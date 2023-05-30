@@ -88,75 +88,81 @@ const Home = () => {
     setTopP(newValue as number);
   };
   return (
-    <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-      <Card variant="elevation" sx={{ maxWidth: 445 }}>
-        <CardActionArea>
-          <CardContent>
-            <div style={{ float: 'right' }}>Sent:</div> <br />
-            <Paper
-              elevation={3}
-              style={{
-                padding: '10px',
-                display: displayValue,
-                justifyContent: 'flex-end',
-                float: 'right',
-              }}
-            >
-              {sent}
-            </Paper>
-            <br />
-            <br />
-            <br />
-            Response: <br />
-            {visible ? <img src="/typing.gif" alt="typing" width="50px" /> : null}
-            <Paper elevation={3} style={{ padding: '10px', float: 'left', display: displayValue }}>
-              {data.response}
-            </Paper>
-            <br />
-            <br />
-          </CardContent>
-        </CardActionArea>
-      </Card>
-      <br />
+    <>
+      <h1>Chat App</h1>
+      <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
+        <Card variant="elevation" sx={{ maxWidth: 445 }}>
+          <CardActionArea>
+            <CardContent>
+              <div style={{ float: 'right' }}>Sent:</div> <br />
+              <Paper
+                elevation={3}
+                style={{
+                  padding: '10px',
+                  display: displayValue,
+                  justifyContent: 'flex-end',
+                  float: 'right',
+                }}
+              >
+                {sent}
+              </Paper>
+              <br />
+              <br />
+              <br />
+              Response: <br />
+              {visible ? <img src="/typing.gif" alt="typing" width="50px" /> : null}
+              <Paper
+                elevation={3}
+                style={{ padding: '10px', float: 'left', display: displayValue }}
+              >
+                {data.response}
+              </Paper>
+              <br />
+              <br />
+            </CardContent>
+          </CardActionArea>
+        </Card>
+        <br />
 
-      <Paper elevation={1} sx={{ maxWidth: 500 }} style={{ padding: '10px' }}>
-        Chat session: <br />
-        <textarea
-          name="chatsession"
-          onChange={handleChatsessionChange}
-          rows={3}
-          cols={50}
-          value={data.chatsession}
-        />
-        <CustomButton variant="contained" type="submit" style={{ marginTop: '-50px' }}>
-          Send
-        </CustomButton>
-        <Paper elevation={1} style={{ maxWidth: 345, padding: '10px' }}>
-          Temperature:{' '}
-          <Slider
-            valueLabelDisplay="auto"
-            min={0}
-            max={1}
-            step={0.1}
-            value={temperature}
-            defaultValue={0.7}
-            aria-label="Temperature"
-            onChange={handleTemperatureChange}
+        <Paper elevation={1} sx={{ maxWidth: 500 }} style={{ padding: '10px' }}>
+          Chat session: <br />
+          <textarea
+            name="chatsession"
+            onChange={handleChatsessionChange}
+            rows={3}
+            cols={50}
+            value={data.chatsession}
           />
-          Top_P:{' '}
-          <Slider
-            valueLabelDisplay="auto"
-            min={0}
-            max={1}
-            step={0.05}
-            value={topP}
-            defaultValue={0.95}
-            aria-label="Top P"
-            onChange={handleTopPChange}
-          />
+          <CustomButton variant="contained" type="submit" style={{ marginTop: '-50px' }}>
+            Send
+          </CustomButton>
+          <Paper elevation={1} style={{ maxWidth: 345, padding: '10px' }}>
+            Temperature:{' '}
+            <Slider
+              valueLabelDisplay="auto"
+              min={0}
+              max={1}
+              step={0.1}
+              value={temperature}
+              defaultValue={0.7}
+              aria-label="Temperature"
+              onChange={handleTemperatureChange}
+            />
+            Top_P:{' '}
+            <Slider
+              valueLabelDisplay="auto"
+              min={0}
+              max={1}
+              step={0.05}
+              value={topP}
+              defaultValue={0.95}
+              aria-label="Top P"
+              onChange={handleTopPChange}
+            />
+          </Paper>
         </Paper>
-      </Paper>
-    </form>
+      </form>
+    </>
   );
 };
 
