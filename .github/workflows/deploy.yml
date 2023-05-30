@@ -1,0 +1,76 @@
+name: Deploy Workflow
+on:
+  workflow_dispatch:
+    inputs:
+      deploy-environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'dev'
+      image-tag:
+        description: 'Docker tag to deploy'
+        required: true
+env:
+  DOCKER_REGISTRY: "mck-dwa-mobile.jfrog.io"
+  IMAGE_TAG: "${{ github.event.inputs.image-tag }}"
+  ENV: "${{ github.event.inputs.deploy-environment }}"
+
+jobs:
+  deploy:
+    name: "${{ github.event.inputs.deploy-environment }} deploy tag : ${{ github.event.inputs.image-tag }}"
+    environment: ${{ github.event.inputs.deploy-environment }}
+    runs-on: kube-deploy
+    defaults:
+      run:
+        shell: bash
+    container:
+      image: mck-tech-platform-srvs.jfrog.io/kubectl:latest
+      credentials:
+        username: ${{ secrets.DEV_PORTAL_JFROG_USERNAME }}
+        password: ${{ secrets.DEV_PORTAL_JFROG_API_KEY }}
+    steps:
+    - name: Get Manifest File
+      uses: actions/checkout@v2
+    - name: "Deploy to ${{ github.event.inputs.deploy-environment }} cluster"
+      env:
+        KUBERNETES_SERVICE_ACCOUNT: ${{ secrets.KUBE_SA_TOKEN }}
+        MANIFEST_NAME: manifest-${{ env.ENV }}.yml
+        CLUSTER_TYPE: "AKS"
+        CLUSTER_REGION: "US"
+        OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
+
+      run: |
+        # Setting up cluster configurations, config files are in the kubectl image
+        # https://github.com/mckesson/pltsrv-kube-apps/tree/master/kubectl
+        source /aks/aks-clusters.config
+
+        if [ "$ENV" = "prod" ]; then
+          PROD=$(eval "echo \${CLUSTER_TYPE}_\${CLUSTER_REGION}PROD")
+          SHARED_CLUSTER="\$${PROD}"
+        else
+          DEV=$(eval "echo  \${CLUSTER_TYPE}_\${CLUSTER_REGION}DEV")
+          SHARED_CLUSTER="\$${DEV}"
+        fi
+
+        # Set shared cluster cert and API
+        eval CLUSTER_CERT="${SHARED_CLUSTER}_CERT"
+        eval CLUSTER_API="${SHARED_CLUSTER}_API"
+
+        # envsubst command will substitute environmental variables available to this step into the
+        # kubernetes manifest file
+        # e.g. ${IMAGE_NAME} in the manifest-dev.yml will be replaced with an actual value
+        # The output i.e. the manifest file with actual values is then piped into the kubectl
+        # apply command to deploy the resources to Kubernetes
+        envsubst < .kube/${MANIFEST_NAME} | \
+        kubectl \
+          --token="$KUBERNETES_SERVICE_ACCOUNT" \
+          --certificate-authority=$CLUSTER_CERT \
+          --server=$CLUSTER_API \
+          apply -f -
+
+    - if: github.event.inputs.deploy-environment == 'prod'
+      name: Mark Release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        tag: ${{ env.IMAGE_TAG }}
+        token: ${{ secrets.GITHUB_TOKEN }}
