@@ -89,7 +89,7 @@ const Home = () => {
   };
   return (
     <>
-      <h1>Chat App</h1>
+      <h1 style={{ marginLeft: '20px', marginTop: '20px' }}>Chat App</h1>
       <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
         <Card variant="elevation" sx={{ maxWidth: 445 }}>
           <CardActionArea>
