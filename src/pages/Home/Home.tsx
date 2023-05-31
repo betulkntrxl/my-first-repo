@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
-import { Card, CardActionArea, CardActions } from '@mui/material';
+import { Card, CardActionArea } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 
@@ -43,50 +42,39 @@ const Home = () => {
     setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
-    const api = process.env.REACT_APP_OPEN_AI_API_KEY;
-    const key = api !== undefined ? api : '';
-    const response = await fetch(
-      'https://openai-nonprod-test4.openai.azure.com/openai/deployments/openai-nonprod-gpt35-turbo-test4/chat/completions?api-version=2023-03-15-preview',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': key,
-        },
-        body: JSON.stringify({
-          messages: [
-            { role: 'system', content: 'Assistant is a large language model trained by OpenAI.' },
-            { role: 'user', content: data.chatsession },
-          ],
-          temperature,
-          top_p: topP,
-          frequency_penalty: 0,
-          presence_penalty: 0,
-          max_tokens: 800,
-          stop: null,
-        }),
-      }
-    );
+    const response = await fetch('/api/prompt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: 'Assistant is a large language model trained by OpenAI.' },
+          { role: 'user', content: data.chatsession },
+        ],
+        temperature,
+        top_p: topP,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+        max_tokens: 800,
+        stop: null,
+      }),
+    });
     const responseData = await response.json();
     setVisible(false);
     setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
     setDisplayValue('flex');
-    console.log(responseData);
   };
 
   const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
-  const handleTemperatureChange = (
-    event: Event,
-    newValue: number | number[],
-    activeThumb: number
-  ) => {
+  const handleTemperatureChange = (event: Event, newValue: number | number[]) => {
     setTemperature(newValue as number);
   };
 
-  const handleTopPChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const handleTopPChange = (event: Event, newValue: number | number[]) => {
     setTopP(newValue as number);
   };
   return (
