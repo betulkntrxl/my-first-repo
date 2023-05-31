@@ -43,13 +43,15 @@ const Home = () => {
     setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
+    const api = process.env.REACT_APP_OPEN_AI_API_KEY;
+    const key = api !== undefined ? api : '';
     const response = await fetch(
       'https://openai-nonprod-test4.openai.azure.com/openai/deployments/openai-nonprod-gpt35-turbo-test4/chat/completions?api-version=2023-03-15-preview',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'api-key': 'd80a347c4f164802b2f241afb298db34',
+          'api-key': key,
         },
         body: JSON.stringify({
           messages: [
