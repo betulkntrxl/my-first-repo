@@ -7,13 +7,19 @@ import { Card, CardActionArea, CardActions } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 
-const Home = () => {
+function Home() {
   const [data, setData] = useState({ chatsession: '', response: '' });
   const [sent, setSent] = useState('');
   const [visible, setVisible] = useState(false);
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
   const [displayValue, setDisplayValue] = useState('none');
+  const systemMessage = {
+    role: 'system',
+    content: 'Assistant is a large language model trained by OpenAI.',
+  };
+  const conversation = [systemMessage];
+  const [messages, setMessages] = useState(conversation);
 
   const blue = {
     500: '#007FFF',
@@ -45,6 +51,7 @@ const Home = () => {
     setVisible(true);
     const api = process.env.REACT_APP_OPEN_AI_API_KEY;
     const key = api !== undefined ? api : '';
+
     const response = await fetch(
       'https://openai-nonprod-test4.openai.azure.com/openai/deployments/openai-nonprod-gpt35-turbo-test4/chat/completions?api-version=2023-03-15-preview',
       {
@@ -54,10 +61,7 @@ const Home = () => {
           'api-key': key,
         },
         body: JSON.stringify({
-          messages: [
-            { role: 'system', content: 'Assistant is a large language model trained by OpenAI.' },
-            { role: 'user', content: data.chatsession },
-          ],
+          messages: [...messages, { role: 'user', content: data.chatsession }],
           temperature,
           top_p: topP,
           frequency_penalty: 0,
@@ -70,8 +74,14 @@ const Home = () => {
     const responseData = await response.json();
     setVisible(false);
     setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
+    // add response to conversation
+    setMessages([
+      ...messages,
+      { role: 'user', content: data.chatsession },
+      { role: 'system', content: responseData.choices[0].message.content },
+    ]);
     setDisplayValue('flex');
-    console.log(responseData);
+    // console.log(responseData);
   };
 
   const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
@@ -89,6 +99,7 @@ const Home = () => {
   const handleTopPChange = (event: Event, newValue: number | number[], activeThumb: number) => {
     setTopP(newValue as number);
   };
+
   return (
     <>
       <h1 style={{ marginLeft: '20px', marginTop: '20px' }}>Chat App</h1>
@@ -166,6 +177,6 @@ const Home = () => {
       </form>
     </>
   );
-};
+}
 
 export default Home;
