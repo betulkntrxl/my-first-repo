@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
@@ -7,7 +7,7 @@ import { Card, CardActionArea, CardActions } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 
-function Home() {
+const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
   const [sent, setSent] = useState('');
   const [visible, setVisible] = useState(false);
@@ -15,13 +15,14 @@ function Home() {
   const [topP, setTopP] = useState(0.95);
   const [maxTokens, setMaxTokens] = useState(800);
   const [displayValue, setDisplayValue] = useState('none');
+  const [tokenCount, setTokenCount] = useState(0);
   const systemMessage = {
     role: 'system',
     content: 'Assistant is a large language model trained by OpenAI.',
   };
   const conversation = [systemMessage];
   const [messages, setMessages] = useState(conversation);
-
+  const refForm = useRef();
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
@@ -45,8 +46,7 @@ function Home() {
     }
   `;
 
-  async function handleSubmit(event: { preventDefault: () => void }) {
-    event.preventDefault();
+  async function sendMessage() {
     setSent(data.chatsession);
     setDisplayValue('none');
     setData({ ...data, response: '' });
@@ -82,9 +82,21 @@ function Home() {
       { role: 'user', content: data.chatsession },
       { role: 'system', content: responseData.choices[0].message.content },
     ]);
+    setTokenCount(
+      tokenCount + data.chatsession.length / 4 + responseData.choices[0].message.content.length / 4
+    );
     setDisplayValue('flex');
+  }
+
+  async function handleSubmit(event: { preventDefault: () => void }) {
+    event.preventDefault();
+    sendMessage();
     // console.log(responseData);
   }
+
+  useEffect(() => {
+    sendMessage();
+  }, []);
 
   const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -114,15 +126,19 @@ function Home() {
     <>
       <h1 style={{ marginLeft: '20px', marginTop: '20px' }}>Chat App</h1>
       <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-        <Card variant="elevation" sx={{ maxWidth: 445 }}>
+        <Card
+          variant="elevation"
+          sx={{ maxWidth: 745 }}
+          style={{ maxHeight: 200, overflow: 'auto' }}
+        >
           <CardActionArea>
             <CardContent>
-              <div style={{ float: 'right' }}>Sent:</div> <br />
+              <br />
               <Paper
                 elevation={3}
                 style={{
                   padding: '10px',
-                  display: displayValue,
+                  display: sent.length === 0 ? 'none' : 'block',
                   justifyContent: 'flex-end',
                   float: 'right',
                 }}
@@ -132,7 +148,7 @@ function Home() {
               <br />
               <br />
               <br />
-              Response: <br />
+              <br />
               {visible ? <img src="/typing.gif" alt="typing" width="50px" /> : null}
               <Paper
                 elevation={3}
@@ -142,24 +158,31 @@ function Home() {
               </Paper>
               <br />
               <br />
+              <br />
+              <br />
             </CardContent>
           </CardActionArea>
         </Card>
+        Token Count: {tokenCount}
         <br />
-
-        <Paper elevation={1} sx={{ maxWidth: 500 }} style={{ padding: '10px' }}>
-          Chat session: <br />
+        <br />
+        <Paper elevation={1} sx={{ maxWidth: 800 }} style={{ padding: '10px', height: '200px' }}>
           <textarea
+            ref={input => input && input.focus()}
             name="chatsession"
             onChange={handleChatsessionChange}
-            rows={3}
+            rows={2}
             cols={50}
             value={data.chatsession}
           />
-          <CustomButton variant="contained" type="submit" style={{ marginTop: '-50px' }}>
+          <CustomButton
+            variant="contained"
+            type="submit"
+            style={{ marginTop: '-30px', marginLeft: '10px' }}
+          >
             Send
           </CustomButton>
-          <Paper elevation={1} style={{ maxWidth: 345, padding: '10px' }}>
+          <Paper elevation={1} style={{ maxWidth: 245, padding: '10px', float: 'right' }}>
             Temperature:{' '}
             <Slider
               valueLabelDisplay="auto"
@@ -198,6 +221,6 @@ function Home() {
       </form>
     </>
   );
-}
+};
 
 export default Home;
