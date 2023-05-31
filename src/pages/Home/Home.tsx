@@ -13,6 +13,7 @@ function Home() {
   const [visible, setVisible] = useState(false);
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
+  const [maxTokens, setMaxTokens] = useState(800);
   const [displayValue, setDisplayValue] = useState('none');
   const systemMessage = {
     role: 'system',
@@ -43,7 +44,8 @@ function Home() {
       background-color: ${blue[600]};
     }
   `;
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+
+  async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     setSent(data.chatsession);
     setDisplayValue('none');
@@ -66,7 +68,7 @@ function Home() {
           top_p: topP,
           frequency_penalty: 0,
           presence_penalty: 0,
-          max_tokens: 800,
+          max_tokens: maxTokens,
           stop: null,
         }),
       }
@@ -82,7 +84,7 @@ function Home() {
     ]);
     setDisplayValue('flex');
     // console.log(responseData);
-  };
+  }
 
   const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -92,12 +94,20 @@ function Home() {
     event: Event,
     newValue: number | number[],
     activeThumb: number
-  ) => {
+  ): void => {
     setTemperature(newValue as number);
   };
 
   const handleTopPChange = (event: Event, newValue: number | number[], activeThumb: number) => {
     setTopP(newValue as number);
+  };
+
+  const handleMaxTokensChange = (
+    event: Event,
+    newValue: number | number[],
+    activeThumb: number
+  ): void => {
+    setMaxTokens(newValue as number);
   };
 
   return (
@@ -171,6 +181,17 @@ function Home() {
               defaultValue={0.95}
               aria-label="Top P"
               onChange={handleTopPChange}
+            />
+            Max Tokens:{' '}
+            <Slider
+              valueLabelDisplay="auto"
+              min={0}
+              max={4096}
+              step={1}
+              value={maxTokens}
+              defaultValue={800}
+              aria-label="Max Tokens"
+              onChange={handleMaxTokensChange}
             />
           </Paper>
         </Paper>
