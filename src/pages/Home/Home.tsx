@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
-import { Card, CardActionArea, CardActions } from '@mui/material';
+import { Card, CardActionArea } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 
@@ -22,7 +21,6 @@ const Home = () => {
   };
   const conversation = [systemMessage];
   const [messages, setMessages] = useState(conversation);
-  const refForm = useRef();
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
@@ -51,28 +49,21 @@ const Home = () => {
     setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
-    const api = process.env.REACT_APP_OPEN_AI_API_KEY;
-    const key = api !== undefined ? api : '';
-
-    const response = await fetch(
-      'https://openai-nonprod-test4.openai.azure.com/openai/deployments/openai-nonprod-gpt35-turbo-test4/chat/completions?api-version=2023-03-15-preview',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': key,
-        },
-        body: JSON.stringify({
-          messages: [...messages, { role: 'user', content: data.chatsession }],
-          temperature,
-          top_p: topP,
-          frequency_penalty: 0,
-          presence_penalty: 0,
-          max_tokens: maxTokens,
-          stop: null,
-        }),
-      }
-    );
+    const response = await fetch('/api/prompt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages: [...messages, { role: 'user', content: data.chatsession }],
+        temperature,
+        top_p: topP,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+        max_tokens: maxTokens,
+        stop: null,
+      }),
+    });
     const responseData = await response.json();
     setVisible(false);
     setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
@@ -102,23 +93,15 @@ const Home = () => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
-  const handleTemperatureChange = (
-    event: Event,
-    newValue: number | number[],
-    activeThumb: number
-  ): void => {
+  const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
   };
 
-  const handleTopPChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const handleTopPChange = (event: Event, newValue: number | number[]) => {
     setTopP(newValue as number);
   };
 
-  const handleMaxTokensChange = (
-    event: Event,
-    newValue: number | number[],
-    activeThumb: number
-  ): void => {
+  const handleMaxTokensChange = (event: Event, newValue: number | number[]): void => {
     setMaxTokens(newValue as number);
   };
 

@@ -5,7 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@fontsource/roboto": "^4.5.8",
+    "@fontsource/roboto": "^5.0.2",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.6",
     "@mui/system": "^5.13.2",
@@ -73,7 +73,7 @@
       "text"
     ]
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
     "@babel/runtime": "^7.19.0",
