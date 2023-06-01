@@ -87,7 +87,7 @@ const Home = () => {
 
   useEffect(() => {
     sendMessage();
-  }, []);
+  }, []); // eslint-disable-line no-use-before-define
 
   const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
     setData({ ...data, [event.target.name]: event.target.value });
