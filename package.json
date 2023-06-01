@@ -73,7 +73,7 @@
       "text"
     ]
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
     "@babel/runtime": "^7.19.0",
