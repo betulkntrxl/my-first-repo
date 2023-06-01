@@ -87,7 +87,7 @@ const Home = () => {
 
   useEffect(() => {
     sendMessage();
-  }, []); // eslint-disable-line no-use-before-define
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -112,7 +112,7 @@ const Home = () => {
         <Card
           variant="elevation"
           sx={{ maxWidth: 745 }}
-          style={{ maxHeight: 200, overflow: 'auto' }}
+          style={{ maxHeight: 300, overflow: 'auto' }}
         >
           <CardActionArea>
             <CardContent>
