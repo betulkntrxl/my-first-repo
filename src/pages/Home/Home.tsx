@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
@@ -79,9 +79,22 @@ const Home = () => {
     setDisplayValue('flex');
   }
 
+  const bottomRef: any = useRef();
+
+  const scrollToBottom = () => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollTo({
+        top: bottomRef.current.scrollHeight,
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     sendMessage();
+    scrollToBottom();
     // console.log(responseData);
   }
 
@@ -111,37 +124,64 @@ const Home = () => {
       <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
         <Card
           variant="elevation"
-          sx={{ maxWidth: 745 }}
+          sx={{ Width: '100%' }}
           style={{ maxHeight: 300, overflow: 'auto' }}
+          ref={bottomRef}
         >
           <CardActionArea>
             <CardContent>
-              <br />
-              <Paper
-                elevation={3}
-                style={{
-                  padding: '10px',
-                  display: sent.length === 0 ? 'none' : 'block',
-                  justifyContent: 'flex-end',
-                  float: 'right',
-                }}
-              >
-                {sent}
-              </Paper>
-              <br />
-              <br />
+              {messages.map((value, index, array) => {
+                if (value.role === 'user' && index !== 0) {
+                  return (
+                    <>
+                      <br />
+                      <br />
+                      <Paper
+                        key={value.content}
+                        elevation={3}
+                        style={{
+                          padding: '10px',
+                          display: value.content.length === 0 ? 'none' : 'block',
+                          justifyContent: 'flex-end',
+                          float: 'right',
+                        }}
+                      >
+                        {value.content}
+                        {/* sent */}
+                      </Paper>
+                      <br />
+                    </>
+                  );
+                }
+                if (value.role === 'system' && index !== 0) {
+                  return (
+                    <>
+                      <br />
+                      <br />
+                      <Paper
+                        key={value.content}
+                        elevation={3}
+                        style={{ padding: '10px', float: 'left', display: displayValue }}
+                      >
+                        {/* data.response */}
+                        {value.content}
+                      </Paper>
+                      <br />
+                      <br />
+                    </>
+                  );
+                }
+                return (
+                  <>
+                    <br />
+                    <br />
+                  </>
+                );
+              })}
+              {scrollToBottom()}
               <br />
               <br />
               {visible ? <img src="/typing.gif" alt="typing" width="50px" /> : null}
-              <Paper
-                elevation={3}
-                style={{ padding: '10px', float: 'left', display: displayValue }}
-              >
-                {data.response}
-              </Paper>
-              <br />
-              <br />
-              <br />
               <br />
             </CardContent>
           </CardActionArea>
