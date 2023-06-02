@@ -13,10 +13,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
-  const [sent, setSent] = useState('');
+  // const [sent, setSent] = useState('');
   const [visible, setVisible] = useState(false);
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
@@ -107,7 +108,7 @@ const Home = () => {
   `;
 
   async function sendMessage() {
-    setSent(data.chatsession);
+    // setSent(data.chatsession);
     setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
@@ -146,12 +147,7 @@ const Home = () => {
   function scrollToBottom() {
     setTimeout(() => {
       if (bottomRef.current) {
-        // bottomRef.current.scrollTo({
-        // top: bottomRef.current.scrollHeight,
         bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
-        // behavior: 'smooth',
-        // block: 'start',
-        // });
       }
     }, 1000);
   }
@@ -173,7 +169,7 @@ const Home = () => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const container = window !== undefined ? () => window.document.body : undefined;
+
   const drawerWidth = 240;
 
   return (
@@ -203,21 +199,6 @@ const Home = () => {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
           variant="temporary"
           sx={{
             display: { xs: 'none', sm: 'block' },
@@ -234,19 +215,19 @@ const Home = () => {
         <Card
           variant="elevation"
           sx={{ Width: '100%' }}
-          style={{ maxHeight: 425, overflow: 'auto' }}
+          style={{ maxHeight: '400px', overflow: 'auto', overflowY: 'scroll' }}
           ref={bottomRef}
         >
           <CardActionArea>
             <CardContent>
-              {messages.map((value, index, array) => {
+              {messages.map((value, index) => {
                 if (value.role === 'user' && index !== 0) {
                   return (
                     <>
                       <br />
                       <br />
                       <Paper
-                        key={value.content}
+                        key={Date.now()}
                         elevation={3}
                         style={{
                           padding: '10px',
@@ -268,7 +249,7 @@ const Home = () => {
                       <br />
                       <br />
                       <Paper
-                        key={value.content}
+                        key={Date.now()}
                         elevation={3}
                         style={{ padding: '10px', float: 'left', display: displayValue }}
                       >
@@ -295,73 +276,85 @@ const Home = () => {
             </CardContent>
           </CardActionArea>
         </Card>
-        Token Count: {tokenCount}
         <br />
         <br />
         <Paper
           sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '80px' }}
           elevation={3}
         >
-          <textarea
-            ref={input => input && input.focus()}
-            name="chatsession"
-            onChange={handleChatsessionChange}
-            rows={2}
-            cols={50}
-            value={data.chatsession}
-            style={{ margin: '10px' }}
-          />
-          <CustomButton
-            variant="contained"
-            type="submit"
-            style={{ marginTop: '-30px', marginLeft: '10px' }}
-          >
-            Send
-          </CustomButton>
-          <Stack
-            direction="row"
-            spacing={2}
-            style={{ width: '50%', padding: '10px', float: 'right' }}
-          >
-            <Paper style={{ width: '150px', padding: 10 }}>
-              Temperature: <br />{' '}
-              <Slider
-                valueLabelDisplay="auto"
-                min={0}
-                max={1}
-                step={0.1}
-                value={temperature}
-                defaultValue={0.7}
-                aria-label="Temperature"
-                onChange={handleTemperatureChange}
+          <Stack direction="row">
+            <Stack direction="column" style={{ maxWidth: '30%' }}>
+              <textarea
+                ref={input => input && input.focus()}
+                name="chatsession"
+                onChange={handleChatsessionChange}
+                rows={2}
+                cols={50}
+                value={data.chatsession}
+                style={{ margin: '10px' }}
               />
-            </Paper>
-            <Paper style={{ width: '150px', padding: 10 }}>
-              Top_P:{' '}
-              <Slider
-                valueLabelDisplay="auto"
-                min={0}
-                max={1}
-                step={0.05}
-                value={topP}
-                defaultValue={0.95}
-                aria-label="Top P"
-                onChange={handleTopPChange}
-              />
-            </Paper>
-            <Paper style={{ width: '150px', padding: 10 }}>
-              Max Tokens:{' '}
-              <Slider
-                valueLabelDisplay="auto"
-                min={0}
-                max={4096}
-                step={1}
-                value={maxTokens}
-                defaultValue={800}
-                aria-label="Max Tokens"
-                onChange={handleMaxTokensChange}
-              />
-            </Paper>
+              <Grid item xs={4} style={{ marginLeft: '10px', marginTop: -10 }}>
+                Token Count: {tokenCount}
+              </Grid>
+            </Stack>
+            <Grid item xs={6} style={{ width: '20%' }}>
+              <CustomButton variant="contained" type="submit" style={{ margin: '10px' }}>
+                Send
+              </CustomButton>
+            </Grid>
+            <Stack
+              direction="row"
+              spacing={2}
+              style={{ width: '50%', padding: '5px', float: 'right' }}
+            >
+              <Paper
+                style={{
+                  width: '170px',
+                  padding: 5,
+                  marginTop: 2,
+                  marginBottom: 15,
+                  float: 'right',
+                }}
+              >
+                Temperature: <br />{' '}
+                <Slider
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  value={temperature}
+                  defaultValue={0.7}
+                  aria-label="Temperature"
+                  onChange={handleTemperatureChange}
+                />
+              </Paper>
+              <Paper style={{ width: '170px', padding: 5, marginTop: 2, marginBottom: 15 }}>
+                Top_P:{' '}
+                <Slider
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={topP}
+                  defaultValue={0.95}
+                  aria-label="Top P"
+                  onChange={handleTopPChange}
+                />
+              </Paper>
+              <Paper style={{ width: '170px', padding: 5, marginTop: 2, marginBottom: 15 }}>
+                Max Tokens:{' '}
+                <Slider
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={4096}
+                  step={1}
+                  value={maxTokens}
+                  defaultValue={800}
+                  aria-label="Max Tokens"
+                  onChange={handleMaxTokensChange}
+                />
+              </Paper>
+            </Stack>
           </Stack>
         </Paper>
       </form>
