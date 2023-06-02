@@ -223,11 +223,11 @@ const Home = () => {
               {messages.map((value, index) => {
                 if (value.role === 'user' && index !== 0) {
                   return (
-                    <>
-                      <br />
-                      <br />
+                    <div key={value.content + 1}>
+                      <br key={value.content + 2} />
+                      <br key={value.content + 3} />
                       <Paper
-                        key={Date.now()}
+                        key={value.content + 4}
                         elevation={3}
                         style={{
                           padding: '10px',
@@ -239,33 +239,33 @@ const Home = () => {
                         {value.content}
                         {/* sent */}
                       </Paper>
-                      <br />
-                    </>
+                      <br key={value.content + 5} />
+                    </div>
                   );
                 }
                 if (value.role === 'system' && index !== 0) {
                   return (
-                    <>
-                      <br />
-                      <br />
+                    <div key={value.content + 6}>
+                      <br key={value.content + 7} />
+                      <br key={value.content + 8} />
                       <Paper
-                        key={Date.now()}
+                        key={value.content + 9}
                         elevation={3}
                         style={{ padding: '10px', float: 'left', display: displayValue }}
                       >
                         {/* data.response */}
                         {value.content}
                       </Paper>
-                      <br />
-                      <br />
-                    </>
+                      <br key={value.content + 10} />
+                      <br key={value.content + 11} />
+                    </div>
                   );
                 }
                 return (
-                  <>
-                    <br />
-                    <br />
-                  </>
+                  <div key={value.content + 12}>
+                    <br key={value.content + 13} />
+                    <br key={value.content + 14} />
+                  </div>
                 );
               })}
               {scrollToBottom()}
