@@ -143,21 +143,22 @@ const Home = () => {
 
   const bottomRef: any = useRef();
 
-  const scrollToBottom = () => {
-    if (bottomRef.current) {
-      // bottomRef.current.scrollTo({
-      // top: bottomRef.current.scrollHeight,
-      bottomRef.current.scrollTop = bottomRef.current.scrollHeight + 200;
-      // behavior: 'smooth',
-      // block: 'start',
-      // });
-    }
-  };
+  function scrollToBottom() {
+    setTimeout(() => {
+      if (bottomRef.current) {
+        // bottomRef.current.scrollTo({
+        // top: bottomRef.current.scrollHeight,
+        bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
+        // behavior: 'smooth',
+        // block: 'start',
+        // });
+      }
+    }, 1000);
+  }
 
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     sendMessage();
-    scrollToBottom();
     // console.log(responseData);
   }
 
@@ -233,7 +234,7 @@ const Home = () => {
         <Card
           variant="elevation"
           sx={{ Width: '100%' }}
-          style={{ maxHeight: 450, overflow: 'auto' }}
+          style={{ maxHeight: 425, overflow: 'auto' }}
           ref={bottomRef}
         >
           <CardActionArea>
