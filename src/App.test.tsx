@@ -8,7 +8,7 @@ describe('testing the App', () => {
 
   it('renders a text', () => {
     render(<App />);
-    const text = screen.getByRole('heading', { name: /Chat App/i });
+    const text = screen.getByLabelText('menu');
     expect(text).toBeTruthy();
   });
 });
