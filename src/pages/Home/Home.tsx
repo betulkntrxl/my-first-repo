@@ -5,6 +5,14 @@ import { styled } from '@mui/system';
 import { Card, CardActionArea } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
+import Stack from '@mui/material/Stack';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
@@ -21,11 +29,65 @@ const Home = () => {
   };
   const conversation = [systemMessage];
   const [messages, setMessages] = useState(conversation);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
     700: '#0059B2',
   };
+
+  const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
+    setTemperature(newValue as number);
+  };
+
+  const handleTopPChange = (event: Event, newValue: number | number[]) => {
+    setTopP(newValue as number);
+  };
+
+  const handleMaxTokensChange = (event: Event, newValue: number | number[]): void => {
+    setMaxTokens(newValue as number);
+  };
+
+  const drawer = (
+    <div>
+      <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', float: 'right' }}>
+        Temperature:{' '}
+        <Slider
+          valueLabelDisplay="auto"
+          min={0}
+          max={1}
+          step={0.1}
+          value={temperature}
+          defaultValue={0.7}
+          aria-label="Temperature"
+          onChange={handleTemperatureChange}
+        />
+        Top_P:{' '}
+        <Slider
+          valueLabelDisplay="auto"
+          min={0}
+          max={1}
+          step={0.05}
+          value={topP}
+          defaultValue={0.95}
+          aria-label="Top P"
+          onChange={handleTopPChange}
+        />
+        Max Tokens:{' '}
+        <Slider
+          valueLabelDisplay="auto"
+          min={0}
+          max={4096}
+          step={1}
+          value={maxTokens}
+          defaultValue={800}
+          aria-label="Max Tokens"
+          onChange={handleMaxTokensChange}
+        />
+      </Paper>
+    </div>
+  );
 
   const CustomButton = styled(Button)`
     font-family: IBM Plex Sans, sans-serif;
@@ -83,11 +145,12 @@ const Home = () => {
 
   const scrollToBottom = () => {
     if (bottomRef.current) {
-      bottomRef.current.scrollTo({
-        top: bottomRef.current.scrollHeight,
-        behavior: 'smooth',
-        block: 'start',
-      });
+      // bottomRef.current.scrollTo({
+      // top: bottomRef.current.scrollHeight,
+      bottomRef.current.scrollTop = bottomRef.current.scrollHeight + 200;
+      // behavior: 'smooth',
+      // block: 'start',
+      // });
     }
   };
 
@@ -106,26 +169,71 @@ const Home = () => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
-  const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
-    setTemperature(newValue as number);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
   };
-
-  const handleTopPChange = (event: Event, newValue: number | number[]) => {
-    setTopP(newValue as number);
-  };
-
-  const handleMaxTokensChange = (event: Event, newValue: number | number[]): void => {
-    setMaxTokens(newValue as number);
-  };
+  const container = window !== undefined ? () => window.document.body : undefined;
+  const drawerWidth = 240;
 
   return (
     <>
-      <h1 style={{ marginLeft: '20px', marginTop: '20px' }}>Chat App</h1>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={handleDrawerToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" component="div">
+              Chat App
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
+      >
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {drawer}
+        </Drawer>
+        <Drawer
+          variant="temporary"
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+        >
+          {drawer}
+        </Drawer>
+      </Box>
+
       <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
         <Card
           variant="elevation"
           sx={{ Width: '100%' }}
-          style={{ maxHeight: 300, overflow: 'auto' }}
+          style={{ maxHeight: 450, overflow: 'auto' }}
           ref={bottomRef}
         >
           <CardActionArea>
@@ -189,7 +297,10 @@ const Home = () => {
         Token Count: {tokenCount}
         <br />
         <br />
-        <Paper elevation={1} sx={{ maxWidth: 800 }} style={{ padding: '10px', height: '200px' }}>
+        <Paper
+          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '80px' }}
+          elevation={3}
+        >
           <textarea
             ref={input => input && input.focus()}
             name="chatsession"
@@ -197,6 +308,7 @@ const Home = () => {
             rows={2}
             cols={50}
             value={data.chatsession}
+            style={{ margin: '10px' }}
           />
           <CustomButton
             variant="contained"
@@ -205,41 +317,51 @@ const Home = () => {
           >
             Send
           </CustomButton>
-          <Paper elevation={1} style={{ maxWidth: 245, padding: '10px', float: 'right' }}>
-            Temperature:{' '}
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={1}
-              step={0.1}
-              value={temperature}
-              defaultValue={0.7}
-              aria-label="Temperature"
-              onChange={handleTemperatureChange}
-            />
-            Top_P:{' '}
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={1}
-              step={0.05}
-              value={topP}
-              defaultValue={0.95}
-              aria-label="Top P"
-              onChange={handleTopPChange}
-            />
-            Max Tokens:{' '}
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={4096}
-              step={1}
-              value={maxTokens}
-              defaultValue={800}
-              aria-label="Max Tokens"
-              onChange={handleMaxTokensChange}
-            />
-          </Paper>
+          <Stack
+            direction="row"
+            spacing={2}
+            style={{ width: '50%', padding: '10px', float: 'right' }}
+          >
+            <Paper style={{ width: '150px', padding: 10 }}>
+              Temperature: <br />{' '}
+              <Slider
+                valueLabelDisplay="auto"
+                min={0}
+                max={1}
+                step={0.1}
+                value={temperature}
+                defaultValue={0.7}
+                aria-label="Temperature"
+                onChange={handleTemperatureChange}
+              />
+            </Paper>
+            <Paper style={{ width: '150px', padding: 10 }}>
+              Top_P:{' '}
+              <Slider
+                valueLabelDisplay="auto"
+                min={0}
+                max={1}
+                step={0.05}
+                value={topP}
+                defaultValue={0.95}
+                aria-label="Top P"
+                onChange={handleTopPChange}
+              />
+            </Paper>
+            <Paper style={{ width: '150px', padding: 10 }}>
+              Max Tokens:{' '}
+              <Slider
+                valueLabelDisplay="auto"
+                min={0}
+                max={4096}
+                step={1}
+                value={maxTokens}
+                defaultValue={800}
+                aria-label="Max Tokens"
+                onChange={handleMaxTokensChange}
+              />
+            </Paper>
+          </Stack>
         </Paper>
       </form>
     </>
