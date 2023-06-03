@@ -283,25 +283,44 @@ const Home = () => {
           elevation={3}
         >
           <Stack direction="row">
-            <Stack direction="column" style={{ maxWidth: '30%' }}>
-              <textarea
-                ref={input => input && input.focus()}
-                name="chatsession"
-                onChange={handleChatsessionChange}
-                rows={2}
-                cols={50}
-                value={data.chatsession}
-                style={{ margin: '10px' }}
-              />
-              <Grid item xs={4} style={{ marginLeft: '10px', marginTop: -10 }}>
-                Token Count: {tokenCount}
-              </Grid>
-            </Stack>
-            <Grid item xs={6} style={{ width: '20%' }}>
-              <CustomButton variant="contained" type="submit" style={{ margin: '10px' }}>
-                Send
-              </CustomButton>
-            </Grid>
+            <Paper style={{ width: '50%' }}>
+              <Stack direction="row">
+                <Stack direction="column" style={{ width: '80%' }}>
+                  <textarea
+                    ref={input => input && input.focus()}
+                    name="chatsession"
+                    onChange={handleChatsessionChange}
+                    rows={2}
+                    cols={50}
+                    value={data.chatsession}
+                    style={{
+                      margin: '7px',
+                      width: '98%',
+                      fontFamily: 'sans-serif',
+                      padding: '5px 5px',
+                      boxSizing: 'border-box',
+                      border: '2px solid #ccc',
+                      borderRadius: '4px',
+                      backgroundColor: '#f8f8f8',
+                      fontSize: '16px',
+                      resize: 'none',
+                    }}
+                  />
+                  <Grid item xs={4} style={{ marginLeft: '10px', marginTop: -10 }}>
+                    Token Count: {tokenCount}
+                  </Grid>
+                </Stack>
+                <Stack>
+                  <CustomButton
+                    variant="contained"
+                    type="submit"
+                    style={{ margin: '10px', width: '90px' }}
+                  >
+                    Send
+                  </CustomButton>
+                </Stack>
+              </Stack>
+            </Paper>
             <Stack
               direction="row"
               spacing={2}
@@ -313,6 +332,7 @@ const Home = () => {
                   padding: 5,
                   marginTop: 2,
                   marginBottom: 15,
+                  marginLeft: 20,
                   float: 'right',
                 }}
               >
