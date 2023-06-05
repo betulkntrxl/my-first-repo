@@ -354,7 +354,7 @@ const Home = () => {
                 />
               </Paper>
               <Paper style={{ width: '170px', padding: 5, marginTop: 2, marginBottom: 15 }}>
-                Top_P:{' '}
+                Top P:{' '}
                 <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
                   <InfoOutlinedIcon />
                 </Tooltip>
