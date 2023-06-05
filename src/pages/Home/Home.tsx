@@ -14,10 +14,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import SendIcon from '@mui/icons-material/Send';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Tooltip from '@mui/material/Tooltip';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
-  // const [sent, setSent] = useState('');
   const [visible, setVisible] = useState(false);
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
@@ -108,7 +110,6 @@ const Home = () => {
   `;
 
   async function sendMessage() {
-    // setSent(data.chatsession);
     setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
@@ -156,7 +157,6 @@ const Home = () => {
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     sendMessage();
-    // console.log(responseData);
   }
 
   useEffect(() => {
@@ -317,7 +317,7 @@ const Home = () => {
                     type="submit"
                     style={{ margin: '10px', width: '90px' }}
                   >
-                    Send
+                    <SendIcon />
                   </CustomButton>
                 </Stack>
               </Stack>
@@ -337,7 +337,11 @@ const Home = () => {
                   float: 'right',
                 }}
               >
-                Temperature: <br />{' '}
+                Temperature:{' '}
+                <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
+                  <InfoOutlinedIcon />
+                </Tooltip>
+                <br />{' '}
                 <Slider
                   valueLabelDisplay="auto"
                   min={0}
@@ -351,6 +355,9 @@ const Home = () => {
               </Paper>
               <Paper style={{ width: '170px', padding: 5, marginTop: 2, marginBottom: 15 }}>
                 Top_P:{' '}
+                <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
+                  <InfoOutlinedIcon />
+                </Tooltip>
                 <Slider
                   valueLabelDisplay="auto"
                   min={0}
@@ -363,7 +370,10 @@ const Home = () => {
                 />
               </Paper>
               <Paper style={{ width: '170px', padding: 5, marginTop: 2, marginBottom: 15 }}>
-                Max Tokens:{' '}
+                Max response:{' '}
+                <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
+                  <InfoOutlinedIcon />
+                </Tooltip>
                 <Slider
                   valueLabelDisplay="auto"
                   min={0}
