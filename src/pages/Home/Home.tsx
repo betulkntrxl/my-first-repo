@@ -150,6 +150,7 @@ const Home = () => {
         bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
       }
     }, 1000);
+    return null;
   }
 
   async function handleSubmit(event: { preventDefault: () => void }) {
