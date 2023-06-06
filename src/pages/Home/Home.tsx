@@ -5,18 +5,12 @@ import { styled } from '@mui/system';
 import { Card, CardActionArea } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import SendIcon from '@mui/icons-material/Send';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Tooltip from '@mui/material/Tooltip';
+import Menu from './Menu';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
@@ -39,7 +33,6 @@ const Home = () => {
   const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
-  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [disabledBool, setDisabledBool] = useState(true);
 
   const blue = {
@@ -59,46 +52,6 @@ const Home = () => {
   const handleMaxTokensChange = (event: Event, newValue: number | number[]): void => {
     setMaxTokens(newValue as number);
   };
-
-  const drawer = (
-    <div>
-      <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', float: 'right' }}>
-        Temperature:{' '}
-        <Slider
-          valueLabelDisplay="auto"
-          min={0}
-          max={1}
-          step={0.1}
-          value={temperature}
-          defaultValue={0.7}
-          aria-label="Temperature"
-          onChange={handleTemperatureChange}
-        />
-        Top_P:{' '}
-        <Slider
-          valueLabelDisplay="auto"
-          min={0}
-          max={1}
-          step={0.05}
-          value={topP}
-          defaultValue={0.95}
-          aria-label="Top P"
-          onChange={handleTopPChange}
-        />
-        Max Tokens:{' '}
-        <Slider
-          valueLabelDisplay="auto"
-          min={0}
-          max={4096}
-          step={1}
-          value={maxTokens}
-          defaultValue={800}
-          aria-label="Max Tokens"
-          onChange={handleMaxTokensChange}
-        />
-      </Paper>
-    </div>
-  );
 
   const CustomButton = styled(Button)`
     font-family: IBM Plex Sans, sans-serif;
@@ -182,50 +135,16 @@ const Home = () => {
     }
   };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const drawerWidth = 240;
-
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={handleDrawerToggle}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" component="div">
-              Chat App
-            </Typography>
-          </Toolbar>
-        </AppBar>
-      </Box>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="Settings"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          variant="temporary"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
+      <Menu
+        temperature={temperature}
+        handleTemperatureChange={handleTemperatureChange}
+        topP={topP}
+        handleTopPChange={handleTopPChange}
+        maxTokens={maxTokens}
+        handleMaxTokensChange={handleMaxTokensChange}
+      />
 
       <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
         <Card
