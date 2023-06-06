@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
@@ -26,13 +26,21 @@ const Home = () => {
   const [maxTokens, setMaxTokens] = useState(800);
   const [displayValue, setDisplayValue] = useState('none');
   const [tokenCount, setTokenCount] = useState(0);
+  const systemMessageDisplay = {
+    role: 'system',
+    content: 'Assistant is a large language model trained by OpenAI.',
+    id: '0',
+  };
   const systemMessage = {
     role: 'system',
     content: 'Assistant is a large language model trained by OpenAI.',
   };
   const conversation = [systemMessage];
+  const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
+  const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [disabledBool, setDisabledBool] = useState(true);
 
   const blue = {
     500: '#007FFF',
@@ -110,6 +118,7 @@ const Home = () => {
   `;
 
   async function sendMessage() {
+    setDisabledBool(true);
     setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
@@ -137,6 +146,11 @@ const Home = () => {
       { role: 'user', content: data.chatsession },
       { role: 'system', content: responseData.choices[0].message.content },
     ]);
+    setMessagesDisplay([
+      ...messagesDisplay,
+      { role: 'user', content: data.chatsession, id: data.chatsession },
+      { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
+    ]);
     setTokenCount(
       tokenCount + data.chatsession.length / 4 + responseData.choices[0].message.content.length / 4
     );
@@ -159,12 +173,13 @@ const Home = () => {
     sendMessage();
   }
 
-  useEffect(() => {
-    sendMessage();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
     setData({ ...data, [event.target.name]: event.target.value });
+    if (event.target.value === '') {
+      setDisabledBool(true);
+    } else {
+      setDisabledBool(false);
+    }
   };
 
   const handleDrawerToggle = () => {
@@ -196,7 +211,7 @@ const Home = () => {
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
+        aria-label="Settings"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
@@ -221,14 +236,14 @@ const Home = () => {
         >
           <CardActionArea>
             <CardContent>
-              {messages.map((value, index) => {
+              {messagesDisplay.map((value, index) => {
                 if (value.role === 'user' && index !== 0) {
                   return (
-                    <div key={value.content + 1}>
-                      <br key={value.content + 2} />
-                      <br key={value.content + 3} />
+                    <div key={value.id + 1}>
+                      <br key={value.id + 2} />
+                      <br key={value.id + 3} />
                       <Paper
-                        key={value.content + 4}
+                        key={value.id + 4}
                         elevation={3}
                         style={{
                           padding: '10px',
@@ -240,32 +255,32 @@ const Home = () => {
                         {value.content}
                         {/* sent */}
                       </Paper>
-                      <br key={value.content + 5} />
+                      <br key={value.id + 5} />
                     </div>
                   );
                 }
                 if (value.role === 'system' && index !== 0) {
                   return (
-                    <div key={value.content + 6}>
-                      <br key={value.content + 7} />
-                      <br key={value.content + 8} />
+                    <div key={value.id + 6}>
+                      <br key={value.id + 7} />
+                      <br key={value.id + 8} />
                       <Paper
-                        key={value.content + 9}
+                        key={value.id + 9}
                         elevation={3}
                         style={{ padding: '10px', float: 'left', display: displayValue }}
                       >
                         {/* data.response */}
                         {value.content}
                       </Paper>
-                      <br key={value.content + 10} />
-                      <br key={value.content + 11} />
+                      <br key={value.id + 10} />
+                      <br key={value.id + 11} />
                     </div>
                   );
                 }
                 return (
-                  <div key={value.content + 12}>
-                    <br key={value.content + 13} />
-                    <br key={value.content + 14} />
+                  <div key={value.id + 12}>
+                    <br key={value.id + 13} />
+                    <br key={value.id + 14} />
                   </div>
                 );
               })}
@@ -280,7 +295,7 @@ const Home = () => {
         <br />
         <br />
         <Paper
-          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '80px' }}
+          sx={{ position: 'fixed', bottom: 0, left: 10, right: 0, height: '80px' }}
           elevation={3}
         >
           <Stack direction="row">
@@ -288,6 +303,7 @@ const Home = () => {
               <Stack direction="row">
                 <Stack direction="column" style={{ width: '80%' }}>
                   <textarea
+                    placeholder="Type your message here."
                     ref={input => input && input.focus()}
                     name="chatsession"
                     onChange={handleChatsessionChange}
@@ -300,7 +316,7 @@ const Home = () => {
                       fontFamily: 'sans-serif',
                       padding: '5px 5px',
                       boxSizing: 'border-box',
-                      border: '2px solid #ccc',
+                      border: '1',
                       borderRadius: '4px',
                       backgroundColor: '#f8f8f8',
                       fontSize: '16px',
@@ -315,6 +331,7 @@ const Home = () => {
                   <CustomButton
                     variant="contained"
                     type="submit"
+                    {...(disabledBool && { disabled: true })}
                     style={{ margin: '10px', width: '90px' }}
                   >
                     <SendIcon />
