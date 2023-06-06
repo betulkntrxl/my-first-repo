@@ -329,6 +329,7 @@ const Home = () => {
                 </Stack>
                 <Stack>
                   <CustomButton
+                    title="send"
                     variant="contained"
                     type="submit"
                     {...(disabledBool && { disabled: true })}
