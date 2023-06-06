@@ -2,8 +2,6 @@ import React, { useState, useRef } from 'react';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
-import { Card, CardActionArea } from '@mui/material';
-import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -11,6 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from './Menu';
+import Messages from './Messages';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
@@ -112,15 +111,6 @@ const Home = () => {
 
   const bottomRef: any = useRef();
 
-  function scrollToBottom() {
-    setTimeout(() => {
-      if (bottomRef.current) {
-        bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
-      }
-    }, 1000);
-    return null;
-  }
-
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     sendMessage();
@@ -147,70 +137,12 @@ const Home = () => {
       />
 
       <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-        <Card
-          variant="elevation"
-          sx={{ Width: '100%' }}
-          style={{ maxHeight: '60vh', overflow: 'auto', overflowY: 'scroll' }}
-          ref={bottomRef}
-        >
-          <CardActionArea>
-            <CardContent>
-              {messagesDisplay.map((value, index) => {
-                if (value.role === 'user' && index !== 0) {
-                  return (
-                    <div key={value.id + 1}>
-                      <br key={value.id + 2} />
-                      <br key={value.id + 3} />
-                      <Paper
-                        key={value.id + 4}
-                        elevation={3}
-                        style={{
-                          padding: '10px',
-                          display: value.content.length === 0 ? 'none' : 'block',
-                          justifyContent: 'flex-end',
-                          float: 'right',
-                        }}
-                      >
-                        {value.content}
-                        {/* sent */}
-                      </Paper>
-                      <br key={value.id + 5} />
-                    </div>
-                  );
-                }
-                if (value.role === 'system' && index !== 0) {
-                  return (
-                    <div key={value.id + 6}>
-                      <br key={value.id + 7} />
-                      <br key={value.id + 8} />
-                      <Paper
-                        key={value.id + 9}
-                        elevation={3}
-                        style={{ padding: '10px', float: 'left', display: displayValue }}
-                      >
-                        {/* data.response */}
-                        {value.content}
-                      </Paper>
-                      <br key={value.id + 10} />
-                      <br key={value.id + 11} />
-                    </div>
-                  );
-                }
-                return (
-                  <div key={value.id + 12}>
-                    <br key={value.id + 13} />
-                    <br key={value.id + 14} />
-                  </div>
-                );
-              })}
-              {scrollToBottom()}
-              <br />
-              <br />
-              {visible ? <img src="/typing.gif" alt="typing" width="50px" /> : null}
-              <br />
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        <Messages
+          bottomRef={bottomRef}
+          messagesDisplay={messagesDisplay}
+          displayValue={displayValue}
+          visible={visible}
+        />
         <br />
         <br />
         <Paper
