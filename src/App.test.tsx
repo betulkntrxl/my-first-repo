@@ -51,7 +51,7 @@ describe('testing the App', () => {
     await user.keyboard('hello');
     const sendElement = screen.getByTitle('send');
     await user.click(sendElement);
-    const tokenCount = screen.getByText(/Token Count:/);
-    expect(tokenCount).toBeTruthy();
+    const helloText = screen.getByText(/hello/);
+    expect(helloText).toBeTruthy();
   });
 });
