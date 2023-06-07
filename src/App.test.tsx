@@ -12,6 +12,13 @@ describe('testing the App', () => {
     const menu = screen.getByLabelText('menu');
     expect(menu).toBeTruthy();
   });
+  it('opens a menu', async () => {
+    render(<App />);
+    const user = userEvent.setup();
+    const menuElement = screen.getByLabelText('menu');
+    await user.click(menuElement);
+    expect(menuElement).toBeTruthy();
+  });
 
   it('renders a Temperature slider', () => {
     render(<App />);
