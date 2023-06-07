@@ -71,6 +71,7 @@ const Home = () => {
     const responseData = await response.json();
     setVisible(false);
     setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
+    setTokenCount(responseData.usage.total_tokens);
     // add response to conversation
     setMessages([
       { role: 'system', content: systemMessageValue },
@@ -83,9 +84,6 @@ const Home = () => {
       { role: 'user', content: data.chatsession, id: data.chatsession },
       { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
     ]);
-    setTokenCount(
-      tokenCount + data.chatsession.length / 4 + responseData.choices[0].message.content.length / 4
-    );
     setDisplayValue('flex');
   }
 
