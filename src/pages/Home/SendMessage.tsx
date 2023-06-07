@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
@@ -58,6 +58,12 @@ const SendMessage = (props: {
     }
   `;
 
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // inputRef.current.focus()
+  });
+
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 10, right: 0, height: '80px' }} elevation={3}>
       <Stack direction="row">
@@ -65,6 +71,7 @@ const SendMessage = (props: {
           <Stack direction="row">
             <Stack direction="column" style={{ width: '80%' }}>
               <textarea
+                title="sendmessage"
                 placeholder="Type your message here."
                 // ref={input => input && input.focus()}
                 name="chatsession"

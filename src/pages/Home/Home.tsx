@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
