@@ -37,6 +37,10 @@ jobs:
         CLUSTER_TYPE: "AKS"
         CLUSTER_REGION: "US"
         OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        TENANT_ID: ${{ secrets.TENANT_ID }}
+        EXPRESS_SESSION_SECRET: ${{ secrets.EXPRESS_SESSION_SECRET }}
 
       run: |
         # Setting up cluster configurations, config files are in the kubectl image

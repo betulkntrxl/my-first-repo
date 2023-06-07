@@ -3,6 +3,16 @@ import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 import { logger } from '../configs/logger.js';
 
 export const setupRoutes = expressWebServer => {
+  // Check to see if user is logged in, if not redirect them to login
+  /* eslint-disable */
+  function isAuthenticated(req, res, next) {
+    if (!req.session.isAuthenticated) {
+      return res.redirect('/api/auth/login'); // redirect to sign-in route
+    }
+    next();
+  }
+  /* eslint-enable */
+
   // Intercept the prompt request and inject the api key
   expressWebServer.use('/api/prompt', async (req, res, next) => {
     logger.info(`Adding api key header to http request...`);
@@ -24,7 +34,10 @@ export const setupRoutes = expressWebServer => {
   });
 
   // Prompt api which gets proxied to the openai api
-  expressWebServer.post('/api/prompt', openAIApiProxy);
+  expressWebServer.post('/api/prompt', isAuthenticated, openAIApiProxy);
+
+  // Make sure the user is authenticated before serving static content
+  expressWebServer.use('/', isAuthenticated);
 
   // Serving the static content i.e. the React App
   expressWebServer.use(express.static('./build'));
