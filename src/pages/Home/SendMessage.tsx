@@ -66,7 +66,7 @@ const SendMessage = (props: {
             <Stack direction="column" style={{ width: '80%' }}>
               <textarea
                 placeholder="Type your message here."
-                ref={input => input && input.focus()}
+                // ref={input => input && input.focus()}
                 name="chatsession"
                 onChange={handleChatsessionChange}
                 rows={2}

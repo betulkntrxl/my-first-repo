@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Slider from '@mui/material/Slider';
+import Tooltip from '@mui/material/Tooltip';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const Menu = (props: {
   temperature: number;
@@ -18,6 +20,8 @@ const Menu = (props: {
   handleMaxTokensChange:
     | ((event: Event, value: number | number[], activeThumb: number) => void)
     | undefined;
+  handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
+  systemMessageValue: string;
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -33,12 +37,17 @@ const Menu = (props: {
     handleTopPChange,
     maxTokens,
     handleMaxTokensChange,
+    handleSystemMessageValueChange,
+    systemMessageValue,
   } = props;
 
   const drawer = (
     <div>
       <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', float: 'right' }}>
         Temperature:{' '}
+        <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
+          <InfoOutlinedIcon />
+        </Tooltip>
         <Slider
           valueLabelDisplay="auto"
           min={0}
@@ -50,6 +59,9 @@ const Menu = (props: {
           onChange={handleTemperatureChange}
         />
         Top_P:{' '}
+        <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
+          <InfoOutlinedIcon />
+        </Tooltip>
         <Slider
           valueLabelDisplay="auto"
           min={0}
@@ -61,6 +73,9 @@ const Menu = (props: {
           onChange={handleTopPChange}
         />
         Max Tokens:{' '}
+        <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
+          <InfoOutlinedIcon />
+        </Tooltip>
         <Slider
           valueLabelDisplay="auto"
           min={0}
@@ -70,6 +85,31 @@ const Menu = (props: {
           defaultValue={800}
           aria-label="Max Tokens"
           onChange={handleMaxTokensChange}
+        />
+        System message:
+        <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
+          <InfoOutlinedIcon />
+        </Tooltip>{' '}
+        <textarea
+          placeholder="Type the system message here."
+          ref={input => input && input.focus()}
+          name="systemMessage"
+          onChange={handleSystemMessageValueChange}
+          rows={5}
+          cols={50}
+          value={systemMessageValue}
+          style={{
+            margin: '7px',
+            width: '98%',
+            fontFamily: 'sans-serif',
+            padding: '5px 5px',
+            boxSizing: 'border-box',
+            border: '1',
+            borderRadius: '4px',
+            backgroundColor: '#f8f8f8',
+            fontSize: '16px',
+            resize: 'none',
+          }}
         />
       </Paper>
     </div>
