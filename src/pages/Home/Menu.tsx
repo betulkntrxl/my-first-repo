@@ -52,7 +52,7 @@ const Menu = (props: {
 
   const drawer = (
     <div>
-      <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', float: 'right' }}>
+      <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
         Temperature:{' '}
         <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
           <InfoOutlinedIcon />
@@ -95,6 +95,8 @@ const Menu = (props: {
           aria-label="Max Tokens"
           onChange={handleMaxTokensChange}
         />
+      </Paper>
+      <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
         System message:
         <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
           <InfoOutlinedIcon />
