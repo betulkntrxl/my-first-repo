@@ -24,6 +24,10 @@ const Menu = (props: {
     | undefined;
   handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
   systemMessageValue: string;
+  handlePastMessagesChange:
+    | ((event: Event, value: number | number[], activeThumb: number) => void)
+    | undefined;
+  pastMessages: number;
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -41,6 +45,8 @@ const Menu = (props: {
     handleMaxTokensChange,
     handleSystemMessageValueChange,
     systemMessageValue,
+    handlePastMessagesChange,
+    pastMessages,
   } = props;
 
   const [systemMessageTemplate, setsystemMessageTemplate] = React.useState('as an assistant');
@@ -94,6 +100,20 @@ const Menu = (props: {
           defaultValue={800}
           aria-label="Max Tokens"
           onChange={handleMaxTokensChange}
+        />
+        Past messages included:{' '}
+        <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
+          <InfoOutlinedIcon />
+        </Tooltip>
+        <Slider
+          valueLabelDisplay="auto"
+          min={0}
+          max={20}
+          step={1}
+          value={pastMessages}
+          defaultValue={10}
+          aria-label="Past messages included"
+          onChange={handlePastMessagesChange}
         />
       </Paper>
       <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>

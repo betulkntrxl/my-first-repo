@@ -9,6 +9,7 @@ const Home = () => {
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
   const [maxTokens, setMaxTokens] = useState(800);
+  const [pastMessages, setPastMessages] = useState(10);
   const [displayValue, setDisplayValue] = useState('none');
   const [tokenCount, setTokenCount] = useState(0);
 
@@ -42,13 +43,18 @@ const Home = () => {
     setMaxTokens(newValue as number);
   };
 
+  const handlePastMessagesChange = (event: Event, newValue: number | number[]): void => {
+    setPastMessages(newValue as number);
+  };
+
   async function sendMessage() {
     setDisabledBool(true);
     setData({ ...data, response: '' });
     setVisible(true);
     // remove system message to replace with System message parameter
     // check for past messages greater than 10 then remove earliest message and response
-    const newmessage = [...messages].length > 9 ? [...messages].slice(3) : [...messages].slice(1);
+    const newmessage =
+      [...messages].length > pastMessages + 1 ? [...messages].slice(3) : [...messages].slice(1);
     const response = await fetch('/api/prompt', {
       method: 'POST',
       headers: {
@@ -118,6 +124,8 @@ const Home = () => {
         handleMaxTokensChange={handleMaxTokensChange}
         handleSystemMessageValueChange={handleSystemMessageValueChange}
         systemMessageValue={systemMessageValue}
+        handlePastMessagesChange={handlePastMessagesChange}
+        pastMessages={pastMessages}
       />
       <br />
       <Messages
