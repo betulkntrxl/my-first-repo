@@ -35,7 +35,7 @@ const Menu = (props: {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawerWidth = 360;
+  const drawerWidth = 400;
   const {
     temperature,
     handleTemperatureChange,
@@ -117,6 +117,23 @@ const Menu = (props: {
         />
       </Paper>
       <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
+        <InputLabel id="systemMessageTemplate">System Template</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={systemMessageTemplate}
+          label="Age"
+          onChange={handlesystemMessageTemplateChange}
+        >
+          <MenuItem value="as an assistant">as an assistant</MenuItem>
+          <MenuItem value="as a agent understanding the sentiment">
+            as a agent understanding the sentiment
+          </MenuItem>
+          <MenuItem value="as a mentor using the Socratic method">
+            as a mentor using the Socratic method
+          </MenuItem>
+        </Select>
+        <br />
         System message:
         <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
           <InfoOutlinedIcon />
@@ -142,22 +159,6 @@ const Menu = (props: {
             resize: 'none',
           }}
         />
-        <InputLabel id="systemMessageTemplate">System Template</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={systemMessageTemplate}
-          label="Age"
-          onChange={handlesystemMessageTemplateChange}
-        >
-          <MenuItem value="as an assistant">as an assistant</MenuItem>
-          <MenuItem value="as a agent understanding the sentiment">
-            as a agent understanding the sentiment
-          </MenuItem>
-          <MenuItem value="as a mentor using the Socratic method">
-            as a mentor using the Socratic method
-          </MenuItem>
-        </Select>
       </Paper>
     </div>
   );
