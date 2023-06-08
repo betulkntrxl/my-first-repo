@@ -44,7 +44,7 @@ const Home = () => {
 
   async function sendMessage() {
     setDisabledBool(true);
-    setDisplayValue('none');
+    // setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
     // remove system message to replace with System message parameter
