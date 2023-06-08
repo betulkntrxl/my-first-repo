@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { InputLabel, MenuItem } from '@mui/material';
 
 const Menu = (props: {
   temperature: number;
@@ -29,7 +31,7 @@ const Menu = (props: {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawerWidth = 240;
+  const drawerWidth = 360;
   const {
     temperature,
     handleTemperatureChange,
@@ -40,6 +42,13 @@ const Menu = (props: {
     handleSystemMessageValueChange,
     systemMessageValue,
   } = props;
+
+  const [systemMessageTemplate, setsystemMessageTemplate] = React.useState('as an assistant');
+
+  const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
+    setsystemMessageTemplate(event.target.value as string);
+    handleSystemMessageValueChange(event);
+  };
 
   const drawer = (
     <div>
@@ -111,6 +120,22 @@ const Menu = (props: {
             resize: 'none',
           }}
         />
+        <InputLabel id="systemMessageTemplate">System Template</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={systemMessageTemplate}
+          label="Age"
+          onChange={handlesystemMessageTemplateChange}
+        >
+          <MenuItem value="as an assistant">as an assistant</MenuItem>
+          <MenuItem value="as a agent understanding the sentiment">
+            as a agent understanding the sentiment
+          </MenuItem>
+          <MenuItem value="as a mentor using the Socratic method">
+            as a mentor using the Socratic method
+          </MenuItem>
+        </Select>
       </Paper>
     </div>
   );
