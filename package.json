@@ -26,7 +26,7 @@
     "web-vitals": "^3.3.2"
   },
   "scripts": {
-    "start": "HTTPS=true SSL_CRT_FILE=./server/certs/local-dev/cert.pem SSL_KEY_FILE=./server/certs/local-dev/key.pem react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -73,7 +73,7 @@
       "text"
     ]
   },
-  "proxy": "https://localhost",
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
     "@babel/runtime": "^7.19.0",

@@ -17,8 +17,8 @@ const MSAL_CONFIG = {
   },
 };
 
-const REDIRECT_URI = process.env.REDIRECT_URI || 'https://localhost/api/auth/redirect';
-const POST_LOGOUT_REDIRECT_URI = process.env.POST_LOGOUT_REDIRECT_URI || 'https://localhost/';
+const REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:8080/api/auth/redirect';
+const POST_LOGOUT_REDIRECT_URI = process.env.POST_LOGOUT_REDIRECT_URI || 'http://localhost:8080/';
 const GRAPH_ME_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
 
 export { MSAL_CONFIG, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI, GRAPH_ME_ENDPOINT };
