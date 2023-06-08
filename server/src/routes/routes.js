@@ -16,7 +16,7 @@ export const setupRoutes = expressWebServer => {
       if (!req.session.isAuthenticated) {
         logger.info(`User is not authenticated redirecting to login`);
 
-        return res.redirect('/api/auth/login'); // redirect to sign-in route
+        return res.redirect('/api/auth/login'); // redirect to login route
       }
 
       logger.info(`User is authenticated`);
