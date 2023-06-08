@@ -44,11 +44,11 @@ const Home = () => {
 
   async function sendMessage() {
     setDisabledBool(true);
-    // setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
     // remove system message to replace with System message parameter
-    const newmessage = [...messages].slice(1);
+    // check for past messages greater than 10 then remove earliest message and response
+    const newmessage = [...messages].length > 9 ? [...messages].slice(3) : [...messages].slice(1);
     const response = await fetch('/api/prompt', {
       method: 'POST',
       headers: {
