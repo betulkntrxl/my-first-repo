@@ -1,5 +1,6 @@
 import express from 'express';
 import { setupMiddleware } from './src/configs/setup-middleware.js';
+import { setupAuth } from './src/configs/setup-auth.js';
 import { setupRoutes } from './src/routes/routes.js';
 import { logger } from './src/configs/logger.js';
 
@@ -8,6 +9,9 @@ const expressWebServer = express();
 
 // Setting up middleware for security and logging
 setupMiddleware(expressWebServer);
+
+// Setup authz with Azure
+setupAuth(expressWebServer);
 
 // Setup routes for api calls and to server the static content i.e. the React App
 setupRoutes(expressWebServer);
