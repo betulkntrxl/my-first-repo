@@ -4,6 +4,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import { logger } from './logger.js';
 
 export const setupMiddleware = expressWebServer => {
   expressWebServer.use(compression());
@@ -13,8 +14,11 @@ export const setupMiddleware = expressWebServer => {
   expressWebServer.use(bodyParser.json());
 
   if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
+    logger.info(`Using cloud config, setting cookie secure true...`);
+
     expressWebServer.use(
       session({
+        name: 'mt-openai-chat',
         secret: process.env.EXPRESS_SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
@@ -24,8 +28,11 @@ export const setupMiddleware = expressWebServer => {
       })
     );
   } else {
+    logger.info(`Local deployment... setting cookie secure false...`);
+
     expressWebServer.use(
       session({
+        name: 'local-mt-openai-chat',
         secret: 'super-secret-dev-secret', // For local development this secret doesn't matter
         resave: false,
         saveUninitialized: false,
