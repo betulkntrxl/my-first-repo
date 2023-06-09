@@ -3,6 +3,11 @@ import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 import { logger } from '../configs/logger.js';
 
 export const setupRoutes = expressWebServer => {
+  // App Version
+  expressWebServer.use('/api/version', async (req, res, next) => {
+    res.send(`{"version": "${process.env.VERSION}"}`);
+  });
+
   // Check to see if user is logged in, if not redirect them to login
   /* eslint-disable */
   function isAuthenticated(req, res, next) {

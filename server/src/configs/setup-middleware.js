@@ -13,35 +13,14 @@ export const setupMiddleware = expressWebServer => {
   expressWebServer.use(morgan(':date[clf] ":method :url"'));
   expressWebServer.use(bodyParser.json());
 
-  if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
-    logger.info(`Using cloud config, setting cookie secure true...`);
-
-    expressWebServer.use(
-      session({
-        name: 'mt-openai-chat',
-        secret: process.env.EXPRESS_SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-          secure: true, // For deployment make sure the cookie is only transported over https
-        },
-      })
-    );
-  } else {
-    logger.info(`Local deployment... setting cookie secure false...`);
-
-    expressWebServer.use(
-      session({
-        name: 'local-mt-openai-chat',
-        secret: 'super-secret-dev-secret', // For local development this secret doesn't matter
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-          secure: false, // For local development allow cookie to be transported over http
-        },
-      })
-    );
-  }
+  expressWebServer.use(
+    session({
+      name: 'mt-openai-chat',
+      secret: process.env.EXPRESS_SESSION_SECRET || 'local-dev-secret',
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
 
   expressWebServer.use(express.urlencoded({ extended: false }));
 };
