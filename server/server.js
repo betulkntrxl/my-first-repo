@@ -3,7 +3,6 @@ import { setupMiddleware } from './src/configs/setup-middleware.js';
 import { setupAuth } from './src/configs/setup-auth.js';
 import { setupRoutes } from './src/routes/routes.js';
 import { logger } from './src/configs/logger.js';
-import { testRedis } from './src/configs/test.js';
 
 // Initializing web server
 const expressWebServer = express();
@@ -18,10 +17,6 @@ setupAuth(expressWebServer);
 setupRoutes(expressWebServer);
 
 const port = process.env.PORT || 8080;
-
-testRedis()
-  .then(result => console.log(result))
-  .catch(ex => console.log(ex));
 
 // Starting web server
 expressWebServer.listen(port, () => {

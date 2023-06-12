@@ -1,10 +1,13 @@
 import msal from '@azure/msal-node';
-import { MSAL_CONFIG, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from './authConfig.js';
+import { MSAL_CONFIG, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from './auth-config.js';
+import { logger } from './logger.js';
 
 const msalInstance = new msal.ConfidentialClientApplication(MSAL_CONFIG);
 const cryptoProvider = new msal.CryptoProvider();
 
 export const setupAuth = expressWebServer => {
+  logger.info('Setting up Auth...');
+
   async function redirectToAuthCodeUrl(
     req,
     res,
@@ -104,4 +107,6 @@ export const setupAuth = expressWebServer => {
       res.redirect(logoutUri);
     });
   });
+
+  logger.info('Auth Setup Complete');
 };
