@@ -48,6 +48,8 @@ describe('testing the App', () => {
   it('sends a message', async () => {
     render(<App />);
     const user = userEvent.setup();
+    const sendmessageElement = screen.getByTitle('sendmessage');
+    await user.click(sendmessageElement);
     await user.keyboard('hello');
     const sendElement = screen.getByTitle('send');
     await user.click(sendElement);

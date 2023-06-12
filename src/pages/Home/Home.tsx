@@ -9,22 +9,27 @@ const Home = () => {
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
   const [maxTokens, setMaxTokens] = useState(800);
+  const [pastMessages, setPastMessages] = useState(10);
   const [displayValue, setDisplayValue] = useState('none');
   const [tokenCount, setTokenCount] = useState(0);
+
+  const [disabledBool, setDisabledBool] = useState(true);
+  const [systemMessageValue, setSystemMessageValue] = useState(
+    'Assistant is a large language model trained by OpenAI.'
+  );
   const systemMessageDisplay = {
     role: 'system',
-    content: 'Assistant is a large language model trained by OpenAI.',
+    content: systemMessageValue,
     id: '0',
   };
   const systemMessage = {
     role: 'system',
-    content: 'Assistant is a large language model trained by OpenAI.',
+    content: systemMessageValue,
   };
   const conversation = [systemMessage];
   const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
-  const [disabledBool, setDisabledBool] = useState(true);
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
@@ -38,18 +43,29 @@ const Home = () => {
     setMaxTokens(newValue as number);
   };
 
+  const handlePastMessagesChange = (event: Event, newValue: number | number[]): void => {
+    setPastMessages(newValue as number);
+  };
+
   async function sendMessage() {
     setDisabledBool(true);
-    setDisplayValue('none');
     setData({ ...data, response: '' });
     setVisible(true);
+    // remove system message to replace with System message parameter
+    // check for past messages greater than 10 then remove earliest message and response
+    const newmessage =
+      [...messages].length > pastMessages + 1 ? [...messages].slice(3) : [...messages].slice(1);
     const response = await fetch('/api/prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        messages: [...messages, { role: 'user', content: data.chatsession }],
+        messages: [
+          { role: 'system', content: systemMessageValue },
+          ...newmessage,
+          { role: 'user', content: data.chatsession },
+        ],
         temperature,
         top_p: topP,
         frequency_penalty: 0,
@@ -61,9 +77,11 @@ const Home = () => {
     const responseData = await response.json();
     setVisible(false);
     setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
+    setTokenCount(responseData.usage.total_tokens);
     // add response to conversation
     setMessages([
-      ...messages,
+      { role: 'system', content: systemMessageValue },
+      ...newmessage,
       { role: 'user', content: data.chatsession },
       { role: 'system', content: responseData.choices[0].message.content },
     ]);
@@ -72,9 +90,6 @@ const Home = () => {
       { role: 'user', content: data.chatsession, id: data.chatsession },
       { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
     ]);
-    setTokenCount(
-      tokenCount + data.chatsession.length / 4 + responseData.choices[0].message.content.length / 4
-    );
     setDisplayValue('flex');
   }
 
@@ -94,6 +109,10 @@ const Home = () => {
     }
   };
 
+  const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
+    setSystemMessageValue(event.target.value);
+  };
+
   return (
     <>
       <Menu
@@ -103,17 +122,19 @@ const Home = () => {
         handleTopPChange={handleTopPChange}
         maxTokens={maxTokens}
         handleMaxTokensChange={handleMaxTokensChange}
+        handleSystemMessageValueChange={handleSystemMessageValueChange}
+        systemMessageValue={systemMessageValue}
+        handlePastMessagesChange={handlePastMessagesChange}
+        pastMessages={pastMessages}
       />
-
+      <br />
+      <Messages
+        bottomRef={bottomRef}
+        messagesDisplay={messagesDisplay}
+        displayValue={displayValue}
+        visible={visible}
+      />
       <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-        <Messages
-          bottomRef={bottomRef}
-          messagesDisplay={messagesDisplay}
-          displayValue={displayValue}
-          visible={visible}
-        />
-        <br />
-        <br />
         <SendMessage
           handleChatsessionChange={handleChatsessionChange}
           data={data}
