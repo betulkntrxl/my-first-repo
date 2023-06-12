@@ -11,23 +11,17 @@ export const setupRoutes = expressWebServer => {
   // Check to see if user is logged in, if not redirect them to login
   /* eslint-disable */
   function isAuthenticated(req, res, next) {
-    //By passing authentication when running locally with Create React App Dev Server
-    if (process.env.DEPLOY_ENVIRONMENT === 'local-react-server') {
-      logger.info(`By passing authentication check...`);
-      next();
-    } else {
-      logger.info(`Checking if user is authenticated...`);
+    logger.info(`Checking if user is authenticated...`);
 
-      if (!req.session.isAuthenticated) {
-        logger.info(`User is not authenticated redirecting to login`);
+    if (!req.session.isAuthenticated) {
+      logger.info(`User is not authenticated redirecting to login`);
 
-        return res.redirect('/api/auth/login'); // redirect to login route
-      }
-
-      logger.info(`User is authenticated`);
-
-      next();
+      return res.redirect('/api/auth/login'); // redirect to login route
     }
+
+    logger.info(`User is authenticated`);
+
+    next();
   }
   /* eslint-enable */
 
