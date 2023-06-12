@@ -41,6 +41,8 @@ jobs:
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         TENANT_ID: ${{ secrets.TENANT_ID }}
         EXPRESS_SESSION_SECRET: ${{ secrets.EXPRESS_SESSION_SECRET }}
+        REDIS_HOST: ${{ secrets.REDIS_HOST }}
+        REDIS_KEY: ${{ secrets.REDIS_KEY }}
 
       run: |
         # Setting up cluster configurations, config files are in the kubectl image
