@@ -91,12 +91,10 @@ const Home = () => {
         { role: 'user', content: data.chatsession, id: data.chatsession },
         { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
       ]);
+      setVisible(false);
+
+      setDisplayValue('flex');
     }
-
-    // const responseData = await response.json();
-    setVisible(false);
-
-    setDisplayValue('flex');
   }
 
   const bottomRef: any = useRef();
