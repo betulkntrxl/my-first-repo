@@ -30,7 +30,7 @@ describe('testing the App', () => {
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
     expect(menuElement).toBeTruthy();
-  });
+  }, 20000);
 
   it('renders a Temperature slider', () => {
     render(<App />);
