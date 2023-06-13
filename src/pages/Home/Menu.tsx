@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Paper from '@mui/material/Paper';
 import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
@@ -50,21 +50,11 @@ const Menu = (props: {
   } = props;
 
   const [systemMessageTemplate, setsystemMessageTemplate] = React.useState('as an assistant');
-  const [version, setVersion] = React.useState('');
+
   const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
     setsystemMessageTemplate(event.target.value as string);
     handleSystemMessageValueChange(event);
   };
-
-  useEffect(() => {
-    async function getVersion() {
-      // GET request using fetch with async/await
-      const response = await fetch('/api/version');
-      const data = await response.json();
-      setVersion(data.version);
-    }
-    getVersion();
-  });
 
   const drawer = (
     <div>
@@ -187,8 +177,8 @@ const Menu = (props: {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" component="div">
-              Chat App {version}
+            <Typography variant="h6" color="inherit" component="div" title="menutitle">
+              Chat App
             </Typography>
           </Toolbar>
         </AppBar>

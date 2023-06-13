@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
@@ -30,6 +30,17 @@ const Home = () => {
   const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
+  const [version, setVersion] = React.useState('');
+
+  useEffect(() => {
+    async function getVersion() {
+      // GET request using fetch with async/await
+      const response = await fetch('/api/version');
+      const dataver = await response.json();
+      setVersion(dataver.version);
+    }
+    getVersion();
+  });
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
@@ -127,6 +138,7 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
+      <div style={{ float: 'right' }}>{version}</div>
       <br />
       <Messages
         bottomRef={bottomRef}
