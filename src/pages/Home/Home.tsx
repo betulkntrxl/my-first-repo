@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
@@ -30,17 +30,6 @@ const Home = () => {
   const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
-  const [version, setVersion] = React.useState('');
-
-  useEffect(() => {
-    async function getVersion() {
-      // GET request using fetch with async/await
-      const response = await fetch('/api/version');
-      const dataver = await response.json();
-      setVersion(dataver.version);
-    }
-    getVersion();
-  });
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
@@ -85,22 +74,28 @@ const Home = () => {
         stop: null,
       }),
     });
-    const responseData = await response.json();
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.indexOf('application/json') !== -1) {
+      const responseData = await response.json();
+      setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
+      setTokenCount(responseData.usage.total_tokens);
+      // add response to conversation
+      setMessages([
+        { role: 'system', content: systemMessageValue },
+        ...newmessage,
+        { role: 'user', content: data.chatsession },
+        { role: 'system', content: responseData.choices[0].message.content },
+      ]);
+      setMessagesDisplay([
+        ...messagesDisplay,
+        { role: 'user', content: data.chatsession, id: data.chatsession },
+        { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
+      ]);
+    }
+
+    // const responseData = await response.json();
     setVisible(false);
-    setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
-    setTokenCount(responseData.usage.total_tokens);
-    // add response to conversation
-    setMessages([
-      { role: 'system', content: systemMessageValue },
-      ...newmessage,
-      { role: 'user', content: data.chatsession },
-      { role: 'system', content: responseData.choices[0].message.content },
-    ]);
-    setMessagesDisplay([
-      ...messagesDisplay,
-      { role: 'user', content: data.chatsession, id: data.chatsession },
-      { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
-    ]);
+
     setDisplayValue('flex');
   }
 
@@ -138,7 +133,7 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
-      <div style={{ float: 'right' }}>{version}</div>
+
       <br />
       <Messages
         bottomRef={bottomRef}

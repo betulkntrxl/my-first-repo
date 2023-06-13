@@ -30,9 +30,22 @@ const Menu = (props: {
   pastMessages: number;
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [version, setVersion] = React.useState('');
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+
+    async function getVersion() {
+      // GET request using fetch with async/await
+      const response = await fetch('/api/version');
+      if (typeof response !== 'undefined') {
+        const dataver = await response.json();
+        setVersion(dataver.version);
+      }
+    }
+    if (version === '') {
+      getVersion();
+    }
   };
 
   const drawerWidth = 400;
@@ -160,6 +173,7 @@ const Menu = (props: {
           }}
         />
       </Paper>
+      <div style={{ float: 'left', margin: 10 }}>version: {version}</div>
     </div>
   );
 
