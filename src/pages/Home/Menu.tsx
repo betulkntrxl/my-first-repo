@@ -11,7 +11,7 @@ import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { InputLabel, MenuItem } from '@mui/material';
+import { Button, InputLabel, MenuItem } from '@mui/material';
 
 const Menu = (props: {
   temperature: number;
@@ -34,19 +34,16 @@ const Menu = (props: {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-
-    async function getVersion() {
-      // GET request using fetch with async/await
-      const response = await fetch('/api/version');
-      if (typeof response !== 'undefined') {
-        const dataver = await response.json();
-        setVersion(dataver.version);
-      }
-    }
-    if (version === '') {
-      getVersion();
-    }
   };
+
+  async function getVersion() {
+    // GET request using fetch with async/await
+    const response = await fetch('/api/version');
+    if (typeof response !== 'undefined') {
+      const dataver = await response.json();
+      setVersion(dataver.version);
+    }
+  }
 
   const drawerWidth = 400;
   const {
@@ -173,6 +170,14 @@ const Menu = (props: {
           }}
         />
       </Paper>
+      <Button
+        style={{ float: 'left' }}
+        onClick={() => {
+          getVersion();
+        }}
+      >
+        show version
+      </Button>
       <div style={{ float: 'left', margin: 10 }}>version: {version}</div>
     </div>
   );
