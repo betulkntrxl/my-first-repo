@@ -24,7 +24,7 @@ export const setupMiddleware = expressWebServer => {
     saveUninitialized: false,
     rolling: true,
     cookie: {
-      maxAge: process.env.SESSION_EXPIRY_IN_MILLISECONDS || 1800000, // 30 mins
+      maxAge: Number(process.env.SESSION_EXPIRY_IN_MILLISECONDS) || 1800000, // 30 mins
     },
   };
 
