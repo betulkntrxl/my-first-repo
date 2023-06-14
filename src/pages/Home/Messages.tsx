@@ -46,6 +46,7 @@ const Messages = (props: {
                       display: value.content.length === 0 ? 'none' : 'block',
                       justifyContent: 'flex-end',
                       float: 'right',
+                      whiteSpace: 'pre-wrap',
                     }}
                   >
                     {value.content}
@@ -63,7 +64,12 @@ const Messages = (props: {
                   <Paper
                     key={value.id + 9}
                     elevation={3}
-                    style={{ padding: '10px', float: 'left', display: displayValue }}
+                    style={{
+                      padding: '10px',
+                      float: 'left',
+                      display: displayValue,
+                      whiteSpace: 'pre-wrap',
+                    }}
                   >
                     {/* data.response */}
                     {value.content}

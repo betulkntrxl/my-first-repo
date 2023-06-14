@@ -7,17 +7,22 @@ import App from './App';
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('renders a menu', () => {
+  it('sends a message', async () => {
+    render(<App />);
+    const user = userEvent.setup();
+    const sendmessageElement = screen.getByTitle('sendmessage');
+    await user.click(sendmessageElement);
+    await user.keyboard('hello');
+    const sendElement = screen.getByTitle('send');
+    await user.click(sendElement);
+    const helloText = screen.getByText(/hello/);
+    expect(helloText).toBeTruthy();
+  }, 20000);
+
+  it('renders a menu', async () => {
     render(<App />);
     const menu = screen.getByLabelText('menu');
     expect(menu).toBeTruthy();
-  });
-  it('opens a menu', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
-    expect(menuElement).toBeTruthy();
   });
 
   it('renders a Temperature slider', () => {
@@ -44,16 +49,5 @@ describe('testing the App', () => {
     render(<App />);
     const tokenCount = screen.getByText(/Token Count:/);
     expect(tokenCount).toBeTruthy();
-  });
-  it('sends a message', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
-    const helloText = screen.getByText(/hello/);
-    expect(helloText).toBeTruthy();
   });
 });

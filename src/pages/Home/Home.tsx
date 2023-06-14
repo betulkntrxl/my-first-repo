@@ -74,23 +74,27 @@ const Home = () => {
         stop: null,
       }),
     });
-    const responseData = await response.json();
-    setVisible(false);
-    setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
-    setTokenCount(responseData.usage.total_tokens);
-    // add response to conversation
-    setMessages([
-      { role: 'system', content: systemMessageValue },
-      ...newmessage,
-      { role: 'user', content: data.chatsession },
-      { role: 'system', content: responseData.choices[0].message.content },
-    ]);
-    setMessagesDisplay([
-      ...messagesDisplay,
-      { role: 'user', content: data.chatsession, id: data.chatsession },
-      { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
-    ]);
-    setDisplayValue('flex');
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.indexOf('application/json') !== -1) {
+      const responseData = await response.json();
+      setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
+      setTokenCount(responseData.usage.total_tokens);
+      // add response to conversation
+      setMessages([
+        { role: 'system', content: systemMessageValue },
+        ...newmessage,
+        { role: 'user', content: data.chatsession },
+        { role: 'system', content: responseData.choices[0].message.content },
+      ]);
+      setMessagesDisplay([
+        ...messagesDisplay,
+        { role: 'user', content: data.chatsession, id: data.chatsession },
+        { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
+      ]);
+      setVisible(false);
+
+      setDisplayValue('flex');
+    }
   }
 
   const bottomRef: any = useRef();
@@ -127,6 +131,7 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
+
       <br />
       <Messages
         bottomRef={bottomRef}
