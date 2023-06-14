@@ -77,6 +77,9 @@ export const setupAuth = expressWebServer => {
       const state = JSON.parse(cryptoProvider.base64Decode(req.body.state));
 
       // check if csrfToken matches
+      logger.info(`state.csrfToken ${state.csrfToken}`);
+      logger.info(`req.session.csrfToken ${req.session.csrfToken}`);
+
       if (state.csrfToken === req.session.csrfToken) {
         req.session.authCodeRequest.code = req.body.code; // authZ code
         req.session.authCodeRequest.codeVerifier = req.session.pkceCodes.verifier; // PKCE Code Verifier
