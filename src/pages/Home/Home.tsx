@@ -133,17 +133,19 @@ const Home = () => {
       />
       <div
         style={{
-          backgroundImage: 'url("/chatapp.png")',
+          background: 'url("/chatapp.png")',
+          backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center',
+          backgroundPosition: 'center 30px',
           width: '100%',
-          paddingTop: 650,
           float: 'right',
+          margin: 10,
+          height: 500,
         }}
       >
         <br />
 
-        <div style={{ float: 'right', marginTop: -650, width: '100%' }}>
+        <div style={{ float: 'right', width: '100%' }}>
           <Messages
             bottomRef={bottomRef}
             messagesDisplay={messagesDisplay}
