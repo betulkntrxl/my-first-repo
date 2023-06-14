@@ -18,5 +18,5 @@ export const setupRedisClient = () => {
   logger.info('Redis client configured and connected');
 
   // Create and return Redis Session Store
-  return new RedisStore({ client, logErrors: true });
+  return new RedisStore({ client });
 };
