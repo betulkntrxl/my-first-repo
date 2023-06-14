@@ -31,6 +31,11 @@ const Home = () => {
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
 
+  const myStyle = {
+    backgroundImage: 'url("/chatapp.png")',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+  };
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
   };
@@ -118,7 +123,13 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div
+      style={{
+        backgroundImage: 'url("/chatapp.png")',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+      }}
+    >
       <Menu
         temperature={temperature}
         handleTemperatureChange={handleTemperatureChange}
@@ -131,29 +142,43 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
+      <div
+        style={{
+          backgroundImage: 'url("/chatapp.png")',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          width: '100%',
+          paddingTop: 650,
+          float: 'right',
+        }}
+      >
+        <br />
+        {/* <img alt='chat app' src='\chatapp.png'/> */}
+        <div style={{ float: 'right', marginTop: -650, width: '100%' }}>
+          <Messages
+            bottomRef={bottomRef}
+            messagesDisplay={messagesDisplay}
+            displayValue={displayValue}
+            visible={visible}
+          />
+        </div>
 
-      <br />
-      <Messages
-        bottomRef={bottomRef}
-        messagesDisplay={messagesDisplay}
-        displayValue={displayValue}
-        visible={visible}
-      />
-      <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-        <SendMessage
-          handleChatsessionChange={handleChatsessionChange}
-          data={data}
-          tokenCount={tokenCount}
-          disabledBool={disabledBool}
-          temperature={temperature}
-          handleTemperatureChange={handleTemperatureChange}
-          topP={topP}
-          handleTopPChange={handleTopPChange}
-          maxTokens={maxTokens}
-          handleMaxTokensChange={handleMaxTokensChange}
-        />
-      </form>
-    </>
+        <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
+          <SendMessage
+            handleChatsessionChange={handleChatsessionChange}
+            data={data}
+            tokenCount={tokenCount}
+            disabledBool={disabledBool}
+            temperature={temperature}
+            handleTemperatureChange={handleTemperatureChange}
+            topP={topP}
+            handleTopPChange={handleTopPChange}
+            maxTokens={maxTokens}
+            handleMaxTokensChange={handleMaxTokensChange}
+          />
+        </form>
+      </div>
+    </div>
   );
 };
 

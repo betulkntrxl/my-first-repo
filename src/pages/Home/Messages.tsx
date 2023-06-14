@@ -27,7 +27,12 @@ const Messages = (props: {
     <Card
       variant="elevation"
       sx={{ Width: '100%' }}
-      style={{ maxHeight: '60vh', overflow: 'auto', overflowY: 'scroll' }}
+      style={{
+        maxHeight: '60vh',
+        overflow: 'auto',
+        overflowY: 'scroll',
+        backgroundColor: 'transparent',
+      }}
       ref={bottomRef}
     >
       <CardActionArea>
