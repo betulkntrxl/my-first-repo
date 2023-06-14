@@ -17,19 +17,32 @@ export const setupMiddleware = expressWebServer => {
   expressWebServer.use(bodyParser.json());
 
   // Note: HTTPOnly and Secure Flags are set in the Kubernetes Manifest files, annotations on the ingress
-  expressWebServer.use(
-    session({
-      name: 'mt-openai-chat',
-      secret: process.env.EXPRESS_SESSION_SECRET || 'local-dev-secret',
-      resave: false,
-      saveUninitialized: false,
-    })
-  );
+
+  if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
+    expressWebServer.use(
+      session({
+        name: 'mt-openai-chat',
+        secret: process.env.EXPRESS_SESSION_SECRET || 'local-dev-secret',
+        resave: false,
+        saveUninitialized: false,
+        store: setupRedisClient(),
+      })
+    );
+  } else {
+    expressWebServer.use(
+      session({
+        name: 'mt-openai-chat',
+        secret: process.env.EXPRESS_SESSION_SECRET || 'local-dev-secret',
+        resave: false,
+        saveUninitialized: false,
+      })
+    );
+  }
 
   // If deployed to the Cloud then setup Redis as a distributed session store
-  if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
-    session.store = setupRedisClient();
-  }
+  // if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
+  //   session.store = setupRedisClient();
+  // }
 
   expressWebServer.use(express.urlencoded({ extended: false }));
 
