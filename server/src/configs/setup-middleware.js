@@ -23,6 +23,8 @@ export const setupMiddleware = expressWebServer => {
       secret: process.env.EXPRESS_SESSION_SECRET || 'local-dev-secret',
       resave: false,
       saveUninitialized: false,
+      rolling: true,
+      maxAge: process.env.SESSION_EXPIRY_IN_MILLISECONDS || 1800000, // 30 mins
     })
   );
 
