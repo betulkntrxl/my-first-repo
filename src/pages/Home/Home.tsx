@@ -31,11 +31,6 @@ const Home = () => {
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
 
-  const myStyle = {
-    backgroundImage: 'url("/chatapp.png")',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-  };
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
   };
@@ -123,13 +118,7 @@ const Home = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: 'url("/chatapp.png")',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-      }}
-    >
+    <div>
       <Menu
         temperature={temperature}
         handleTemperatureChange={handleTemperatureChange}
@@ -153,7 +142,7 @@ const Home = () => {
         }}
       >
         <br />
-        {/* <img alt='chat app' src='\chatapp.png'/> */}
+
         <div style={{ float: 'right', marginTop: -650, width: '100%' }}>
           <Messages
             bottomRef={bottomRef}
