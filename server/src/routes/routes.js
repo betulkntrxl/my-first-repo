@@ -8,22 +8,41 @@ export const setupRoutes = expressWebServer => {
     res.send(`{"version": "${process.env.VERSION}"}`);
   });
 
-  // Check to see if user is logged in, if not redirect them to login
+  // Check to see if user is logged in, if not redirect them to login route
   /* eslint-disable */
-  function isAuthenticated(req, res, next) {
+  function ensureAuthenticatedRedirectIfNot(req, res, next) {
     logger.info(`Checking if user is authenticated...`);
 
-    if (!req.session.isAuthenticated) {
-      logger.info(`User is not authenticated redirecting to login`);
-
+    if (!isAuthenticated(req)) {
+      logger.info(`Redirecting to login`);
       return res.redirect('/api/auth/login'); // redirect to login route
     }
-
-    logger.info(`User is authenticated`);
 
     next();
   }
   /* eslint-enable */
+
+  // Check to see if user is logged in, if not return HTTP Status 401
+  /* eslint-disable */
+  function ensureAuthenticated401IfNot(req, res, next) {
+    logger.info(`Checking if user is authenticated for API...`);
+
+    if (!isAuthenticated(req)) {
+      logger.info(`Returning HTTP Status 401`);
+      return res.status(401).send('User is not logged in, authenticate path is /api/auth/login');
+    }
+
+    next();
+  }
+  /* eslint-enable */
+
+  function isAuthenticated(req) {
+    logger.info(
+      req.session.isAuthenticated ? 'User is authenticated' : 'User is not authenticated'
+    );
+
+    return req.session.isAuthenticated;
+  }
 
   // Intercept the prompt request and inject the api key
   expressWebServer.use('/api/prompt', async (req, res, next) => {
@@ -46,10 +65,10 @@ export const setupRoutes = expressWebServer => {
   });
 
   // Prompt api which gets proxied to the openai api
-  expressWebServer.post('/api/prompt', isAuthenticated, openAIApiProxy);
+  expressWebServer.post('/api/prompt', ensureAuthenticated401IfNot, openAIApiProxy);
 
   // Make sure the user is authenticated before serving static content
-  expressWebServer.use('/', isAuthenticated);
+  expressWebServer.use('/', ensureAuthenticatedRedirectIfNot);
 
   // Serving the static content i.e. the React App
   expressWebServer.use(express.static('./build'));
