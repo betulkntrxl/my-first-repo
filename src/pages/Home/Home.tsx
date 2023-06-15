@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
+import ToolBar from './ToolBar';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
@@ -94,6 +95,9 @@ const Home = () => {
       setVisible(false);
 
       setDisplayValue('flex');
+    } else {
+      // refresh the page
+      window.history.go(0);
     }
   }
 
@@ -118,7 +122,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div>
       <Menu
         temperature={temperature}
         handleTemperatureChange={handleTemperatureChange}
@@ -131,29 +135,50 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
-
-      <br />
-      <Messages
-        bottomRef={bottomRef}
-        messagesDisplay={messagesDisplay}
-        displayValue={displayValue}
-        visible={visible}
+      <ToolBar
+        temperature={temperature}
+        handleTemperatureChange={handleTemperatureChange}
+        topP={topP}
+        handleTopPChange={handleTopPChange}
+        maxTokens={maxTokens}
+        handleMaxTokensChange={handleMaxTokensChange}
       />
-      <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-        <SendMessage
-          handleChatsessionChange={handleChatsessionChange}
-          data={data}
-          tokenCount={tokenCount}
-          disabledBool={disabledBool}
-          temperature={temperature}
-          handleTemperatureChange={handleTemperatureChange}
-          topP={topP}
-          handleTopPChange={handleTopPChange}
-          maxTokens={maxTokens}
-          handleMaxTokensChange={handleMaxTokensChange}
-        />
-      </form>
-    </>
+      <div
+        style={{
+          background: 'url("/chatapp.png")',
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center 90px',
+          width: '100%',
+          float: 'right',
+          margin: 10,
+          height: 500,
+        }}
+      >
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <div style={{ float: 'right', width: '100%' }}>
+          <Messages
+            bottomRef={bottomRef}
+            messagesDisplay={messagesDisplay}
+            displayValue={displayValue}
+            visible={visible}
+          />
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
+          <SendMessage
+            handleChatsessionChange={handleChatsessionChange}
+            data={data}
+            tokenCount={tokenCount}
+            disabledBool={disabledBool}
+          />
+        </form>
+      </div>
+    </div>
   );
 };
 
