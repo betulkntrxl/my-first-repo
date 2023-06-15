@@ -71,6 +71,5 @@ export const setupRoutes = expressWebServer => {
   expressWebServer.use('/', ensureAuthenticatedRedirectIfNot);
 
   // Serving the static content i.e. the React App
-  // Caching static content for a year as filename/content are uniquely generated at build time
-  expressWebServer.use(express.static('./build', { maxAge: 31536000 }));
+  expressWebServer.use(express.static('./build'));
 };
