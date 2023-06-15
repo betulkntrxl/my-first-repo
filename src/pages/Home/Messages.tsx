@@ -29,6 +29,7 @@ const Messages = (props: {
       sx={{ Width: '100%' }}
       style={{
         maxHeight: '60vh',
+        height: '60vh',
         overflow: 'auto',
         overflowY: 'scroll',
         backgroundColor: 'transparent',

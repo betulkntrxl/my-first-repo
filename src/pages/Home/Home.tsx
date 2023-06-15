@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
+import ToolBar from './ToolBar';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
@@ -94,6 +95,9 @@ const Home = () => {
       setVisible(false);
 
       setDisplayValue('flex');
+    } else {
+      // refresh the page
+      window.history.go(0);
     }
   }
 
@@ -131,18 +135,29 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
+      <ToolBar
+        temperature={temperature}
+        handleTemperatureChange={handleTemperatureChange}
+        topP={topP}
+        handleTopPChange={handleTopPChange}
+        maxTokens={maxTokens}
+        handleMaxTokensChange={handleMaxTokensChange}
+      />
       <div
         style={{
           background: 'url("/chatapp.png")',
           backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 30px',
+          backgroundPosition: 'center 90px',
           width: '100%',
           float: 'right',
           margin: 10,
           height: 500,
         }}
       >
+        <br />
+        <br />
+        <br />
         <br />
 
         <div style={{ float: 'right', width: '100%' }}>
@@ -160,12 +175,6 @@ const Home = () => {
             data={data}
             tokenCount={tokenCount}
             disabledBool={disabledBool}
-            temperature={temperature}
-            handleTemperatureChange={handleTemperatureChange}
-            topP={topP}
-            handleTopPChange={handleTopPChange}
-            maxTokens={maxTokens}
-            handleMaxTokensChange={handleMaxTokensChange}
           />
         </form>
       </div>
