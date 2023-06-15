@@ -42,7 +42,6 @@ const SendMessage = (props: {
         <Paper style={{ width: '100%' }}>
           <Stack direction="row">
             <Stack direction="column" style={{ width: '100%' }}>
-              <input type="submit" style={{ display: 'none' }} />
               <input
                 title="sendmessage"
                 placeholder="Type your message here."
@@ -62,6 +61,7 @@ const SendMessage = (props: {
                   resize: 'none',
                 }}
               />
+              <input type="submit" style={{ display: 'none' }} />
               <Grid item xs={4} style={{ marginLeft: '10px', marginTop: -10 }}>
                 Token Count: {tokenCount}
               </Grid>
