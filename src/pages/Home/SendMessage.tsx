@@ -52,7 +52,7 @@ const SendMessage = (props: {
                   margin: '7px',
                   width: '100%',
                   fontFamily: 'sans-serif',
-                  padding: '5px 5px',
+                  padding: 10,
                   boxSizing: 'border-box',
                   border: '1',
                   borderRadius: '4px',

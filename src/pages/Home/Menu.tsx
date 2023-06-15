@@ -197,7 +197,7 @@ const Menu = (props: {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" component="div" title="menutitle">
-              Chat App
+              McKesson Chat App
             </Typography>
           </Toolbar>
         </AppBar>

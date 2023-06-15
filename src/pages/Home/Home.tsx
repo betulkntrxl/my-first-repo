@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
-import ToolBar from './ToolBar';
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
@@ -135,14 +134,14 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
-      <ToolBar
+      {/* <ToolBar
         temperature={temperature}
         handleTemperatureChange={handleTemperatureChange}
         topP={topP}
         handleTopPChange={handleTopPChange}
         maxTokens={maxTokens}
         handleMaxTokensChange={handleMaxTokensChange}
-      />
+      /> */}
       <div
         style={{
           background: 'url("/chatapp.png")',
@@ -155,11 +154,6 @@ const Home = () => {
           height: 500,
         }}
       >
-        <br />
-        <br />
-        <br />
-        <br />
-
         <div style={{ float: 'right', width: '100%' }}>
           <Messages
             bottomRef={bottomRef}
