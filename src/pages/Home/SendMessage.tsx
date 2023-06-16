@@ -20,16 +20,16 @@ const SendMessage = (props: {
   };
 
   const CustomButton = styled(Button)`
-    font-family: IBM Plex Sans, sans-serif;
-    font-weight: bold;
+    font-family: Arial, sans-serif;
     font-size: 0.875rem;
     background-color: ${blue[500]};
-    padding: 12px 24px;
-    border-radius: 12px;
+    padding: 4px 10px;
+    border-radius: 8px;
     color: white;
     transition: all 150ms ease;
     cursor: pointer;
     border: none;
+    margin-right: 10px;
 
     &:hover {
       background-color: ${blue[600]};
@@ -72,9 +72,12 @@ const SendMessage = (props: {
                 variant="contained"
                 type="submit"
                 {...(disabledBool && { disabled: true })}
-                style={{ margin: '7px', width: '90px' }}
+                style={{ marginLeft: '25px', width: '150px', marginTop: 7 }}
               >
-                <SendIcon />
+                Send
+                <SendIcon
+                  style={{ transform: 'rotate(-40deg)', marginLeft: 10, marginBottom: 10 }}
+                />
               </CustomButton>
             </Stack>
           </Stack>
