@@ -42,19 +42,17 @@ const SendMessage = (props: {
         <Paper style={{ width: '100%' }}>
           <Stack direction="row">
             <Stack direction="column" style={{ width: '100%' }}>
-              <textarea
+              <input
                 title="sendmessage"
                 placeholder="Type your message here."
                 name="chatsession"
                 onChange={handleChatsessionChange}
-                rows={2}
-                cols={50}
                 value={data.chatsession}
                 style={{
                   margin: '7px',
                   width: '100%',
                   fontFamily: 'sans-serif',
-                  padding: '5px 5px',
+                  padding: 10,
                   boxSizing: 'border-box',
                   border: '1',
                   borderRadius: '4px',
@@ -63,6 +61,7 @@ const SendMessage = (props: {
                   resize: 'none',
                 }}
               />
+              <input type="submit" style={{ display: 'none' }} />
               <Grid item xs={4} style={{ marginLeft: '10px', marginTop: -10 }}>
                 Token Count: {tokenCount}
               </Grid>
