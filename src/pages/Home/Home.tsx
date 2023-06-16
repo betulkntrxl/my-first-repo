@@ -144,7 +144,7 @@ const Home = () => {
       /> */}
       <div
         style={{
-          background: 'url("/chatapp.png")',
+          //         background: 'url("/chatapp.png")',
           backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center 90px',
@@ -154,6 +154,38 @@ const Home = () => {
           height: 500,
         }}
       >
+        <div
+          style={{
+            position: 'absolute',
+            // color:'#B3CEDD',
+            color: 'steelblue',
+            opacity: 0.6,
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: -1,
+            overflow: 'hidden',
+            fontFamily: 'arial',
+          }}
+        >
+          <div style={{ fontSize: 20, textAlign: 'center', marginTop: 150 }}>Welcome to</div>
+          <div style={{ fontSize: 56, textAlign: 'center', margin: 30 }}>McKesson Chat App</div>
+          <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
+            Enter an instruction or select a preset, and watch the API respond with a completion
+            that attempts to match the context or pattern you provided.
+            <br />
+            <br />
+            Use good judgment when sharing outputs, and attribute them to your name or company.
+            <br />
+            <br />
+            Requests submitted to our API will not be used to train or improve future models.
+            <br />
+            <br />
+            Our default models&apos; training data cuts off in 2021, so they may not have knowledge
+            of current events.
+          </div>
+        </div>
         <div style={{ float: 'right', width: '100%' }}>
           <Messages
             bottomRef={bottomRef}
