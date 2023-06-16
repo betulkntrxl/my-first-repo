@@ -10,13 +10,15 @@ import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, InputLabel, MenuItem, Stack, Typography } from '@mui/material';
+import { Button, Divider, InputLabel, MenuItem, Stack, Typography } from '@mui/material';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
+import LogoutIcon from '@mui/icons-material/Logout';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 const Menu = (props: {
   temperature: number;
@@ -73,43 +75,59 @@ const Menu = (props: {
 
   const drawer = (
     <div>
-      <Stack direction="row">
-        <div
-          style={{
-            width: '90%',
-            textAlign: 'left',
-            color: 'cornflowerblue',
-            fontSize: '18px',
+      <Stack direction="column">
+        <Stack direction="row">
+          <div
+            style={{
+              width: '90%',
+              textAlign: 'left',
+              color: '#007BC7',
+              fontSize: '18px',
+              fontWeight: 'bolder',
+              fontFamily: 'Arial',
+              margin: 20,
+              marginTop: 30,
+              marginBottom: 10,
+            }}
+          >
+            Menu
+          </div>
+          <IconButton
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            onClick={handleDrawerToggle}
+            style={{ float: 'right' }}
+          >
+            <CloseIcon style={{ color: '#007BC7', fontWeight: 'bold' }} />
+          </IconButton>
+        </Stack>
+        <HorizontalRuleIcon
+          preserveAspectRatio="none"
+          sx={{
+            color: '#007BC7',
+            marginLeft: '-70px',
+            width: '530px',
+            maxWidth: 600,
             fontWeight: 'bolder',
-            margin: 20,
           }}
-        >
-          Menu
-        </div>
-        <IconButton
-          color="inherit"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-          onClick={handleDrawerToggle}
-          style={{ float: 'right' }}
-        >
-          <CloseIcon />
-        </IconButton>
+        />
       </Stack>
-      <hr />
+
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography style={{ color: 'cornflowerblue', fontWeight: 'bold' }}>
+          <Typography style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
             Assistant Setup
           </Typography>
         </AccordionSummary>
+        <Divider variant="middle" />
         <AccordionDetails>
           <Typography>
-            <InputLabel id="systemMessageTemplate">System Template</InputLabel>
+            <InputLabel id="systemMessageTemplate">System Message Template</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -125,6 +143,7 @@ const Menu = (props: {
                 as a mentor using the Socratic method
               </MenuItem>
             </Select>
+            <br />
             <br />
             System message:
             <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
@@ -160,10 +179,11 @@ const Menu = (props: {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography style={{ color: 'cornflowerblue', fontWeight: 'bold' }}>
+          <Typography style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
             Configuration
           </Typography>
         </AccordionSummary>
+        <Divider variant="middle" />
         <AccordionDetails>
           <Typography>
             Temperature:{' '}
@@ -208,38 +228,28 @@ const Menu = (props: {
               aria-label="Max Tokens"
               onChange={handleMaxTokensChange}
             />
+            <Typography>
+              Past messages included:{' '}
+              <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
+                <InfoOutlinedIcon />
+              </Tooltip>
+              <Slider
+                valueLabelDisplay="auto"
+                min={0}
+                max={20}
+                step={1}
+                value={pastMessages}
+                defaultValue={10}
+                aria-label="Past messages included"
+                onChange={handlePastMessagesChange}
+              />
+            </Typography>
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography style={{ color: 'cornflowerblue', fontWeight: 'bold' }}>Settings</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Past messages included:{' '}
-            <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
-              <InfoOutlinedIcon />
-            </Tooltip>
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={20}
-              step={1}
-              value={pastMessages}
-              defaultValue={10}
-              aria-label="Past messages included"
-              onChange={handlePastMessagesChange}
-            />
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+
       <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
-        <div style={{ color: 'cornflowerblue', fontWeight: 'bold' }}>About</div>
+        <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
         <br />
         <Button
           style={{ float: 'left' }}
@@ -249,16 +259,21 @@ const Menu = (props: {
         >
           show version
         </Button>
-        <div style={{ float: 'left', margin: 10 }}>version: {version}</div>
+        <div style={{ float: 'left', margin: 10 }}>Version: {version}</div>
       </Paper>
     </div>
   );
+
+  const handleLogout = async () => {
+    // logout
+    const response = await fetch('/api/auth/logout');
+  };
 
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Toolbar variant="dense">
+          <Toolbar variant="regular" style={{ width: '100%' }}>
             <IconButton
               edge="start"
               color="inherit"
@@ -268,9 +283,23 @@ const Menu = (props: {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" component="div" title="menutitle">
+            <Typography
+              variant="h6"
+              color="inherit"
+              component="div"
+              sx={{ flexGrow: 0.9 }}
+              title="menutitle"
+            >
               McKesson Chat App
             </Typography>
+            <IconButton
+              style={{ color: 'white', fontSize: '16' }}
+              edge="end"
+              onClick={handleLogout}
+            >
+              <LogoutIcon style={{ color: 'white' }} />
+              <Typography> Logout</Typography>
+            </IconButton>
           </Toolbar>
         </AppBar>
       </Box>
