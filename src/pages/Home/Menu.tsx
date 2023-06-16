@@ -266,7 +266,7 @@ const Menu = (props: {
 
   const handleLogout = async () => {
     // logout
-    const response = await fetch('/api/auth/logout');
+    await fetch('/api/auth/logout');
   };
 
   return (
