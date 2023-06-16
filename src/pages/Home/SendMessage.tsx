@@ -37,11 +37,19 @@ const SendMessage = (props: {
   `;
 
   return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 10, right: 0, height: '80px' }} elevation={3}>
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '110px' }} elevation={3}>
       <Stack direction="row">
         <Paper style={{ width: '100%' }}>
           <Stack direction="row">
-            <Stack direction="column" style={{ width: '100%' }}>
+            <Stack direction="column" style={{ marginLeft: 20, width: '100%' }}>
+              <Grid item xs={4} style={{ marginTop: 0 }}>
+                <Button
+                  variant="contained"
+                  style={{ backgroundColor: '#005A8C', marginTop: 5, marginLeft: 7 }}
+                >
+                  Token Count: {tokenCount}
+                </Button>
+              </Grid>
               <input
                 title="sendmessage"
                 placeholder="Type your message here."
@@ -49,7 +57,10 @@ const SendMessage = (props: {
                 onChange={handleChatsessionChange}
                 value={data.chatsession}
                 style={{
-                  margin: '7px',
+                  marginTop: 0,
+                  marginLeft: 7,
+                  marginBottom: 25,
+                  // margin: '7px',
                   width: '100%',
                   fontFamily: 'sans-serif',
                   padding: 10,
@@ -62,9 +73,6 @@ const SendMessage = (props: {
                 }}
               />
               <input type="submit" style={{ display: 'none' }} />
-              <Grid item xs={4} style={{ marginLeft: '10px', marginTop: -10 }}>
-                Token Count: {tokenCount}
-              </Grid>
             </Stack>
             <Stack>
               <CustomButton
@@ -72,7 +80,7 @@ const SendMessage = (props: {
                 variant="contained"
                 type="submit"
                 {...(disabledBool && { disabled: true })}
-                style={{ marginLeft: '25px', width: '150px', marginTop: 7 }}
+                style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
               >
                 Send
                 <SendIcon

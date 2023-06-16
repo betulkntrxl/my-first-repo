@@ -273,7 +273,7 @@ const Menu = (props: {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Toolbar variant="regular" style={{ width: '100%' }}>
+          <Toolbar variant="regular" style={{ width: '95%' }}>
             <IconButton
               edge="start"
               color="inherit"
@@ -287,16 +287,12 @@ const Menu = (props: {
               variant="h6"
               color="inherit"
               component="div"
-              sx={{ flexGrow: 0.9 }}
+              sx={{ flexGrow: 1 }}
               title="menutitle"
             >
               McKesson Chat App
             </Typography>
-            <IconButton
-              style={{ color: 'white', fontSize: '16' }}
-              edge="end"
-              onClick={handleLogout}
-            >
+            <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLogout}>
               <LogoutIcon style={{ color: 'white' }} />
               <Typography> Logout</Typography>
             </IconButton>
