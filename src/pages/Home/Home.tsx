@@ -104,6 +104,7 @@ const Home = () => {
 
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
+    // display user message while waiting for response
     setMessagesDisplay([
       ...messagesDisplay,
       { role: 'user', content: data.chatsession, id: data.chatsession },
