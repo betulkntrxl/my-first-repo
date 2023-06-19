@@ -93,10 +93,18 @@ const Messages = (props: {
             </div>
           );
         })}
-        {scrollToBottom()}
+        {
+          // scroll to bottom of chat after system has responded
+          scrollToBottom()
+        }
         <br />
         <br />
-        {visible ? <img src="/typing.gif" alt="typing" width="50px" /> : null}
+        {
+          // show typing bubble while system is responding
+          visible ? (
+            <img src="/typing.gif" alt="typing" width="50px" style={{ marginTop: 20 }} />
+          ) : null
+        }
         <br />
       </CardContent>
     </Card>

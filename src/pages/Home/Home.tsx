@@ -104,6 +104,10 @@ const Home = () => {
 
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
+    setMessagesDisplay([
+      ...messagesDisplay,
+      { role: 'user', content: data.chatsession, id: data.chatsession },
+    ]);
     sendMessage();
   }
 
