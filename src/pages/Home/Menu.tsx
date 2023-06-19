@@ -281,11 +281,12 @@ const Menu = (props: {
                   defaultValue={0.7}
                   aria-label="Temperature"
                   onChange={handleTemperatureSliderChange}
-                  aria-labelledby="temperature-input-slider"
+                  aria-labelledby="temperature-input-label"
                 />
               </Grid>
               <Grid item>
                 <Input
+                  title="temperature-input"
                   value={tempValue}
                   size="small"
                   onChange={handleTemperatureInputChange}
@@ -294,7 +295,7 @@ const Menu = (props: {
                     min: 0,
                     max: 1,
                     type: 'number',
-                    'aria-labelledby': 'temperature-input-slider',
+                    'aria-labelledby': 'temperature-input-label',
                   }}
                 />
               </Grid>
@@ -314,11 +315,12 @@ const Menu = (props: {
                   defaultValue={0.95}
                   aria-label="Top P"
                   onChange={handleTopPSliderChange}
-                  aria-labelledby="topp-input-slider"
+                  aria-labelledby="topp-input-label"
                 />
               </Grid>
               <Grid item>
                 <Input
+                  title="topP-input"
                   value={topPValue}
                   size="small"
                   onChange={handleTopPInputChange}
@@ -327,7 +329,7 @@ const Menu = (props: {
                     min: 0,
                     max: 1,
                     type: 'number',
-                    'aria-labelledby': 'topp-input-slider',
+                    'aria-labelledby': 'topp-input-label',
                   }}
                 />
               </Grid>
@@ -347,11 +349,12 @@ const Menu = (props: {
                   defaultValue={800}
                   aria-label="Max Tokens"
                   onChange={handleMaxTokensSliderChange}
-                  aria-labelledby="maxtokens-input-slider"
+                  aria-labelledby="maxtokens-input-label"
                 />
               </Grid>
               <Grid item>
                 <Input
+                  title="maxTokens-input"
                   value={maxTokensValue}
                   size="small"
                   onChange={handleMaxTokensInputChange}
@@ -360,7 +363,7 @@ const Menu = (props: {
                     min: 0,
                     max: 4096,
                     type: 'number',
-                    'aria-labelledby': 'maxtokens-input-slider',
+                    'aria-labelledby': 'maxtokens-input-label',
                   }}
                 />
               </Grid>
@@ -381,11 +384,12 @@ const Menu = (props: {
                     defaultValue={10}
                     aria-label="Past messages included"
                     onChange={handlePastMessagesSliderChange}
-                    aria-labelledby="pastmessages-input-slider"
+                    aria-labelledby="pastmessages-input-label"
                   />
                 </Grid>
                 <Grid item>
                   <Input
+                    title="pastMessages-input"
                     value={pastMessagesValue}
                     size="small"
                     onChange={handlePastMessagesInputChange}
@@ -394,7 +398,7 @@ const Menu = (props: {
                       min: 0,
                       max: 20,
                       type: 'number',
-                      'aria-labelledby': 'pastmessages-input-slider',
+                      'aria-labelledby': 'pastmessages-input-label',
                     }}
                   />
                 </Grid>
