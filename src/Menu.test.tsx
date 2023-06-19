@@ -29,6 +29,8 @@ describe('testing the App', () => {
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
     const temperatureInput = screen.getByTitle('temperature-input');
+    await user.click(temperatureInput);
+    await user.keyboard('.5');
     expect(temperatureInput).toBeTruthy();
   });
   it('renders a Top P slider', async () => {
@@ -45,6 +47,8 @@ describe('testing the App', () => {
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
     const toppInput = screen.getByTitle('topP-input');
+    await user.click(toppInput);
+    await user.keyboard('.8');
     expect(toppInput).toBeTruthy();
   });
   it('renders a Max Tokens slider', async () => {
@@ -61,6 +65,8 @@ describe('testing the App', () => {
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
     const maxtokensInput = screen.getByTitle('maxTokens-input');
+    await user.click(maxtokensInput);
+    await user.keyboard('200');
     expect(maxtokensInput).toBeTruthy();
   });
   it('renders a Previous Messages slider', async () => {
@@ -77,6 +83,8 @@ describe('testing the App', () => {
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
     const previousMessagesInput = screen.getByTitle('pastMessages-input');
+    await user.click(previousMessagesInput);
+    await user.keyboard('1');
     expect(previousMessagesInput).toBeTruthy();
   });
 });
