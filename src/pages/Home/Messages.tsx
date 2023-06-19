@@ -1,6 +1,8 @@
-import { Card, CardContent } from '@mui/material';
+import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import React from 'react';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import SmartToyOutlinedIcon from '@mui/icons-material/SmartToyOutlined';
 
 const Messages = (props: {
   bottomRef: any;
@@ -44,20 +46,24 @@ const Messages = (props: {
               <div key={value.id + 1}>
                 <br key={value.id + 2} />
                 <br key={value.id + 3} />
-                <Paper
-                  key={value.id + 4}
-                  elevation={3}
-                  style={{
-                    marginTop: 20,
-                    padding: '10px',
-                    display: value.content.length === 0 ? 'none' : 'block',
-                    justifyContent: 'flex-end',
-                    float: 'right',
-                    whiteSpace: 'pre-wrap',
-                  }}
-                >
-                  {value.content}
-                </Paper>
+                <Stack direction="row" style={{ float: 'right' }}>
+                  <Paper
+                    key={value.id + 4}
+                    elevation={3}
+                    style={{
+                      marginTop: 20,
+                      backgroundColor: 'gainsboro',
+                      padding: '10px',
+                      display: value.content.length === 0 ? 'none' : 'block',
+                      justifyContent: 'flex-end',
+                      float: 'right',
+                      whiteSpace: 'pre-wrap',
+                    }}
+                  >
+                    {value.content}
+                  </Paper>
+                  <AccountCircleOutlinedIcon style={{ color: 'steelBlue', fontSize: 40 }} />
+                </Stack>
                 <br key={value.id + 5} />
               </div>
             );
@@ -68,19 +74,23 @@ const Messages = (props: {
               <div key={value.id + 6}>
                 <br key={value.id + 7} />
                 <br key={value.id + 8} />
-                <Paper
-                  key={value.id + 9}
-                  elevation={3}
-                  style={{
-                    marginTop: 20,
-                    padding: '10px',
-                    float: 'left',
-                    display: displayValue,
-                    whiteSpace: 'pre-wrap',
-                  }}
-                >
-                  {value.content}
-                </Paper>
+                <Stack direction="row" style={{ float: 'left' }}>
+                  <SmartToyOutlinedIcon style={{ color: 'steelBlue', fontSize: 40 }} />
+                  <Paper
+                    key={value.id + 9}
+                    elevation={3}
+                    style={{
+                      backgroundColor: '#E5F2F9',
+                      marginTop: 20,
+                      padding: '10px',
+                      float: 'left',
+                      display: displayValue,
+                      whiteSpace: 'pre-wrap',
+                    }}
+                  >
+                    {value.content}
+                  </Paper>
+                </Stack>
                 <br key={value.id + 10} />
                 <br key={value.id + 11} />
               </div>
