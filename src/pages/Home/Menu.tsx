@@ -264,9 +264,8 @@ const Menu = (props: {
     </div>
   );
 
-  const handleLogout = async () => {
-    // logout
-    await fetch('/api/auth/logout');
+  const handleLogout = () => {
+    window.location.href = '/api/auth/logout';
   };
 
   return (
