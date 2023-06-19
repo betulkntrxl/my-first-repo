@@ -153,43 +153,6 @@ const Menu = (props: {
     }
   };
 
-  const handleTemperatureBlur = () => {
-    if (Number(tempValue) < 0) {
-      setTempValue(0);
-      handleTemperatureChange(new Event('0'), 0, 1);
-    } else if (Number(tempValue) > 1) {
-      setTempValue(1);
-      handleTemperatureChange(new Event('1'), 1, 1);
-    }
-  };
-  const handleTopPBlur = () => {
-    if (Number(topPValue) < 0) {
-      setTopPValue(0);
-      handleTopPChange(new Event('0'), 0, 1);
-    } else if (Number(topPValue) > 1) {
-      setTopPValue(1);
-      handleTopPChange(new Event('1'), 1, 1);
-    }
-  };
-  const handleMaxTokensBlur = () => {
-    if (Number(maxTokensValue) < 0) {
-      setMaxTokensValue(0);
-      handleMaxTokensChange(new Event('0'), 0, 1);
-    } else if (Number(maxTokensValue) > 4096) {
-      setMaxTokensValue(4096);
-      handleMaxTokensChange(new Event('4096'), 4096, 1);
-    }
-  };
-  const handlePastMessagesBlur = () => {
-    if (Number(pastMessagesValue) < 0) {
-      setPastMessagesValue(0);
-      handlePastMessagesChange(new Event('0'), 0, 1);
-    } else if (Number(pastMessagesValue) > 20) {
-      setPastMessagesValue(20);
-      handlePastMessagesChange(new Event('20'), 20, 1);
-    }
-  };
-
   const drawer = (
     <div>
       <Stack direction="column">
@@ -326,7 +289,6 @@ const Menu = (props: {
                   value={tempValue}
                   size="small"
                   onChange={handleTemperatureInputChange}
-                  onBlur={handleTemperatureBlur}
                   inputProps={{
                     step: 0.1,
                     min: 0,
@@ -360,7 +322,6 @@ const Menu = (props: {
                   value={topPValue}
                   size="small"
                   onChange={handleTopPInputChange}
-                  onBlur={handleTopPBlur}
                   inputProps={{
                     step: 0.1,
                     min: 0,
@@ -394,7 +355,6 @@ const Menu = (props: {
                   value={maxTokensValue}
                   size="small"
                   onChange={handleMaxTokensInputChange}
-                  onBlur={handleMaxTokensBlur}
                   inputProps={{
                     step: 1,
                     min: 0,
@@ -429,7 +389,6 @@ const Menu = (props: {
                     value={pastMessagesValue}
                     size="small"
                     onChange={handlePastMessagesInputChange}
-                    onBlur={handlePastMessagesBlur}
                     inputProps={{
                       step: 1,
                       min: 0,
