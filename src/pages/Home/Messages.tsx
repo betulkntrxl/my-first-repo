@@ -38,6 +38,7 @@ const Messages = (props: {
     >
       <CardContent>
         {messagesDisplay.map((value, index) => {
+          // check for user or system message
           if (value.role === 'user' && index !== 0) {
             return (
               <div key={value.id + 1}>
@@ -47,6 +48,7 @@ const Messages = (props: {
                   key={value.id + 4}
                   elevation={3}
                   style={{
+                    marginTop: 20,
                     padding: '10px',
                     display: value.content.length === 0 ? 'none' : 'block',
                     justifyContent: 'flex-end',
@@ -55,12 +57,12 @@ const Messages = (props: {
                   }}
                 >
                   {value.content}
-                  {/* sent */}
                 </Paper>
                 <br key={value.id + 5} />
               </div>
             );
           }
+          // check for message from system
           if (value.role === 'system' && index !== 0) {
             return (
               <div key={value.id + 6}>
@@ -70,13 +72,13 @@ const Messages = (props: {
                   key={value.id + 9}
                   elevation={3}
                   style={{
+                    marginTop: 20,
                     padding: '10px',
                     float: 'left',
                     display: displayValue,
                     whiteSpace: 'pre-wrap',
                   }}
                 >
-                  {/* data.response */}
                   {value.content}
                 </Paper>
                 <br key={value.id + 10} />
