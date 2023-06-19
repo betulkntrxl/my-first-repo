@@ -10,7 +10,16 @@ import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, Divider, InputLabel, MenuItem, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  Divider,
+  Grid,
+  Input,
+  InputLabel,
+  MenuItem,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -26,14 +35,10 @@ const Menu = (props: {
   topP: number;
   handleTopPChange: (event: Event, value: number | number[], activeThumb: number) => void;
   maxTokens: number;
-  handleMaxTokensChange:
-    | ((event: Event, value: number | number[], activeThumb: number) => void)
-    | undefined;
+  handleMaxTokensChange: (event: Event, value: number | number[], activeThumb: number) => void;
   handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
   systemMessageValue: string;
-  handlePastMessagesChange:
-    | ((event: Event, value: number | number[], activeThumb: number) => void)
-    | undefined;
+  handlePastMessagesChange: (event: Event, value: number | number[], activeThumb: number) => void;
   pastMessages: number;
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -71,6 +76,118 @@ const Menu = (props: {
   const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
     setsystemMessageTemplate(event.target.value as string);
     handleSystemMessageValueChange(event);
+  };
+  const [tempValue, setTempValue] = React.useState<number | string | Array<number | string>>(0.7);
+  const [topPValue, setTopPValue] = React.useState<number | string | Array<number | string>>(0.95);
+  const [maxTokensValue, setMaxTokensValue] = React.useState<
+    number | string | Array<number | string>
+  >(800);
+  const [pastMessagesValue, setPastMessagesValue] = React.useState<
+    number | string | Array<number | string>
+  >(10);
+
+  const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
+    setTempValue(newValue);
+    handleTemperatureChange(event, newValue, 1);
+  };
+  const handleTopPSliderChange = (event: Event, newValue: number | number[]) => {
+    setTopPValue(newValue);
+    handleTopPChange(event, newValue, 1);
+  };
+  const handleMaxTokensSliderChange = (event: Event, newValue: number | number[]) => {
+    setMaxTokensValue(newValue);
+    handleMaxTokensChange(event, newValue, 1);
+  };
+  const handlePastMessagesSliderChange = (event: Event, newValue: number | number[]) => {
+    setPastMessagesValue(newValue);
+    handlePastMessagesChange(event, newValue, 1);
+  };
+  const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (Number(event.target.value) < 0) {
+      handleTemperatureChange(new Event('0'), 0, 1);
+      setTempValue(0);
+    } else if (Number(event.target.value) > 1) {
+      handleTemperatureChange(new Event('1'), 1, 1);
+      setTempValue(1);
+    } else {
+      handleTemperatureChange(new Event(event.target.value), Number(event.target.value), 1);
+      setTempValue(Number(event.target.value));
+    }
+  };
+  const handleTopPInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (Number(event.target.value) < 0) {
+      handleTopPChange(new Event('0'), 0, 1);
+      setTopPValue(0);
+    } else if (Number(event.target.value) > 1) {
+      handleTopPChange(new Event('1'), 1, 1);
+      setTopPValue(1);
+    } else {
+      handleTopPChange(new Event(event.target.value), Number(event.target.value), 1);
+      setTopPValue(Number(event.target.value));
+    }
+  };
+
+  const handleMaxTokensInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (Number(event.target.value) <= 0) {
+      handleMaxTokensChange(new Event('0'), 0, 1);
+      setMaxTokensValue(0);
+    } else if (Number(event.target.value) > 4096) {
+      handleMaxTokensChange(new Event('4096'), 4096, 1);
+      setMaxTokensValue(4096);
+    } else {
+      handleMaxTokensChange(new Event(event.target.value), Number(event.target.value), 1);
+      setMaxTokensValue(Number(event.target.value).toFixed(0));
+    }
+  };
+  const handlePastMessagesInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const tmpval = Number(event.target.value);
+    if (tmpval <= 0) {
+      handlePastMessagesChange(new Event('0'), 0, 1);
+      setPastMessagesValue(0);
+    } else if (tmpval > 20) {
+      handlePastMessagesChange(new Event('20'), 20, 1);
+      setPastMessagesValue(20);
+    } else {
+      handlePastMessagesChange(new Event(tmpval.toString()), tmpval, 1);
+      setPastMessagesValue(event.target.value === '' ? '' : Number(event.target.value).toFixed(0));
+    }
+  };
+
+  const handleTemperatureBlur = () => {
+    if (Number(tempValue) < 0) {
+      setTempValue(0);
+      handleTemperatureChange(new Event('0'), 0, 1);
+    } else if (Number(tempValue) > 1) {
+      setTempValue(1);
+      handleTemperatureChange(new Event('1'), 1, 1);
+    }
+  };
+  const handleTopPBlur = () => {
+    if (Number(topPValue) < 0) {
+      setTopPValue(0);
+      handleTopPChange(new Event('0'), 0, 1);
+    } else if (Number(topPValue) > 1) {
+      setTopPValue(1);
+      handleTopPChange(new Event('1'), 1, 1);
+    }
+  };
+  const handleMaxTokensBlur = () => {
+    if (Number(maxTokensValue) < 0) {
+      setMaxTokensValue(0);
+      handleMaxTokensChange(new Event('0'), 0, 1);
+    } else if (Number(maxTokensValue) > 4096) {
+      setMaxTokensValue(4096);
+      handleMaxTokensChange(new Event('4096'), 4096, 1);
+    }
+  };
+  const handlePastMessagesBlur = () => {
+    if (Number(pastMessagesValue) < 0) {
+      setPastMessagesValue(0);
+      handlePastMessagesChange(new Event('0'), 0, 1);
+    } else if (Number(pastMessagesValue) > 20) {
+      setPastMessagesValue(20);
+      handlePastMessagesChange(new Event('20'), 20, 1);
+    }
   };
 
   const drawer = (
@@ -190,59 +307,139 @@ const Menu = (props: {
             <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
               <InfoOutlinedIcon />
             </Tooltip>
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={1}
-              step={0.1}
-              value={temperature}
-              defaultValue={0.7}
-              aria-label="Temperature"
-              onChange={handleTemperatureChange}
-            />
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs>
+                <Slider
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={1}
+                  step={0.1}
+                  value={temperature}
+                  defaultValue={0.7}
+                  aria-label="Temperature"
+                  onChange={handleTemperatureSliderChange}
+                  aria-labelledby="temperature-input-slider"
+                />
+              </Grid>
+              <Grid item>
+                <Input
+                  value={tempValue}
+                  size="small"
+                  onChange={handleTemperatureInputChange}
+                  onBlur={handleTemperatureBlur}
+                  inputProps={{
+                    step: 0.1,
+                    min: 0,
+                    max: 1,
+                    type: 'number',
+                    'aria-labelledby': 'temperature-input-slider',
+                  }}
+                />
+              </Grid>
+            </Grid>
             Top_P:{' '}
             <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
               <InfoOutlinedIcon />
             </Tooltip>
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={1}
-              step={0.05}
-              value={topP}
-              defaultValue={0.95}
-              aria-label="Top P"
-              onChange={handleTopPChange}
-            />
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs>
+                <Slider
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={topP}
+                  defaultValue={0.95}
+                  aria-label="Top P"
+                  onChange={handleTopPSliderChange}
+                  aria-labelledby="topp-input-slider"
+                />
+              </Grid>
+              <Grid item>
+                <Input
+                  value={topPValue}
+                  size="small"
+                  onChange={handleTopPInputChange}
+                  onBlur={handleTopPBlur}
+                  inputProps={{
+                    step: 0.1,
+                    min: 0,
+                    max: 1,
+                    type: 'number',
+                    'aria-labelledby': 'topp-input-slider',
+                  }}
+                />
+              </Grid>
+            </Grid>
             Max Tokens:{' '}
             <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
               <InfoOutlinedIcon />
             </Tooltip>
-            <Slider
-              valueLabelDisplay="auto"
-              min={0}
-              max={4096}
-              step={1}
-              value={maxTokens}
-              defaultValue={800}
-              aria-label="Max Tokens"
-              onChange={handleMaxTokensChange}
-            />
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs>
+                <Slider
+                  valueLabelDisplay="auto"
+                  min={0}
+                  max={4096}
+                  step={1}
+                  value={maxTokens}
+                  defaultValue={800}
+                  aria-label="Max Tokens"
+                  onChange={handleMaxTokensSliderChange}
+                  aria-labelledby="maxtokens-input-slider"
+                />
+              </Grid>
+              <Grid item>
+                <Input
+                  value={maxTokensValue}
+                  size="small"
+                  onChange={handleMaxTokensInputChange}
+                  onBlur={handleMaxTokensBlur}
+                  inputProps={{
+                    step: 1,
+                    min: 0,
+                    max: 4096,
+                    type: 'number',
+                    'aria-labelledby': 'maxtokens-input-slider',
+                  }}
+                />
+              </Grid>
+            </Grid>
             <Typography>
               Past messages included:{' '}
               <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
                 <InfoOutlinedIcon />
               </Tooltip>
-              <Slider
-                valueLabelDisplay="auto"
-                min={0}
-                max={20}
-                step={1}
-                value={pastMessages}
-                defaultValue={10}
-                aria-label="Past messages included"
-                onChange={handlePastMessagesChange}
-              />
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs>
+                  <Slider
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={20}
+                    step={1}
+                    value={pastMessages}
+                    defaultValue={10}
+                    aria-label="Past messages included"
+                    onChange={handlePastMessagesSliderChange}
+                    aria-labelledby="pastmessages-input-slider"
+                  />
+                </Grid>
+                <Grid item>
+                  <Input
+                    value={pastMessagesValue}
+                    size="small"
+                    onChange={handlePastMessagesInputChange}
+                    onBlur={handlePastMessagesBlur}
+                    inputProps={{
+                      step: 1,
+                      min: 0,
+                      max: 20,
+                      type: 'number',
+                      'aria-labelledby': 'pastmessages-input-slider',
+                    }}
+                  />
+                </Grid>
+              </Grid>
             </Typography>
           </Typography>
         </AccordionDetails>
@@ -264,9 +461,8 @@ const Menu = (props: {
     </div>
   );
 
-  const handleLogout = async () => {
-    // logout
-    await fetch('/api/auth/logout');
+  const handleLogout = () => {
+    window.location.href = '/api/auth/logout';
   };
 
   return (
@@ -290,7 +486,7 @@ const Menu = (props: {
               sx={{ flexGrow: 1 }}
               title="menutitle"
             >
-              McKesson Chat App
+              McKesson Chat GPT App
             </Typography>
             <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLogout}>
               <LogoutIcon style={{ color: 'white' }} />
