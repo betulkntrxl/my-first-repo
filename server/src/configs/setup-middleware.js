@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import compression from 'compression';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
+import { v4 as uuidv4 } from 'uuid';
 import session from 'express-session';
 import { setupRedisClient } from './redis-client-config.js';
 import { logger } from './logger.js';
@@ -11,7 +12,7 @@ export const setupMiddleware = expressWebServer => {
   logger.info('Setting up middleware...');
 
   expressWebServer.use(compression());
-  expressWebServer.use(helmet({ contentSecurityPolicy: false }));
+  expressWebServer.use(helmet());
   expressWebServer.disable('x-powered-by');
   expressWebServer.use(morgan(':date[clf] ":method :url"'));
   expressWebServer.use(bodyParser.json());
@@ -20,6 +21,9 @@ export const setupMiddleware = expressWebServer => {
   const sessionOptions = {
     name: 'mt-openai-chat',
     secret: process.env.EXPRESS_SESSION_SECRET || 'local-dev-secret',
+    genid(req) {
+      return uuidv4(); // use UUIDs for session IDs
+    },
     resave: false,
     saveUninitialized: false,
     rolling: true,
