@@ -15,6 +15,10 @@ export const setupRedisClient = () => {
   // Connect to Redis
   client.connect().catch(exception => logger.error(`Failed to connect to redis ${exception}`));
 
+  client.on('error', error => {
+    logger.error(error);
+  });
+
   logger.info('Redis client configured and connected');
 
   // Create and return Redis Session Store
