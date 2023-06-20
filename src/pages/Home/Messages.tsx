@@ -2,7 +2,6 @@ import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import React from 'react';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import SmartToyOutlinedIcon from '@mui/icons-material/SmartToyOutlined';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import { faRobot } from '@fortawesome/free-solid-svg-icons/faRobot';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
