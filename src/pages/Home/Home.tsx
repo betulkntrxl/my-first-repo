@@ -70,20 +70,29 @@ const Home = () => {
   const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
-  const [open, setOpen] = React.useState(false);
+  const [openSessionExpired, setSessionExpiredOpen] = React.useState(false);
+  const [openAPIError, setAPIErrorOpen] = React.useState(false);
 
   const handleSessionExpiredOpen = () => {
-    setOpen(true);
+    setSessionExpiredOpen(true);
   };
 
   const handleSessionExpiredClose = () => {
-    setOpen(false);
+    setSessionExpiredOpen(false);
   };
 
   const handleSessionExpiredContinue = () => {
-    setOpen(false);
+    setSessionExpiredOpen(false);
     // refresh the page
     window.history.go(0);
+  };
+
+  const handleAPIErrorOpen = () => {
+    setAPIErrorOpen(true);
+  };
+
+  const handleAPIErrorClose = () => {
+    setAPIErrorOpen(false);
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
@@ -149,6 +158,9 @@ const Home = () => {
       setVisible(false);
 
       setDisplayValue('flex');
+    } else if (response.status !== 401) {
+      // Display API error if response is not 200 or 401
+      handleAPIErrorOpen();
     } else {
       // display Session Expired message
       handleSessionExpiredOpen();
@@ -283,7 +295,7 @@ const Home = () => {
       <BootstrapDialog
         onClose={handleSessionExpiredClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={openSessionExpired}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleSessionExpiredClose}>
           Session Expired
@@ -297,6 +309,25 @@ const Home = () => {
           </Button>
           <Button variant="contained" autoFocus onClick={handleSessionExpiredContinue}>
             Continue
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
+      <BootstrapDialog
+        onClose={handleAPIErrorClose}
+        aria-labelledby="customized-dialog-title"
+        open={openAPIError}
+      >
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleAPIErrorClose}>
+          <div style={{ color: 'red', fontWeight: 'bold' }}>Error !</div>
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            An error has occured. Please try again at a later time.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={handleAPIErrorClose}>
+            Ok
           </Button>
         </DialogActions>
       </BootstrapDialog>
