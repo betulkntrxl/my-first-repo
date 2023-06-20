@@ -33,7 +33,7 @@ const Messages = (props: {
         maxHeight: '70vh',
         height: '70vh',
         overflow: 'auto',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         backgroundColor: 'transparent',
       }}
       ref={bottomRef}
@@ -51,7 +51,7 @@ const Messages = (props: {
                     key={value.id + 4}
                     elevation={3}
                     style={{
-                      marginTop: 20,
+                      marginTop: 40,
                       backgroundColor: 'gainsboro',
                       padding: '10px',
                       display: value.content.length === 0 ? 'none' : 'block',
@@ -62,7 +62,9 @@ const Messages = (props: {
                   >
                     {value.content}
                   </Paper>
-                  <AccountCircleOutlinedIcon style={{ color: 'steelBlue', fontSize: 40 }} />
+                  <AccountCircleOutlinedIcon
+                    style={{ color: 'steelBlue', fontSize: 40, marginTop: 20 }}
+                  />
                 </Stack>
                 <br key={value.id + 5} />
               </div>
@@ -75,13 +77,15 @@ const Messages = (props: {
                 <br key={value.id + 7} />
                 <br key={value.id + 8} />
                 <Stack direction="row" style={{ float: 'left' }}>
-                  <SmartToyOutlinedIcon style={{ color: 'steelBlue', fontSize: 40 }} />
+                  <SmartToyOutlinedIcon
+                    style={{ color: 'steelBlue', fontSize: 40, marginTop: 20 }}
+                  />
                   <Paper
                     key={value.id + 9}
                     elevation={3}
                     style={{
                       backgroundColor: '#E5F2F9',
-                      marginTop: 20,
+                      marginTop: 40,
                       padding: '10px',
                       float: 'left',
                       display: displayValue,
