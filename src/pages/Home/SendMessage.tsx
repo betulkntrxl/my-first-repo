@@ -51,6 +51,7 @@ const SendMessage = (props: {
                 </Button>
               </Grid>
               <input
+                autoComplete="off"
                 title="sendmessage"
                 placeholder="Type your message here."
                 name="chatsession"
