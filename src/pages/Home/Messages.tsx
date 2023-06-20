@@ -33,7 +33,7 @@ const Messages = (props: {
         maxHeight: '70vh',
         height: '70vh',
         overflow: 'auto',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         backgroundColor: 'transparent',
       }}
       ref={bottomRef}
