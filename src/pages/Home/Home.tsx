@@ -235,7 +235,7 @@ const Home = () => {
           height: 500,
         }}
       >
-        {messages.length < 2 ? ( // hide background when chat starts
+        {messagesDisplay.length < 2 ? ( // hide background when chat starts
           <div
             style={{
               position: 'absolute',
