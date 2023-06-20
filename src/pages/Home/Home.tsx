@@ -1,7 +1,47 @@
 import React, { useState, useRef } from 'react';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import Typography from '@mui/material/Typography';
+import DialogContent from '@mui/material/DialogContent';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
+
+export interface DialogTitleProps {
+  id: string;
+  children?: React.ReactNode;
+  onClose: () => void;
+}
+
+function BootstrapDialogTitle(props: DialogTitleProps) {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: theme => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+}
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
@@ -30,6 +70,21 @@ const Home = () => {
   const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
+  const [open, setOpen] = React.useState(false);
+
+  const handleSessionExpiredOpen = () => {
+    setOpen(true);
+  };
+
+  const handleSessionExpiredClose = () => {
+    setOpen(false);
+  };
+
+  const handleSessionExpiredContinue = () => {
+    setOpen(false);
+    // refresh the page
+    window.history.go(0);
+  };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
@@ -95,8 +150,8 @@ const Home = () => {
 
       setDisplayValue('flex');
     } else {
-      // refresh the page
-      window.history.go(0);
+      // display Session Expired message
+      handleSessionExpiredOpen();
     }
   }
 
@@ -124,6 +179,15 @@ const Home = () => {
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
     setSystemMessageValue(event.target.value);
   };
+
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+      padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+      padding: theme.spacing(1),
+    },
+  }));
 
   return (
     <div>
@@ -216,6 +280,26 @@ const Home = () => {
           />
         </form>
       </div>
+      <BootstrapDialog
+        onClose={handleSessionExpiredClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleSessionExpiredClose}>
+          Session Expired
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>Your session has expired. Do you want to continue?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={handleSessionExpiredClose}>
+            Cancel
+          </Button>
+          <Button variant="contained" autoFocus onClick={handleSessionExpiredContinue}>
+            Continue
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
     </div>
   );
 };
