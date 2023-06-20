@@ -54,7 +54,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Run build
-        run: CI=true yarn prod-build
+        run: CI=true yarn cloud-build
 
       - name: Generate short SHA
         uses: benjlevesque/short-sha@v1.2
