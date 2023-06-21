@@ -5,14 +5,24 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import CachedIcon from '@mui/icons-material/Cached';
 
 const SendMessage = (props: {
   handleChatsessionChange: (event: { target: { name: any; value: any } }) => void;
   data: { chatsession: string; response: string };
   tokenCount: number;
   disabledBool: boolean;
+  handleResetChatSessionOpen: () => void;
+  openResetChatSession: boolean;
 }) => {
-  const { handleChatsessionChange, data, tokenCount, disabledBool } = props;
+  const {
+    handleChatsessionChange,
+    data,
+    tokenCount,
+    disabledBool,
+    handleResetChatSessionOpen,
+    openResetChatSession,
+  } = props;
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
@@ -87,6 +97,18 @@ const SendMessage = (props: {
                 <SendIcon
                   style={{ transform: 'rotate(-40deg)', marginLeft: 10, marginBottom: 10 }}
                 />
+              </CustomButton>
+            </Stack>
+            <Stack>
+              <CustomButton
+                title="reset"
+                variant="contained"
+                onClick={handleResetChatSessionOpen}
+                {...(tokenCount === 0 && { disabled: true })}
+                style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
+              >
+                Reset
+                <CachedIcon style={{ marginLeft: 10, marginBottom: 10 }} />
               </CustomButton>
             </Stack>
           </Stack>
