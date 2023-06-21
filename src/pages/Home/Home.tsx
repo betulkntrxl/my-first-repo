@@ -305,7 +305,6 @@ const Home = () => {
             tokenCount={tokenCount}
             disabledBool={disabledBool}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
-            openResetChatSession={openResetChatSession}
           />
         </form>
       </div>

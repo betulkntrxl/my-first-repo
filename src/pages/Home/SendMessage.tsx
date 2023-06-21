@@ -13,16 +13,9 @@ const SendMessage = (props: {
   tokenCount: number;
   disabledBool: boolean;
   handleResetChatSessionOpen: () => void;
-  openResetChatSession: boolean;
 }) => {
-  const {
-    handleChatsessionChange,
-    data,
-    tokenCount,
-    disabledBool,
-    handleResetChatSessionOpen,
-    openResetChatSession,
-  } = props;
+  const { handleChatsessionChange, data, tokenCount, disabledBool, handleResetChatSessionOpen } =
+    props;
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
