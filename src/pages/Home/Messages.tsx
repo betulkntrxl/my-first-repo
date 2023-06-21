@@ -1,9 +1,6 @@
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import React from 'react';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import { faRobot } from '@fortawesome/free-solid-svg-icons/faRobot';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Messages = (props: {
   bottomRef: any;
