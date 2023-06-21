@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
+import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
 
 const SendMessage = (props: {
@@ -87,9 +87,7 @@ const SendMessage = (props: {
                 style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
               >
                 Send
-                <SendIcon
-                  style={{ transform: 'rotate(-40deg)', marginLeft: 10, marginBottom: 10 }}
-                />
+                <TelegramIcon style={{ marginLeft: 10, marginBottom: 5, marginTop: 5 }} />
               </CustomButton>
             </Stack>
             <Stack>
@@ -107,7 +105,7 @@ const SendMessage = (props: {
                 }}
               >
                 Reset
-                <CachedIcon style={{ marginLeft: 10, marginBottom: 10, marginTop: 10 }} />
+                <CachedIcon style={{ marginLeft: 10, marginBottom: 5, marginTop: 5 }} />
               </CustomButton>
             </Stack>
           </Stack>
