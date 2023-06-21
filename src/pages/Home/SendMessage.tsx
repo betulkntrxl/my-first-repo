@@ -98,7 +98,13 @@ const SendMessage = (props: {
                 variant="contained"
                 onClick={handleResetChatSessionOpen}
                 {...(tokenCount === 0 && { disabled: true })}
-                style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
+                style={{
+                  marginLeft: '10px',
+                  width: '150px',
+                  marginTop: 42,
+                  height: 43,
+                  marginRight: 60,
+                }}
               >
                 Reset
                 <CachedIcon style={{ marginLeft: 10, marginBottom: 10, marginTop: 10 }} />
