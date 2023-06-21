@@ -101,7 +101,7 @@ const SendMessage = (props: {
                 style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
               >
                 Reset
-                <CachedIcon style={{ marginLeft: 10, marginBottom: 10 }} />
+                <CachedIcon style={{ marginLeft: 10, marginBottom: 10, marginTop: 10 }} />
               </CustomButton>
             </Stack>
           </Stack>
