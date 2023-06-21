@@ -70,29 +70,44 @@ const Home = () => {
   const conversationDisplay = [systemMessageDisplay];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
-  const [openSessionExpired, setSessionExpiredOpen] = React.useState(false);
-  const [openAPIError, setAPIErrorOpen] = React.useState(false);
+  const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
+  const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
+  const [openAPIError, setOpenAPIError] = React.useState(false);
+
+  const handleResetChatSessionOpen = () => {
+    setOpenResetChatSession(true);
+  };
+
+  const handleResetChatSessionClose = () => {
+    setOpenResetChatSession(false);
+  };
+
+  const handleResetChatSessionContinue = () => {
+    setOpenResetChatSession(false);
+    // refresh the page
+    window.history.go(0);
+  };
 
   const handleSessionExpiredOpen = () => {
-    setSessionExpiredOpen(true);
+    setOpenSessionExpired(true);
   };
 
   const handleSessionExpiredClose = () => {
-    setSessionExpiredOpen(false);
+    setOpenSessionExpired(false);
   };
 
   const handleSessionExpiredContinue = () => {
-    setSessionExpiredOpen(false);
+    setOpenSessionExpired(false);
     // refresh the page
     window.history.go(0);
   };
 
   const handleAPIErrorOpen = () => {
-    setAPIErrorOpen(true);
+    setOpenAPIError(true);
   };
 
   const handleAPIErrorClose = () => {
-    setAPIErrorOpen(false);
+    setOpenAPIError(false);
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
@@ -289,16 +304,43 @@ const Home = () => {
             data={data}
             tokenCount={tokenCount}
             disabledBool={disabledBool}
+            handleResetChatSessionOpen={handleResetChatSessionOpen}
           />
         </form>
       </div>
+      <BootstrapDialog
+        onClose={handleResetChatSessionClose}
+        aria-labelledby="customized-dialog-title"
+        open={openResetChatSession}
+      >
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleResetChatSessionClose}>
+          <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
+            Reset Chat
+          </div>
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            This will reset your chat session. Do you want to continue?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={handleResetChatSessionClose}>
+            Cancel
+          </Button>
+          <Button variant="contained" autoFocus onClick={handleResetChatSessionContinue}>
+            Continue
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
       <BootstrapDialog
         onClose={handleSessionExpiredClose}
         aria-labelledby="customized-dialog-title"
         open={openSessionExpired}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleSessionExpiredClose}>
-          Session Expired
+          <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
+            Session Expired
+          </div>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>Your session has expired. Do you want to continue?</Typography>

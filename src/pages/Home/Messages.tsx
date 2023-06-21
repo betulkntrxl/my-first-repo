@@ -1,10 +1,6 @@
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import React from 'react';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import { faRobot } from '@fortawesome/free-solid-svg-icons/faRobot';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Messages = (props: {
   bottomRef: any;
@@ -64,8 +60,10 @@ const Messages = (props: {
                   >
                     {value.content}
                   </Paper>
-                  <AccountCircleOutlinedIcon
-                    style={{ color: 'steelBlue', fontSize: 40, marginTop: 20 }}
+                  <img
+                    alt="user"
+                    src="user.png"
+                    style={{ width: 40, height: 40, marginTop: 20, marginLeft: 10 }}
                   />
                 </Stack>
                 <br key={value.id + 5} />
@@ -79,22 +77,18 @@ const Messages = (props: {
                 <br key={value.id + 7} />
                 <br key={value.id + 8} />
                 <Stack direction="row" style={{ float: 'left' }}>
-                  <FontAwesomeIcon
-                    icon={faRobot}
-                    style={{ color: 'steelBlue', marginTop: 25, marginLeft: 20, fontSize: 18 }}
-                  />
-                  <CircleOutlinedIcon
+                  <img
+                    alt="user"
+                    src="system.png"
                     style={{
-                      zIndex: 2,
-                      color: 'steelBlue',
-                      fontSize: 40,
-                      marginTop: 15,
-                      marginLeft: -32,
+                      width: 40,
+                      height: 40,
+                      marginTop: 20,
+                      marginLeft: 20,
+                      marginRight: 10,
                     }}
                   />
-                  {/* <SmartToyOutlinedIcon
-                    style={{ color: 'steelBlue', fontSize: 40, marginTop: 20, marginLeft:-20 }}
-            /> */}
+
                   <Paper
                     key={value.id + 9}
                     elevation={3}
