@@ -42,7 +42,7 @@ const SendMessage = (props: {
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '110px' }} elevation={3}>
       <Stack direction="row">
-        <Paper style={{ width: '100%' }}>
+        <Paper style={{ width: '100%', backgroundColor: '#f8f8f8' }}>
           <Stack direction="row">
             <Stack direction="column" style={{ marginLeft: 20, width: '100%' }}>
               <Grid item xs={4} style={{ marginTop: 0 }}>
@@ -71,7 +71,6 @@ const SendMessage = (props: {
                   boxSizing: 'border-box',
                   border: '1',
                   borderRadius: '4px',
-                  backgroundColor: '#f8f8f8',
                   fontSize: '16px',
                   resize: 'none',
                 }}
