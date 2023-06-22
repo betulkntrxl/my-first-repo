@@ -486,7 +486,7 @@ const Menu = (props: {
               sx={{ flexGrow: 1 }}
               title="menutitle"
             >
-              McKesson Chat GPT App
+              McKesson Chat App
             </Typography>
             <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLogout}>
               <LogoutIcon style={{ color: 'white' }} />

@@ -267,9 +267,7 @@ const Home = () => {
             }}
           >
             <div style={{ fontSize: 20, textAlign: 'center', marginTop: 150 }}>Welcome to</div>
-            <div style={{ fontSize: 56, textAlign: 'center', margin: 30 }}>
-              McKesson Chat GPT App
-            </div>
+            <div style={{ fontSize: 56, textAlign: 'center', margin: 30 }}>McKesson Chat App</div>
             <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
               Enter an instruction or select a preset, and watch the API respond with a completion
               that attempts to match the context or pattern you provided.
