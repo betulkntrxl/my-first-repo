@@ -50,6 +50,7 @@ const Messages = (props: {
                     elevation={3}
                     style={{
                       marginTop: 40,
+                      marginBottom: 20,
                       backgroundColor: 'gainsboro',
                       padding: '10px',
                       display: value.content.length === 0 ? 'none' : 'block',
@@ -62,7 +63,7 @@ const Messages = (props: {
                   </Paper>
                   <img
                     alt="user"
-                    src="user.png"
+                    src="user.jpg"
                     style={{ width: 40, height: 40, marginTop: 20, marginLeft: 10 }}
                   />
                 </Stack>
@@ -78,8 +79,8 @@ const Messages = (props: {
                 <br key={value.id + 8} />
                 <Stack direction="row" style={{ float: 'left' }}>
                   <img
-                    alt="user"
-                    src="system.png"
+                    alt="assistant"
+                    src="system.jpg"
                     style={{
                       width: 40,
                       height: 40,
@@ -95,6 +96,7 @@ const Messages = (props: {
                     style={{
                       backgroundColor: '#E5F2F9',
                       marginTop: 40,
+                      marginBottom: 20,
                       padding: '10px',
                       float: 'left',
                       display: displayValue,
@@ -125,7 +127,16 @@ const Messages = (props: {
         {
           // show typing bubble while system is responding
           visible ? (
-            <img src="/typing.gif" alt="typing" width="50px" style={{ marginTop: 20 }} />
+            <div
+              style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
+            >
+              <img
+                src="/typing.gif"
+                alt="typing"
+                width="100px"
+                style={{ marginTop: 20, position: 'fixed', bottom: 125 }}
+              />
+            </div>
           ) : null
         }
         <br />
