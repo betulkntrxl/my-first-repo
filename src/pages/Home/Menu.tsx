@@ -11,7 +11,6 @@ import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {
-  Button,
   Divider,
   Grid,
   Input,
@@ -87,7 +86,7 @@ const Menu = (props: {
   async function getVersion() {
     try {
       // GET request using fetch with async/await
-      const response = await fetch('/api/version').then(async response2 => {
+      await fetch('/api/version').then(async response2 => {
         if (typeof response2 !== 'undefined') {
           const dataver = await response2.json();
           setVersion(dataver.version);
