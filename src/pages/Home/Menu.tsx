@@ -94,7 +94,7 @@ const Menu = (props: {
         }
       });
     } catch {
-      return null;
+      return '';
     }
     return null;
   }
