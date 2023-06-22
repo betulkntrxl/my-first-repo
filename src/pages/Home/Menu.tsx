@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
@@ -85,13 +85,23 @@ const Menu = (props: {
   };
 
   async function getVersion() {
-    // GET request using fetch with async/await
-    const response = await fetch('/api/version');
-    if (typeof response !== 'undefined') {
-      const dataver = await response.json();
-      setVersion(dataver.version);
+    try {
+      // GET request using fetch with async/await
+      const response = await fetch('/api/version').then(async response2 => {
+        if (typeof response2 !== 'undefined') {
+          const dataver = await response2.json();
+          setVersion(dataver.version);
+        }
+      });
+    } catch {
+      return null;
     }
+    return null;
   }
+
+  useEffect(() => {
+    getVersion();
+  }, []);
 
   const drawerWidth = 400;
   const {
@@ -447,14 +457,14 @@ const Menu = (props: {
       <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
         <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
         <br />
-        <Button
+        {/* <Button
           style={{ float: 'left' }}
           onClick={() => {
             getVersion();
           }}
         >
           show version
-        </Button>
+        </Button> */}
         <br />
         <div style={{ float: 'left', margin: 10 }}>Version: {version}</div>
       </Paper>
