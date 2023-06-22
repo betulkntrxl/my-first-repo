@@ -456,7 +456,7 @@ const Menu = (props: {
 
       <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
         <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
-        <br />
+
         {/* <Button
           style={{ float: 'left' }}
           onClick={() => {
@@ -465,7 +465,7 @@ const Menu = (props: {
         >
           show version
         </Button> */}
-        <br />
+
         <div style={{ float: 'left', margin: 10 }}>Version: {version}</div>
       </Paper>
     </div>
