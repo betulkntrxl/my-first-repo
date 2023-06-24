@@ -28,6 +28,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import AccordionMenu from './AccordionMenu';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -239,219 +240,18 @@ const Menu = (props: {
         />
       </Stack>
 
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
-            Assistant Setup
-          </Typography>
-        </AccordionSummary>
-        <Divider variant="middle" />
-        <AccordionDetails>
-          <Typography>
-            <InputLabel id="systemMessageTemplate">System Message Template</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={systemMessageTemplate}
-              label="Age"
-              onChange={handlesystemMessageTemplateChange}
-            >
-              <MenuItem value="as an assistant">as an assistant</MenuItem>
-              <MenuItem value="as a agent understanding the sentiment">
-                as a agent understanding the sentiment
-              </MenuItem>
-              <MenuItem value="as a mentor using the Socratic method">
-                as a mentor using the Socratic method
-              </MenuItem>
-            </Select>
-            <br />
-            <br />
-            System message:
-            <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
-              <InfoOutlinedIcon />
-            </Tooltip>{' '}
-            <textarea
-              placeholder="Type the system message here."
-              ref={input => input && input.focus()}
-              name="systemMessage"
-              onChange={handleSystemMessageValueChange}
-              rows={5}
-              cols={50}
-              value={systemMessageValue}
-              style={{
-                margin: '7px',
-                width: '98%',
-                fontFamily: 'sans-serif',
-                padding: '5px 5px',
-                boxSizing: 'border-box',
-                border: '1',
-                borderRadius: '4px',
-                backgroundColor: '#f8f8f8',
-                fontSize: '16px',
-                resize: 'none',
-              }}
-            />
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
-            Configuration
-          </Typography>
-        </AccordionSummary>
-        <Divider variant="middle" />
-        <AccordionDetails>
-          <Typography>
-            Temperature:{' '}
-            <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
-              <InfoOutlinedIcon />
-            </Tooltip>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs>
-                <Slider
-                  valueLabelDisplay="auto"
-                  min={0}
-                  max={1}
-                  step={0.1}
-                  value={temperature}
-                  defaultValue={0.7}
-                  aria-label="Temperature"
-                  onChange={handleTemperatureSliderChange}
-                  aria-labelledby="temperature-input-label"
-                />
-              </Grid>
-              <Grid item>
-                <Input
-                  title="temperature-input"
-                  value={tempValue}
-                  size="small"
-                  onChange={handleTemperatureInputChange}
-                  inputProps={{
-                    step: 0.1,
-                    min: 0,
-                    max: 1,
-                    type: 'number',
-                    'aria-labelledby': 'temperature-input-label',
-                  }}
-                />
-              </Grid>
-            </Grid>
-            Top_P:{' '}
-            <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
-              <InfoOutlinedIcon />
-            </Tooltip>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs>
-                <Slider
-                  valueLabelDisplay="auto"
-                  min={0}
-                  max={1}
-                  step={0.05}
-                  value={topP}
-                  defaultValue={0.95}
-                  aria-label="Top P"
-                  onChange={handleTopPSliderChange}
-                  aria-labelledby="topp-input-label"
-                />
-              </Grid>
-              <Grid item>
-                <Input
-                  title="topP-input"
-                  value={topPValue}
-                  size="small"
-                  onChange={handleTopPInputChange}
-                  inputProps={{
-                    step: 0.1,
-                    min: 0,
-                    max: 1,
-                    type: 'number',
-                    'aria-labelledby': 'topp-input-label',
-                  }}
-                />
-              </Grid>
-            </Grid>
-            Max Tokens:{' '}
-            <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
-              <InfoOutlinedIcon />
-            </Tooltip>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs>
-                <Slider
-                  valueLabelDisplay="auto"
-                  min={0}
-                  max={4096}
-                  step={1}
-                  value={maxTokens}
-                  defaultValue={800}
-                  aria-label="Max Tokens"
-                  onChange={handleMaxTokensSliderChange}
-                  aria-labelledby="maxtokens-input-label"
-                />
-              </Grid>
-              <Grid item>
-                <Input
-                  title="maxTokens-input"
-                  value={maxTokensValue}
-                  size="small"
-                  onChange={handleMaxTokensInputChange}
-                  inputProps={{
-                    step: 1,
-                    min: 0,
-                    max: 4096,
-                    type: 'number',
-                    'aria-labelledby': 'maxtokens-input-label',
-                  }}
-                />
-              </Grid>
-            </Grid>
-            <Typography>
-              Past messages included:{' '}
-              <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
-                <InfoOutlinedIcon />
-              </Tooltip>
-              <Grid container spacing={2} alignItems="center">
-                <Grid item xs>
-                  <Slider
-                    valueLabelDisplay="auto"
-                    min={0}
-                    max={20}
-                    step={1}
-                    value={pastMessages}
-                    defaultValue={10}
-                    aria-label="Past messages included"
-                    onChange={handlePastMessagesSliderChange}
-                    aria-labelledby="pastmessages-input-label"
-                  />
-                </Grid>
-                <Grid item>
-                  <Input
-                    title="pastMessages-input"
-                    value={pastMessagesValue}
-                    size="small"
-                    onChange={handlePastMessagesInputChange}
-                    inputProps={{
-                      step: 1,
-                      min: 0,
-                      max: 20,
-                      type: 'number',
-                      'aria-labelledby': 'pastmessages-input-label',
-                    }}
-                  />
-                </Grid>
-              </Grid>
-            </Typography>
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+      <AccordionMenu
+        temperature={temperature}
+        handleTemperatureChange={handleTemperatureChange}
+        topP={topP}
+        handleTopPChange={handleTopPChange}
+        maxTokens={maxTokens}
+        handleMaxTokensChange={handleMaxTokensChange}
+        handleSystemMessageValueChange={handleSystemMessageValueChange}
+        systemMessageValue={systemMessageValue}
+        handlePastMessagesChange={handlePastMessagesChange}
+        pastMessages={pastMessages}
+      />
 
       <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
         <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
