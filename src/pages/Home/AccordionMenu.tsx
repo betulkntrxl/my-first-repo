@@ -1,26 +1,18 @@
 import {
   Accordion,
   AccordionDetails,
-  AccordionProps,
   AccordionSummary,
   Divider,
   Grid,
-  IconButton,
   Input,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   Slider,
-  Stack,
   Tooltip,
   Typography,
-  styled,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
@@ -52,21 +44,6 @@ const AccordionMenu = (propsAccordianMenu: {
   } = propsAccordianMenu;
 
   const [systemMessageTemplate, setsystemMessageTemplate] = React.useState('as an assistant');
-  const [version, setVersion] = React.useState('');
-  async function getVersion() {
-    try {
-      // GET request using fetch with async/await
-      await fetch('/api/version').then(async response2 => {
-        if (typeof response2 !== 'undefined') {
-          const dataver = await response2.json();
-          setVersion(dataver.version);
-        }
-      });
-    } catch {
-      return '';
-    }
-    return null;
-  }
 
   const AccordionTheme = createTheme({
     components: {
@@ -90,18 +67,6 @@ const AccordionMenu = (propsAccordianMenu: {
       },
     },
   });
-
-  const Accordion2 = styled((props: AccordionProps) => (
-    <MuiAccordion disableGutters elevation={0} square {...props} />
-  ))(({ theme }) => ({
-    border: `1px solid ${theme.palette.divider}`,
-    '&:not(:last-child)': {
-      borderBottom: 0,
-    },
-    '&:before': {
-      display: 'none',
-    },
-  }));
 
   const AccordionSummaryTheme = createTheme({
     components: {
@@ -127,24 +92,6 @@ const AccordionMenu = (propsAccordianMenu: {
     },
   });
 
-  const AccordionSummary2 = styled((props: AccordionSummaryProps) => (
-    <MuiAccordionSummary
-      style={{ flexGrow: 0 }}
-      expandIcon={<ExpandMoreIcon sx={{ fontSize: '0.9rem' }} />}
-      {...props}
-    />
-  ))(({ theme }) => ({
-    backgroundColor:
-      theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-      transform: 'rotate(180deg)',
-    },
-    '& .MuiAccordionSummary-content': {
-      marginLeft: theme.spacing(1),
-    },
-  }));
-
   const AccordionDetailsTheme = createTheme({
     components: {
       MuiAccordionSummary: {
@@ -157,11 +104,6 @@ const AccordionMenu = (propsAccordianMenu: {
       },
     },
   });
-
-  const AccordionDetails2 = styled(MuiAccordionDetails)(({ theme }) => ({
-    padding: theme.spacing(2),
-    borderTop: '1px solid rgba(0, 0, 0, .125)',
-  }));
 
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
