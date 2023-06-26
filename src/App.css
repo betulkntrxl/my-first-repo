@@ -14,6 +14,10 @@
   --fontBody: 14px;
 }
 
+input[type=number] {
+  text-align:right;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

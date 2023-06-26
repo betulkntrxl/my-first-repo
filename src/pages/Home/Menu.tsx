@@ -65,18 +65,18 @@ const Menu = (props: {
   } = props;
 
   const drawer = (
-    <div>
+    <div style={{ overflowX: 'hidden' }}>
       <Stack direction="column">
         <Stack direction="row">
           <div
             style={{
-              width: '90%',
+              width: 340,
               textAlign: 'left',
               color: '#007BC7',
               fontSize: '18px',
               fontWeight: 'bolder',
               fontFamily: 'Arial',
-              margin: 20,
+              marginLeft: 20,
               marginTop: 30,
               marginBottom: 10,
             }}
@@ -88,7 +88,7 @@ const Menu = (props: {
             aria-label="menu"
             sx={{ mr: 2 }}
             onClick={handleDrawerToggle}
-            style={{ float: 'right' }}
+            style={{ float: 'right', marginRight: 5 }}
           >
             <CloseIcon style={{ color: '#007BC7', fontWeight: 'bold' }} />
           </IconButton>
@@ -98,7 +98,7 @@ const Menu = (props: {
           sx={{
             color: '#007BC7',
             marginLeft: '-70px',
-            width: '530px',
+            width: '540px',
             maxWidth: 600,
             fontWeight: 'bolder',
           }}
@@ -118,7 +118,18 @@ const Menu = (props: {
         pastMessages={pastMessages}
       />
 
-      <Paper elevation={1} style={{ maxWidth: 500, padding: '10px', margin: 10, float: 'left' }}>
+      <Paper
+        elevation={1}
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          width: 320,
+          maxWidth: 500,
+          padding: '20px',
+          margin: 20,
+          float: 'left',
+        }}
+      >
         <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
 
         {/* <Button

@@ -3,6 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Divider,
+  FormControl,
   Grid,
   Input,
   InputLabel,
@@ -55,10 +56,10 @@ const AccordionMenu = (propsAccordianMenu: {
         },
         styleOverrides: {
           root: ({ theme }) => ({
-            border: `1px solid ${theme.palette.divider}`,
-            '&:not(:last-child)': {
-              borderBottom: 0,
-            },
+            //            border: `1px solid ${theme.palette.divider}`,
+            //            '&:not(:last-child)': {
+            //              borderBottom: 0,
+            //            },
             '&:before': {
               display: 'none',
             },
@@ -77,14 +78,15 @@ const AccordionMenu = (propsAccordianMenu: {
         styleOverrides: {
           root: ({ theme }) => ({
             style: 'flexGrow: 0',
-            backgroundColor:
-              theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
+            //            backgroundColor:
+            //              theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
             flexDirection: 'row',
             '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
               transform: 'rotate(180deg)',
             },
             '& .MuiAccordionSummary-content': {
-              marginLeft: theme.spacing(1),
+              marginLeft: 3,
+              //  marginLeft: theme.spacing(1),
             },
           }),
         },
@@ -97,8 +99,8 @@ const AccordionMenu = (propsAccordianMenu: {
       MuiAccordionSummary: {
         styleOverrides: {
           root: ({ theme }) => ({
-            padding: theme.spacing(2),
-            borderTop: '1px solid rgba(0, 0, 0, .125)',
+            //            padding: theme.spacing(2),
+            //            borderTop: '1px solid rgba(0, 0, 0, .125)',
           }),
         },
       },
@@ -212,29 +214,37 @@ const AccordionMenu = (propsAccordianMenu: {
           <Divider variant="middle" />
           <ThemeProvider theme={AccordionDetailsTheme}>
             <AccordionDetails>
+              <br />
               <Typography>
-                <InputLabel id="systemMessageTemplate">System Message Template</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={systemMessageTemplate}
-                  label="Age"
-                  onChange={handlesystemMessageTemplateChange}
-                >
-                  <MenuItem value="as an assistant">as an assistant</MenuItem>
-                  <MenuItem value="as a agent understanding the sentiment">
-                    as a agent understanding the sentiment
-                  </MenuItem>
-                  <MenuItem value="as a mentor using the Socratic method">
-                    as a mentor using the Socratic method
-                  </MenuItem>
-                </Select>
+                <FormControl fullWidth>
+                  <InputLabel id="systemMessageTemplate-label" style={{ fontWeight: 'bold' }}>
+                    System Message Template
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    labelId="systemMessageTemplate-label"
+                    id="systemMessageTemplate"
+                    value={systemMessageTemplate}
+                    label="System Message Template"
+                    onChange={handlesystemMessageTemplateChange}
+                  >
+                    <MenuItem value="as an assistant">as an assistant</MenuItem>
+                    <MenuItem value="as a agent understanding the sentiment">
+                      as a agent understanding the sentiment
+                    </MenuItem>
+                    <MenuItem value="as a mentor using the Socratic method">
+                      as a mentor using the Socratic method
+                    </MenuItem>
+                  </Select>
+                </FormControl>
                 <br />
                 <br />
-                System message:
-                <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
-                  <InfoOutlinedIcon />
-                </Tooltip>{' '}
+                <div style={{ fontWeight: 'bold' }}>
+                  System message:
+                  <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
+                    <InfoOutlinedIcon />
+                  </Tooltip>
+                </div>{' '}
                 <textarea
                   placeholder="Type the system message here."
                   ref={input => input && input.focus()}
@@ -244,14 +254,12 @@ const AccordionMenu = (propsAccordianMenu: {
                   cols={50}
                   value={systemMessageValue}
                   style={{
-                    margin: '7px',
                     width: '98%',
                     fontFamily: 'sans-serif',
                     padding: '5px 5px',
                     boxSizing: 'border-box',
                     border: '1',
                     borderRadius: '4px',
-                    backgroundColor: '#f8f8f8',
                     fontSize: '16px',
                     resize: 'none',
                   }}
@@ -282,9 +290,10 @@ const AccordionMenu = (propsAccordianMenu: {
                 <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
                   <InfoOutlinedIcon />
                 </Tooltip>
-                <Grid container spacing={2} alignItems="center">
+                <Grid container spacing={2} alignItems="center" style={{ width: 350 }}>
                   <Grid item xs>
                     <Slider
+                      style={{ width: 240 }}
                       valueLabelDisplay="auto"
                       min={0}
                       max={1}
@@ -316,9 +325,10 @@ const AccordionMenu = (propsAccordianMenu: {
                 <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
                   <InfoOutlinedIcon />
                 </Tooltip>
-                <Grid container spacing={2} alignItems="center">
+                <Grid container spacing={2} alignItems="center" style={{ width: 350 }}>
                   <Grid item xs>
                     <Slider
+                      style={{ width: 240 }}
                       valueLabelDisplay="auto"
                       min={0}
                       max={1}
@@ -350,9 +360,10 @@ const AccordionMenu = (propsAccordianMenu: {
                 <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
                   <InfoOutlinedIcon />
                 </Tooltip>
-                <Grid container spacing={2} alignItems="center">
+                <Grid container spacing={2} alignItems="center" style={{ width: 350 }}>
                   <Grid item xs>
                     <Slider
+                      style={{ width: 240 }}
                       valueLabelDisplay="auto"
                       min={0}
                       max={4096}
@@ -385,9 +396,10 @@ const AccordionMenu = (propsAccordianMenu: {
                   <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
                     <InfoOutlinedIcon />
                   </Tooltip>
-                  <Grid container spacing={2} alignItems="center">
+                  <Grid container spacing={2} alignItems="center" style={{ width: 350 }}>
                     <Grid item xs>
                       <Slider
+                        style={{ width: 240 }}
                         valueLabelDisplay="auto"
                         min={0}
                         max={20}
