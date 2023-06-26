@@ -92,7 +92,24 @@ const Messages = (props: {
                       marginRight: 10,
                     }}
                   />
-                  {value.content.length === 0 ? (
+
+                  {value.content.length > 0 ? (
+                    <Paper
+                      key={value.id + 9}
+                      elevation={3}
+                      style={{
+                        backgroundColor: '#E5F2F9',
+                        marginTop: 40,
+                        marginBottom: 20,
+                        padding: '10px',
+                        float: 'left',
+                        display: displayValue,
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {value.content}
+                    </Paper>
+                  ) : (
                     <img
                       alt="assistant"
                       src="/typing.gif"
@@ -100,25 +117,7 @@ const Messages = (props: {
                       height={37}
                       style={{ marginTop: 40 }}
                     />
-                  ) : (
-                    ''
                   )}
-
-                  <Paper
-                    key={value.id + 9}
-                    elevation={3}
-                    style={{
-                      backgroundColor: '#E5F2F9',
-                      marginTop: 40,
-                      marginBottom: 20,
-                      padding: '10px',
-                      float: 'left',
-                      display: displayValue,
-                      whiteSpace: 'pre-wrap',
-                    }}
-                  >
-                    {value.content}
-                  </Paper>
                 </Stack>
                 <br key={value.id + 10} />
                 <br key={value.id + 11} />
