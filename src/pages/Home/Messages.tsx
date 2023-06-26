@@ -110,13 +110,15 @@ const Messages = (props: {
                       {value.content}
                     </Paper>
                   ) : (
-                    <img
-                      alt="assistant"
-                      src="/typing.gif"
-                      width="100px"
-                      height={37}
-                      style={{ marginTop: 40 }}
-                    />
+                    <div style={{ width: '300px' }}>
+                      <img
+                        alt="assistant"
+                        src="/typing.gif"
+                        width="100px"
+                        height={37}
+                        style={{ marginTop: 40 }}
+                      />
+                    </div>
                   )}
                 </Stack>
                 <br key={value.id + 10} />
