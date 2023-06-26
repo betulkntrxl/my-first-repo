@@ -98,8 +98,9 @@ const Home = () => {
 
   const handleSessionExpiredContinue = () => {
     setOpenSessionExpired(false);
-    // refresh the page
-    window.history.go(0);
+    // redirect to login
+    window.location.href = '/api/auth/login';
+    //    window.history.go(0);
   };
 
   const handleAPIErrorOpen = () => {
