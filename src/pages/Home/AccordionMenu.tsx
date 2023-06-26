@@ -56,10 +56,10 @@ const AccordionMenu = (propsAccordianMenu: {
         },
         styleOverrides: {
           root: ({ theme }) => ({
-            //            border: `1px solid ${theme.palette.divider}`,
-            //            '&:not(:last-child)': {
-            //              borderBottom: 0,
-            //            },
+            border: `0px solid ${theme.palette.divider}`,
+            '&:not(:last-child)': {
+              borderBottom: 0,
+            },
             '&:before': {
               display: 'none',
             },
@@ -78,15 +78,15 @@ const AccordionMenu = (propsAccordianMenu: {
         styleOverrides: {
           root: ({ theme }) => ({
             style: 'flexGrow: 0',
-            //            backgroundColor:
-            //              theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
+            backgroundColor:
+              theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, 0)',
             flexDirection: 'row',
             '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
               transform: 'rotate(180deg)',
             },
             '& .MuiAccordionSummary-content': {
               marginLeft: 3,
-              //  marginLeft: theme.spacing(1),
+              //                marginLeft: theme.spacing(1),
             },
           }),
         },
@@ -99,7 +99,7 @@ const AccordionMenu = (propsAccordianMenu: {
       MuiAccordionSummary: {
         styleOverrides: {
           root: ({ theme }) => ({
-            //            padding: theme.spacing(2),
+            padding: theme.spacing(2),
             //            borderTop: '1px solid rgba(0, 0, 0, .125)',
           }),
         },
