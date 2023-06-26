@@ -165,6 +165,7 @@ const Home = () => {
         { role: 'user', content: data.chatsession },
         { role: 'system', content: responseData.choices[0].message.content },
       ]);
+      // trim last empty assistant message and add new user and assistant reaponse
       setMessagesDisplay([
         ...messagesDisplay,
         { role: 'user', content: data.chatsession, id: data.chatsession },
@@ -190,6 +191,7 @@ const Home = () => {
     setMessagesDisplay([
       ...messagesDisplay,
       { role: 'user', content: data.chatsession, id: data.chatsession },
+      { role: 'system', content: '', id: messagesDisplay.length.toString() },
     ]);
     sendMessage();
   }
@@ -230,17 +232,9 @@ const Home = () => {
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
       />
-      {/* <ToolBar
-        temperature={temperature}
-        handleTemperatureChange={handleTemperatureChange}
-        topP={topP}
-        handleTopPChange={handleTopPChange}
-        maxTokens={maxTokens}
-        handleMaxTokensChange={handleMaxTokensChange}
-      /> */}
+
       <div
         style={{
-          //         background: 'url("/chatapp.png")',
           backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center 90px',

@@ -28,8 +28,11 @@ const Messages = (props: {
       variant="elevation"
       sx={{ Width: '100%' }}
       style={{
-        maxHeight: '70vh',
-        height: '70vh',
+        position: 'fixed',
+        top: 80,
+        left: 0,
+        right: 0,
+        bottom: 110,
         overflow: 'auto',
         overflowY: 'auto',
         backgroundColor: 'transparent',
@@ -90,21 +93,31 @@ const Messages = (props: {
                     }}
                   />
 
-                  <Paper
-                    key={value.id + 9}
-                    elevation={3}
-                    style={{
-                      backgroundColor: '#E5F2F9',
-                      marginTop: 40,
-                      marginBottom: 20,
-                      padding: '10px',
-                      float: 'left',
-                      display: displayValue,
-                      whiteSpace: 'pre-wrap',
-                    }}
-                  >
-                    {value.content}
-                  </Paper>
+                  {value.content.length > 0 ? (
+                    <Paper
+                      key={value.id + 9}
+                      elevation={3}
+                      style={{
+                        backgroundColor: '#E5F2F9',
+                        marginTop: 40,
+                        marginBottom: 20,
+                        padding: '10px',
+                        float: 'left',
+                        display: displayValue,
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {value.content}
+                    </Paper>
+                  ) : (
+                    <img
+                      alt="assistant"
+                      src="/typing.gif"
+                      width="100px"
+                      height={37}
+                      style={{ marginTop: 40 }}
+                    />
+                  )}
                 </Stack>
                 <br key={value.id + 10} />
                 <br key={value.id + 11} />
@@ -130,12 +143,12 @@ const Messages = (props: {
             <div
               style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
             >
-              <img
+              {/*  <img
                 src="/typing.gif"
                 alt="typing"
                 width="100px"
                 style={{ marginTop: 20, position: 'fixed', bottom: 125 }}
-              />
+          /> */}
             </div>
           ) : null
         }
