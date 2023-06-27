@@ -105,7 +105,7 @@ const AccordionMenu = (propsAccordianMenu: {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
+              <Typography style={{ color: '#007BC7', fontFamily: 'Arial' }}>
                 Assistant Setup
               </Typography>
             </AccordionSummary>
@@ -129,7 +129,7 @@ const AccordionMenu = (propsAccordianMenu: {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
+              <Typography style={{ color: '#007BC7', fontFamily: 'Arial' }}>
                 Configuration
               </Typography>
             </AccordionSummary>
