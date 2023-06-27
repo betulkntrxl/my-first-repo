@@ -132,15 +132,6 @@ const Menu = (props: {
       >
         <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
 
-        {/* <Button
-          style={{ float: 'left' }}
-          onClick={() => {
-            getVersion();
-          }}
-        >
-          show version
-        </Button> */}
-
         <div style={{ float: 'left', margin: 10 }}>Version: {version}</div>
       </Paper>
     </div>
