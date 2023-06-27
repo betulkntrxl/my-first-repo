@@ -17,10 +17,7 @@ const AssistantSetupMenu = (props: {
 }) => {
   const { handleSystemMessageValueChange, systemMessageValue } = props;
 
-  const [systemMessageTemplate, setsystemMessageTemplate] = React.useState('as an assistant');
-
   const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
-    setsystemMessageTemplate(event.target.value);
     handleSystemMessageValueChange(event);
   };
 
