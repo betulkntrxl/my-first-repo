@@ -121,6 +121,7 @@ const Menu = (props: {
       <Paper
         elevation={1}
         style={{
+          backgroundColor: '#e6e6e6',
           position: 'fixed',
           bottom: 0,
           width: 320,
