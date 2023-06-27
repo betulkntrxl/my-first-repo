@@ -103,10 +103,12 @@ const ConfigurationMenu = (props: {
 
   return (
     <Typography>
-      Temperature:{' '}
-      <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
-        <InfoOutlinedIcon />
-      </Tooltip>
+      <Typography id="temperature-input-label">
+        Temperature:{' '}
+        <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
+          <InfoOutlinedIcon />
+        </Tooltip>
+      </Typography>
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
         <Grid item xs>
           <Slider
@@ -138,10 +140,12 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
       </Grid>
-      Top_P:{' '}
-      <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
-        <InfoOutlinedIcon />
-      </Tooltip>
+      <Typography id="topp-input-label">
+        Top_P:{' '}
+        <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
+          <InfoOutlinedIcon />
+        </Tooltip>
+      </Typography>
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
         <Grid item xs>
           <Slider
@@ -173,10 +177,12 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
       </Grid>
-      Max Tokens:{' '}
-      <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
-        <InfoOutlinedIcon />
-      </Tooltip>
+      <Typography id="maxtokens-input-label">
+        Max Tokens:{' '}
+        <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
+          <InfoOutlinedIcon />
+        </Tooltip>
+      </Typography>
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
         <Grid item xs>
           <Slider
@@ -209,10 +215,12 @@ const ConfigurationMenu = (props: {
         </Grid>
       </Grid>
       <Typography>
-        Past messages included:{' '}
-        <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
-          <InfoOutlinedIcon />
-        </Tooltip>
+        <Typography id="pastmessages-input-label">
+          Past messages included:{' '}
+          <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
+            <InfoOutlinedIcon />
+          </Tooltip>
+        </Typography>
         <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
           <Grid item xs>
             <Slider
