@@ -103,7 +103,10 @@ const ConfigurationMenu = (props: {
 
   return (
     <Typography>
-      <Typography id="temperature-input-label">
+      <Typography
+        id="temperature-input-label"
+        style={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif' }}
+      >
         Temperature:{' '}
         <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
           <InfoOutlinedIcon />

@@ -42,7 +42,10 @@ const AccordionMenu = (propsAccordianMenu: {
           root: ({ theme }) => ({
             border: `0px solid ${theme.palette.divider}`,
             '&:not(:last-child)': {
-              borderBottom: 0,
+              borderBottom: '1px solid',
+              marginLeft: 20,
+              marginRight: 20,
+              color: '#e6e6e6',
             },
             '&:before': {
               display: 'none',
@@ -69,7 +72,7 @@ const AccordionMenu = (propsAccordianMenu: {
               transform: 'rotate(180deg)',
             },
             '& .MuiAccordionSummary-content': {
-              marginLeft: 3,
+              marginLeft: -15,
             },
           }),
         },
@@ -79,10 +82,11 @@ const AccordionMenu = (propsAccordianMenu: {
 
   const AccordionDetailsTheme = createTheme({
     components: {
-      MuiAccordionSummary: {
+      MuiAccordionDetails: {
         styleOverrides: {
           root: ({ theme }) => ({
-            padding: theme.spacing(2),
+            color: 'black',
+            padding: theme.spacing(0),
           }),
         },
       },
@@ -110,7 +114,7 @@ const AccordionMenu = (propsAccordianMenu: {
               </Typography>
             </AccordionSummary>
           </ThemeProvider>
-          <Divider variant="middle" />
+          <Divider />
           <ThemeProvider theme={AccordionDetailsTheme}>
             <AccordionDetails>
               <AssistantSetupMenu
@@ -134,7 +138,7 @@ const AccordionMenu = (propsAccordianMenu: {
               </Typography>
             </AccordionSummary>
           </ThemeProvider>
-          <Divider variant="middle" />
+          <Divider />
           <ThemeProvider theme={AccordionDetailsTheme}>
             <AccordionDetails>
               <ConfigurationMenu
