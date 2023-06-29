@@ -145,29 +145,30 @@ const Menu = (props: {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ backgroundColor: 'white' }}>
           <Toolbar variant="regular" style={{ width: '95%' }}>
             <IconButton
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{ mr: 1 }}
               onClick={handleDrawerToggle}
             >
-              <MenuIcon />
+              <MenuIcon color="primary" />
             </IconButton>
+            <img alt="McKesson" src="thumbnail_image001.jpg" />
             <Typography
               variant="h6"
-              color="inherit"
+              color="#005A8C"
               component="div"
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, fontWeight: 'bold', fontFamily: 'arial', marginLeft: 1 }}
               title="menutitle"
             >
-              McKesson Chat App
+              Chat App
             </Typography>
             <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLogout}>
-              <LogoutIcon style={{ color: 'white' }} />
-              <Typography> Logout</Typography>
+              <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
+              <Typography color="primary"> Logout</Typography>
             </IconButton>
           </Toolbar>
         </AppBar>
