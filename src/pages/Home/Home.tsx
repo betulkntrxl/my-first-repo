@@ -251,6 +251,7 @@ const Home = () => {
               position: 'absolute',
               // color:'#B3CEDD',
               color: 'steelblue',
+              backgroundColor: '#E5EFF3',
               opacity: 0.6,
               top: 0,
               left: 0,
