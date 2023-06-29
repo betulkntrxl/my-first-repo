@@ -35,7 +35,7 @@ const Messages = (props: {
         bottom: 110,
         overflow: 'auto',
         overflowY: 'auto',
-        zIndex: -2,
+        // zIndex: -2,
         backgroundColor: 'transparent',
         //        backgroundColor:'#E5EFF3'
       }}
