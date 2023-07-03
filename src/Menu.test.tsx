@@ -28,6 +28,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
     const temperatureInput = screen.getByTitle('temperature-input');
     await user.click(temperatureInput);
     await user.keyboard('.5');
@@ -38,6 +40,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
     const topP = screen.getByLabelText('Top P');
     expect(topP).toBeTruthy();
   });
@@ -46,6 +50,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
     const toppInput = screen.getByTitle('topP-input');
     await user.click(toppInput);
     await user.keyboard('.8');
@@ -56,6 +62,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
     const maxTokens = screen.getByLabelText('Max Tokens');
     expect(maxTokens).toBeTruthy();
   });
@@ -64,6 +72,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
     const maxtokensInput = screen.getByTitle('maxTokens-input');
     await user.click(maxtokensInput);
     await user.keyboard('200');
@@ -74,6 +84,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
     const previousMessages = screen.getByLabelText('Past messages included');
     expect(previousMessages).toBeTruthy();
   });
@@ -82,6 +94,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
     const previousMessagesInput = screen.getByTitle('pastMessages-input');
     await user.click(previousMessagesInput);
     await user.keyboard('1');

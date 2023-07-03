@@ -23,81 +23,56 @@ const ConfigurationMenu = (props: {
     pastMessages,
   } = props;
 
-  const [tempValue, setTempValue] = React.useState<number | string | Array<number | string>>(0.7);
-  const [topPValue, setTopPValue] = React.useState<number | string | Array<number | string>>(0.95);
-  const [maxTokensValue, setMaxTokensValue] = React.useState<
-    number | string | Array<number | string>
-  >(800);
-  const [pastMessagesValue, setPastMessagesValue] = React.useState<
-    number | string | Array<number | string>
-  >(10);
-
   const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
-    setTempValue(newValue);
     handleTemperatureChange(event, newValue, 1);
   };
 
   const handleTopPSliderChange = (event: Event, newValue: number | number[]) => {
-    setTopPValue(newValue);
     handleTopPChange(event, newValue, 1);
   };
   const handleMaxTokensSliderChange = (event: Event, newValue: number | number[]) => {
-    setMaxTokensValue(newValue);
     handleMaxTokensChange(event, newValue, 1);
   };
   const handlePastMessagesSliderChange = (event: Event, newValue: number | number[]) => {
-    setPastMessagesValue(newValue);
     handlePastMessagesChange(event, newValue, 1);
   };
 
   const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) < 0) {
       handleTemperatureChange(new Event('0'), 0, 1);
-      setTempValue(0);
     } else if (Number(event.target.value) > 1) {
       handleTemperatureChange(new Event('1'), 1, 1);
-      setTempValue(1);
     } else {
       handleTemperatureChange(new Event(event.target.value), Number(event.target.value), 1);
-      setTempValue(Number(event.target.value));
     }
   };
   const handleTopPInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) < 0) {
       handleTopPChange(new Event('0'), 0, 1);
-      setTopPValue(0);
     } else if (Number(event.target.value) > 1) {
       handleTopPChange(new Event('1'), 1, 1);
-      setTopPValue(1);
     } else {
       handleTopPChange(new Event(event.target.value), Number(event.target.value), 1);
-      setTopPValue(Number(event.target.value));
     }
   };
 
   const handleMaxTokensInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) <= 0) {
       handleMaxTokensChange(new Event('0'), 0, 1);
-      setMaxTokensValue(0);
     } else if (Number(event.target.value) > 4096) {
       handleMaxTokensChange(new Event('4096'), 4096, 1);
-      setMaxTokensValue(4096);
     } else {
       handleMaxTokensChange(new Event(event.target.value), Number(event.target.value), 1);
-      setMaxTokensValue(Number(event.target.value).toFixed(0));
     }
   };
   const handlePastMessagesInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tmpval = Number(event.target.value);
     if (tmpval <= 0) {
       handlePastMessagesChange(new Event('0'), 0, 1);
-      setPastMessagesValue(0);
     } else if (tmpval > 20) {
       handlePastMessagesChange(new Event('20'), 20, 1);
-      setPastMessagesValue(20);
     } else {
       handlePastMessagesChange(new Event(tmpval.toString()), tmpval, 1);
-      setPastMessagesValue(event.target.value === '' ? '' : Number(event.target.value).toFixed(0));
     }
   };
 
@@ -131,7 +106,8 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 75 }}
             title="temperature-input"
-            value={tempValue}
+            value={temperature}
+            defaultValue={temperature}
             size="small"
             onChange={handleTemperatureInputChange}
             inputProps={{
@@ -169,7 +145,8 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 75 }}
             title="topP-input"
-            value={topPValue}
+            value={topP}
+            defaultValue={topP}
             size="small"
             onChange={handleTopPInputChange}
             inputProps={{
@@ -207,7 +184,8 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 75 }}
             title="maxTokens-input"
-            value={maxTokensValue}
+            value={maxTokens}
+            defaultValue={maxTokens}
             size="small"
             onChange={handleMaxTokensInputChange}
             inputProps={{
@@ -246,7 +224,8 @@ const ConfigurationMenu = (props: {
             <TextField
               style={{ width: 75 }}
               title="pastMessages-input"
-              value={pastMessagesValue}
+              value={pastMessages}
+              defaultValue={pastMessages}
               size="small"
               onChange={handlePastMessagesInputChange}
               inputProps={{
