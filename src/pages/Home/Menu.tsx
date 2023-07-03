@@ -11,6 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import AccordionMenu from './AccordionMenu';
+import Logo from './webimage-B31D6248-7763-4327-92184864D7920A7C.jpg';
 
 const Menu = (props: {
   temperature: number;
@@ -156,11 +157,7 @@ const Menu = (props: {
             >
               <MenuIcon color="primary" />
             </IconButton>
-            <img
-              alt="McKesson"
-              width={150}
-              src="webimage-B31D6248-7763-4327-92184864D7920A7C.jpg"
-            />
+            <img key={Date.now()} alt="McKesson" width={150} src={Logo} />
             <Typography
               variant="h6"
               color="#005A8C"

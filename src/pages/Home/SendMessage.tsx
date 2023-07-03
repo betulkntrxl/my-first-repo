@@ -82,7 +82,7 @@ const SendMessage = (props: {
                 title="send"
                 variant="contained"
                 type="submit"
-                {...(disabledBool && { disabled: true })}
+                {...(disabledBool && data.chatsession.length < 1 && { disabled: true })}
                 style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
               >
                 Send
