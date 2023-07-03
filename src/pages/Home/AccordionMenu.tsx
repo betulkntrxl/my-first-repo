@@ -133,7 +133,10 @@ const AccordionMenu = (propsAccordianMenu: {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography style={{ color: '#007BC7', fontFamily: 'Arial' }}>
+              <Typography
+                style={{ color: '#007BC7', fontFamily: 'Arial' }}
+                aria-label="configuration"
+              >
                 Configuration
               </Typography>
             </AccordionSummary>

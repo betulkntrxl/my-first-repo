@@ -36,6 +36,9 @@ const AssistantSetupMenu = (props: {
           label="System Message Template"
           onChange={handlesystemMessageTemplateChange}
         >
+          <MenuItem value="Assistant is a large language model trained by OpenAI.">
+            Assistant is a large language model trained by OpenAI.
+          </MenuItem>
           <MenuItem value="as an assistant">as an assistant</MenuItem>
           <MenuItem value="as a agent understanding the sentiment">
             as a agent understanding the sentiment
@@ -59,7 +62,7 @@ const AssistantSetupMenu = (props: {
         multiline
         fullWidth
         rows={4}
-        defaultValue={systemMessageValue}
+        //        defaultValue={systemMessageValue}
         value={systemMessageValue}
         onChange={handleSystemMessageValueChange}
       />
