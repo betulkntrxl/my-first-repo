@@ -156,7 +156,11 @@ const Menu = (props: {
             >
               <MenuIcon color="primary" />
             </IconButton>
-            <img alt="McKesson" src="thumbnail_image001.jpg" />
+            <img
+              alt="McKesson"
+              width={150}
+              src="webimage-B31D6248-7763-4327-92184864D7920A7C.jpg"
+            />
             <Typography
               variant="h6"
               color="#005A8C"

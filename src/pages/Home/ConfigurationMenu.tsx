@@ -1,4 +1,4 @@
-import { Grid, Input, Slider, Tooltip, Typography } from '@mui/material';
+import { Grid, Slider, TextField, Tooltip, Typography } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
 
@@ -105,7 +105,7 @@ const ConfigurationMenu = (props: {
     <Typography>
       <Typography
         id="temperature-input-label"
-        style={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif' }}
+        style={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif', color: 'dimgray' }}
       >
         Temperature:{' '}
         <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
@@ -128,7 +128,8 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
         <Grid item>
-          <Input
+          <TextField
+            style={{ width: 75 }}
             title="temperature-input"
             value={tempValue}
             size="small"
@@ -143,7 +144,7 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
       </Grid>
-      <Typography id="topp-input-label">
+      <Typography id="topp-input-label" style={{ color: 'dimgray' }}>
         Top_P:{' '}
         <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
           <InfoOutlinedIcon />
@@ -165,7 +166,8 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
         <Grid item>
-          <Input
+          <TextField
+            style={{ width: 75 }}
             title="topP-input"
             value={topPValue}
             size="small"
@@ -180,7 +182,7 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
       </Grid>
-      <Typography id="maxtokens-input-label">
+      <Typography id="maxtokens-input-label" style={{ color: 'dimgray' }}>
         Max Tokens:{' '}
         <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
           <InfoOutlinedIcon />
@@ -202,7 +204,8 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
         <Grid item>
-          <Input
+          <TextField
+            style={{ width: 75 }}
             title="maxTokens-input"
             value={maxTokensValue}
             size="small"
@@ -218,7 +221,7 @@ const ConfigurationMenu = (props: {
         </Grid>
       </Grid>
       <Typography>
-        <Typography id="pastmessages-input-label">
+        <Typography id="pastmessages-input-label" style={{ color: 'dimgray' }}>
           Past messages included:{' '}
           <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
             <InfoOutlinedIcon />
@@ -240,7 +243,8 @@ const ConfigurationMenu = (props: {
             />
           </Grid>
           <Grid item>
-            <Input
+            <TextField
+              style={{ width: 75 }}
               title="pastMessages-input"
               value={pastMessagesValue}
               size="small"
