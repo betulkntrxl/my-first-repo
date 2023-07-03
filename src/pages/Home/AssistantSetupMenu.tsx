@@ -23,7 +23,9 @@ const AssistantSetupMenu = (props: {
 
   return (
     <Typography>
-      <Typography style={{ marginBottom: 10, marginTop: 10 }}>Message Template</Typography>
+      <Typography style={{ marginBottom: 10, marginTop: 10, color: 'dimgray' }}>
+        Message Template
+      </Typography>
       <FormControl fullWidth>
         <InputLabel id="systemMessageTemplate-label">System Message Template</InputLabel>
         <Select
@@ -45,7 +47,7 @@ const AssistantSetupMenu = (props: {
       </FormControl>
       <br />
       <br />
-      <div style={{ marginBottom: 10 }}>
+      <div style={{ marginBottom: 10, color: 'dimgray' }}>
         System message:
         <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
           <InfoOutlinedIcon />
