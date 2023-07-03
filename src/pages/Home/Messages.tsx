@@ -1,6 +1,8 @@
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import React from 'react';
+import SystemIcon from './system.jpg';
+import UserIcon from './user.jpg';
 
 const Messages = (props: {
   bottomRef: any;
@@ -67,8 +69,9 @@ const Messages = (props: {
                     {value.content}
                   </Paper>
                   <img
+                    key={Date.now()}
                     alt="user"
-                    src="user.jpg"
+                    src={UserIcon}
                     style={{ width: 40, height: 40, marginTop: 20, marginLeft: 10 }}
                   />
                 </Stack>
@@ -85,7 +88,7 @@ const Messages = (props: {
                 <Stack direction="row" style={{ float: 'left' }}>
                   <img
                     alt="assistant"
-                    src="system.jpg"
+                    src={SystemIcon}
                     style={{
                       width: 40,
                       height: 40,
