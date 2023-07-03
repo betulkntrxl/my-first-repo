@@ -105,7 +105,6 @@ const ConfigurationMenu = (props: {
         <Grid item>
           <TextField
             style={{ width: 75 }}
-            title="temperature-input"
             value={temperature}
             defaultValue={temperature}
             size="small"
@@ -116,6 +115,7 @@ const ConfigurationMenu = (props: {
               max: 1,
               type: 'number',
               'aria-labelledby': 'temperature-input-label',
+              title: 'temperature-input',
             }}
           />
         </Grid>
@@ -144,7 +144,6 @@ const ConfigurationMenu = (props: {
         <Grid item>
           <TextField
             style={{ width: 75 }}
-            title="topP-input"
             value={topP}
             defaultValue={topP}
             size="small"
@@ -155,6 +154,7 @@ const ConfigurationMenu = (props: {
               max: 1,
               type: 'number',
               'aria-labelledby': 'topp-input-label',
+              title: 'topP-input',
             }}
           />
         </Grid>
@@ -183,7 +183,6 @@ const ConfigurationMenu = (props: {
         <Grid item>
           <TextField
             style={{ width: 75 }}
-            title="maxTokens-input"
             value={maxTokens}
             defaultValue={maxTokens}
             size="small"
@@ -194,6 +193,7 @@ const ConfigurationMenu = (props: {
               max: 4096,
               type: 'number',
               'aria-labelledby': 'maxtokens-input-label',
+              title: 'maxTokens-input',
             }}
           />
         </Grid>
@@ -223,7 +223,6 @@ const ConfigurationMenu = (props: {
           <Grid item>
             <TextField
               style={{ width: 75 }}
-              title="pastMessages-input"
               value={pastMessages}
               defaultValue={pastMessages}
               size="small"
@@ -234,6 +233,7 @@ const ConfigurationMenu = (props: {
                 max: 20,
                 type: 'number',
                 'aria-labelledby': 'pastmessages-input-label',
+                title: 'pastMessages-input',
               }}
             />
           </Grid>
