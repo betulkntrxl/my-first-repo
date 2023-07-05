@@ -150,7 +150,9 @@ const Messages = (props: {
             <div
               style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
             />
-          ) : null
+          ) : (
+            ''
+          )
         }
         <br />
       </CardContent>
