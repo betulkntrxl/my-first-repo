@@ -149,15 +149,10 @@ const Messages = (props: {
           visible ? (
             <div
               style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
-            >
-              {/*  <img
-                src="/typing.gif"
-                alt="typing"
-                width="100px"
-                style={{ marginTop: 20, position: 'fixed', bottom: 125 }}
-          /> */}
-            </div>
-          ) : null
+            />
+          ) : (
+            ''
+          )
         }
         <br />
       </CardContent>
