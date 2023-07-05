@@ -9,9 +9,11 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { Paper, Stack } from '@mui/material';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
+import SystemIcon from './systemIntro.jpg';
 
 export interface DialogTitleProps {
   id: string;
@@ -45,17 +47,17 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 
 const Home = () => {
   const [data, setData] = useState({ chatsession: '', response: '' });
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
   const [maxTokens, setMaxTokens] = useState(800);
   const [pastMessages, setPastMessages] = useState(10);
-  const [displayValue, setDisplayValue] = useState('none');
+  const [displayValue, setDisplayValue] = useState('block');
   const [tokenCount, setTokenCount] = useState(0);
 
   const [disabledBool, setDisabledBool] = useState(true);
   const [systemMessageValue, setSystemMessageValue] = useState(
-    'Assistant is a large language model trained by OpenAI.'
+    'Assistant is a large language model trained by OpenAI."'
   );
   const systemMessageDisplay = {
     role: 'system',
@@ -285,6 +287,41 @@ const Home = () => {
               activity, system personnel may provide the evidence of such monitoring to law
               enforcement officials.
             </div>
+            {/* introduction */}
+            <Stack
+              direction="row"
+              style={{ position: 'fixed', bottom: 120, float: 'left', color: 'black' }}
+            >
+              <img
+                alt="assistant"
+                src={SystemIcon}
+                style={{
+                  width: 40,
+                  height: 40,
+                  marginTop: 20,
+                  marginLeft: 20,
+                  marginRight: 10,
+                }}
+              />
+              <Paper
+                key={-1}
+                elevation={3}
+                style={{
+                  backgroundColor: 'white',
+                  color: 'black',
+                  marginTop: 40,
+                  marginBottom: 20,
+                  padding: '10px',
+                  float: 'left',
+                  display: displayValue,
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                <Typography style={{ color: 'black' }}>
+                  Hello, I&apos;m the McKesson Azure OpenAI GPT35-Turbo Chatbot. How can I help?
+                </Typography>
+              </Paper>
+            </Stack>
           </div>
         ) : (
           ''
