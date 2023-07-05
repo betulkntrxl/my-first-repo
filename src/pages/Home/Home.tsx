@@ -278,6 +278,13 @@ const Home = () => {
               Our default models&apos; training data cuts off in 2021, so they may not have
               knowledge of current events.
             </div>
+            <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
+              Please note that McKesson Security teams and Microsoft will be monitoring all use in
+              this McKesson GPT environment. Anyone using this application expressly consents to
+              such monitoring and is advised that if such monitoring reveals possible criminal
+              activity, system personnel may provide the evidence of such monitoring to law
+              enforcement officials.
+            </div>
           </div>
         ) : (
           ''
