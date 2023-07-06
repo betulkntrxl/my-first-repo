@@ -317,7 +317,7 @@ const Home = () => {
                 }}
               >
                 <Typography style={{ color: 'black' }}>
-                  Hello, I&apos;m the McKesson Azure OpenAI GPT35-Turbo Chatbot. How can I help?
+                  Hello, I&apos;m the McKesson Chat App. How can I help?
                 </Typography>
               </Paper>
             </Stack>
