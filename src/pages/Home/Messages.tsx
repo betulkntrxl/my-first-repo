@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper';
 import React from 'react';
 import SystemIcon from './system.jpg';
 import UserIcon from './user.jpg';
+import Typing from './typing.gif';
 
 const Messages = (props: {
   bottomRef: any;
@@ -118,7 +119,7 @@ const Messages = (props: {
                     <div style={{ width: '300px' }}>
                       <img
                         alt="assistant"
-                        src="/typing.gif"
+                        src={Typing}
                         width="100px"
                         height={37}
                         style={{ marginTop: 40 }}
