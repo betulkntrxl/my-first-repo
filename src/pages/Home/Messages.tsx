@@ -1,6 +1,9 @@
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import React from 'react';
+import SystemIcon from './system.jpg';
+import UserIcon from './user.jpg';
+import Typing from './typing.gif';
 
 const Messages = (props: {
   bottomRef: any;
@@ -35,7 +38,9 @@ const Messages = (props: {
         bottom: 110,
         overflow: 'auto',
         overflowY: 'auto',
+        // zIndex: -2,
         backgroundColor: 'transparent',
+        //        backgroundColor:'#E5EFF3'
       }}
       ref={bottomRef}
     >
@@ -65,8 +70,9 @@ const Messages = (props: {
                     {value.content}
                   </Paper>
                   <img
+                    key={Date.now()}
                     alt="user"
-                    src="user.jpg"
+                    src={UserIcon}
                     style={{ width: 40, height: 40, marginTop: 20, marginLeft: 10 }}
                   />
                 </Stack>
@@ -83,7 +89,7 @@ const Messages = (props: {
                 <Stack direction="row" style={{ float: 'left' }}>
                   <img
                     alt="assistant"
-                    src="system.jpg"
+                    src={SystemIcon}
                     style={{
                       width: 40,
                       height: 40,
@@ -113,7 +119,7 @@ const Messages = (props: {
                     <div style={{ width: '300px' }}>
                       <img
                         alt="assistant"
-                        src="/typing.gif"
+                        src={Typing}
                         width="100px"
                         height={37}
                         style={{ marginTop: 40 }}
@@ -144,15 +150,10 @@ const Messages = (props: {
           visible ? (
             <div
               style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
-            >
-              {/*  <img
-                src="/typing.gif"
-                alt="typing"
-                width="100px"
-                style={{ marginTop: 20, position: 'fixed', bottom: 125 }}
-          /> */}
-            </div>
-          ) : null
+            />
+          ) : (
+            ''
+          )
         }
         <br />
       </CardContent>
