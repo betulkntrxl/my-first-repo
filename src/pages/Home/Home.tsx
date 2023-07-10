@@ -9,11 +9,9 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { Paper, Stack } from '@mui/material';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
-import SystemIcon from './systemIntro.jpg';
 
 export interface DialogTitleProps {
   id: string;
@@ -56,6 +54,8 @@ const Home = () => {
   const [tokenCount, setTokenCount] = useState(0);
 
   const [disabledBool, setDisabledBool] = useState(false);
+  const [disabledInput, setDisabledInput] = useState(false);
+
   const [systemMessageValue, setSystemMessageValue] = useState(
     'Assistant is a large language model trained by OpenAI."'
   );
@@ -182,6 +182,7 @@ const Home = () => {
       setDisplayValue('flex');
       // enable send box
       setDisabledBool(false);
+      setDisabledInput(false);
     } else if (response.status !== 401) {
       // Display API error if response is not 200 or 401
       handleAPIErrorOpen();
@@ -195,6 +196,7 @@ const Home = () => {
 
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
+    setDisabledInput(true);
     setDisabledBool(true);
     // clear send message box while waiting
     setData({ ...data, chatsession: '' });
@@ -350,6 +352,7 @@ const Home = () => {
             data={data}
             tokenCount={tokenCount}
             disabledBool={disabledBool}
+            disabledInput={disabledInput}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
           />
         </form>

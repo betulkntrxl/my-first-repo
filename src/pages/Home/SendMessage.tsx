@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -6,18 +6,23 @@ import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
-import { TextField } from '@mui/material';
 
 const SendMessage = (props: {
   handleChatsessionChange: (event: { target: { name: any; value: any } }) => void;
   data: { chatsession: string; response: string };
   tokenCount: number;
   disabledBool: boolean;
+  disabledInput: boolean;
   handleResetChatSessionOpen: () => void;
 }) => {
-  const { handleChatsessionChange, data, tokenCount, disabledBool, handleResetChatSessionOpen } =
-    props;
-  //  const [disabledSend, setDisabledSend] = useState(false);
+  const {
+    handleChatsessionChange,
+    data,
+    tokenCount,
+    disabledBool,
+    disabledInput,
+    handleResetChatSessionOpen,
+  } = props;
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
@@ -60,7 +65,7 @@ const SendMessage = (props: {
                 </Button>
               </Grid>
               <input
-                {...(disabledBool && { disabled: true })}
+                {...(disabledInput && { disabled: true })}
                 autoComplete="off"
                 title="sendmessage"
                 placeholder="Type your message here."
