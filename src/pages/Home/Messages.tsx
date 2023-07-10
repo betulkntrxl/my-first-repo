@@ -45,6 +45,45 @@ const Messages = (props: {
       ref={bottomRef}
     >
       <CardContent>
+        <div
+          style={{
+            //            position: 'absolute',
+            // color:'#B3CEDD',
+            color: 'steelblue',
+            //  backgroundColor: '#E5EFF3',
+            opacity: 0.6,
+            top: 0,
+            left: 0,
+            //  bottom: 0,
+            right: 0,
+            //   zIndex: -1,
+            //   overflow: 'hidden',
+            fontFamily: 'arial',
+          }}
+        >
+          <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
+            Enter an instruction or select a preset, and watch the API respond with a completion
+            that attempts to match the context or pattern you provided.
+            <br />
+            <br />
+            Use good judgment when sharing outputs, and attribute them to your name or company.
+            <br />
+            <br />
+            Requests submitted to our API will not be used to train or improve future models.
+            <br />
+            <br />
+            Our default models&apos; training data cuts off in 2021, so they may not have knowledge
+            of current events.
+          </div>
+          <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
+            Please note that McKesson Security teams and Microsoft will be monitoring all use in
+            this McKesson GPT environment. Anyone using this application expressly consents to such
+            monitoring and is advised that if such monitoring reveals possible criminal activity,
+            system personnel may provide the evidence of such monitoring to law enforcement
+            officials.
+          </div>
+        </div>
+
         {messagesDisplay.map((value, index) => {
           // check for user or system message
           if (value.role === 'user' && index !== 0) {
@@ -132,6 +171,7 @@ const Messages = (props: {
               </div>
             );
           }
+
           return (
             <div key={value.id + 12}>
               <br key={value.id + 13} />

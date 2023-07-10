@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -6,6 +6,7 @@ import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
+import { TextField } from '@mui/material';
 
 const SendMessage = (props: {
   handleChatsessionChange: (event: { target: { name: any; value: any } }) => void;
@@ -16,6 +17,7 @@ const SendMessage = (props: {
 }) => {
   const { handleChatsessionChange, data, tokenCount, disabledBool, handleResetChatSessionOpen } =
     props;
+  //  const [disabledSend, setDisabledSend] = useState(false);
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
@@ -39,6 +41,10 @@ const SendMessage = (props: {
     }
   `;
 
+  const handleSendChange = (event: { target: { name: any; value: any } }) => {
+    handleChatsessionChange(event);
+  };
+
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '110px' }} elevation={3}>
       <Stack direction="row">
@@ -54,11 +60,12 @@ const SendMessage = (props: {
                 </Button>
               </Grid>
               <input
+                {...(disabledBool && { disabled: true })}
                 autoComplete="off"
                 title="sendmessage"
                 placeholder="Type your message here."
                 name="chatsession"
-                onChange={handleChatsessionChange}
+                onChange={handleSendChange}
                 value={data.chatsession}
                 style={{
                   marginTop: 0,
@@ -82,7 +89,7 @@ const SendMessage = (props: {
                 title="send"
                 variant="contained"
                 type="submit"
-                {...(disabledBool && data.chatsession.length < 1 && { disabled: true })}
+                {...(disabledBool && { disabled: true })}
                 style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
               >
                 Send
