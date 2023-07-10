@@ -103,7 +103,7 @@
     "prop-types": "^15.8.1",
     "react-test-renderer": "^17.0.2",
     "stylelint-config-prettier": "^9.0.5",
-    "webpack": "^5.87.0"
+    "webpack": "^5.88.1"
   },
   "eslintConfig": {
     "overrides": [
