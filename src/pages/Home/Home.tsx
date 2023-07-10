@@ -9,11 +9,9 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { Paper, Stack } from '@mui/material';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
-import SystemIcon from './systemIntro.jpg';
 
 export interface DialogTitleProps {
   id: string;
@@ -55,7 +53,9 @@ const Home = () => {
   const [displayValue, setDisplayValue] = useState('block');
   const [tokenCount, setTokenCount] = useState(0);
 
-  const [disabledBool, setDisabledBool] = useState(true);
+  const [disabledBool, setDisabledBool] = useState(false);
+  const [disabledInput, setDisabledInput] = useState(false);
+
   const [systemMessageValue, setSystemMessageValue] = useState(
     'Assistant is a large language model trained by OpenAI."'
   );
@@ -69,7 +69,10 @@ const Home = () => {
     content: systemMessageValue,
   };
   const conversation = [systemMessage];
-  const conversationDisplay = [systemMessageDisplay];
+  const conversationDisplay = [
+    systemMessageDisplay,
+    { role: 'system', content: "Hello, I'm the McKesson Chat App. How can I help?", id: '1' },
+  ];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
@@ -129,8 +132,9 @@ const Home = () => {
   };
 
   async function sendMessage() {
-    setDisabledBool(true);
     setData({ ...data, response: '' });
+    setDisabledBool(true);
+
     setVisible(true);
     // remove system message to replace with System message parameter
     // check for past messages greater than 10 then remove earliest message and response
@@ -176,6 +180,9 @@ const Home = () => {
       setVisible(false);
 
       setDisplayValue('flex');
+      // enable send box
+      setDisabledBool(false);
+      setDisabledInput(false);
     } else if (response.status !== 401) {
       // Display API error if response is not 200 or 401
       handleAPIErrorOpen();
@@ -189,6 +196,10 @@ const Home = () => {
 
   async function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
+    setDisabledInput(true);
+    setDisabledBool(true);
+    // clear send message box while waiting
+    setData({ ...data, chatsession: '' });
     // display user message while waiting for response
     setMessagesDisplay([
       ...messagesDisplay,
@@ -246,13 +257,13 @@ const Home = () => {
           height: 500,
         }}
       >
-        {messagesDisplay.length < 2 ? ( // hide background when chat starts
+        {messagesDisplay.length < 3 ? ( // hide background when chat starts
           <div
             style={{
               position: 'absolute',
               // color:'#B3CEDD',
               color: 'steelblue',
-              backgroundColor: '#E5EFF3',
+              //  backgroundColor: '#E5EFF3',
               opacity: 0.6,
               top: 0,
               left: 0,
@@ -263,9 +274,9 @@ const Home = () => {
               fontFamily: 'arial',
             }}
           >
-            <div style={{ fontSize: 20, textAlign: 'center', marginTop: 150 }}>Welcome to</div>
-            <div style={{ fontSize: 56, textAlign: 'center', margin: 30 }}>McKesson Chat App</div>
-            <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
+            {/*            <div style={{ fontSize: 20, textAlign: 'center', marginTop: 150 }}>Welcome to</div> */}
+            {/*            <div style={{ fontSize: 56, textAlign: 'center', margin: 30 }}>McKesson Chat App</div> */}
+            {/*            <div style={{ fontSize: 14, textAlign: 'center', margin: 30, marginTop: 150 }}>
               Enter an instruction or select a preset, and watch the API respond with a completion
               that attempts to match the context or pattern you provided.
               <br />
@@ -285,42 +296,42 @@ const Home = () => {
               such monitoring and is advised that if such monitoring reveals possible criminal
               activity, system personnel may provide the evidence of such monitoring to law
               enforcement officials.
-            </div>
-            {/* introduction */}
-            <Stack
-              direction="row"
-              style={{ position: 'fixed', bottom: 120, float: 'left', color: 'black' }}
-            >
-              <img
-                alt="assistant"
-                src={SystemIcon}
-                style={{
-                  width: 40,
-                  height: 40,
-                  marginTop: 20,
-                  marginLeft: 20,
-                  marginRight: 10,
-                }}
-              />
-              <Paper
-                key={-1}
-                elevation={3}
-                style={{
-                  backgroundColor: 'white',
-                  color: 'black',
-                  marginTop: 40,
-                  marginBottom: 20,
-                  padding: '10px',
-                  float: 'left',
-                  display: displayValue,
-                  whiteSpace: 'pre-wrap',
-                }}
-              >
-                <Typography style={{ color: 'black' }}>
-                  Hello, I&apos;m the McKesson Chat App. How can I help?
-                </Typography>
-              </Paper>
-            </Stack>
+          </div> */}
+            {/* introduction
+    <Stack
+      direction="row"
+      style={{ position: 'fixed', bottom: 120, float: 'left', color: 'black' }}
+    >
+      <img
+        alt="assistant"
+        src={SystemIcon}
+        style={{
+          width: 40,
+          height: 40,
+          marginTop: 20,
+          marginLeft: 20,
+          marginRight: 10,
+        }}
+      />
+      <Paper
+        key={-1}
+        elevation={3}
+        style={{
+          backgroundColor: 'white',
+          color: 'black',
+          marginTop: 40,
+          marginBottom: 20,
+          padding: '10px',
+          float: 'left',
+          display: displayValue,
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        <Typography style={{ color: 'black' }}>
+          Hello, I&apos;m the McKesson Chat App. How can I help?
+        </Typography>
+      </Paper>
+    </Stack> */}
           </div>
         ) : (
           ''
@@ -341,6 +352,7 @@ const Home = () => {
             data={data}
             tokenCount={tokenCount}
             disabledBool={disabledBool}
+            disabledInput={disabledInput}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
           />
         </form>
