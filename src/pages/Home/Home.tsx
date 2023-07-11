@@ -297,7 +297,6 @@ const Home = () => {
             disabledBool={disabledBool}
             disabledInput={disabledInput}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
-            refInput={refInput}
           />
         </form>
       </div>

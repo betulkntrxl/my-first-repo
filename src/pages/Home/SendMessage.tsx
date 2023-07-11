@@ -6,8 +6,6 @@ import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
-import ReactDOM from 'react-dom';
-import { TextField } from '@mui/material';
 
 const SendMessage = (props: {
   handleChatsessionChange: (event: { target: { name: any; value: any } }) => void;
@@ -16,7 +14,6 @@ const SendMessage = (props: {
   disabledBool: boolean;
   disabledInput: boolean;
   handleResetChatSessionOpen: () => void;
-  refInput: any;
 }) => {
   const {
     handleChatsessionChange,
@@ -25,7 +22,6 @@ const SendMessage = (props: {
     disabledBool,
     disabledInput,
     handleResetChatSessionOpen,
-    refInput,
   } = props;
   const blue = {
     500: '#007FFF',
