@@ -61,11 +61,11 @@ export const setupAuth = expressWebServer => {
 
     const authCodeUrlRequestParams = {
       state,
-      scopes: [],
+      scopes: ['openid', 'offline_access', 'profile', 'email'],
     };
 
     const authCodeRequestParams = {
-      scopes: [],
+      scopes: ['openid', 'offline_access', 'profile', 'email'],
     };
 
     // trigger the first leg of auth code flow
