@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -6,6 +6,8 @@ import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
+import ReactDOM from 'react-dom';
+import { TextField } from '@mui/material';
 
 const SendMessage = (props: {
   handleChatsessionChange: (event: { target: { name: any; value: any } }) => void;
@@ -14,6 +16,7 @@ const SendMessage = (props: {
   disabledBool: boolean;
   disabledInput: boolean;
   handleResetChatSessionOpen: () => void;
+  refInput: any;
 }) => {
   const {
     handleChatsessionChange,
@@ -22,6 +25,7 @@ const SendMessage = (props: {
     disabledBool,
     disabledInput,
     handleResetChatSessionOpen,
+    refInput,
   } = props;
   const blue = {
     500: '#007FFF',
@@ -50,6 +54,12 @@ const SendMessage = (props: {
     handleChatsessionChange(event);
   };
 
+  const inputRef = useRef(null);
+  useEffect(() => {
+    // set focus to input field
+    (inputRef.current as any).focus();
+  }, [disabledInput]);
+
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '110px' }} elevation={3}>
       <Stack direction="row">
@@ -65,6 +75,7 @@ const SendMessage = (props: {
                 </Button>
               </Grid>
               <input
+                ref={inputRef}
                 {...(disabledInput && { disabled: true })}
                 autoComplete="off"
                 title="sendmessage"
