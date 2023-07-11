@@ -71,7 +71,7 @@ const Home = () => {
   const conversation = [systemMessage];
   const conversationDisplay = [
     systemMessageDisplay,
-    { role: 'system', content: "Hello, I'm the McKesson Chat App. How can I help?", id: '1' },
+    { role: 'system', content: "Hello, I'm the McKesson ChatApp. How can I help?", id: '1' },
   ];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
