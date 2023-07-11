@@ -131,8 +131,6 @@ const Home = () => {
     setPastMessages(newValue as number);
   };
 
-  const refInput = React.createRef();
-
   async function sendMessage() {
     const messageToSend = data.chatsession;
     // clear send message box while waiting
