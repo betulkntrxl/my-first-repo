@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -50,6 +50,12 @@ const SendMessage = (props: {
     handleChatsessionChange(event);
   };
 
+  const inputRef = useRef(null);
+  useEffect(() => {
+    // set focus to input field
+    (inputRef.current as any).focus();
+  }, [disabledInput]);
+
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '110px' }} elevation={3}>
       <Stack direction="row">
@@ -65,6 +71,7 @@ const SendMessage = (props: {
                 </Button>
               </Grid>
               <input
+                ref={inputRef}
                 {...(disabledInput && { disabled: true })}
                 autoComplete="off"
                 title="sendmessage"

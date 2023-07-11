@@ -57,7 +57,7 @@ const Home = () => {
   const [disabledInput, setDisabledInput] = useState(false);
 
   const [systemMessageValue, setSystemMessageValue] = useState(
-    'Assistant is a large language model trained by OpenAI."'
+    'Assistant is a large language model trained by OpenAI.'
   );
   const systemMessageDisplay = {
     role: 'system',
@@ -273,66 +273,7 @@ const Home = () => {
               overflow: 'hidden',
               fontFamily: 'arial',
             }}
-          >
-            {/*            <div style={{ fontSize: 20, textAlign: 'center', marginTop: 150 }}>Welcome to</div> */}
-            {/*            <div style={{ fontSize: 56, textAlign: 'center', margin: 30 }}>McKesson Chat App</div> */}
-            {/*            <div style={{ fontSize: 14, textAlign: 'center', margin: 30, marginTop: 150 }}>
-              Enter an instruction or select a preset, and watch the API respond with a completion
-              that attempts to match the context or pattern you provided.
-              <br />
-              <br />
-              Use good judgment when sharing outputs, and attribute them to your name or company.
-              <br />
-              <br />
-              Requests submitted to our API will not be used to train or improve future models.
-              <br />
-              <br />
-              Our default models&apos; training data cuts off in 2021, so they may not have
-              knowledge of current events.
-            </div>
-            <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
-              Please note that McKesson Security teams and Microsoft will be monitoring all use in
-              this McKesson GPT environment. Anyone using this application expressly consents to
-              such monitoring and is advised that if such monitoring reveals possible criminal
-              activity, system personnel may provide the evidence of such monitoring to law
-              enforcement officials.
-          </div> */}
-            {/* introduction
-    <Stack
-      direction="row"
-      style={{ position: 'fixed', bottom: 120, float: 'left', color: 'black' }}
-    >
-      <img
-        alt="assistant"
-        src={SystemIcon}
-        style={{
-          width: 40,
-          height: 40,
-          marginTop: 20,
-          marginLeft: 20,
-          marginRight: 10,
-        }}
-      />
-      <Paper
-        key={-1}
-        elevation={3}
-        style={{
-          backgroundColor: 'white',
-          color: 'black',
-          marginTop: 40,
-          marginBottom: 20,
-          padding: '10px',
-          float: 'left',
-          display: displayValue,
-          whiteSpace: 'pre-wrap',
-        }}
-      >
-        <Typography style={{ color: 'black' }}>
-          Hello, I&apos;m the McKesson Chat App. How can I help?
-        </Typography>
-      </Paper>
-    </Stack> */}
-          </div>
+          />
         ) : (
           ''
         )}
