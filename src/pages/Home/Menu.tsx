@@ -165,7 +165,7 @@ const Menu = (props: {
               sx={{ flexGrow: 1, fontWeight: 'bold', fontFamily: 'arial', marginLeft: 1 }}
               title="menutitle"
             >
-              Chat App
+              ChatApp
             </Typography>
             <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLogout}>
               <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />

@@ -12,10 +12,17 @@ const SendMessage = (props: {
   data: { chatsession: string; response: string };
   tokenCount: number;
   disabledBool: boolean;
+  disabledInput: boolean;
   handleResetChatSessionOpen: () => void;
 }) => {
-  const { handleChatsessionChange, data, tokenCount, disabledBool, handleResetChatSessionOpen } =
-    props;
+  const {
+    handleChatsessionChange,
+    data,
+    tokenCount,
+    disabledBool,
+    disabledInput,
+    handleResetChatSessionOpen,
+  } = props;
   const blue = {
     500: '#007FFF',
     600: '#0072E5',
@@ -39,6 +46,10 @@ const SendMessage = (props: {
     }
   `;
 
+  const handleSendChange = (event: { target: { name: any; value: any } }) => {
+    handleChatsessionChange(event);
+  };
+
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '110px' }} elevation={3}>
       <Stack direction="row">
@@ -54,11 +65,12 @@ const SendMessage = (props: {
                 </Button>
               </Grid>
               <input
+                {...(disabledInput && { disabled: true })}
                 autoComplete="off"
                 title="sendmessage"
                 placeholder="Type your message here."
                 name="chatsession"
-                onChange={handleChatsessionChange}
+                onChange={handleSendChange}
                 value={data.chatsession}
                 style={{
                   marginTop: 0,
@@ -82,7 +94,7 @@ const SendMessage = (props: {
                 title="send"
                 variant="contained"
                 type="submit"
-                {...(disabledBool && data.chatsession.length < 1 && { disabled: true })}
+                {...(disabledBool && { disabled: true })}
                 style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
               >
                 Send
