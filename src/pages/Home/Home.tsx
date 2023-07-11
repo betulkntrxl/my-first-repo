@@ -132,7 +132,9 @@ const Home = () => {
   };
 
   async function sendMessage() {
-    setData({ ...data, response: '' });
+    const messageToSend = data.chatsession;
+    // clear send message box while waiting
+    setData({ ...data, response: '', chatsession: '' });
     setDisabledBool(true);
 
     setVisible(true);
@@ -149,7 +151,7 @@ const Home = () => {
         messages: [
           { role: 'system', content: systemMessageValue },
           ...newmessage,
-          { role: 'user', content: data.chatsession },
+          { role: 'user', content: messageToSend },
         ],
         temperature,
         top_p: topP,
@@ -198,8 +200,6 @@ const Home = () => {
     event.preventDefault();
     setDisabledInput(true);
     setDisabledBool(true);
-    // clear send message box while waiting
-    setData({ ...data, chatsession: '' });
     // display user message while waiting for response
     setMessagesDisplay([
       ...messagesDisplay,
