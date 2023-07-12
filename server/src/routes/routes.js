@@ -44,8 +44,8 @@ export const setupRoutes = expressWebServer => {
     return req.session.isAuthenticated;
   }
 
-  // Intercept the prompt request and inject the api key
-  expressWebServer.use('/api/prompt', async (req, res, next) => {
+  // Intercept the prompt request, check auth and add headers
+  expressWebServer.use('/api/prompt', ensureAuthenticated401IfNot, async (req, res, next) => {
     logger.info(`Adding required and optional headers to http request to Mulesoft...`);
 
     // Adding headers for Mulesoft API
@@ -58,8 +58,8 @@ export const setupRoutes = expressWebServer => {
     next();
   });
 
-  // Creating a proxy to the OpenAI API
-  const openAIApiProxy = createProxyMiddleware({
+  // Creating a proxy to the Mulesoft OpenAI Chat API
+  const mulesoftOpenAIChatApiProxy = createProxyMiddleware({
     target: process.env.MULESOFT_OPENAI_CHAT_API_URL,
     changeOrigin: true,
     pathRewrite: { '^/api/prompt': '' },
@@ -67,8 +67,10 @@ export const setupRoutes = expressWebServer => {
     logger: console,
   });
 
-  // Prompt api which gets proxied to the openai api
-  expressWebServer.post('/api/prompt', ensureAuthenticated401IfNot, openAIApiProxy);
+  // Prompt api which gets proxied to the Mulesoft OpenAi Chat API
+  // Note the user needs to be authenticated before calling this.
+  // The auth check is done in the .use('/api/prompt'... above
+  expressWebServer.post('/api/prompt', mulesoftOpenAIChatApiProxy);
 
   // Make sure the user is authenticated before serving static content
   expressWebServer.use('/', ensureAuthenticatedRedirectIfNot);
