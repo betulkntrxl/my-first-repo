@@ -44,28 +44,33 @@ export const setupRoutes = expressWebServer => {
     return req.session.isAuthenticated;
   }
 
-  // Intercept the prompt request and inject the api key
-  expressWebServer.use('/api/prompt', async (req, res, next) => {
-    logger.info(`Adding api key header to http request...`);
+  // Intercept the prompt request, check auth and add headers
+  expressWebServer.use('/api/prompt', ensureAuthenticated401IfNot, async (req, res, next) => {
+    logger.info(`Adding required and optional headers to http request to Mulesoft...`);
 
-    // Adding api key in header
-    req.headers['api-key'] = process.env.OPEN_AI_API_KEY;
+    // Adding headers for Mulesoft API
+    req.headers.client_id = process.env.MULESOFT_OPENAI_CLIENT_ID;
+    req.headers.client_secret = process.env.MULESOFT_OPENAI_CLIENT_SECRET;
+    req.headers.urn = req.session.account.idTokenClaims.email;
+    // TODO: Harcoding for now until we figure out how to get the BU for the user
+    req.headers.bu = 'MckTech';
 
     next();
   });
 
-  // Creating a proxy to the OpenAI API
-  const openAIApiProxy = createProxyMiddleware({
-    target:
-      'https://openai-nonprod-test4.openai.azure.com/openai/deployments/openai-nonprod-gpt35-turbo-test4/chat/completions?api-version=2023-03-15-preview',
+  // Creating a proxy to the Mulesoft OpenAI Chat API
+  const mulesoftOpenAIChatApiProxy = createProxyMiddleware({
+    target: process.env.MULESOFT_OPENAI_CHAT_API_URL,
     changeOrigin: true,
     pathRewrite: { '^/api/prompt': '' },
     onProxyReq: fixRequestBody,
     logger: console,
   });
 
-  // Prompt api which gets proxied to the openai api
-  expressWebServer.post('/api/prompt', ensureAuthenticated401IfNot, openAIApiProxy);
+  // Prompt api which gets proxied to the Mulesoft OpenAi Chat API
+  // Note the user needs to be authenticated before calling this.
+  // The auth check is done in the .use('/api/prompt'... above
+  expressWebServer.post('/api/prompt', mulesoftOpenAIChatApiProxy);
 
   // Make sure the user is authenticated before serving static content
   expressWebServer.use('/', ensureAuthenticatedRedirectIfNot);
