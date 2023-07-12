@@ -76,7 +76,16 @@ const Messages = (props: {
               Our default models&apos; training data cuts off in 2021, so they may not have
               knowledge of current events.
             </div>
-            <div style={{ fontSize: 14, textAlign: 'center', marginTop: 30, marginBottom: 10 }}>
+            <div
+              style={{
+                fontSize: 14,
+                textAlign: 'center',
+                marginTop: 30,
+                marginBottom: 10,
+                marginLeft: '5%',
+                width: '90%',
+              }}
+            >
               Please note that McKesson Security teams and Microsoft will be monitoring all use in
               this McKesson GPT environment. Anyone using this application expressly consents to
               such monitoring and is advised that if such monitoring reveals possible criminal
