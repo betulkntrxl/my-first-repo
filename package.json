@@ -39,7 +39,7 @@
     "prepare": "husky install",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
     "prettier:check": "prettier --check 'src/**/*.{ts,tsx}'",
-    "prod-server": "yarn build && NODE_EXTRA_CA_CERTS=certs/mule-chain.pem node server/server.js"
+    "prod-server": "yarn build && node server/server.js"
   },
   "browserslist": {
     "production": [
