@@ -46,18 +46,21 @@ export const setupRoutes = expressWebServer => {
 
   // Intercept the prompt request and inject the api key
   expressWebServer.use('/api/prompt', async (req, res, next) => {
-    logger.info(`Adding api key header to http request...`);
+    logger.info(`Adding required and optional headers to http request to Mulesoft...`);
 
-    // Adding api key in header
-    req.headers['api-key'] = process.env.OPEN_AI_API_KEY;
+    // Adding headers for Mulesoft API
+    req.headers.client_id = process.env.MULESOFT_OPENAI_CLIENT_ID;
+    req.headers.client_secret = process.env.MULESOFT_OPENAI_CLIENT_SECRET;
+    req.headers.urn = req.session.account.idTokenClaims.email;
+    // TODO: Harcoding for now until we figure out how to get the BU for the user
+    req.headers.bu = 'MckTech';
 
     next();
   });
 
   // Creating a proxy to the OpenAI API
   const openAIApiProxy = createProxyMiddleware({
-    target:
-      'https://openai-nonprod-test4.openai.azure.com/openai/deployments/openai-nonprod-gpt35-turbo-test4/chat/completions?api-version=2023-03-15-preview',
+    target: process.env.MULESOFT_OPENAI_CHAT_API_URL,
     changeOrigin: true,
     pathRewrite: { '^/api/prompt': '' },
     onProxyReq: fixRequestBody,
