@@ -122,7 +122,7 @@ const SendMessage = (props: {
                   marginRight: 60,
                 }}
               >
-                Reset
+                Reset Chat
                 <CachedIcon style={{ marginLeft: 10, marginBottom: 5, marginTop: 5 }} />
               </CustomButton>
             </Stack>
