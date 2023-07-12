@@ -36,7 +36,8 @@ jobs:
         MANIFEST_NAME: manifest-${{ env.ENV }}.yml
         CLUSTER_TYPE: "AKS"
         CLUSTER_REGION: "US"
-        OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
+        MULESOFT_OPENAI_CLIENT_ID: ${{ secrets.MULESOFT_OPENAI_CLIENT_ID }}
+        MULESOFT_OPENAI_CLIENT_SECRET: ${{ secrets.MULESOFT_OPENAI_CLIENT_SECRET }}
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         TENANT_ID: ${{ secrets.TENANT_ID }}
