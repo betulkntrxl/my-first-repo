@@ -99,6 +99,9 @@ const Home = () => {
 
   const handleSessionExpiredClose = () => {
     setOpenSessionExpired(false);
+    // enable send box
+    setDisabledBool(false);
+    setDisabledInput(false);
   };
 
   const handleSessionExpiredContinue = () => {
@@ -113,6 +116,9 @@ const Home = () => {
 
   const handleAPIErrorClose = () => {
     setOpenAPIError(false);
+    // enable send box
+    setDisabledBool(false);
+    setDisabledInput(false);
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
@@ -179,6 +185,7 @@ const Home = () => {
         { role: 'user', content: data.chatsession, id: data.chatsession },
         { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
       ]);
+      // turn off typing animation
       setVisible(false);
 
       setDisplayValue('flex');
@@ -186,9 +193,21 @@ const Home = () => {
       setDisabledBool(false);
       setDisabledInput(false);
     } else if (response.status !== 401) {
+      // turn off typing animation
+      setVisible(false);
+      setMessagesDisplay([
+        ...messagesDisplay,
+        { role: 'user', content: data.chatsession, id: data.chatsession },
+      ]);
       // Display API error if response is not 200 or 401
       handleAPIErrorOpen();
     } else {
+      // turn off typing animation
+      setVisible(false);
+      setMessagesDisplay([
+        ...messagesDisplay,
+        { role: 'user', content: data.chatsession, id: data.chatsession },
+      ]);
       // display Session Expired message
       handleSessionExpiredOpen();
     }
