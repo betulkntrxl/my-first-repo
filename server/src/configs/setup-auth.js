@@ -96,7 +96,7 @@ export const setupAuth = expressWebServer => {
           next(error);
         }
       } else {
-        logger.info(
+        logger.error(
           `CSRF token doesn't match, destroying session and redirecting them to login again`
         );
         req.session.destroy(
