@@ -99,6 +99,12 @@ export const setupAuth = expressWebServer => {
         logger.error(
           `CSRF token doesn't match, destroying session and redirecting them to login again`
         );
+
+        res.clearCookie('mt-openai-chat', {
+          maxAge: Number(process.env.SESSION_EXPIRY_IN_MILLISECONDS) || 1800000,
+          httpOnly: true,
+          secure: true,
+        });
         req.session.destroy(
           () => res.redirect('/api/auth/login') // redirect to login route
         );
