@@ -77,8 +77,8 @@ export const setupAuth = expressWebServer => {
       const state = JSON.parse(cryptoProvider.base64Decode(req.body.state));
 
       // check if csrfToken matches
-      logger.info(`state.csrfToken ${state.csrfToken}`);
-      logger.info(`req.session.csrfToken ${req.session.csrfToken}`);
+      logger.debug(`state.csrfToken ${state.csrfToken}`);
+      logger.debug(`req.session.csrfToken ${req.session.csrfToken}`);
 
       if (state.csrfToken === req.session.csrfToken) {
         req.session.authCodeRequest.code = req.body.code; // authZ code
@@ -96,7 +96,12 @@ export const setupAuth = expressWebServer => {
           next(error);
         }
       } else {
-        next(new Error('csrf token does not match'));
+        logger.error(
+          `CSRF token doesn't match, destroying session and redirecting them to login again`
+        );
+        req.session.destroy(
+          () => res.redirect('/api/auth/login') // redirect to login route
+        );
       }
     } else {
       next(new Error('state is missing'));
