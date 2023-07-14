@@ -16,7 +16,9 @@ export const setupRedisClient = () => {
   client.connect().catch(exception => logger.error(`Failed to connect to Redis ${exception}`));
 
   client.on('error', error => {
-    logger.error(`Redis error... ${error}`);
+    // This a known issue where the Redis socket closes unexpectedly
+    // Catching it resets the connection so the connection stays alive
+    logger.warn(`Redis connection ${error}`);
   });
 
   logger.info('Redis client configured and connected');
