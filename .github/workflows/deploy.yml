@@ -44,6 +44,8 @@ jobs:
         EXPRESS_SESSION_SECRET: ${{ secrets.EXPRESS_SESSION_SECRET }}
         REDIS_HOST: ${{ secrets.REDIS_HOST }}
         REDIS_KEY: ${{ secrets.REDIS_KEY }}
+        ALLOW_TEST_USER: ${{ secrets.ALLOW_TEST_USER }}
+        TEST_USER_API_KEY: ${{ secrets.TEST_USER_API_KEY }}
 
       run: |
         # Setting up cluster configurations, config files are in the kubectl image
