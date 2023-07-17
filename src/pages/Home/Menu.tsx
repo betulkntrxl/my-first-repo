@@ -157,7 +157,7 @@ const Menu = (props: {
             >
               <MenuIcon color="primary" />
             </IconButton>
-            <img key={Date.now()} alt="McKesson" width={150} src={Logo} />
+            <img alt="McKesson" width={150} src={Logo} />
             <Typography
               variant="h6"
               color="#005A8C"

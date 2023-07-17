@@ -117,7 +117,6 @@ const Messages = (props: {
                       {value.content}
                     </Paper>
                     <img
-                      key={Date.now()}
                       alt="user"
                       src={UserIcon}
                       style={{ width: 40, height: 40, marginTop: 20, marginLeft: 10 }}
