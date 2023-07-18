@@ -168,7 +168,8 @@ const Home = () => {
       }),
     });
     const contentType = response.headers.get('content-type');
-    if (contentType && contentType.indexOf('application/json') !== -1) {
+    // check for response status 200 else display error message immediately
+    if (contentType && contentType.indexOf('application/json') !== -1 && response.status === 200) {
       const responseData = await response.json();
       setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
       setTokenCount(responseData.usage.total_tokens);
