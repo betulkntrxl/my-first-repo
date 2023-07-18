@@ -11,6 +11,8 @@ const ConfigurationMenu = (props: {
   handleMaxTokensChange: (event: Event, value: number | number[], activeThumb: number) => void;
   handlePastMessagesChange: (event: Event, value: number | number[], activeThumb: number) => void;
   pastMessages: number;
+  handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
+  APITimeout: number;
 }) => {
   const {
     temperature,
@@ -21,6 +23,8 @@ const ConfigurationMenu = (props: {
     handleMaxTokensChange,
     handlePastMessagesChange,
     pastMessages,
+    handleAPITimeoutChange,
+    APITimeout,
   } = props;
 
   const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
@@ -35,6 +39,9 @@ const ConfigurationMenu = (props: {
   };
   const handlePastMessagesSliderChange = (event: Event, newValue: number | number[]) => {
     handlePastMessagesChange(event, newValue, 1);
+  };
+  const handleAPITimeoutSliderChange = (event: Event, newValue: number | number[]) => {
+    handleAPITimeoutChange(event, newValue, 1);
   };
 
   const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +80,16 @@ const ConfigurationMenu = (props: {
       handlePastMessagesChange(new Event('20'), 20, 1);
     } else {
       handlePastMessagesChange(new Event(tmpval.toString()), tmpval, 1);
+    }
+  };
+  const handleAPITimeoutInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const tmpval = Number(event.target.value);
+    if (tmpval <= 0) {
+      handleAPITimeoutChange(new Event('0'), 0, 1);
+    } else if (tmpval > 20) {
+      handleAPITimeoutChange(new Event('20'), 20, 1);
+    } else {
+      handleAPITimeoutChange(new Event(tmpval.toString()), tmpval, 1);
     }
   };
 
@@ -234,6 +251,47 @@ const ConfigurationMenu = (props: {
                 type: 'number',
                 'aria-labelledby': 'pastmessages-input-label',
                 title: 'pastMessages-input',
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Typography>
+      <Typography>
+        <Typography id="apitimeout-input-label" style={{ color: 'dimgray' }}>
+          API Timeout:{' '}
+          <Tooltip title="API Timeout is the maximum amount of time allowed for the API to respond to a request. If the API takes longer than the specified timeout period to respond, the request will be terminated. This may need to be increased for complex prompts as the Azure OpenAI API can take time to process the request.">
+            <InfoOutlinedIcon />
+          </Tooltip>
+        </Typography>
+        <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
+          <Grid item xs>
+            <Slider
+              style={{ width: 240 }}
+              valueLabelDisplay="auto"
+              min={0}
+              max={120}
+              step={1}
+              value={APITimeout}
+              defaultValue={20}
+              aria-label="API Timeout"
+              onChange={handleAPITimeoutSliderChange}
+              aria-labelledby="apitimeout-input-label"
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              style={{ width: 75 }}
+              value={APITimeout}
+              defaultValue={APITimeout}
+              size="small"
+              onChange={handleAPITimeoutInputChange}
+              inputProps={{
+                step: 1,
+                min: 0,
+                max: 120,
+                type: 'number',
+                'aria-labelledby': 'apitimeout-input-label',
+                title: 'apitimeout-input',
               }}
             />
           </Grid>

@@ -50,6 +50,8 @@ const Home = () => {
   const [topP, setTopP] = useState(0.95);
   const [maxTokens, setMaxTokens] = useState(800);
   const [pastMessages, setPastMessages] = useState(10);
+  const [APITimeout, setAPITimeout] = useState(20);
+
   const [displayValue, setDisplayValue] = useState('block');
   const [tokenCount, setTokenCount] = useState(0);
 
@@ -137,6 +139,10 @@ const Home = () => {
     setPastMessages(newValue as number);
   };
 
+  const handleAPITimeoutChange = (event: Event, newValue: number | number[]): void => {
+    setAPITimeout(newValue as number);
+  };
+
   async function sendMessage() {
     const messageToSend = data.chatsession;
     // clear send message box while waiting
@@ -168,7 +174,7 @@ const Home = () => {
       }),
     });
     const contentType = response.headers.get('content-type');
-    if (contentType && contentType.indexOf('application/json') !== -1) {
+    if (contentType && contentType.indexOf('application/json') !== -1 && response.status === 200) {
       const responseData = await response.json();
       setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
       setTokenCount(responseData.usage.total_tokens);
@@ -263,6 +269,8 @@ const Home = () => {
         systemMessageValue={systemMessageValue}
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
+        handleAPITimeoutChange={handleAPITimeoutChange}
+        APITimeout={APITimeout}
       />
 
       <div

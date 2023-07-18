@@ -16,6 +16,8 @@ const AccordionMenu = (propsAccordianMenu: {
   systemMessageValue: string;
   handlePastMessagesChange: (event: Event, value: number | number[], activeThumb: number) => void;
   pastMessages: number;
+  handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
+  APITimeout: number;
 }) => {
   const {
     temperature,
@@ -28,6 +30,8 @@ const AccordionMenu = (propsAccordianMenu: {
     systemMessageValue,
     handlePastMessagesChange,
     pastMessages,
+    handleAPITimeoutChange,
+    APITimeout,
   } = propsAccordianMenu;
 
   const AccordionTheme = createTheme({
@@ -153,6 +157,8 @@ const AccordionMenu = (propsAccordianMenu: {
                 handleMaxTokensChange={handleMaxTokensChange}
                 handlePastMessagesChange={handlePastMessagesChange}
                 pastMessages={pastMessages}
+                handleAPITimeoutChange={handleAPITimeoutChange}
+                APITimeout={APITimeout}
               />
             </AccordionDetails>
           </ThemeProvider>
