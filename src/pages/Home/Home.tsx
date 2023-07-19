@@ -48,7 +48,7 @@ const Home = () => {
   const [visible, setVisible] = useState(true);
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
-  const [maxTokens, setMaxTokens] = useState(800);
+  const [maxTokens, setMaxTokens] = useState(200);
   const [pastMessages, setPastMessages] = useState(10);
   const [displayValue, setDisplayValue] = useState('block');
   const [tokenCount, setTokenCount] = useState(0);
