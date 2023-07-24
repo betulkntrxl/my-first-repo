@@ -23,3 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 
 storybook-static
+settings.json
+.wsuo
+read.lock
+*.vsidx
+VSWorkspaceState.json
+slnx.sqlite

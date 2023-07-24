@@ -229,12 +229,23 @@ const Home = () => {
     sendMessage();
   }
 
-  const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
+  const handleChatsessionChange = (event: { [x: string]: any; preventDefault: () => void }) => {
     setData({ ...data, [event.target.name]: event.target.value });
+
     if (event.target.value === '') {
       setDisabledBool(true);
     } else {
       setDisabledBool(false);
+    }
+  };
+
+  const handleKeyDown = (event: { [x: string]: any; preventDefault: () => void }) => {
+    // console.log('User pressed: ', event.key);
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      //  your logic here
+      handleSubmit(event);
+      // console.log('Enter key pressed ');
     }
   };
 
@@ -315,6 +326,7 @@ const Home = () => {
             disabledBool={disabledBool}
             disabledInput={disabledInput}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
+            handleKeyDown={handleKeyDown}
           />
         </form>
       </div>

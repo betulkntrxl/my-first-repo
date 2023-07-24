@@ -19,5 +19,9 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  },
+  "editor.fontSize": 18,
+  "terminal.integrated.fontSize": 18,
+  "editor.fontFamily": "Arial",
+  "terminal.integrated.fontFamily": "monospaced"
 }
