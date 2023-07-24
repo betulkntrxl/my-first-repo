@@ -23,4 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 
 storybook-static
-.vscode/settings.json
+settings.json
+.wsuo
+read.lock
+*.vsidx
+VSWorkspaceState.json
+slnx.sqlite
