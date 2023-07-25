@@ -9,6 +9,7 @@ import SendMessage from './SendMessage';
 import ResetChatDialog from './ResetChatDialog';
 import SessionExpiredDialog from './SessionExpiredDialog';
 import APIErrorDialog from './APIErrorDialog';
+import MaxTokensLimitDialog from './MaxTokensLimitDialog';
 
 export interface DialogTitleProps {
   id: string;
@@ -51,7 +52,7 @@ const Home = () => {
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
-  const [openMaxTokensLimitSnackbar, setOpenMaxTokensLimitSnackbar] = React.useState(false);
+  const [openMaxTokensLimit, setOpenMaxTokensLimit] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
     setOpenResetChatSession(true);
@@ -95,8 +96,12 @@ const Home = () => {
     setDisabledInput(false);
   };
 
-  const handleCloseMaxTokensLimitSnackbar = () => {
-    setOpenMaxTokensLimitSnackbar(false);
+  const handleMaxTokensLimitClose = () => {
+    setOpenMaxTokensLimit(false);
+  };
+
+  const handleMaxTokensLimitContinue = () => {
+    setOpenMaxTokensLimit(false);
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
@@ -173,7 +178,7 @@ const Home = () => {
       setDisabledInput(false);
       // check for max token limit exceeded and display message
       if (responseData.usage.total_tokens >= maxTokens) {
-        setOpenMaxTokensLimitSnackbar(true);
+        setOpenMaxTokensLimit(true);
       }
     } else if (response.status !== 401) {
       // turn off typing animation
@@ -218,12 +223,6 @@ const Home = () => {
       setDisabledBool(true);
     } else {
       setDisabledBool(false);
-    }
-    if (event.target.value === '[reset]') {
-      handleResetChatSessionOpen();
-    }
-    if (event.target.value === '[maxtokens]') {
-      setOpenMaxTokensLimitSnackbar(true);
     }
   };
 
@@ -328,8 +327,14 @@ const Home = () => {
           openAPIError,
         }}
       />
-
-      <Snackbar
+      <MaxTokensLimitDialog
+        {...{
+          handleMaxTokensLimitClose,
+          openMaxTokensLimit,
+          handleMaxTokensLimitContinue,
+        }}
+      />
+      {/* <Snackbar
         open={openMaxTokensLimitSnackbar}
         autoHideDuration={6000}
         onClose={handleCloseMaxTokensLimitSnackbar}
@@ -342,7 +347,7 @@ const Home = () => {
           The Max Tokens Limit has been exceeded. Increase the size of Max Tokens in the
           Configuration Menu.
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </div>
   );
 };
