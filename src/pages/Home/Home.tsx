@@ -48,7 +48,7 @@ const Home = () => {
   const [visible, setVisible] = useState(true);
   const [temperature, setTemperature] = useState<number>(0.7);
   const [topP, setTopP] = useState(0.95);
-  const [maxTokens, setMaxTokens] = useState(800);
+  const [maxTokens, setMaxTokens] = useState(200);
   const [pastMessages, setPastMessages] = useState(10);
   const [APITimeout, setAPITimeout] = useState(20);
 
@@ -174,6 +174,7 @@ const Home = () => {
       }),
     });
     const contentType = response.headers.get('content-type');
+    // check for response status 200 else display error message immediately
     if (contentType && contentType.indexOf('application/json') !== -1 && response.status === 200) {
       const responseData = await response.json();
       setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
@@ -234,12 +235,23 @@ const Home = () => {
     sendMessage();
   }
 
-  const handleChatsessionChange = (event: { target: { name: any; value: any } }) => {
+  const handleChatsessionChange = (event: { [x: string]: any; preventDefault: () => void }) => {
     setData({ ...data, [event.target.name]: event.target.value });
+
     if (event.target.value === '') {
       setDisabledBool(true);
     } else {
       setDisabledBool(false);
+    }
+  };
+
+  const handleKeyDown = (event: { [x: string]: any; preventDefault: () => void }) => {
+    // console.log('User pressed: ', event.key);
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      //  your logic here
+      handleSubmit(event);
+      // console.log('Enter key pressed ');
     }
   };
 
@@ -322,6 +334,7 @@ const Home = () => {
             disabledBool={disabledBool}
             disabledInput={disabledInput}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
+            handleKeyDown={handleKeyDown}
           />
         </form>
       </div>
