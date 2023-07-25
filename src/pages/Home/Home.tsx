@@ -52,7 +52,7 @@ const Home = () => {
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
-  const [openMaxTokensLimit, setOpenMaxTokensLimit] = React.useState(false);
+  //  const [openMaxTokensLimit, setOpenMaxTokensLimit] = React.useState(false);
   const [openMaxTokensLimitSnackbar, setOpenMaxTokensLimitSnackbar] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
@@ -99,14 +99,6 @@ const Home = () => {
 
   const handleCloseMaxTokensLimitSnackbar = () => {
     setOpenMaxTokensLimitSnackbar(false);
-  };
-
-  const handleMaxTokensLimitClose = () => {
-    setOpenMaxTokensLimit(false);
-  };
-
-  const handleMaxTokensLimitContinue = () => {
-    setOpenMaxTokensLimit(false);
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
