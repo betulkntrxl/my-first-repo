@@ -219,6 +219,9 @@ const Home = () => {
     } else {
       setDisabledBool(false);
     }
+    if (event.target.value === '[reset]') {
+      handleResetChatSessionOpen();
+    }
   };
 
   const handleKeyDown = (event: { [x: string]: any; preventDefault: () => void }) => {
