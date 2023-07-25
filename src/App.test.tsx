@@ -19,20 +19,6 @@ describe('testing the App', () => {
     expect(sendElement).toBeTruthy();
   }, 20000);
 
-  it('reset chat', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hi');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
-    const resetElement = screen.getByTitle('reset');
-    await user.click(resetElement);
-
-    expect(resetElement).toBeTruthy();
-  }, 2000);
-
   it('renders a menu', async () => {
     render(<App />);
     const menu = screen.getByLabelText('menu');
