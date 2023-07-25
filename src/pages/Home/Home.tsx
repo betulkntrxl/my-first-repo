@@ -1,46 +1,20 @@
 import React, { useState, useRef } from 'react';
-import Button from '@mui/material/Button';
-import DialogActions from '@mui/material/DialogActions';
-import Typography from '@mui/material/Typography';
-import DialogContent from '@mui/material/DialogContent';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
+
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
+import ResetChatDialog from './ResetChatDialog';
+import SessionExpiredDialog from './SessionExpiredDialog';
+import APIErrorDialog from './APIErrorDialog';
+import MaxTokensLimitDialog from './MaxTokensLimitDialog';
 
 export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   onClose: () => void;
-}
-
-function BootstrapDialogTitle(props: DialogTitleProps) {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: theme => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
 }
 
 const Home = () => {
@@ -78,6 +52,7 @@ const Home = () => {
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
+  const [openMaxTokensLimit, setOpenMaxTokensLimit] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
     setOpenResetChatSession(true);
@@ -119,6 +94,18 @@ const Home = () => {
     // enable send box
     setDisabledBool(false);
     setDisabledInput(false);
+  };
+
+  const handleMaxTokensLimitOpen = () => {
+    setOpenMaxTokensLimit(true);
+  };
+
+  const handleMaxTokensLimitClose = () => {
+    setOpenMaxTokensLimit(false);
+  };
+
+  const handleMaxTokensLimitContinue = () => {
+    setOpenMaxTokensLimit(false);
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
@@ -193,6 +180,10 @@ const Home = () => {
       // enable send box
       setDisabledBool(false);
       setDisabledInput(false);
+      // check for max token limit exceeded and display message
+      if (responseData.usage.total_tokens >= maxTokens) {
+        setOpenMaxTokensLimit(true);
+      }
     } else if (response.status !== 401) {
       // turn off typing animation
       setVisible(false);
@@ -330,71 +321,35 @@ const Home = () => {
           />
         </form>
       </div>
-      <BootstrapDialog
-        onClose={handleResetChatSessionClose}
-        aria-labelledby="customized-dialog-title"
-        open={openResetChatSession}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleResetChatSessionClose}>
-          <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
-            Reset Chat
-          </div>
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            This will reset your chat session. Do you want to continue?
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={handleResetChatSessionClose}>
-            Cancel
-          </Button>
-          <Button variant="contained" autoFocus onClick={handleResetChatSessionContinue}>
-            Continue
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
-      <BootstrapDialog
-        onClose={handleSessionExpiredClose}
-        aria-labelledby="customized-dialog-title"
-        open={openSessionExpired}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleSessionExpiredClose}>
-          <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
-            Session Expired
-          </div>
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>Your session has expired. Do you want to continue?</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={handleSessionExpiredClose}>
-            Cancel
-          </Button>
-          <Button variant="contained" autoFocus onClick={handleSessionExpiredContinue}>
-            Continue
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
-      <BootstrapDialog
-        onClose={handleAPIErrorClose}
-        aria-labelledby="customized-dialog-title"
-        open={openAPIError}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleAPIErrorClose}>
-          <div style={{ color: 'red', fontWeight: 'bold' }}>Error !</div>
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            An error has occured. Please try again at a later time.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={handleAPIErrorClose}>
-            Ok
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
+
+      <ResetChatDialog
+        {...{
+          handleResetChatSessionClose,
+          openResetChatSession,
+          handleResetChatSessionContinue,
+        }}
+      />
+
+      <SessionExpiredDialog
+        {...{
+          handleSessionExpiredClose,
+          openSessionExpired,
+          handleSessionExpiredContinue,
+        }}
+      />
+      <APIErrorDialog
+        {...{
+          handleAPIErrorClose,
+          openAPIError,
+        }}
+      />
+      <MaxTokensLimitDialog
+        {...{
+          handleMaxTokensLimitClose,
+          openMaxTokensLimit,
+          handleMaxTokensLimitContinue,
+        }}
+      />
     </div>
   );
 };
