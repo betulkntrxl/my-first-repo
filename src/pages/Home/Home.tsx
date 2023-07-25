@@ -1,7 +1,5 @@
 import React, { useState, useRef } from 'react';
 
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -246,15 +244,6 @@ const Home = () => {
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
     setSystemMessageValue(event.target.value);
   };
-
-  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-      padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-      padding: theme.spacing(1),
-    },
-  }));
 
   return (
     <div>
