@@ -1,8 +1,5 @@
 import React, { useState, useRef } from 'react';
 
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
