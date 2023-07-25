@@ -222,6 +222,9 @@ const Home = () => {
     if (event.target.value === '[reset]') {
       handleResetChatSessionOpen();
     }
+    if (event.target.value === '[maxtokens]') {
+      setOpenMaxTokensLimitSnackbar(true);
+    }
   };
 
   const handleKeyDown = (event: { [x: string]: any; preventDefault: () => void }) => {
