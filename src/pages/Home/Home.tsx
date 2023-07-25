@@ -9,7 +9,6 @@ import SendMessage from './SendMessage';
 import ResetChatDialog from './ResetChatDialog';
 import SessionExpiredDialog from './SessionExpiredDialog';
 import APIErrorDialog from './APIErrorDialog';
-// import MaxTokensLimitDialog from './MaxTokensLimitDialog';
 
 export interface DialogTitleProps {
   id: string;
@@ -52,7 +51,6 @@ const Home = () => {
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
-  //  const [openMaxTokensLimit, setOpenMaxTokensLimit] = React.useState(false);
   const [openMaxTokensLimitSnackbar, setOpenMaxTokensLimitSnackbar] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
@@ -224,12 +222,9 @@ const Home = () => {
   };
 
   const handleKeyDown = (event: { [x: string]: any; preventDefault: () => void }) => {
-    // console.log('User pressed: ', event.key);
-
     if (event.key === 'Enter' && !event.shiftKey) {
-      //  your logic here
+      //  handle Enter key but not shift-Enter
       handleSubmit(event);
-      // console.log('Enter key pressed ');
     }
   };
 
@@ -327,13 +322,7 @@ const Home = () => {
           openAPIError,
         }}
       />
-      {/* <MaxTokensLimitDialog
-        {...{
-          handleMaxTokensLimitClose,
-          openMaxTokensLimit,
-          handleMaxTokensLimitContinue,
-        }}
-      /> */}
+
       <Snackbar
         open={openMaxTokensLimitSnackbar}
         autoHideDuration={6000}
