@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import Menu from './Menu';
 import Messages from './Messages';
@@ -53,6 +55,7 @@ const Home = () => {
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
   const [openMaxTokensLimit, setOpenMaxTokensLimit] = React.useState(false);
+  const [openMaxTokensLimitSnackbar, setOpenMaxTokensLimitSnackbar] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
     setOpenResetChatSession(true);
@@ -96,8 +99,8 @@ const Home = () => {
     setDisabledInput(false);
   };
 
-  const handleMaxTokensLimitOpen = () => {
-    setOpenMaxTokensLimit(true);
+  const handleCloseMaxTokensLimitSnackbar = () => {
+    setOpenMaxTokensLimitSnackbar(false);
   };
 
   const handleMaxTokensLimitClose = () => {
@@ -182,7 +185,7 @@ const Home = () => {
       setDisabledInput(false);
       // check for max token limit exceeded and display message
       if (responseData.usage.total_tokens >= maxTokens) {
-        setOpenMaxTokensLimit(true);
+        setOpenMaxTokensLimitSnackbar(true);
       }
     } else if (response.status !== 401) {
       // turn off typing animation
@@ -350,6 +353,20 @@ const Home = () => {
           handleMaxTokensLimitContinue,
         }}
       />
+      <Snackbar
+        open={openMaxTokensLimitSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseMaxTokensLimitSnackbar}
+      >
+        <Alert
+          onClose={handleCloseMaxTokensLimitSnackbar}
+          severity="warning"
+          sx={{ width: '100%', marginLeft: 25, marginBottom: 5 }}
+        >
+          The Max Tokens Limit has been exceeded. Increase the size of Max Tokens in the
+          Configuration Menu.
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
