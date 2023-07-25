@@ -24,7 +24,7 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const sendmessageElement = screen.getByTitle('sendmessage');
     await user.click(sendmessageElement);
-    await user.keyboard('[maxtokens]');
+    await user.keyboard('hi');
     const sendElement = screen.getByTitle('send');
     await user.click(sendElement);
     const resetElement = screen.getByTitle('reset');
