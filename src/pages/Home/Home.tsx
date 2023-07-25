@@ -9,7 +9,7 @@ import SendMessage from './SendMessage';
 import ResetChatDialog from './ResetChatDialog';
 import SessionExpiredDialog from './SessionExpiredDialog';
 import APIErrorDialog from './APIErrorDialog';
-import MaxTokensLimitDialog from './MaxTokensLimitDialog';
+// import MaxTokensLimitDialog from './MaxTokensLimitDialog';
 
 export interface DialogTitleProps {
   id: string;
@@ -335,13 +335,13 @@ const Home = () => {
           openAPIError,
         }}
       />
-      <MaxTokensLimitDialog
+      {/* <MaxTokensLimitDialog
         {...{
           handleMaxTokensLimitClose,
           openMaxTokensLimit,
           handleMaxTokensLimitContinue,
         }}
-      />
+      /> */}
       <Snackbar
         open={openMaxTokensLimitSnackbar}
         autoHideDuration={6000}
@@ -350,7 +350,7 @@ const Home = () => {
         <Alert
           onClose={handleCloseMaxTokensLimitSnackbar}
           severity="warning"
-          sx={{ width: '100%', marginLeft: 25, marginBottom: 5 }}
+          sx={{ width: '100%', marginLeft: 25, marginBottom: 6 }}
         >
           The Max Tokens Limit has been exceeded. Increase the size of Max Tokens in the
           Configuration Menu.
