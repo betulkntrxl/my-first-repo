@@ -70,10 +70,15 @@ const SessionExpiredDialog = (props: {
         <Typography gutterBottom>Your session has expired. Do you want to continue?</Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleSessionExpiredClose}>
+        <Button variant="outlined" onClick={handleSessionExpiredClose} title="close-button">
           Cancel
         </Button>
-        <Button variant="contained" autoFocus onClick={handleSessionExpiredContinue}>
+        <Button
+          variant="contained"
+          autoFocus
+          onClick={handleSessionExpiredContinue}
+          title="continue-button"
+        >
           Continue
         </Button>
       </DialogActions>

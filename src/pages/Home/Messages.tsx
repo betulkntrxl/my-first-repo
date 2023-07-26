@@ -22,7 +22,7 @@ const Messages = (props: {
       if (bottomRef.current) {
         bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
       }
-    }, 1000);
+    }, 500);
     return null;
   }
 
@@ -125,6 +125,7 @@ const Messages = (props: {
                 </div>
               );
             }
+
             // check for message from system
             if (value.role === 'system' && index !== 0) {
               return (
@@ -176,6 +177,7 @@ const Messages = (props: {
 
             return '';
           })}
+
           {
             // scroll to bottom of chat after system has responded
             scrollToBottom()
