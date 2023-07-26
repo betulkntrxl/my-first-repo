@@ -143,6 +143,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const maxtokensInput = screen.getByTitle('maxTokens-input');
     await user.click(maxtokensInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('200');
     expect(maxtokensInput).toBeTruthy();
   });
@@ -156,6 +158,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const maxtokensInput = screen.getByTitle('maxTokens-input');
     await user.click(maxtokensInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('-1');
     expect(maxtokensInput).toBeTruthy();
   });
@@ -169,6 +173,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const maxtokensInput = screen.getByTitle('maxTokens-input');
     await user.click(maxtokensInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('5000');
     expect(maxtokensInput).toBeTruthy();
   });
@@ -193,6 +199,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const previousMessagesInput = screen.getByTitle('pastMessages-input');
     await user.click(previousMessagesInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('1');
     expect(previousMessagesInput).toBeTruthy();
   });
@@ -206,6 +214,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const previousMessagesInput = screen.getByTitle('pastMessages-input');
     await user.click(previousMessagesInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('-1');
     expect(previousMessagesInput).toBeTruthy();
   });
@@ -219,7 +229,22 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const previousMessagesInput = screen.getByTitle('pastMessages-input');
     await user.click(previousMessagesInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('30');
     expect(previousMessagesInput).toBeTruthy();
+  });
+
+  it('renders a System Message input and tests for input', async () => {
+    render(<App />);
+    const user = userEvent.setup();
+    const menuElement = screen.getByLabelText('menu');
+    await user.click(menuElement);
+    const systemMessageInput = screen.getByTitle('system-message-input');
+    await user.click(systemMessageInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
+    await user.keyboard('test');
+    expect(systemMessageInput).toBeTruthy();
   });
 });

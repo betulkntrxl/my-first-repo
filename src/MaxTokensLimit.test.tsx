@@ -27,9 +27,10 @@ const server = setupServer(
         usage: {
           completion_tokens: 9,
           prompt_tokens: 25,
-          total_tokens: 34,
+          total_tokens: 400,
         },
-      })
+      }),
+      ctx.status(401)
     )
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' })))
@@ -42,7 +43,7 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and returns status 200 ok', async () => {
+  it('sends a message and returns total tokens exceeding max token limit', async () => {
     render(<App />);
     const user = userEvent.setup();
     const sendmessageElement = screen.getByTitle('sendmessage');
@@ -53,30 +54,4 @@ describe('testing the App', () => {
 
     expect(sendElement).toBeTruthy();
   }, 5000);
-
-  it('sends a message using Enter key', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello{Enter}');
-
-    expect(sendmessageElement).toBeTruthy();
-  }, 5000);
-
-  it('renders a menu', async () => {
-    render(<App />);
-    const menu = screen.getByLabelText('menu');
-    expect(menu).toBeTruthy();
-  });
-  it('renders a Message input', () => {
-    render(<App />);
-    const textareaNode = screen.getByPlaceholderText('Type your message here.');
-    expect(textareaNode).toBeTruthy();
-  });
-  it('renders a Token Count', () => {
-    render(<App />);
-    const tokenCount = screen.getByText(/Token Count:/);
-    expect(tokenCount).toBeTruthy();
-  });
 });
