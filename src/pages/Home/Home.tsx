@@ -6,7 +6,6 @@ import SendMessage from './SendMessage';
 import ResetChatDialog from './ResetChatDialog';
 import SessionExpiredDialog from './SessionExpiredDialog';
 import APIErrorDialog from './APIErrorDialog';
-import MaxTokensLimitDialog from './MaxTokensLimitDialog';
 
 export interface DialogTitleProps {
   id: string;
@@ -22,8 +21,9 @@ const Home = () => {
   const [maxTokens, setMaxTokens] = useState(200);
   const [pastMessages, setPastMessages] = useState(10);
   const [displayValue, setDisplayValue] = useState('block');
-  const [tokenCount, setTokenCount] = useState(0);
+  const [tokenMessage, setTokenMessage] = useState('');
 
+  const [tokenCount, setTokenCount] = useState(0);
   const [disabledBool, setDisabledBool] = useState(false);
   const [disabledInput, setDisabledInput] = useState(false);
 
@@ -153,6 +153,11 @@ const Home = () => {
       const responseData = await response.json();
       setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
       setTokenCount(responseData.usage.total_tokens);
+      setTokenMessage(
+        responseData.usage.total_tokens > maxTokens
+          ? '  ** Max Tokens Limit Exceeded.  Increase Max Tokens in the Configuration Menu.'
+          : ''
+      );
       // add response to conversation
       setMessages([
         { role: 'system', content: systemMessageValue },
@@ -295,6 +300,7 @@ const Home = () => {
             handleChatsessionChange={handleChatsessionChange}
             data={data}
             tokenCount={tokenCount}
+            tokenMessage={tokenMessage}
             disabledBool={disabledBool}
             disabledInput={disabledInput}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
@@ -324,27 +330,6 @@ const Home = () => {
           openAPIError,
         }}
       />
-      <MaxTokensLimitDialog
-        {...{
-          handleMaxTokensLimitClose,
-          openMaxTokensLimit,
-          handleMaxTokensLimitContinue,
-        }}
-      />
-      {/* <Snackbar
-        open={openMaxTokensLimitSnackbar}
-        autoHideDuration={6000}
-        onClose={handleCloseMaxTokensLimitSnackbar}
-      >
-        <Alert
-          onClose={handleCloseMaxTokensLimitSnackbar}
-          severity="warning"
-          sx={{ width: '100%', marginLeft: 25, marginBottom: 6 }}
-        >
-          The Max Tokens Limit has been exceeded. Increase the size of Max Tokens in the
-          Configuration Menu.
-        </Alert>
-      </Snackbar> */}
     </div>
   );
 };
