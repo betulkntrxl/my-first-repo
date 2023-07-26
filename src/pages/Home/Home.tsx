@@ -49,7 +49,6 @@ const Home = () => {
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
-  const [openMaxTokensLimit, setOpenMaxTokensLimit] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
     setOpenResetChatSession(true);
@@ -91,14 +90,6 @@ const Home = () => {
     // enable send box
     setDisabledBool(false);
     setDisabledInput(false);
-  };
-
-  const handleMaxTokensLimitClose = () => {
-    setOpenMaxTokensLimit(false);
-  };
-
-  const handleMaxTokensLimitContinue = () => {
-    setOpenMaxTokensLimit(false);
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
@@ -178,10 +169,6 @@ const Home = () => {
       // enable send box
       setDisabledBool(false);
       setDisabledInput(false);
-      // check for max token limit exceeded and display message
-      if (responseData.usage.total_tokens >= maxTokens) {
-        setOpenMaxTokensLimit(true);
-      }
     } else if (response.status !== 401) {
       // turn off typing animation
       setVisible(false);
