@@ -81,7 +81,9 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const toppInput = screen.getByTitle('topP-input');
     await user.click(toppInput);
-    await user.keyboard('.8');
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
+    await user.keyboard('0.8');
     expect(toppInput).toBeTruthy();
   });
 
@@ -94,6 +96,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const toppInput = screen.getByTitle('topP-input');
     await user.click(toppInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('-1');
     expect(toppInput).toBeTruthy();
   });
@@ -107,6 +111,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const toppInput = screen.getByTitle('topP-input');
     await user.click(toppInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('2');
     expect(toppInput).toBeTruthy();
   });
