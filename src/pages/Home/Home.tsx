@@ -1,10 +1,14 @@
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import axiosRetry from 'axios-retry';
 
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
 import ResetChatDialog from './ResetChatDialog';
 import SessionExpiredDialog from './SessionExpiredDialog';
+import APITimeoutDialog from './APITimeoutDialog';
+import APIRateLimitDialog from './APIRateLimitDialog';
 import APIErrorDialog from './APIErrorDialog';
 
 export interface DialogTitleProps {
@@ -50,6 +54,8 @@ const Home = () => {
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
+  const [openAPIRateLimit, setOpenAPIRateLimit] = React.useState(false);
+  const [openAPITimeout, setOpenAPITimeout] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
@@ -81,6 +87,28 @@ const Home = () => {
     setOpenSessionExpired(false);
     // redirect to login
     window.location.href = '/api/auth/login';
+  };
+
+  const handleAPIRateLimitOpen = () => {
+    setOpenAPIRateLimit(true);
+  };
+
+  const handleAPIRateLimitClose = () => {
+    setOpenAPIRateLimit(false);
+    // enable send box
+    setDisabledBool(false);
+    setDisabledInput(false);
+  };
+
+  const handleAPITimeoutOpen = () => {
+    setOpenAPITimeout(true);
+  };
+
+  const handleAPITimeoutClose = () => {
+    setOpenAPITimeout(false);
+    // enable send box
+    setDisabledBool(false);
+    setDisabledInput(false);
   };
 
   const handleAPIErrorOpen = () => {
@@ -125,75 +153,135 @@ const Home = () => {
     // check for past messages greater than 10 then remove earliest message and response
     const newmessage =
       [...messages].length > pastMessages + 1 ? [...messages].slice(3) : [...messages].slice(1);
-    const response = await fetch('/api/prompt', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+
+    axiosRetry(axios, {
+      retries: 3,
+      shouldResetTimeout: true,
+      retryCondition: error => {
+        const errorReponse = JSON.parse(JSON.stringify(error));
+        return (
+          axiosRetry.isNetworkOrIdempotentRequestError(error) ||
+          error.code === 'ECONNABORTED' ||
+          (errorReponse.config?.method === 'post' && errorReponse.status === 500)
+        );
       },
-      body: JSON.stringify({
-        messages: [
+    });
+
+    await axios
+      .post(
+        '/api/prompt',
+        {
+          messages: [
+            { role: 'system', content: systemMessageValue },
+            ...newmessage,
+            { role: 'user', content: messageToSend },
+          ],
+          temperature,
+          top_p: topP,
+          frequency_penalty: 0,
+          presence_penalty: 0,
+          max_tokens: maxTokens,
+          stop: null,
+        },
+        {
+          timeout: APITimeout * 1000, // axios expects timeout in milliseconds
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then(response => {
+        const responseData = response.data;
+        setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
+        setTokenCount(responseData.usage.total_tokens);
+        // add response to conversation
+        setMessages([
           { role: 'system', content: systemMessageValue },
           ...newmessage,
-          { role: 'user', content: messageToSend },
-        ],
-        temperature,
-        top_p: topP,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-        max_tokens: maxTokens,
-        stop: null,
-      }),
-    });
-    const contentType = response.headers.get('content-type');
-    // check for response status 200 else display error message immediately
-    if (contentType && contentType.indexOf('application/json') !== -1 && response.status === 200) {
-      const responseData = await response.json();
-      setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
-      setTokenCount(responseData.usage.total_tokens);
-      setTokenMessage(
-        responseData.usage.total_tokens > maxTokens
-          ? '  ** Max Tokens Limit Exceeded.  Increase Max Tokens in the Configuration Menu.'
-          : ''
-      );
-      // add response to conversation
-      setMessages([
-        { role: 'system', content: systemMessageValue },
-        ...newmessage,
-        { role: 'user', content: data.chatsession },
-        { role: 'system', content: responseData.choices[0].message.content },
-      ]);
-      // trim last empty assistant message and add new user and assistant reaponse
-      setMessagesDisplay([
-        ...messagesDisplay,
-        { role: 'user', content: data.chatsession, id: data.chatsession },
-        { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
-      ]);
-      // turn off typing animation
-      setVisible(false);
+          { role: 'user', content: data.chatsession },
+          { role: 'system', content: responseData.choices[0].message.content },
+        ]);
+        // trim last empty assistant message and add new user and assistant reaponse
+        setMessagesDisplay([
+          ...messagesDisplay,
+          { role: 'user', content: data.chatsession, id: data.chatsession },
+          { role: 'system', content: responseData.choices[0].message.content, id: responseData.id },
+        ]);
+        // turn off typing animation
+        setVisible(false);
 
-      setDisplayValue('flex');
-      // enable send box
-      setDisabledBool(false);
-      setDisabledInput(false);
-    } else if (response.status !== 401) {
-      // turn off typing animation
-      setVisible(false);
-      setMessagesDisplay([
-        ...messagesDisplay,
-        { role: 'user', content: data.chatsession, id: data.chatsession },
-      ]);
-      // Display API error if response is not 200 or 401
-      handleAPIErrorOpen();
-    } else {
-      // turn off typing animation
-      setVisible(false);
-      setMessagesDisplay([
-        ...messagesDisplay,
-        { role: 'user', content: data.chatsession, id: data.chatsession },
-      ]);
-      // display Session Expired message
-      handleSessionExpiredOpen();
-    }
+        setDisplayValue('flex');
+        // enable send box
+        setDisabledBool(false);
+        setDisabledInput(false);
+      })
+      .catch(error => {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        if (error.response) {
+          // Authentication error
+          if (error.response.status === 401) {
+            // turn off typing animation
+            setVisible(false);
+            setMessagesDisplay([
+              ...messagesDisplay,
+              { role: 'user', content: data.chatsession, id: data.chatsession },
+            ]);
+
+            handleSessionExpiredOpen();
+          }
+          // Rate Limit error
+          else if (error.response.status === 429) {
+            // turn off typing animation
+            setVisible(false);
+            setMessagesDisplay([
+              ...messagesDisplay,
+              { role: 'user', content: data.chatsession, id: data.chatsession },
+            ]);
+
+            handleAPIRateLimitOpen();
+          }
+          // Timeout issue on Mulesoft's side
+          else if (error.response.status === 504) {
+            // turn off typing animation
+            setVisible(false);
+            setMessagesDisplay([
+              ...messagesDisplay,
+              { role: 'user', content: data.chatsession, id: data.chatsession },
+            ]);
+
+            handleAPIErrorOpen();
+          }
+          // Every other type of error returned from Mulesoft
+          else {
+            // turn off typing animation
+            setVisible(false);
+            setMessagesDisplay([
+              ...messagesDisplay,
+              { role: 'user', content: data.chatsession, id: data.chatsession },
+            ]);
+
+            handleAPIErrorOpen();
+          }
+        }
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        else if (error.request) {
+          // turn off typing animation
+          setVisible(false);
+          setMessagesDisplay([
+            ...messagesDisplay,
+            { role: 'user', content: data.chatsession, id: data.chatsession },
+          ]);
+
+          handleAPITimeoutOpen();
+        }
+        // Something happened in setting up the request that triggered an Error
+        else {
+          console.log(`HERE*************3 ${JSON.stringify(error.message)}`);
+        }
+      });
   }
 
   const bottomRef: any = useRef();
@@ -319,10 +407,25 @@ const Home = () => {
           handleSessionExpiredContinue,
         }}
       />
+
       <APIErrorDialog
         {...{
           handleAPIErrorClose,
           openAPIError,
+        }}
+      />
+
+      <APITimeoutDialog
+        {...{
+          handleAPITimeoutClose,
+          openAPITimeout,
+        }}
+      />
+
+      <APIRateLimitDialog
+        {...{
+          handleAPIRateLimitClose,
+          openAPIRateLimit,
         }}
       />
     </div>

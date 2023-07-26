@@ -22,6 +22,7 @@
     "@types/react-dom": "^17.0.14",
     "@types/react-qr-reader": "^2.1.4",
     "axios": "^1.4.0",
+    "axios-retry": "^3.5.1",
     "msw": "^1.2.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -64,6 +65,9 @@
     ]
   },
   "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    },
     "collectCoverageFrom": [
       "src/**/*.tsx",
       "!**/node_modules/**",
