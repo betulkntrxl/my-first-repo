@@ -1,46 +1,16 @@
 import React, { useState, useRef } from 'react';
-import Button from '@mui/material/Button';
-import DialogActions from '@mui/material/DialogActions';
-import Typography from '@mui/material/Typography';
-import DialogContent from '@mui/material/DialogContent';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
 
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
+import ResetChatDialog from './ResetChatDialog';
+import SessionExpiredDialog from './SessionExpiredDialog';
+import APIErrorDialog from './APIErrorDialog';
 
 export interface DialogTitleProps {
   id: string;
   children?: React.ReactNode;
   onClose: () => void;
-}
-
-function BootstrapDialogTitle(props: DialogTitleProps) {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: theme => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
 }
 
 const Home = () => {
@@ -51,8 +21,9 @@ const Home = () => {
   const [maxTokens, setMaxTokens] = useState(200);
   const [pastMessages, setPastMessages] = useState(10);
   const [displayValue, setDisplayValue] = useState('block');
-  const [tokenCount, setTokenCount] = useState(0);
+  const [tokenMessage, setTokenMessage] = useState('');
 
+  const [tokenCount, setTokenCount] = useState(0);
   const [disabledBool, setDisabledBool] = useState(false);
   const [disabledInput, setDisabledInput] = useState(false);
 
@@ -173,6 +144,11 @@ const Home = () => {
       const responseData = await response.json();
       setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
       setTokenCount(responseData.usage.total_tokens);
+      setTokenMessage(
+        responseData.usage.total_tokens > maxTokens
+          ? '  ** Max Tokens Limit Exceeded.  Increase Max Tokens in the Configuration Menu.'
+          : ''
+      );
       // add response to conversation
       setMessages([
         { role: 'system', content: systemMessageValue },
@@ -240,27 +216,15 @@ const Home = () => {
   };
 
   const handleKeyDown = (event: { [x: string]: any; preventDefault: () => void }) => {
-    // console.log('User pressed: ', event.key);
-
     if (event.key === 'Enter' && !event.shiftKey) {
-      //  your logic here
+      //  handle Enter key but not shift-Enter
       handleSubmit(event);
-      // console.log('Enter key pressed ');
     }
   };
 
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
     setSystemMessageValue(event.target.value);
   };
-
-  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-      padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-      padding: theme.spacing(1),
-    },
-  }));
 
   return (
     <div>
@@ -323,6 +287,7 @@ const Home = () => {
             handleChatsessionChange={handleChatsessionChange}
             data={data}
             tokenCount={tokenCount}
+            tokenMessage={tokenMessage}
             disabledBool={disabledBool}
             disabledInput={disabledInput}
             handleResetChatSessionOpen={handleResetChatSessionOpen}
@@ -330,71 +295,28 @@ const Home = () => {
           />
         </form>
       </div>
-      <BootstrapDialog
-        onClose={handleResetChatSessionClose}
-        aria-labelledby="customized-dialog-title"
-        open={openResetChatSession}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleResetChatSessionClose}>
-          <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
-            Reset Chat
-          </div>
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            This will reset your chat session. Do you want to continue?
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={handleResetChatSessionClose}>
-            Cancel
-          </Button>
-          <Button variant="contained" autoFocus onClick={handleResetChatSessionContinue}>
-            Continue
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
-      <BootstrapDialog
-        onClose={handleSessionExpiredClose}
-        aria-labelledby="customized-dialog-title"
-        open={openSessionExpired}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleSessionExpiredClose}>
-          <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
-            Session Expired
-          </div>
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>Your session has expired. Do you want to continue?</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={handleSessionExpiredClose}>
-            Cancel
-          </Button>
-          <Button variant="contained" autoFocus onClick={handleSessionExpiredContinue}>
-            Continue
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
-      <BootstrapDialog
-        onClose={handleAPIErrorClose}
-        aria-labelledby="customized-dialog-title"
-        open={openAPIError}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleAPIErrorClose}>
-          <div style={{ color: 'red', fontWeight: 'bold' }}>Error !</div>
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            An error has occured. Please try again at a later time.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" onClick={handleAPIErrorClose}>
-            Ok
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
+
+      <ResetChatDialog
+        {...{
+          handleResetChatSessionClose,
+          openResetChatSession,
+          handleResetChatSessionContinue,
+        }}
+      />
+
+      <SessionExpiredDialog
+        {...{
+          handleSessionExpiredClose,
+          openSessionExpired,
+          handleSessionExpiredContinue,
+        }}
+      />
+      <APIErrorDialog
+        {...{
+          handleAPIErrorClose,
+          openAPIError,
+        }}
+      />
     </div>
   );
 };
