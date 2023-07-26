@@ -65,6 +65,9 @@ const AssistantSetupMenu = (props: {
         //        defaultValue={systemMessageValue}
         value={systemMessageValue}
         onChange={handleSystemMessageValueChange}
+        inputProps={{
+          title: 'system-message-input',
+        }}
       />
     </Typography>
   );
