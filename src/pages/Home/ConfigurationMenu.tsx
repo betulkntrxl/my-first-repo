@@ -45,18 +45,15 @@ const ConfigurationMenu = (props: {
   };
 
   const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(event.target.value) < 0) {
-      handleTemperatureChange(new Event('0'), 0, 1);
-    } else if (Number(event.target.value) > 1) {
+    if (Number(event.target.value) > 1) {
       handleTemperatureChange(new Event('1'), 1, 1);
     } else {
       handleTemperatureChange(new Event(event.target.value), Number(event.target.value), 1);
     }
   };
+
   const handleTopPInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(event.target.value) < 0) {
-      handleTopPChange(new Event('0'), 0, 1);
-    } else if (Number(event.target.value) > 1) {
+    if (Number(event.target.value) > 1) {
       handleTopPChange(new Event('1'), 1, 1);
     } else {
       handleTopPChange(new Event(event.target.value), Number(event.target.value), 1);
@@ -64,19 +61,16 @@ const ConfigurationMenu = (props: {
   };
 
   const handleMaxTokensInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(event.target.value) <= 0) {
-      handleMaxTokensChange(new Event('0'), 0, 1);
-    } else if (Number(event.target.value) > 4096) {
+    if (Number(event.target.value) > 4096) {
       handleMaxTokensChange(new Event('4096'), 4096, 1);
     } else {
       handleMaxTokensChange(new Event(event.target.value), Number(event.target.value), 1);
     }
   };
+
   const handlePastMessagesInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tmpval = Number(event.target.value);
-    if (tmpval <= 0) {
-      handlePastMessagesChange(new Event('0'), 0, 1);
-    } else if (tmpval > 20) {
+    if (tmpval > 20) {
       handlePastMessagesChange(new Event('20'), 20, 1);
     } else {
       handlePastMessagesChange(new Event(tmpval.toString()), tmpval, 1);
