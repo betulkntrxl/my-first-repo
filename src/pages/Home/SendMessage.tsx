@@ -8,20 +8,24 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
 
 const SendMessage = (props: {
-  handleChatsessionChange: (event: { target: { name: any; value: any } }) => void;
+  handleChatsessionChange: (event: { [x: string]: any; preventDefault: () => void }) => void;
   data: { chatsession: string; response: string };
   tokenCount: number;
+  tokenMessage: string;
   disabledBool: boolean;
   disabledInput: boolean;
   handleResetChatSessionOpen: () => void;
+  handleKeyDown: (event: { [x: string]: any; preventDefault: () => void }) => void;
 }) => {
   const {
     handleChatsessionChange,
     data,
     tokenCount,
+    tokenMessage,
     disabledBool,
     disabledInput,
     handleResetChatSessionOpen,
+    handleKeyDown,
   } = props;
   const blue = {
     500: '#007FFF',
@@ -46,7 +50,7 @@ const SendMessage = (props: {
     }
   `;
 
-  const handleSendChange = (event: { target: { name: any; value: any } }) => {
+  const handleSendChange = (event: { [x: string]: any; preventDefault: () => void }) => {
     handleChatsessionChange(event);
   };
 
@@ -69,8 +73,9 @@ const SendMessage = (props: {
                 >
                   Token Count: {tokenCount}
                 </Button>
+                {tokenMessage}
               </Grid>
-              <input
+              <textarea
                 ref={inputRef}
                 {...(disabledInput && { disabled: true })}
                 autoComplete="off"
@@ -78,6 +83,7 @@ const SendMessage = (props: {
                 placeholder="Type your message here."
                 name="chatsession"
                 onChange={handleSendChange}
+                onKeyDown={handleKeyDown}
                 value={data.chatsession}
                 style={{
                   marginTop: 0,
