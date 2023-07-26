@@ -11,6 +11,7 @@ const SendMessage = (props: {
   handleChatsessionChange: (event: { [x: string]: any; preventDefault: () => void }) => void;
   data: { chatsession: string; response: string };
   tokenCount: number;
+  tokenMessage: string;
   disabledBool: boolean;
   disabledInput: boolean;
   handleResetChatSessionOpen: () => void;
@@ -20,6 +21,7 @@ const SendMessage = (props: {
     handleChatsessionChange,
     data,
     tokenCount,
+    tokenMessage,
     disabledBool,
     disabledInput,
     handleResetChatSessionOpen,
@@ -71,6 +73,7 @@ const SendMessage = (props: {
                 >
                   Token Count: {tokenCount}
                 </Button>
+                {tokenMessage}
               </Grid>
               <textarea
                 ref={inputRef}
@@ -116,7 +119,7 @@ const SendMessage = (props: {
                 title="reset"
                 variant="contained"
                 onClick={handleResetChatSessionOpen}
-                {...(tokenCount === 0 && { disabled: true })}
+                //  {...(tokenCount === 0 && { disabled: true })}
                 style={{
                   marginLeft: '10px',
                   width: '150px',
