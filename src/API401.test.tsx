@@ -31,7 +31,23 @@ describe('testing the App', () => {
     await user.keyboard('hello');
     const sendElement = screen.getByTitle('send');
     await user.click(sendElement);
+    // close dialog
+    const closeElement = screen.getByTitle('close-button');
+    await user.click(closeElement);
+    expect(closeElement).toBeTruthy();
+  }, 5000);
 
-    expect(sendElement).toBeTruthy();
+  it('sends a message and returns status 401 Unauthorized error', async () => {
+    render(<App />);
+    const user = userEvent.setup();
+    const sendmessageElement = screen.getByTitle('sendmessage');
+    await user.click(sendmessageElement);
+    await user.keyboard('hello');
+    const sendElement = screen.getByTitle('send');
+    await user.click(sendElement);
+    // continue
+    const continueElement = screen.getByTitle('continue-button');
+    await user.click(continueElement);
+    expect(continueElement).toBeTruthy();
   }, 5000);
 });

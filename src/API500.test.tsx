@@ -28,7 +28,8 @@ describe('testing the App', () => {
     await user.keyboard('hello');
     const sendElement = screen.getByTitle('send');
     await user.click(sendElement);
-
+    const closeElement = screen.getByTitle('close-button');
+    await user.click(closeElement);
     expect(sendElement).toBeTruthy();
   }, 5000);
 });
