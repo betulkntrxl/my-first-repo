@@ -66,7 +66,7 @@ const APIErrorDialog = (props: { handleAPIErrorClose: () => void; openAPIError: 
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleAPIErrorClose}>
+        <Button variant="outlined" onClick={handleAPIErrorClose} title="close-button">
           Ok
         </Button>
       </DialogActions>
