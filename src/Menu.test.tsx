@@ -32,6 +32,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const temperatureInput = screen.getByTitle('temperature-input');
     await user.click(temperatureInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('.5');
     expect(temperatureInput).toBeTruthy();
   });
@@ -44,6 +46,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const temperatureInput = screen.getByTitle('temperature-input');
     await user.click(temperatureInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('-1');
     expect(temperatureInput).toBeTruthy();
   });
@@ -57,6 +61,8 @@ describe('testing the App', () => {
     await user.click(configurationElement);
     const temperatureInput = screen.getByTitle('temperature-input');
     await user.click(temperatureInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('2');
     expect(temperatureInput).toBeTruthy();
   });
