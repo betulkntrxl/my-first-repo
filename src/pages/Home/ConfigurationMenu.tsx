@@ -61,7 +61,9 @@ const ConfigurationMenu = (props: {
   };
 
   const handleMaxTokensInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(event.target.value) > 4096) {
+    if (Number(event.target.value) < 1) {
+      handleMaxTokensChange(new Event('1'), 1, 1);
+    } else if (Number(event.target.value) > 4096) {
       handleMaxTokensChange(new Event('4096'), 4096, 1);
     } else {
       handleMaxTokensChange(new Event(event.target.value), Number(event.target.value), 1);
@@ -181,7 +183,7 @@ const ConfigurationMenu = (props: {
           <Slider
             style={{ width: 230 }}
             valueLabelDisplay="auto"
-            min={0}
+            min={1}
             max={4096}
             step={1}
             value={maxTokens}
@@ -200,7 +202,7 @@ const ConfigurationMenu = (props: {
             onChange={handleMaxTokensInputChange}
             inputProps={{
               step: 1,
-              min: 0,
+              min: 1,
               max: 4096,
               type: 'number',
               'aria-labelledby': 'maxtokens-input-label',
