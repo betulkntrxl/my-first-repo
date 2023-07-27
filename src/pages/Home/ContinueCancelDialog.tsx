@@ -72,10 +72,10 @@ const ContinueCancelDialog = (props: {
         <Typography gutterBottom>{bodyText}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleClose}>
+        <Button variant="outlined" onClick={handleClose} title="cancel-button">
           Cancel
         </Button>
-        <Button variant="contained" autoFocus onClick={handleContinue}>
+        <Button variant="contained" autoFocus onClick={handleContinue} title="continue-button">
           Continue
         </Button>
       </DialogActions>
