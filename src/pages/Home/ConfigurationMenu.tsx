@@ -61,7 +61,9 @@ const ConfigurationMenu = (props: {
   };
 
   const handleMaxTokensInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(event.target.value) > 4096) {
+    if (Number(event.target.value) < 1) {
+      handleMaxTokensChange(new Event('1'), 1, 1);
+    } else if (Number(event.target.value) > 4096) {
       handleMaxTokensChange(new Event('4096'), 4096, 1);
     } else {
       handleMaxTokensChange(new Event(event.target.value), Number(event.target.value), 1);
