@@ -181,7 +181,7 @@ const ConfigurationMenu = (props: {
           <Slider
             style={{ width: 230 }}
             valueLabelDisplay="auto"
-            min={0}
+            min={1}
             max={4096}
             step={1}
             value={maxTokens}
@@ -200,7 +200,7 @@ const ConfigurationMenu = (props: {
             onChange={handleMaxTokensInputChange}
             inputProps={{
               step: 1,
-              min: 0,
+              min: 1,
               max: 4096,
               type: 'number',
               'aria-labelledby': 'maxtokens-input-label',
