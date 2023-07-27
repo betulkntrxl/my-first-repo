@@ -39,8 +39,13 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   );
 }
 
-const APIErrorDialog = (props: { handleAPIErrorClose: () => void; openAPIError: boolean }) => {
-  const { handleAPIErrorClose, openAPIError } = props;
+const OKDialog = (props: {
+  handleClose: () => void;
+  openDialog: boolean;
+  headerText: string;
+  bodyText: string;
+}) => {
+  const { handleClose, openDialog, headerText, bodyText } = props;
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -53,20 +58,18 @@ const APIErrorDialog = (props: { handleAPIErrorClose: () => void; openAPIError: 
 
   return (
     <BootstrapDialog
-      onClose={handleAPIErrorClose}
+      onClose={handleClose}
       aria-labelledby="customized-dialog-title"
-      open={openAPIError}
+      open={openDialog}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleAPIErrorClose}>
-        <div style={{ color: 'red', fontWeight: 'bold' }}>Error !</div>
+      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <div style={{ color: 'red', fontWeight: 'bold' }}>{headerText} !</div>
       </BootstrapDialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>
-          An error has occured. Please try again at a later time.
-        </Typography>
+        <Typography gutterBottom>{bodyText}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleAPIErrorClose} title="close-button">
+        <Button variant="outlined" onClick={handleClose} title="close-button">
           Ok
         </Button>
       </DialogActions>
@@ -74,4 +77,4 @@ const APIErrorDialog = (props: { handleAPIErrorClose: () => void; openAPIError: 
   );
 };
 
-export default APIErrorDialog;
+export default OKDialog;
