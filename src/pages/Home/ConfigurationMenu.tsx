@@ -101,7 +101,7 @@ const ConfigurationMenu = (props: {
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
         <Grid item xs>
           <Slider
-            style={{ width: 240 }}
+            style={{ width: 230 }}
             valueLabelDisplay="auto"
             min={0}
             max={1}
@@ -115,7 +115,7 @@ const ConfigurationMenu = (props: {
         </Grid>
         <Grid item>
           <TextField
-            style={{ width: 75 }}
+            style={{ width: 85 }}
             value={temperature}
             defaultValue={temperature}
             size="small"
@@ -140,7 +140,7 @@ const ConfigurationMenu = (props: {
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
         <Grid item xs>
           <Slider
-            style={{ width: 240 }}
+            style={{ width: 230 }}
             valueLabelDisplay="auto"
             min={0}
             max={1}
@@ -154,7 +154,7 @@ const ConfigurationMenu = (props: {
         </Grid>
         <Grid item>
           <TextField
-            style={{ width: 75 }}
+            style={{ width: 85 }}
             value={topP}
             defaultValue={topP}
             size="small"
@@ -179,7 +179,7 @@ const ConfigurationMenu = (props: {
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
         <Grid item xs>
           <Slider
-            style={{ width: 240 }}
+            style={{ width: 230 }}
             valueLabelDisplay="auto"
             min={0}
             max={4096}
@@ -193,7 +193,7 @@ const ConfigurationMenu = (props: {
         </Grid>
         <Grid item>
           <TextField
-            style={{ width: 75 }}
+            style={{ width: 85 }}
             value={maxTokens}
             defaultValue={maxTokens}
             size="small"
@@ -219,7 +219,7 @@ const ConfigurationMenu = (props: {
         <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
           <Grid item xs>
             <Slider
-              style={{ width: 240 }}
+              style={{ width: 230 }}
               valueLabelDisplay="auto"
               min={0}
               max={20}
@@ -233,7 +233,7 @@ const ConfigurationMenu = (props: {
           </Grid>
           <Grid item>
             <TextField
-              style={{ width: 75 }}
+              style={{ width: 85 }}
               value={pastMessages}
               defaultValue={pastMessages}
               size="small"
@@ -260,7 +260,7 @@ const ConfigurationMenu = (props: {
         <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
           <Grid item xs>
             <Slider
-              style={{ width: 240 }}
+              style={{ width: 230 }}
               valueLabelDisplay="auto"
               min={5}
               max={60}
@@ -274,7 +274,7 @@ const ConfigurationMenu = (props: {
           </Grid>
           <Grid item>
             <TextField
-              style={{ width: 75 }}
+              style={{ width: 85 }}
               value={APITimeout}
               defaultValue={APITimeout}
               size="small"
