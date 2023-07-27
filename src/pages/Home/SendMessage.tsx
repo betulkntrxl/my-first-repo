@@ -119,7 +119,7 @@ const SendMessage = (props: {
                 title="reset"
                 variant="contained"
                 onClick={handleResetChatSessionOpen}
-                {...(tokenCount === 0 && { disabled: true })}
+                //  {...(tokenCount === 0 && { disabled: true })}
                 style={{
                   marginLeft: '10px',
                   width: '150px',
