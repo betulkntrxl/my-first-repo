@@ -73,10 +73,15 @@ const ResetChatDialog = (props: {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleResetChatSessionClose}>
+        <Button variant="outlined" onClick={handleResetChatSessionClose} title="cancel-button">
           Cancel
         </Button>
-        <Button variant="contained" autoFocus onClick={handleResetChatSessionContinue}>
+        <Button
+          variant="contained"
+          autoFocus
+          onClick={handleResetChatSessionContinue}
+          title="continue-button"
+        >
           Continue
         </Button>
       </DialogActions>
