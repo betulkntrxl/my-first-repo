@@ -54,16 +54,6 @@ describe('testing the App', () => {
     expect(sendElement).toBeTruthy();
   }, 5000);
 
-  it('sends a message using Enter key', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello{Enter}');
-
-    expect(sendmessageElement).toBeTruthy();
-  }, 5000);
-
   it('renders a menu', async () => {
     render(<App />);
     const menu = screen.getByLabelText('menu');

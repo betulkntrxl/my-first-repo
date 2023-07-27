@@ -24,6 +24,8 @@ const Menu = (props: {
   systemMessageValue: string;
   handlePastMessagesChange: (event: Event, value: number | number[], activeThumb: number) => void;
   pastMessages: number;
+  handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
+  APITimeout: number;
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [version, setVersion] = React.useState('');
@@ -63,6 +65,8 @@ const Menu = (props: {
     systemMessageValue,
     handlePastMessagesChange,
     pastMessages,
+    handleAPITimeoutChange,
+    APITimeout,
   } = props;
 
   const drawer = (
@@ -117,6 +121,8 @@ const Menu = (props: {
         systemMessageValue={systemMessageValue}
         handlePastMessagesChange={handlePastMessagesChange}
         pastMessages={pastMessages}
+        handleAPITimeoutChange={handleAPITimeoutChange}
+        APITimeout={APITimeout}
       />
 
       <Paper
@@ -127,14 +133,14 @@ const Menu = (props: {
           bottom: 0,
           width: 320,
           maxWidth: 500,
-          padding: '20px',
-          margin: 20,
+          padding: '10px',
+          margin: 10,
           float: 'left',
         }}
       >
         <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
 
-        <div style={{ float: 'left', margin: 10 }}>Version: {version}</div>
+        <div style={{ float: 'left', marginLeft: 10 }}>Version: {version}</div>
       </Paper>
     </div>
   );

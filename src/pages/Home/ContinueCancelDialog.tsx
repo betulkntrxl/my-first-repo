@@ -39,13 +39,14 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   );
 }
 
-const ResetChatDialog = (props: {
-  handleResetChatSessionClose: () => void;
-  openResetChatSession: boolean;
-  handleResetChatSessionContinue: () => void;
+const ContinueCancelDialog = (props: {
+  handleClose: () => void;
+  openDialog: boolean;
+  handleContinue: () => void;
+  headerText: string;
+  bodyText: string;
 }) => {
-  const { handleResetChatSessionClose, openResetChatSession, handleResetChatSessionContinue } =
-    props;
+  const { handleClose, openDialog, handleContinue, headerText, bodyText } = props;
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -58,25 +59,23 @@ const ResetChatDialog = (props: {
 
   return (
     <BootstrapDialog
-      onClose={handleResetChatSessionClose}
+      onClose={handleClose}
       aria-labelledby="customized-dialog-title"
-      open={openResetChatSession}
+      open={openDialog}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleResetChatSessionClose}>
+      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
         <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
-          Reset Chat
+          {headerText}
         </div>
       </BootstrapDialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>
-          This will reset your chat session. Do you want to continue?
-        </Typography>
+        <Typography gutterBottom>{bodyText}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleResetChatSessionClose}>
+        <Button variant="outlined" onClick={handleClose}>
           Cancel
         </Button>
-        <Button variant="contained" autoFocus onClick={handleResetChatSessionContinue}>
+        <Button variant="contained" autoFocus onClick={handleContinue}>
           Continue
         </Button>
       </DialogActions>
@@ -84,4 +83,4 @@ const ResetChatDialog = (props: {
   );
 };
 
-export default ResetChatDialog;
+export default ContinueCancelDialog;
