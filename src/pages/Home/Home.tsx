@@ -5,11 +5,8 @@ import axiosRetry from 'axios-retry';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
-import ResetChatDialog from './ResetChatDialog';
-import SessionExpiredDialog from './SessionExpiredDialog';
-import APITimeoutDialog from './APITimeoutDialog';
-import APIRateLimitDialog from './APIRateLimitDialog';
-import APIErrorDialog from './APIErrorDialog';
+import ContinueCancelDialog from './ContinueCancelDialog';
+import OKDialog from './OkDialog';
 
 export interface DialogTitleProps {
   id: string;
@@ -24,7 +21,7 @@ const Home = () => {
   const [topP, setTopP] = useState(0.95);
   const [maxTokens, setMaxTokens] = useState(200);
   const [pastMessages, setPastMessages] = useState(10);
-  const [APITimeout, setAPITimeout] = useState(20);
+  const [APITimeout, setAPITimeout] = useState(10);
 
   const [displayValue, setDisplayValue] = useState('block');
   const [tokenMessage, setTokenMessage] = useState('');
@@ -194,6 +191,11 @@ const Home = () => {
         const responseData = response.data;
         setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
         setTokenCount(responseData.usage.total_tokens);
+        setTokenMessage(
+          responseData.usage.total_tokens > maxTokens
+            ? '  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.'
+            : ''
+        );
         // add response to conversation
         setMessages([
           { role: 'system', content: systemMessageValue },
@@ -279,7 +281,14 @@ const Home = () => {
         }
         // Something happened in setting up the request that triggered an Error
         else {
-          console.log(`HERE*************3 ${JSON.stringify(error.message)}`);
+          // turn off typing animation
+          setVisible(false);
+          setMessagesDisplay([
+            ...messagesDisplay,
+            { role: 'user', content: data.chatsession, id: data.chatsession },
+          ]);
+
+          handleAPIErrorOpen();
         }
       });
   }
@@ -392,40 +401,52 @@ const Home = () => {
         </form>
       </div>
 
-      <ResetChatDialog
+      <ContinueCancelDialog
         {...{
-          handleResetChatSessionClose,
-          openResetChatSession,
-          handleResetChatSessionContinue,
+          handleClose: handleResetChatSessionClose,
+          openDialog: openResetChatSession,
+          handleContinue: handleResetChatSessionContinue,
+          headerText: 'Reset Chat',
+          bodyText: 'This will reset your chat session. Do you want to continue?',
         }}
       />
 
-      <SessionExpiredDialog
+      <ContinueCancelDialog
         {...{
-          handleSessionExpiredClose,
-          openSessionExpired,
-          handleSessionExpiredContinue,
+          handleClose: handleSessionExpiredClose,
+          openDialog: openSessionExpired,
+          handleContinue: handleSessionExpiredContinue,
+          headerText: 'Session Expired',
+          bodyText: 'Your session has expired. Do you want to continue?',
         }}
       />
 
-      <APIErrorDialog
+      <OKDialog
         {...{
-          handleAPIErrorClose,
-          openAPIError,
+          handleClose: handleAPIErrorClose,
+          openDialog: openAPIError,
+          headerText: 'Unexpected Error',
+          bodyText:
+            'An error has occured. The server may be busy.\nPlease try again at a later time.',
         }}
       />
 
-      <APITimeoutDialog
+      <OKDialog
         {...{
-          handleAPITimeoutClose,
-          openAPITimeout,
+          handleClose: handleAPITimeoutClose,
+          openDialog: openAPITimeout,
+          headerText: 'API Timeout',
+          bodyText:
+            'Is your question complex? If so the API could take a bit more time to respond.\nYou can increase the API Timeout in the Configuration Menu.',
         }}
       />
 
-      <APIRateLimitDialog
+      <OKDialog
         {...{
-          handleAPIRateLimitClose,
-          openAPIRateLimit,
+          handleClose: handleAPIRateLimitClose,
+          openDialog: openAPIRateLimit,
+          headerText: 'Server is busy',
+          bodyText: 'The server is currently busy.\nPlease try again at a later time.',
         }}
       />
     </div>

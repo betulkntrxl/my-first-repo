@@ -39,11 +39,13 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   );
 }
 
-const APIErrorDialog = (props: {
-  handleAPIRateLimitClose: () => void;
-  openAPIRateLimit: boolean;
+const OKDialog = (props: {
+  handleClose: () => void;
+  openDialog: boolean;
+  headerText: string;
+  bodyText: string;
 }) => {
-  const { handleAPIRateLimitClose, openAPIRateLimit } = props;
+  const { handleClose, openDialog, headerText, bodyText } = props;
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -56,22 +58,18 @@ const APIErrorDialog = (props: {
 
   return (
     <BootstrapDialog
-      onClose={handleAPIRateLimitClose}
+      onClose={handleClose}
       aria-labelledby="customized-dialog-title"
-      open={openAPIRateLimit}
+      open={openDialog}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleAPIRateLimitClose}>
-        <div style={{ color: 'red', fontWeight: 'bold' }}>Server is busy</div>
+      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <div style={{ color: 'red', fontWeight: 'bold' }}>{headerText} !</div>
       </BootstrapDialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>
-          The server is currently busy.
-          <br />
-          Please try again at a later time.
-        </Typography>
+        <Typography gutterBottom>{bodyText}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleAPIRateLimitClose}>
+        <Button variant="outlined" onClick={handleClose} title="close-button">
           Ok
         </Button>
       </DialogActions>
@@ -79,4 +77,4 @@ const APIErrorDialog = (props: {
   );
 };
 
-export default APIErrorDialog;
+export default OKDialog;

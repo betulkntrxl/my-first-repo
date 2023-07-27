@@ -78,10 +78,10 @@ const ConfigurationMenu = (props: {
   };
   const handleAPITimeoutInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tmpval = Number(event.target.value);
-    if (tmpval <= 0) {
-      handleAPITimeoutChange(new Event('0'), 0, 1);
-    } else if (tmpval > 20) {
-      handleAPITimeoutChange(new Event('20'), 20, 1);
+    if (tmpval <= 5) {
+      handleAPITimeoutChange(new Event('5'), 5, 1);
+    } else if (tmpval > 60) {
+      handleAPITimeoutChange(new Event('60'), 60, 1);
     } else {
       handleAPITimeoutChange(new Event(tmpval.toString()), tmpval, 1);
     }
@@ -262,11 +262,11 @@ const ConfigurationMenu = (props: {
             <Slider
               style={{ width: 240 }}
               valueLabelDisplay="auto"
-              min={0}
-              max={120}
+              min={5}
+              max={60}
               step={1}
               value={APITimeout}
-              defaultValue={20}
+              defaultValue={10}
               aria-label="API Timeout"
               onChange={handleAPITimeoutSliderChange}
               aria-labelledby="apitimeout-input-label"
@@ -281,8 +281,8 @@ const ConfigurationMenu = (props: {
               onChange={handleAPITimeoutInputChange}
               inputProps={{
                 step: 1,
-                min: 0,
-                max: 120,
+                min: 5,
+                max: 60,
                 type: 'number',
                 'aria-labelledby': 'apitimeout-input-label',
                 title: 'apitimeout-input',
