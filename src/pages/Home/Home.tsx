@@ -243,18 +243,7 @@ const Home = () => {
 
             handleAPIRateLimitOpen();
           }
-          // Timeout issue on Mulesoft's side
-          else if (error.response.status === 504) {
-            // turn off typing animation
-            setVisible(false);
-            setMessagesDisplay([
-              ...messagesDisplay,
-              { role: 'user', content: data.chatsession, id: data.chatsession },
-            ]);
-
-            handleAPIErrorOpen();
-          }
-          // Every other type of error returned from Mulesoft
+          // Every other type of error
           else {
             // turn off typing animation
             setVisible(false);
@@ -266,9 +255,7 @@ const Home = () => {
             handleAPIErrorOpen();
           }
         }
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
+        // Axios timeout will trigger this flow
         else if (error.request) {
           // turn off typing animation
           setVisible(false);
