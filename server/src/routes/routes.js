@@ -5,7 +5,8 @@ import { logger } from '../configs/logger.js';
 export const setupRoutes = expressWebServer => {
   // App Version
   expressWebServer.use('/api/version', async (req, res, next) => {
-    res.send(`{"version": "${process.env.VERSION}"}`);
+    const VERSION = process.env.VERSION || 'local-dev';
+    res.send(`{"version": "${VERSION}"}`);
   });
 
   // Check to see if user is logged in, if not redirect them to login route
