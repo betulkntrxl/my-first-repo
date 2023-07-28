@@ -45,9 +45,10 @@ describe('testing the App', () => {
     await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
       timeout: 5000,
     }).then(() => {
-      // fireEvent.click(screen.getByTitle('cancel-button'))
-      const cancelElement = screen.getByTitle('cancel-button');
-      user.click(cancelElement);
+      fireEvent.click(screen.getByTitle('cancel-button'));
+      // const cancelElement = screen.getByTitle('cancel-button');
+      // user.click(cancelElement);
+      // expect(cancelElement).toBeTruthy();
     });
     //  await new Promise(res => setTimeout(res, 3000));
     //  const cancelElement = screen.getByTitle('cancel-button');
