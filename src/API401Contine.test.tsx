@@ -31,7 +31,7 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and returns status 401 Unauthorized error and Cancel', async () => {
+  it('sends a message and returns status 401 Unauthorized error and Continue', async () => {
     render(<App />);
     const user = userEvent.setup();
     const sendmessageElement = screen.getByTitle('sendmessage');
@@ -42,19 +42,17 @@ describe('testing the App', () => {
     // wait for dialog to be rendered
 
     // await waitFor(() => expect(screen.getByTestId('cancel-button')).toBeVisible(), {
-    await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
+    await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
       timeout: 5000,
     }).then(() => {
-      fireEvent.click(screen.getByTitle('cancel-button'));
+      fireEvent.click(screen.getByTitle('continue-button'));
       // const cancelElement = screen.getByTitle('cancel-button');
       // user.click(cancelElement);
       // expect(cancelElement).toBeTruthy();
     });
-    //  await new Promise(res => setTimeout(res, 3000));
-    //  const cancelElement = screen.getByTitle('cancel-button');
-    // fireEvent.click(screen.getByTitle('cancel-button'))
-    //  const cancelElement = await screen.findByText('Cancel');
-    // await user.click(cancelElement);
+    // continue
+    //  const continueElement = screen.getByTitle('continue-button');
+    //  await user.click(continueElement);
     expect(sendElement).toBeTruthy();
   }, 5000);
 });
