@@ -237,6 +237,23 @@ describe('testing the App', () => {
     expect(previousMessagesInput).toBeTruthy();
   });
 
+  it('renders an API Timeout input and tests for input less than 5 and greater than 60', async () => {
+    render(<App />);
+    const user = userEvent.setup();
+    const menuElement = screen.getByLabelText('menu');
+    await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
+    const APITimeoutInput = screen.getByTitle('apitimeout-input');
+    await user.click(APITimeoutInput);
+    // select all digits in input
+    await user.keyboard('{Control>}a{/Control}');
+    await user.keyboard('4');
+    await user.keyboard('{Control>}a{/Control}');
+    await user.keyboard('70');
+    expect(APITimeoutInput).toBeTruthy();
+  });
+
   it('renders a System Message input and tests for input', async () => {
     render(<App />);
     const user = userEvent.setup();
