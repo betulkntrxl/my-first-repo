@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor } from '@testing-library/react';
+import { render, cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -46,11 +46,6 @@ describe('testing the App', () => {
   it('sends a message and reset chat and cancel', async () => {
     render(<App />);
     const user = userEvent.setup();
-    //  const sendmessageElement = screen.getByTitle('sendmessage');
-    //  await user.click(sendmessageElement);
-    //  await user.keyboard('hello');
-    //  const sendElement = screen.getByTitle('send');
-    //  await user.click(sendElement);
     const resetElement = screen.getByTitle('reset');
     await user.click(resetElement);
     const cancelElement = screen.getByTitle('cancel-button');
@@ -64,20 +59,8 @@ describe('testing the App', () => {
     const user = userEvent.setup();
 
     const sendmessageElement = screen.getByTitle('sendmessage');
-    //    await user.click(sendmessageElement);
-    //    await user.keyboard('hello');
-    //    const sendElement = screen.getByTitle('send');
-    //    await user.click(sendElement);
-    //    await waitFor(() => expect(screen.getByTitle('reset')).not.toBeDisabled(), {
-    //      timeout: 5000,
-    //    });
-
     const resetElement = screen.getByTitle('reset');
     await user.click(resetElement);
-    // continue
-    //  await waitFor(() => expect(screen.getByTitle('continue-button')).not.toBeDisabled(), {
-    //    timeout: 5000,
-    //  });
     const continueElement = await screen.getByTitle('continue-button');
     await user.click(continueElement);
     expect(continueElement).toBeTruthy();

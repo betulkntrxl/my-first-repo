@@ -23,6 +23,7 @@ describe('testing the App', () => {
     const temperature = screen.getByLabelText('Temperature');
     expect(temperature).toBeTruthy();
   });
+
   it('renders a Temperature input and tests valid input', async () => {
     render(<App />);
     const user = userEvent.setup();
@@ -37,6 +38,7 @@ describe('testing the App', () => {
     await user.keyboard('.5');
     expect(temperatureInput).toBeTruthy();
   });
+
   it('renders a Temperature input and tests invalid input less than zero', async () => {
     render(<App />);
     const user = userEvent.setup();
