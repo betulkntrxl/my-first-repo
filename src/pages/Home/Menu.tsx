@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import AppBar from '@mui/material/AppBar';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -36,11 +38,10 @@ const Menu = (props: {
 
   async function getVersion() {
     try {
-      // GET request using fetch with async/await
-      await fetch('/api/version').then(async response2 => {
-        if (typeof response2 !== 'undefined') {
-          const dataver = await response2.json();
-          setVersion(dataver.version);
+      await axios('/api/version').then(response => {
+        if (response && response.data) {
+          const { data } = response;
+          setVersion(data.version);
         }
       });
     } catch {
