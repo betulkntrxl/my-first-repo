@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -28,6 +28,17 @@ describe('testing the App', () => {
     await user.keyboard('hello');
     const sendElement = screen.getByTitle('send');
     await user.click(sendElement);
+    // wait for dialog to be rendered
+
+    // await waitFor(() => expect(screen.getByTestId('cancel-button')).toBeVisible(), {
+    await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible(), {
+      timeout: 5000,
+    }).then(() => {
+      fireEvent.click(screen.getByTitle('close-button'));
+      // const cancelElement = screen.getByTitle('cancel-button');
+      // user.click(cancelElement);
+      // expect(cancelElement).toBeTruthy();
+    });
     // const closeElement = screen.getByTitle('close-button');
     // await user.click(closeElement);
     expect(sendElement).toBeTruthy();
