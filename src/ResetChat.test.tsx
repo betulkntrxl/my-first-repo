@@ -43,7 +43,7 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and reset chat', async () => {
+  it('sends a message and reset chat and cancel', async () => {
     render(<App />);
     const user = userEvent.setup();
     //  const sendmessageElement = screen.getByTitle('sendmessage');
@@ -59,7 +59,7 @@ describe('testing the App', () => {
     expect(resetElement).toBeTruthy();
   }, 5000);
 
-  it('sends a message and reset chat', async () => {
+  it('sends a message and reset chat and continue', async () => {
     render(<App />);
     const user = userEvent.setup();
 
