@@ -189,6 +189,7 @@ describe('testing the App', () => {
     const configurationElement = screen.getByLabelText('configuration');
     await user.click(configurationElement);
     const previousMessages = screen.getByLabelText('Past messages included');
+    await user.click(previousMessages);
     expect(previousMessages).toBeTruthy();
   });
 
