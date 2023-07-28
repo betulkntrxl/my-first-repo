@@ -155,11 +155,24 @@ const Home = () => {
       retries: 3,
       shouldResetTimeout: true,
       retryCondition: error => {
-        const errorReponse = JSON.parse(JSON.stringify(error));
+        // error wasn't a proper object so using JSON.parse to make it so
+        const ERROR_RESPONSE = JSON.parse(JSON.stringify(error));
+
+        const HTTP_METHOD = ERROR_RESPONSE.config?.method;
+        const ERROR_RESPONSE_STATUS = ERROR_RESPONSE.status;
+
         return (
           axiosRetry.isNetworkOrIdempotentRequestError(error) ||
+          // Retry on ChatApp timeout
           error.code === 'ECONNABORTED' ||
-          (errorReponse.config?.method === 'post' && errorReponse.status === 500)
+          // Retry on Prompt OpenAI API Timeout
+          (HTTP_METHOD === 'post' && ERROR_RESPONSE_STATUS === 408) ||
+          // Retry on Prompt Mulesoft API Timeout
+          (HTTP_METHOD === 'post' && ERROR_RESPONSE_STATUS === 504) ||
+          // Retry on Prompt server error from Mulesoft
+          (HTTP_METHOD === 'post' && ERROR_RESPONSE_STATUS === 500) ||
+          // Retry on Prompt Bad Gateway from Mulesoft
+          (HTTP_METHOD === 'post' && ERROR_RESPONSE_STATUS === 502)
         );
       },
     });
