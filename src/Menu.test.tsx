@@ -20,8 +20,9 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
-    const temperature = screen.getByLabelText('Temperature');
-    expect(temperature).toBeTruthy();
+    const temperatureElement = screen.getByLabelText('Temperature');
+    await user.click(temperatureElement);
+    expect(temperatureElement).toBeTruthy();
   });
 
   it('renders a Temperature input and tests valid input', async () => {
@@ -76,8 +77,9 @@ describe('testing the App', () => {
     await user.click(menuElement);
     const configurationElement = screen.getByLabelText('configuration');
     await user.click(configurationElement);
-    const topP = screen.getByLabelText('Top P');
-    expect(topP).toBeTruthy();
+    const topPElement = screen.getByLabelText('Top P');
+    await user.click(topPElement);
+    expect(topPElement).toBeTruthy();
   });
 
   it('renders a TopP input and tests for valid input', async () => {
@@ -132,8 +134,9 @@ describe('testing the App', () => {
     await user.click(menuElement);
     const configurationElement = screen.getByLabelText('configuration');
     await user.click(configurationElement);
-    const maxTokens = screen.getByLabelText('Max Tokens');
-    expect(maxTokens).toBeTruthy();
+    const maxTokensElement = screen.getByLabelText('Max Tokens');
+    await user.click(maxTokensElement);
+    expect(maxTokensElement).toBeTruthy();
   });
 
   it('renders a MaxTokens input and tests for valid input', async () => {
@@ -236,6 +239,18 @@ describe('testing the App', () => {
     await user.keyboard('{Control>}a{/Control}');
     await user.keyboard('30');
     expect(previousMessagesInput).toBeTruthy();
+  });
+
+  it('renders an API Timeout slider', async () => {
+    render(<App />);
+    const user = userEvent.setup();
+    const menuElement = screen.getByLabelText('menu');
+    await user.click(menuElement);
+    const configurationElement = screen.getByLabelText('configuration');
+    await user.click(configurationElement);
+    const APITimeoutMessages = screen.getByLabelText('API Timeout');
+    await user.click(APITimeoutMessages);
+    expect(APITimeoutMessages).toBeTruthy();
   });
 
   it('renders an API Timeout input and tests for input less than 5 and greater than 60', async () => {
