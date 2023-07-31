@@ -42,16 +42,16 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message by clicking on Send button and returns status 200 ok', async () => {
+  it('sends a message by pressing Enter and returns status 200 ok', async () => {
     render(<App />);
     const user = userEvent.setup();
     const sendmessageElement = screen.getByTitle('sendmessage');
     await user.click(sendmessageElement);
-    await user.keyboard('hello');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
+    await user.keyboard('hello{Enter}');
+    // const sendElement = screen.getByTitle('send');
+    // await user.click(sendElement);
 
-    expect(sendElement).toBeTruthy();
+    expect(sendmessageElement).toBeTruthy();
   }, 5000);
 
   it('renders a menu', async () => {
