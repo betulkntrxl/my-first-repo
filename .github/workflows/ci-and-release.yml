@@ -92,7 +92,7 @@ jobs:
       - if: github.ref == 'refs/heads/main'
         id: version-bump-git-tag
         name: Bump version and push git tag
-        uses: anothrNick/github-tag-action@9885a4f9af674ba472de91fb3c0cb033ecb32b7e
+        uses: anothrNick/github-tag-action@1.67.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
