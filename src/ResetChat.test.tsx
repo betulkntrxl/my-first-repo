@@ -58,7 +58,6 @@ describe('testing the App', () => {
     render(<App />);
     const user = userEvent.setup();
 
-    const sendmessageElement = screen.getByTitle('sendmessage');
     const resetElement = screen.getByTitle('reset');
     await user.click(resetElement);
     const continueElement = await screen.getByTitle('continue-button');
