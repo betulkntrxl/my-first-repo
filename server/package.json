@@ -18,7 +18,5 @@
     "winston": "3.10.0"
   },
   "scripts": {},
-  "devDependencies": {
-    "@types/cron": "^2.0.0"
-  }
+  "devDependencies": {}
 }
