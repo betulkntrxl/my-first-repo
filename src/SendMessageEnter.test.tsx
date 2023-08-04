@@ -29,10 +29,10 @@ const server = setupServer(
           prompt_tokens: 25,
           total_tokens: 34,
         },
-      })
-    )
+      }),
+    ),
   ),
-  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' })))
+  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
 
 beforeAll(() => server.listen());
