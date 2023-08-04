@@ -8,9 +8,9 @@ import App from './App';
 
 const server = setupServer(
   rest.post('/api/prompt', (req, res, ctx) =>
-    res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(429))
+    res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(429)),
   ),
-  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' })))
+  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
 
 beforeAll(() => server.listen());

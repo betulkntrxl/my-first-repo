@@ -30,10 +30,10 @@ const server = setupServer(
           total_tokens: 400,
         },
       }),
-      ctx.status(200)
-    )
+      ctx.status(200),
+    ),
   ),
-  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' })))
+  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
 
 beforeAll(() => server.listen());

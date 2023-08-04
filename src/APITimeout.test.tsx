@@ -8,7 +8,7 @@ import App from './App';
 
 const server = setupServer(
   rest.post('/api/prompt', async req => req.passthrough),
-  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' })))
+  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
 
 beforeAll(() => server.listen());

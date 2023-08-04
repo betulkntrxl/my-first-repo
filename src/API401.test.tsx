@@ -10,10 +10,10 @@ const server = setupServer(
   rest.post('/api/prompt', (req, res, ctx) =>
     res(
       ctx.json({ errorMessage: 'User is not logged in, authenticate path is /api/auth/login' }),
-      ctx.status(401)
-    )
+      ctx.status(401),
+    ),
   ),
-  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' })))
+  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
 
 beforeAll(() => server.listen());

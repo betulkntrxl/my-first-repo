@@ -31,7 +31,7 @@ const Home = () => {
   const [disabledInput, setDisabledInput] = useState(false);
 
   const [systemMessageValue, setSystemMessageValue] = useState(
-    'Assistant is a large language model trained by OpenAI.'
+    'Assistant is a large language model trained by OpenAI.',
   );
   const systemMessageDisplay = {
     role: 'system',
@@ -198,7 +198,7 @@ const Home = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-        }
+        },
       )
       .then(response => {
         const responseData = response.data;
@@ -207,7 +207,7 @@ const Home = () => {
         setTokenMessage(
           responseData.usage.total_tokens > maxTokens
             ? '  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.'
-            : ''
+            : '',
         );
         // add response to conversation
         setMessages([
