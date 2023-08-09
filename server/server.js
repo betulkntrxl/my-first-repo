@@ -1,8 +1,29 @@
+import appInsights from 'applicationinsights';
+
 import express from 'express';
 import { setupMiddleware } from './src/configs/setup-middleware.js';
 import { setupAuth } from './src/configs/setup-auth.js';
 import { setupRoutes } from './src/routes/routes.js';
 import { logger } from './src/configs/logger.js';
+
+if (process.env.APPLICATION_INSIGHTS_CONNECTION_STRING) {
+  logger.info('Starting Application Insights monitoring...');
+
+  appInsights
+    .setup(process.env.APPLICATION_INSIGHTS_CONNECTION_STRING)
+    .setAutoDependencyCorrelation(true)
+    .setAutoCollectRequests(true)
+    .setAutoCollectPerformance(true, true)
+    .setAutoCollectExceptions(true)
+    .setAutoCollectDependencies(true)
+    .setAutoCollectConsole(true)
+    .setUseDiskRetryCaching(true)
+    .setSendLiveMetrics(true)
+    .setDistributedTracingMode(appInsights.DistributedTracingModes.AI)
+    .start();
+
+  logger.info('Application Insights setup complete');
+}
 
 // Initializing web server
 const expressWebServer = express();
