@@ -46,7 +46,9 @@ const port = process.env.PORT || 8080;
 // Starting web server
 const start = Date.now();
 expressWebServer.listen(port, () => {
-  const duration = Date.now() - start;
-  appInsights.defaultClient.trackMetric({ name: 'server startup time', value: duration });
+  if (process.env.APPLICATION_INSIGHTS_CONNECTION_STRING) {
+    const duration = Date.now() - start;
+    appInsights.defaultClient.trackMetric({ name: 'server startup time', value: duration });
+  }
   logger.info(`MT OpenAI Chat App UI server running on port ${port}`);
 });
