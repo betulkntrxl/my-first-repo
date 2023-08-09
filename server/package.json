@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@azure/msal-node": "^1.18.1",
+    "applicationinsights": "^2.7.0",
     "body-parser": "1.20.2",
     "compression": "1.7.4",
     "connect-redis": "^7.1.0",
