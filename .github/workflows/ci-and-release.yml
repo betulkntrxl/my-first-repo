@@ -27,6 +27,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: |
+            yarn.lock
+            server/yarn.lock
 
       - name: Install dependencies for UI
         run: yarn install --frozen-lockfile
