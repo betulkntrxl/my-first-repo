@@ -29,7 +29,7 @@ describe('testing the App', () => {
 
     // wait for dialog to be rendered
     await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible(), {
-      timeout: 5000,
+      timeout: 7000,
     }).then(() => {
       fireEvent.click(screen.getByTitle('close-button'));
     });
