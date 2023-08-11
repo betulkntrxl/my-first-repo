@@ -222,7 +222,7 @@ const Home = () => {
         axios.post('/api/app-insights-trace', {
           message: 'ChatApp Retry Prompt',
           severity: 'Warning',
-          properties: { retryCount: retryCount, errorStatusCode: ERROR_RESPONSE.status },
+          properties: { retryCount, errorCode: error.code, errorStatusCode: ERROR_RESPONSE.status },
         });
       },
       retryCondition: error => {
@@ -231,8 +231,6 @@ const Home = () => {
 
         const HTTP_METHOD = ERROR_RESPONSE.config?.method;
         const ERROR_RESPONSE_STATUS = ERROR_RESPONSE.status;
-
-        axios.post('/api/app-insights-events', { name: 'WinGame' });
 
         return (
           axiosRetry.isNetworkOrIdempotentRequestError(error) ||
