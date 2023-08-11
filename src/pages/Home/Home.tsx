@@ -141,7 +141,7 @@ const Home = () => {
   const handleAPIErrorOpen = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
-      name: 'ChatApp Rate Unexplained Error',
+      name: 'ChatApp Unexplained Error',
     });
 
     setOpenAPIError(true);

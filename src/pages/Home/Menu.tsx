@@ -35,7 +35,7 @@ const Menu = (props: {
   const handleDrawerToggle = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
-      name: 'Menu clicked',
+      name: 'Menu Toggled',
     });
 
     setMobileOpen(!mobileOpen);

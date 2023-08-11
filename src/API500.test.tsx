@@ -11,6 +11,8 @@ const server = setupServer(
     res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(500)),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.get('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
+  rest.get('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
 );
 
 beforeAll(() => server.listen());
