@@ -33,6 +33,11 @@ const Menu = (props: {
   const [version, setVersion] = React.useState('');
 
   const handleDrawerToggle = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'Menu clicked',
+    });
+
     setMobileOpen(!mobileOpen);
   };
 
@@ -147,6 +152,11 @@ const Menu = (props: {
   );
 
   const handleLogout = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'ChatApp Logout Clicked',
+    });
+
     window.location.href = '/api/auth/logout';
   };
 
