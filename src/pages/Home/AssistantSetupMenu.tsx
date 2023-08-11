@@ -23,7 +23,6 @@ const AssistantSetupMenu = (props: {
     axios.post('/api/app-insights-event', {
       name: 'ChatApp System Message Template Changed',
     });
-    console.log(JSON.stringify(event));
     handleSystemMessageValueChange(event);
   };
 

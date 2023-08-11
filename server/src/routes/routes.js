@@ -67,7 +67,7 @@ export const setupRoutes = (expressWebServer, appInsights) => {
     },
   );
 
-  // App Insights Events
+  // App Insights Trace
   expressWebServer.post(
     '/api/app-insights-trace',
     ensureAuthenticated401IfNot,
