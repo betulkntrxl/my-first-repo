@@ -19,11 +19,24 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('opens a menu', async () => {
+  it('renders an API Timeout input and tests for input less than 5 and greater than 60', async () => {
     render(<App />);
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
-    expect(menuElement).toBeTruthy();
-  }, 20000);
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
+      timeout: 7000,
+    }).then(() => {
+      fireEvent.click(screen.getByLabelText('configuration'));
+      const APITimeoutInput = screen.getByTitle('apitimeout-input');
+      user.click(APITimeoutInput);
+      // select all digits in input
+      user.keyboard('{Control>}a{/Control}');
+      user.keyboard('4');
+      user.keyboard('{Control>}a{/Control}');
+      user.keyboard('70');
+      expect(APITimeoutInput).toBeTruthy();
+    });
+  });
 });

@@ -19,11 +19,19 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('opens a menu', async () => {
+  it('renders a Top P slider', async () => {
     render(<App />);
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
-    expect(menuElement).toBeTruthy();
-  }, 20000);
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
+      timeout: 7000,
+    }).then(() => {
+      fireEvent.click(screen.getByLabelText('configuration'));
+      const topPElement = screen.getByLabelText('Top P');
+      user.click(topPElement);
+      expect(topPElement).toBeTruthy();
+    });
+  });
 });

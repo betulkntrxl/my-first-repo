@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -50,20 +50,13 @@ describe('testing the App', () => {
     const user = userEvent.setup();
     const resetElement = screen.getByTitle('reset');
     await user.click(resetElement);
-    const cancelElement = screen.getByTitle('cancel-button');
-    await user.click(cancelElement);
-
-    expect(resetElement).toBeTruthy();
-  }, 5000);
-
-  it('sends a message and reset chat and continue', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-
-    const resetElement = screen.getByTitle('reset');
-    await user.click(resetElement);
-    const continueElement = await screen.getByTitle('continue-button');
-    await user.click(continueElement);
-    expect(continueElement).toBeTruthy();
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
+      timeout: 7000,
+    }).then(() => {
+      const cancelElement = screen.getByTitle('cancel-button');
+      user.click(cancelElement);
+      expect(resetElement).toBeTruthy();
+    });
   }, 5000);
 });

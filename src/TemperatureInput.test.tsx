@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
@@ -19,11 +18,22 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('opens a menu', async () => {
+  it('renders a Temperature input and tests valid input', async () => {
     render(<App />);
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
-    expect(menuElement).toBeTruthy();
-  }, 20000);
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
+      timeout: 7000,
+    }).then(() => {
+      fireEvent.click(screen.getByLabelText('configuration'));
+      const temperatureInput = screen.getByTitle('temperature-input');
+      user.click(temperatureInput);
+      // select all digits in input
+      user.keyboard('{Control>}a{/Control}');
+      user.keyboard('.5');
+      expect(temperatureInput).toBeTruthy();
+    });
+  });
 });

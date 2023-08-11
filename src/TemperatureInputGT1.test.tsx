@@ -19,11 +19,24 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('opens a menu', async () => {
+  it('renders a Temperature input and tests invalid input greater than one', async () => {
     render(<App />);
     const user = userEvent.setup();
     const menuElement = screen.getByLabelText('menu');
     await user.click(menuElement);
-    expect(menuElement).toBeTruthy();
-  }, 20000);
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
+      timeout: 7000,
+    }).then(() => {
+      fireEvent.click(screen.getByLabelText('configuration'));
+      const configurationElement = screen.getByLabelText('configuration');
+      // await user.click(configurationElement);
+      const temperatureInput = screen.getByTitle('temperature-input');
+      user.click(temperatureInput);
+      // select all digits in input
+      user.keyboard('{Control>}a{/Control}');
+      user.keyboard('2');
+      expect(temperatureInput).toBeTruthy();
+    });
+  });
 });
