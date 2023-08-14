@@ -39,14 +39,14 @@ setupMiddleware(expressWebServer);
 setupAuth(expressWebServer);
 
 // Setup routes for api calls and to server the static content i.e. the React App
-setupRoutes(expressWebServer);
+setupRoutes(expressWebServer, appInsights);
 
 const port = process.env.PORT || 8080;
 
 // Starting web server
 const start = Date.now();
 expressWebServer.listen(port, () => {
-  if (process.env.APPLICATION_INSIGHTS_CONNECTION_STRING) {
+  if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
     const duration = Date.now() - start;
     appInsights.defaultClient.trackMetric({ name: 'server startup time', value: duration });
   }

@@ -56,20 +56,41 @@ const Home = () => {
   const [openAPIError, setOpenAPIError] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'ChatApp Reset Chat Clicked',
+    });
+
     setOpenResetChatSession(true);
   };
 
   const handleResetChatSessionClose = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'ChatApp Reset Chat Closed',
+    });
+
     setOpenResetChatSession(false);
   };
 
   const handleResetChatSessionContinue = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'ChatApp Reset Chat Continue',
+    });
+
     setOpenResetChatSession(false);
     // refresh the page
     window.history.go(0);
   };
 
   const handleSessionExpiredOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Session Expired',
+      severity: 'Warning',
+    });
+
     setOpenSessionExpired(true);
   };
 
@@ -87,6 +108,12 @@ const Home = () => {
   };
 
   const handleAPIRateLimitOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Rate Limit Hit',
+      severity: 'Error',
+    });
+
     setOpenAPIRateLimit(true);
   };
 
@@ -98,6 +125,13 @@ const Home = () => {
   };
 
   const handleAPITimeoutOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Timeout',
+      severity: 'Error',
+      properties: { APITimeout },
+    });
+
     setOpenAPITimeout(true);
   };
 
@@ -109,6 +143,12 @@ const Home = () => {
   };
 
   const handleAPIErrorOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Unexplained Error',
+      severity: 'Error',
+    });
+
     setOpenAPIError(true);
   };
 
@@ -120,22 +160,47 @@ const Home = () => {
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: `Temperature Changed to ${newValue}`,
+    });
+
     setTemperature(newValue as number);
   };
 
   const handleTopPChange = (event: Event, newValue: number | number[]) => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: `TopP Changed to ${newValue}`,
+    });
+
     setTopP(newValue as number);
   };
 
   const handleMaxTokensChange = (event: Event, newValue: number | number[]): void => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: `Max Tokens Changed to ${newValue}`,
+    });
+
     setMaxTokens(newValue as number);
   };
 
   const handlePastMessagesChange = (event: Event, newValue: number | number[]): void => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: `Past Messages Changed to ${newValue}`,
+    });
+
     setPastMessages(newValue as number);
   };
 
   const handleAPITimeoutChange = (event: Event, newValue: number | number[]): void => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: `API Timeout Changed to ${newValue}`,
+    });
+
     setAPITimeout(newValue as number);
   };
 
@@ -154,6 +219,17 @@ const Home = () => {
     axiosRetry(axios, {
       retries: 3,
       shouldResetTimeout: true,
+      onRetry: (retryCount, error) => {
+        // error wasn't a proper object so using JSON.parse to make it so
+        const ERROR_RESPONSE = JSON.parse(JSON.stringify(error));
+
+        // Tracking retry in app insights
+        axios.post('/api/app-insights-trace', {
+          message: 'ChatApp Retry Prompt',
+          severity: 'Warning',
+          properties: { retryCount, errorCode: error.code, errorStatusCode: ERROR_RESPONSE.status },
+        });
+      },
       retryCondition: error => {
         // error wasn't a proper object so using JSON.parse to make it so
         const ERROR_RESPONSE = JSON.parse(JSON.stringify(error));
@@ -204,8 +280,19 @@ const Home = () => {
         const responseData = response.data;
         setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
         setTokenCount(responseData.usage.total_tokens);
+        const USED_MORE_THAN_MAX_TOKENS = responseData.usage.total_tokens > maxTokens;
+
+        if (USED_MORE_THAN_MAX_TOKENS) {
+          // Tracking in app insights
+          axios.post('/api/app-insights-trace', {
+            message: 'ChatApp Used tokens is greater than max tokens',
+            severity: 'Warning',
+            properties: { maxTokens, totalTokens: responseData.usage.total_tokens },
+          });
+        }
+
         setTokenMessage(
-          responseData.usage.total_tokens > maxTokens
+          USED_MORE_THAN_MAX_TOKENS
             ? '  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.'
             : '',
         );
@@ -326,6 +413,11 @@ const Home = () => {
   };
 
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'System Message Changed',
+    });
+
     setSystemMessageValue(event.target.value);
   };
 

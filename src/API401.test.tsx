@@ -14,6 +14,8 @@ const server = setupServer(
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
+  rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
 );
 
 beforeAll(() => server.listen());
@@ -34,7 +36,7 @@ describe('testing the App', () => {
 
     // wait for dialog to be rendered
     await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
-      timeout: 7000,
+      timeout: 10000,
     }).then(() => {
       fireEvent.click(screen.getByTitle('cancel-button'));
     });

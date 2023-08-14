@@ -8,10 +8,7 @@ import App from './App';
 
 const server = setupServer(
   rest.post('/api/prompt', (req, res, ctx) =>
-    res(
-      ctx.json({ errorMessage: 'User is not logged in, authenticate path is /api/auth/login' }),
-      ctx.status(401),
-    ),
+    res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(500)),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
@@ -25,21 +22,22 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and returns status 401 Unauthorized error and Continue', async () => {
+  it('renders a System Message input and tests for input', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
+    const menuElement = screen.getByLabelText('menu');
+    await user.click(menuElement);
 
     // wait for dialog to be rendered
-    await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
+    await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible(), {
       timeout: 10000,
     }).then(() => {
-      fireEvent.click(screen.getByTitle('continue-button'));
+      fireEvent.click(screen.getByTitle('system-message-input'));
+      const systemMessageInput = screen.getByTitle('system-message-input');
+      // select all digits in input
+      user.keyboard('{Control>}a{/Control}');
+      user.keyboard('test');
+      expect(systemMessageInput).toBeTruthy();
     });
-    expect(sendElement).toBeTruthy();
-  }, 5000);
+  });
 });
