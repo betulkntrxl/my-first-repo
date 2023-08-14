@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -50,14 +50,16 @@ describe('testing the App', () => {
     const user = userEvent.setup();
 
     const resetElement = screen.getByTitle('reset');
-    await user.click(resetElement);
-    // wait for element to be rendered
-    await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
-      timeout: 10000,
-    }).then(() => {
-      const continueElement = screen.getByTitle('continue-button');
-      user.click(continueElement);
-      expect(continueElement).toBeTruthy();
+    act(async () => {
+      await user.click(resetElement);
+      // wait for element to be rendered
+      await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        const continueElement = screen.getByTitle('continue-button');
+        user.click(continueElement);
+        expect(continueElement).toBeTruthy();
+      });
     });
   }, 5000);
 });

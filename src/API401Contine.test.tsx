@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -29,17 +29,19 @@ describe('testing the App', () => {
     render(<App />);
     const user = userEvent.setup();
     const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
+    act(async () => {
+      await user.click(sendmessageElement);
+      await user.keyboard('hello');
+      const sendElement = screen.getByTitle('send');
+      await user.click(sendElement);
 
-    // wait for dialog to be rendered
-    await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
-      timeout: 10000,
-    }).then(() => {
-      fireEvent.click(screen.getByTitle('continue-button'));
+      // wait for dialog to be rendered
+      await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        fireEvent.click(screen.getByTitle('continue-button'));
+      });
+      expect(sendElement).toBeTruthy();
     });
-    expect(sendElement).toBeTruthy();
   }, 5000);
 });

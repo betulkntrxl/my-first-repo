@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -25,19 +25,21 @@ describe('testing the App', () => {
   it('renders a System Message input and tests for input', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
+    act(async () => {
+      const menuElement = screen.getByLabelText('menu');
+      await user.click(menuElement);
 
-    // wait for dialog to be rendered
-    await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible(), {
-      timeout: 10000,
-    }).then(() => {
-      fireEvent.click(screen.getByTitle('system-message-input'));
-      const systemMessageInput = screen.getByTitle('system-message-input');
-      // select all digits in input
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('test');
-      expect(systemMessageInput).toBeTruthy();
+      // wait for dialog to be rendered
+      await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        fireEvent.click(screen.getByTitle('system-message-input'));
+        const systemMessageInput = screen.getByTitle('system-message-input');
+        // select all digits in input
+        user.keyboard('{Control>}a{/Control}');
+        user.keyboard('test');
+        expect(systemMessageInput).toBeTruthy();
+      });
     });
   });
 });

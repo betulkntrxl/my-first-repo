@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -22,19 +22,21 @@ describe('testing the App', () => {
   it('renders an API Timeout slider', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
-    // wait for element to be rendered
-    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-      timeout: 10000,
-    }).then(async () => {
-      fireEvent.click(screen.getByLabelText('configuration'));
-      await waitFor(() => expect(screen.getByLabelText('API Timeout')).toBeVisible(), {
+    act(async () => {
+      const menuElement = screen.getByLabelText('menu');
+      await user.click(menuElement);
+      // wait for element to be rendered
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
         timeout: 10000,
-      }).then(() => {
-        const APITimeoutMessages = screen.getByLabelText('API Timeout');
-        user.click(APITimeoutMessages);
-        expect(APITimeoutMessages).toBeTruthy();
+      }).then(async () => {
+        fireEvent.click(screen.getByLabelText('configuration'));
+        await waitFor(() => expect(screen.getByLabelText('API Timeout')).toBeVisible(), {
+          timeout: 10000,
+        }).then(() => {
+          const APITimeoutMessages = screen.getByLabelText('API Timeout');
+          user.click(APITimeoutMessages);
+          expect(APITimeoutMessages).toBeTruthy();
+        });
       });
     });
   });

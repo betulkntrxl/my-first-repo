@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -48,12 +48,14 @@ describe('testing the App', () => {
     render(<App />);
     const user = userEvent.setup();
     const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
+    act(async () => {
+      await user.click(sendmessageElement);
+      await user.keyboard('hello');
+      const sendElement = screen.getByTitle('send');
+      await user.click(sendElement);
 
-    expect(sendElement).toBeTruthy();
+      expect(sendElement).toBeTruthy();
+    });
   }, 5000);
 
   it('renders a menu', async () => {

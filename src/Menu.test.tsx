@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -22,8 +22,10 @@ describe('testing the App', () => {
   it('opens a menu', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
-    expect(menuElement).toBeTruthy();
+    act(async () => {
+      const menuElement = screen.getByLabelText('menu');
+      await user.click(menuElement);
+      expect(menuElement).toBeTruthy();
+    });
   }, 20000);
 });

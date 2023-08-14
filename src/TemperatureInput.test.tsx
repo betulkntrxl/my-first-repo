@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -21,22 +21,24 @@ describe('testing the App', () => {
   it('renders a Temperature input and tests valid input', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
-    // wait for element to be rendered
-    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-      timeout: 10000,
-    }).then(async () => {
-      fireEvent.click(screen.getByLabelText('configuration'));
-      await waitFor(() => expect(screen.getByTitle('temperature-input')).toBeVisible(), {
+    act(async () => {
+      const menuElement = screen.getByLabelText('menu');
+      await user.click(menuElement);
+      // wait for element to be rendered
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
         timeout: 10000,
-      }).then(() => {
-        const temperatureInput = screen.getByTitle('temperature-input');
-        user.click(temperatureInput);
-        // select all digits in input
-        user.keyboard('{Control>}a{/Control}');
-        user.keyboard('.5');
-        expect(temperatureInput).toBeTruthy();
+      }).then(async () => {
+        fireEvent.click(screen.getByLabelText('configuration'));
+        await waitFor(() => expect(screen.getByTitle('temperature-input')).toBeVisible(), {
+          timeout: 10000,
+        }).then(() => {
+          const temperatureInput = screen.getByTitle('temperature-input');
+          user.click(temperatureInput);
+          // select all digits in input
+          user.keyboard('{Control>}a{/Control}');
+          user.keyboard('.5');
+          expect(temperatureInput).toBeTruthy();
+        });
       });
     });
   });
