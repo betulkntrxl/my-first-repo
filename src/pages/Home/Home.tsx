@@ -15,13 +15,18 @@ export interface DialogTitleProps {
 }
 
 const Home = () => {
+  const DEFAULT_TEMPERATURE = 0.7;
+  const DEFAULT_TOP_P = 0.95;
+  const DEFAULT_MAX_TOKENS = 200;
+  const DEFAULT_PAST_MESSAGES = 10;
+  const DEFAULT_API_TIMEOUT = 10;
   const [data, setData] = useState({ chatsession: '', response: '' });
   const [visible, setVisible] = useState(true);
-  const [temperature, setTemperature] = useState<number>(0.7);
-  const [topP, setTopP] = useState(0.95);
-  const [maxTokens, setMaxTokens] = useState(200);
-  const [pastMessages, setPastMessages] = useState(10);
-  const [APITimeout, setAPITimeout] = useState(10);
+  const [temperature, setTemperature] = useState<number>(DEFAULT_TEMPERATURE);
+  const [topP, setTopP] = useState(DEFAULT_TOP_P);
+  const [maxTokens, setMaxTokens] = useState(DEFAULT_MAX_TOKENS);
+  const [pastMessages, setPastMessages] = useState(DEFAULT_PAST_MESSAGES);
+  const [APITimeout, setAPITimeout] = useState(DEFAULT_API_TIMEOUT);
 
   const [displayValue, setDisplayValue] = useState('block');
   const [tokenMessage, setTokenMessage] = useState('');
@@ -154,47 +159,22 @@ const Home = () => {
   };
 
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
-    // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: `Temperature Changed to ${newValue}`,
-    });
-
     setTemperature(newValue as number);
   };
 
   const handleTopPChange = (event: Event, newValue: number | number[]) => {
-    // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: `TopP Changed to ${newValue}`,
-    });
-
     setTopP(newValue as number);
   };
 
   const handleMaxTokensChange = (event: Event, newValue: number | number[]): void => {
-    // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: `Max Tokens Changed to ${newValue}`,
-    });
-
     setMaxTokens(newValue as number);
   };
 
   const handlePastMessagesChange = (event: Event, newValue: number | number[]): void => {
-    // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: `Past Messages Changed to ${newValue}`,
-    });
-
     setPastMessages(newValue as number);
   };
 
   const handleAPITimeoutChange = (event: Event, newValue: number | number[]): void => {
-    // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: `API Timeout Changed to ${newValue}`,
-    });
-
     setAPITimeout(newValue as number);
   };
 
@@ -246,6 +226,41 @@ const Home = () => {
         );
       },
     });
+
+    if (temperature !== DEFAULT_TEMPERATURE) {
+      // Tracking in app insights
+      axios.post('/api/app-insights-event', {
+        name: `Temperature sent as ${temperature}`,
+      });
+    }
+
+    if (topP !== DEFAULT_TOP_P) {
+      // Tracking in app insights
+      axios.post('/api/app-insights-event', {
+        name: `TopP sent as ${topP}`,
+      });
+    }
+
+    if (maxTokens !== DEFAULT_MAX_TOKENS) {
+      // Tracking in app insights
+      axios.post('/api/app-insights-event', {
+        name: `Max Tokens sent as ${maxTokens}`,
+      });
+    }
+
+    if (pastMessages !== DEFAULT_PAST_MESSAGES) {
+      // Tracking in app insights
+      axios.post('/api/app-insights-event', {
+        name: `Past Messages sent as ${pastMessages}`,
+      });
+    }
+
+    if (APITimeout !== DEFAULT_API_TIMEOUT) {
+      // Tracking in app insights
+      axios.post('/api/app-insights-event', {
+        name: `API Timeout sent as ${APITimeout}`,
+      });
+    }
 
     await axios
       .post(
