@@ -22,7 +22,7 @@ describe('testing the App', () => {
   it('opens a menu', async () => {
     render(<App />);
     const user = userEvent.setup();
-    act(async () => {
+    await act(async () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       expect(menuElement).toBeTruthy();

@@ -60,6 +60,7 @@ describe('testing the App', () => {
 
   it('renders a menu', async () => {
     render(<App />);
+
     const menu = screen.getByLabelText('menu');
     expect(menu).toBeTruthy();
   });
