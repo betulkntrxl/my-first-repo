@@ -119,7 +119,6 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 85 }}
             value={temperature}
-            defaultValue={temperature}
             size="small"
             onChange={handleTemperatureInputChange}
             inputProps={{
@@ -158,7 +157,6 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 85 }}
             value={topP}
-            defaultValue={topP}
             size="small"
             onChange={handleTopPInputChange}
             inputProps={{
@@ -197,7 +195,6 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 85 }}
             value={maxTokens}
-            defaultValue={maxTokens}
             size="small"
             onChange={handleMaxTokensInputChange}
             inputProps={{
@@ -237,7 +234,6 @@ const ConfigurationMenu = (props: {
             <TextField
               style={{ width: 85 }}
               value={pastMessages}
-              defaultValue={pastMessages}
               size="small"
               onChange={handlePastMessagesInputChange}
               inputProps={{
