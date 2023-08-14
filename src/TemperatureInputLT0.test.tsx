@@ -29,8 +29,6 @@ describe('testing the App', () => {
       timeout: 7000,
     }).then(() => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      const configurationElement = screen.getByLabelText('configuration');
-      //     await user.click(configurationElement);
       const temperatureInput = screen.getByTitle('temperature-input');
       user.click(temperatureInput);
       // select all digits in input

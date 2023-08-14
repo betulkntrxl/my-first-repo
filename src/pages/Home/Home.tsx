@@ -86,8 +86,9 @@ const Home = () => {
 
   const handleSessionExpiredOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: 'ChatApp Session Expired',
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Session Expired',
+      severity: 'Warning',
     });
 
     setOpenSessionExpired(true);
@@ -108,8 +109,9 @@ const Home = () => {
 
   const handleAPIRateLimitOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: 'ChatApp Rate Limit Hit',
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Rate Limit Hit',
+      severity: 'Error',
     });
 
     setOpenAPIRateLimit(true);
@@ -124,8 +126,10 @@ const Home = () => {
 
   const handleAPITimeoutOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: 'ChatApp Timeout',
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Timeout',
+      severity: 'Error',
+      properties: { APITimeout },
     });
 
     setOpenAPITimeout(true);
@@ -140,8 +144,9 @@ const Home = () => {
 
   const handleAPIErrorOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
-      name: 'ChatApp Unexplained Error',
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Unexplained Error',
+      severity: 'Error',
     });
 
     setOpenAPIError(true);
@@ -276,12 +281,16 @@ const Home = () => {
         setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
         setTokenCount(responseData.usage.total_tokens);
         const USED_MORE_THAN_MAX_TOKENS = responseData.usage.total_tokens > maxTokens;
+
         if (USED_MORE_THAN_MAX_TOKENS) {
           // Tracking in app insights
-          axios.post('/api/app-insights-event', {
-            name: 'Used tokens is greater than max tokens',
+          axios.post('/api/app-insights-trace', {
+            message: 'ChatApp Used tokens is greater than max tokens',
+            severity: 'Warning',
+            properties: { maxTokens, totalTokens: responseData.usage.total_tokens },
           });
         }
+
         setTokenMessage(
           USED_MORE_THAN_MAX_TOKENS
             ? '  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.'
