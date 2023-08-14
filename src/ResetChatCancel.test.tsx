@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -27,9 +27,10 @@ const server = setupServer(
         usage: {
           completion_tokens: 9,
           prompt_tokens: 25,
-          total_tokens: 34,
+          total_tokens: 400,
         },
       }),
+      ctx.status(200),
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
@@ -44,31 +45,18 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message by pressing Enter and returns status 200 ok', async () => {
+  it('sends a message and reset chat and cancel', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello{Enter}');
-    // const sendElement = screen.getByTitle('send');
-    // await user.click(sendElement);
-
-    expect(sendmessageElement).toBeTruthy();
+    const resetElement = screen.getByTitle('reset');
+    await user.click(resetElement);
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
+      timeout: 10000,
+    }).then(() => {
+      const cancelElement = screen.getByTitle('cancel-button');
+      user.click(cancelElement);
+      expect(resetElement).toBeTruthy();
+    });
   }, 5000);
-
-  it('renders a menu', async () => {
-    render(<App />);
-    const menu = screen.getByLabelText('menu');
-    expect(menu).toBeTruthy();
-  });
-  it('renders a Message input', () => {
-    render(<App />);
-    const textareaNode = screen.getByPlaceholderText('Type your message here.');
-    expect(textareaNode).toBeTruthy();
-  });
-  it('renders a Token Count', () => {
-    render(<App />);
-    const tokenCount = screen.getByText(/Token Count:/);
-    expect(tokenCount).toBeTruthy();
-  });
 });

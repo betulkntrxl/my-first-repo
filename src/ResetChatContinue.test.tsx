@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -34,6 +34,8 @@ const server = setupServer(
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
+  rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
 );
 
 beforeAll(() => server.listen());
@@ -43,25 +45,19 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and reset chat and cancel', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const resetElement = screen.getByTitle('reset');
-    await user.click(resetElement);
-    const cancelElement = screen.getByTitle('cancel-button');
-    await user.click(cancelElement);
-
-    expect(resetElement).toBeTruthy();
-  }, 5000);
-
   it('sends a message and reset chat and continue', async () => {
     render(<App />);
     const user = userEvent.setup();
 
     const resetElement = screen.getByTitle('reset');
     await user.click(resetElement);
-    const continueElement = await screen.getByTitle('continue-button');
-    await user.click(continueElement);
-    expect(continueElement).toBeTruthy();
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
+      timeout: 10000,
+    }).then(() => {
+      const continueElement = screen.getByTitle('continue-button');
+      user.click(continueElement);
+      expect(continueElement).toBeTruthy();
+    });
   }, 5000);
 });

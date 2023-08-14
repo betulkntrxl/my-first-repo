@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
+import axios from 'axios';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 const AssistantSetupMenu = (props: {
@@ -18,6 +19,10 @@ const AssistantSetupMenu = (props: {
   const { handleSystemMessageValueChange, systemMessageValue } = props;
 
   const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'ChatApp System Message Template Changed',
+    });
     handleSystemMessageValueChange(event);
   };
 
