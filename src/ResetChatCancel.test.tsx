@@ -52,13 +52,11 @@ describe('testing the App', () => {
     await act(async () => {
       await user.click(resetElement);
       // wait for element to be rendered
-      await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
-        timeout: 10000,
-      }).then(() => {
+      await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
         const cancelElement = screen.getByTitle('cancel-button');
         user.click(cancelElement);
         expect(resetElement).toBeTruthy();
       });
     });
-  }, 5000);
+  });
 });

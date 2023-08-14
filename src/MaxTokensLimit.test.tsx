@@ -57,5 +57,5 @@ describe('testing the App', () => {
 
       expect(sendElement).toBeTruthy();
     });
-  }, 5000);
+  });
 });

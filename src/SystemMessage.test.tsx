@@ -30,16 +30,16 @@ describe('testing the App', () => {
       await user.click(menuElement);
 
       // wait for dialog to be rendered
-      await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible(), {
-        timeout: 10000,
-      }).then(() => {
-        fireEvent.click(screen.getByTitle('system-message-input'));
-        const systemMessageInput = screen.getByTitle('system-message-input');
-        // select all digits in input
-        user.keyboard('{Control>}a{/Control}');
-        user.keyboard('test');
-        expect(systemMessageInput).toBeTruthy();
-      });
+      await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible()).then(
+        () => {
+          fireEvent.click(screen.getByTitle('system-message-input'));
+          const systemMessageInput = screen.getByTitle('system-message-input');
+          // select all digits in input
+          user.keyboard('{Control>}a{/Control}');
+          user.keyboard('test');
+          expect(systemMessageInput).toBeTruthy();
+        },
+      );
     });
   });
 });

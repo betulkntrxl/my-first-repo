@@ -27,5 +27,5 @@ describe('testing the App', () => {
       await user.click(menuElement);
       expect(menuElement).toBeTruthy();
     });
-  }, 20000);
+  });
 });

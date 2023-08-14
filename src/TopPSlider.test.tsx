@@ -26,18 +26,16 @@ describe('testing the App', () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered
-      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-        timeout: 10000,
-      }).then(async () => {
-        fireEvent.click(screen.getByLabelText('configuration'));
-        await waitFor(() => expect(screen.getByLabelText('Top P')).toBeVisible(), {
-          timeout: 10000,
-        }).then(() => {
-          const topPElement = screen.getByLabelText('Top P');
-          user.click(topPElement);
-          expect(topPElement).toBeTruthy();
-        });
-      });
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+        async () => {
+          fireEvent.click(screen.getByLabelText('configuration'));
+          await waitFor(() => expect(screen.getByLabelText('Top P')).toBeVisible()).then(() => {
+            const topPElement = screen.getByLabelText('Top P');
+            user.click(topPElement);
+            expect(topPElement).toBeTruthy();
+          });
+        },
+      );
     });
   });
 });

@@ -56,7 +56,7 @@ describe('testing the App', () => {
 
       expect(sendmessageElement).toBeTruthy();
     });
-  }, 5000);
+  });
 
   it('renders a menu', async () => {
     render(<App />);

@@ -30,9 +30,7 @@ describe('testing the App', () => {
         timeout: 10000,
       }).then(async () => {
         fireEvent.click(screen.getByLabelText('configuration'));
-        await waitFor(() => expect(screen.getByLabelText('Max Tokens')).toBeVisible(), {
-          timeout: 10000,
-        }).then(() => {
+        await waitFor(() => expect(screen.getByLabelText('Max Tokens')).toBeVisible()).then(() => {
           fireEvent.click(screen.getByLabelText('Max Tokens'));
           const maxTokensElement = screen.getByLabelText('Max Tokens');
           expect(maxTokensElement).toBeTruthy();

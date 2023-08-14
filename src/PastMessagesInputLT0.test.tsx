@@ -26,21 +26,21 @@ describe('testing the App', () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered
-      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-        timeout: 10000,
-      }).then(async () => {
-        fireEvent.click(screen.getByLabelText('configuration'));
-        await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible(), {
-          timeout: 10000,
-        }).then(() => {
-          const previousMessagesInput = screen.getByTitle('pastMessages-input');
-          fireEvent.click(screen.getByTitle('pastMessages-input'));
-          // select all digits in input
-          user.keyboard('{Control>}a{/Control}');
-          user.keyboard('-1');
-          expect(previousMessagesInput).toBeTruthy();
-        });
-      });
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+        async () => {
+          fireEvent.click(screen.getByLabelText('configuration'));
+          await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible()).then(
+            () => {
+              const previousMessagesInput = screen.getByTitle('pastMessages-input');
+              fireEvent.click(screen.getByTitle('pastMessages-input'));
+              // select all digits in input
+              user.keyboard('{Control>}a{/Control}');
+              user.keyboard('-1');
+              expect(previousMessagesInput).toBeTruthy();
+            },
+          );
+        },
+      );
     });
   });
 });

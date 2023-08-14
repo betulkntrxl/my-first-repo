@@ -26,20 +26,20 @@ describe('testing the App', () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered
-      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-        timeout: 10000,
-      }).then(async () => {
-        fireEvent.click(screen.getByLabelText('configuration'));
-        await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible(), {
-          timeout: 10000,
-        }).then(() => {
-          fireEvent.click(screen.getByTitle('maxTokens-input'));
-          const maxtokensInput = screen.getByTitle('maxTokens-input');
-          user.keyboard('{Control>}a{/Control}');
-          user.keyboard('-1');
-          expect(maxtokensInput).toBeTruthy();
-        });
-      });
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+        async () => {
+          fireEvent.click(screen.getByLabelText('configuration'));
+          await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
+            () => {
+              fireEvent.click(screen.getByTitle('maxTokens-input'));
+              const maxtokensInput = screen.getByTitle('maxTokens-input');
+              user.keyboard('{Control>}a{/Control}');
+              user.keyboard('-1');
+              expect(maxtokensInput).toBeTruthy();
+            },
+          );
+        },
+      );
     });
   });
 });

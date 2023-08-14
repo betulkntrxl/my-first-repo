@@ -36,12 +36,10 @@ describe('testing the App', () => {
       await user.click(sendElement);
 
       // wait for dialog to be rendered
-      await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
-        timeout: 10000,
-      }).then(() => {
+      await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
         fireEvent.click(screen.getByTitle('cancel-button'));
       });
       expect(sendElement).toBeTruthy();
     });
-  }, 5000);
+  });
 });
