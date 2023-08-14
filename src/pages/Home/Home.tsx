@@ -85,12 +85,6 @@ const Home = () => {
   };
 
   const handleSessionExpiredOpen = () => {
-    // Tracking in app insights
-    axios.post('/api/app-insights-trace', {
-      message: 'ChatApp Session Expired',
-      severity: 'Warning',
-    });
-
     setOpenSessionExpired(true);
   };
 
@@ -111,7 +105,7 @@ const Home = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-trace', {
       message: 'ChatApp Rate Limit Hit',
-      severity: 'Error',
+      severity: 3, // Error
     });
 
     setOpenAPIRateLimit(true);
@@ -128,7 +122,7 @@ const Home = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-trace', {
       message: 'ChatApp Timeout',
-      severity: 'Error',
+      severity: 3, // Error
       properties: { APITimeout },
     });
 
@@ -146,7 +140,7 @@ const Home = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-trace', {
       message: 'ChatApp Unexplained Error',
-      severity: 'Error',
+      severity: 3, // Error
     });
 
     setOpenAPIError(true);
@@ -226,7 +220,7 @@ const Home = () => {
         // Tracking retry in app insights
         axios.post('/api/app-insights-trace', {
           message: 'ChatApp Retry Prompt',
-          severity: 'Warning',
+          severity: 2, // Warning
           properties: { retryCount, errorCode: error.code, errorStatusCode: ERROR_RESPONSE.status },
         });
       },
@@ -286,7 +280,7 @@ const Home = () => {
           // Tracking in app insights
           axios.post('/api/app-insights-trace', {
             message: 'ChatApp Used tokens is greater than max tokens',
-            severity: 'Warning',
+            severity: 2, // Warning
             properties: { maxTokens, totalTokens: responseData.usage.total_tokens },
           });
         }
