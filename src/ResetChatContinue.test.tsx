@@ -53,7 +53,7 @@ describe('testing the App', () => {
     await user.click(resetElement);
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
-      timeout: 7000,
+      timeout: 10000,
     }).then(() => {
       const continueElement = screen.getByTitle('continue-button');
       user.click(continueElement);

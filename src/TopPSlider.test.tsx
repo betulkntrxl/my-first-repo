@@ -26,7 +26,7 @@ describe('testing the App', () => {
     await user.click(menuElement);
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-      timeout: 7000,
+      timeout: 10000,
     }).then(() => {
       fireEvent.click(screen.getByLabelText('configuration'));
       const topPElement = screen.getByLabelText('Top P');

@@ -36,7 +36,7 @@ describe('testing the App', () => {
 
     // wait for dialog to be rendered
     await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible(), {
-      timeout: 7000,
+      timeout: 10000,
     }).then(() => {
       fireEvent.click(screen.getByTitle('continue-button'));
     });

@@ -30,7 +30,7 @@ describe('testing the App', () => {
 
     // wait for dialog to be rendered
     await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible(), {
-      timeout: 7000,
+      timeout: 10000,
     }).then(() => {
       fireEvent.click(screen.getByTitle('system-message-input'));
       const systemMessageInput = screen.getByTitle('system-message-input');

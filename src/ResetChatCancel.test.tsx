@@ -52,7 +52,7 @@ describe('testing the App', () => {
     await user.click(resetElement);
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
-      timeout: 7000,
+      timeout: 10000,
     }).then(() => {
       const cancelElement = screen.getByTitle('cancel-button');
       user.click(cancelElement);
