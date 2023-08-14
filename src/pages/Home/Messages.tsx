@@ -63,34 +63,39 @@ const Messages = (props: {
             }}
           >
             <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
-              Enter an instruction or select a preset, and watch the API respond with a completion
-              that attempts to match the context or pattern you provided.
+              You can ask ChatApp a question using the textbox below. Please keep the following in
+              mind when using this tool:
               <br />
               <br />
-              Use good judgment when sharing outputs, and attribute them to your name or company.
-              <br />
-              <br />
-              Requests submitted to our API will not be used to train or improve future models.
-              <br />
-              <br />
-              Our default models&apos; training data cuts off in 2021, so they may not have
-              knowledge of current events.
-            </div>
-            <div
-              style={{
-                fontSize: 14,
-                textAlign: 'center',
-                marginTop: 30,
-                marginBottom: 10,
-                marginLeft: '5%',
-                width: '90%',
-              }}
-            >
-              Please note that McKesson Security teams and Microsoft will be monitoring all use in
-              this McKesson GPT environment. Anyone using this application expressly consents to
-              such monitoring and is advised that if such monitoring reveals possible criminal
-              activity, system personnel may provide the evidence of such monitoring to law
-              enforcement officials.
+              <ul style={{ textAlign: 'left' }}>
+                <li>
+                  Any questions asked or data entered will not be used to train or improve the
+                  current underlying model or future models.
+                </li>
+                <li>
+                  Use good judgement before relying on or sharing ChatApp responses as they may not
+                  always be accurate. Pressure test and verify that the response seems correct,
+                  unbiased, and explainable - does it make sense?
+                </li>
+                <li>
+                  During these early learning days, do not rely on these responses without taking
+                  additional verification steps for critical business purposes or for decisions with
+                  significant impacts (employment/hiring, financial, legal, healthcare applications
+                  or decisions, etc.).
+                </li>
+                <li>
+                  Our default models&apos; training data (i.e., the information from which the model
+                  has been developed) cuts off in 2021, so the models&apos; output may not reflect
+                  current events.
+                </li>
+                <li>
+                  McKesson Security teams and Microsoft will be monitoring all use in this McKesson
+                  GPT environment. Anyone using this application expressly consents to such
+                  monitoring. If such monitoring reveals possible activity which violates company
+                  policy and/or the law, system personnel may provide this information to relevant
+                  company legal/ethical channels and/or to law enforcement officials.
+                </li>
+              </ul>
             </div>
           </div>
 
