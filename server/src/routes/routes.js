@@ -67,7 +67,12 @@ export const setupRoutes = (expressWebServer, appInsights) => {
     },
   );
 
-  // App Insights Trace
+  // App Insights Trace, Severity Levels available
+  // Verbose = 0,
+  // Information = 1,
+  // Warning = 2,
+  // Error = 3,
+  // Critical = 4
   expressWebServer.post(
     '/api/app-insights-trace',
     ensureAuthenticated401IfNot,
