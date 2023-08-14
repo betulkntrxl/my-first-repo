@@ -42,12 +42,8 @@ jobs:
       - name: Lint/Format checks
         run: yarn lint:check && yarn prettier:check
 
-      - name: Get number of CPU cores
-        uses: SimenB/github-actions-cpu-cores@v1
-        id: cpu-cores
-
       - name: Run tests
-        run: CI=true yarn test --max-workers ${{ steps.cpu-cores.outputs.count }} --coverage .
+        run: CI=true yarn test --runInBand --coverage .
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
