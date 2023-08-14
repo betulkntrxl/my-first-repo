@@ -33,7 +33,7 @@ const Menu = (props: {
   const [version, setVersion] = React.useState('');
 
   const handleDrawerToggle = () => {
-    if (mobileOpen) {
+    if (!mobileOpen) {
       // Tracking in app insights
       axios.post('/api/app-insights-event', {
         name: 'Menu opened',
