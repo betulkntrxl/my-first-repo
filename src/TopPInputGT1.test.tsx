@@ -22,7 +22,7 @@ describe('testing the App', () => {
   it('renders a TopP input and tests for invalid input greater than 1', async () => {
     render(<App />);
     const user = userEvent.setup();
-    act(async () => {
+    await act(async () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered

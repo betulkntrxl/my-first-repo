@@ -22,7 +22,7 @@ describe('testing the App', () => {
   it('renders a previousMessages input and tests for input greater than 20', async () => {
     render(<App />);
     const user = userEvent.setup();
-    act(async () => {
+    await act(async () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered

@@ -22,7 +22,7 @@ describe('testing the App', () => {
   it('renders a MaxTokens input and tests for invalid input less than zero', async () => {
     render(<App />);
     const user = userEvent.setup();
-    act(async () => {
+    await act(async () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered

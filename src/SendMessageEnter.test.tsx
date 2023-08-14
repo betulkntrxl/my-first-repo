@@ -48,7 +48,7 @@ describe('testing the App', () => {
     render(<App />);
     const user = userEvent.setup();
     const sendmessageElement = screen.getByTitle('sendmessage');
-    act(async () => {
+    await act(async () => {
       await user.click(sendmessageElement);
       await user.keyboard('hello{Enter}');
       // const sendElement = screen.getByTitle('send');

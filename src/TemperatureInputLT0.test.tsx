@@ -22,7 +22,7 @@ describe('testing the App', () => {
   it('renders a Temperature input and tests invalid input less than zero', async () => {
     render(<App />);
     const user = userEvent.setup();
-    act(async () => {
+    await act(async () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered
