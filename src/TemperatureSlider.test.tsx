@@ -27,11 +27,15 @@ describe('testing the App', () => {
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
       timeout: 10000,
-    }).then(() => {
+    }).then(async () => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      fireEvent.click(screen.getByLabelText('Temperature'));
-      const temperatureElement = screen.getByLabelText('Temperature');
-      expect(temperatureElement).toBeTruthy();
+      await waitFor(() => expect(screen.getByLabelText('Temperature')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        fireEvent.click(screen.getByLabelText('Temperature'));
+        const temperatureElement = screen.getByLabelText('Temperature');
+        expect(temperatureElement).toBeTruthy();
+      });
     });
   });
 });

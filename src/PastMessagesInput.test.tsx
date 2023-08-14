@@ -27,14 +27,18 @@ describe('testing the App', () => {
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
       timeout: 10000,
-    }).then(() => {
+    }).then(async () => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      const previousMessagesInput = screen.getByTitle('pastMessages-input');
-      user.click(previousMessagesInput);
-      // select all digits in input
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('1');
-      expect(previousMessagesInput).toBeTruthy();
+      await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        const previousMessagesInput = screen.getByTitle('pastMessages-input');
+        user.click(previousMessagesInput);
+        // select all digits in input
+        user.keyboard('{Control>}a{/Control}');
+        user.keyboard('1');
+        expect(previousMessagesInput).toBeTruthy();
+      });
     });
   });
 });

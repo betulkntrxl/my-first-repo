@@ -26,14 +26,18 @@ describe('testing the App', () => {
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
       timeout: 10000,
-    }).then(() => {
+    }).then(async () => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      const temperatureInput = screen.getByTitle('temperature-input');
-      user.click(temperatureInput);
-      // select all digits in input
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('.5');
-      expect(temperatureInput).toBeTruthy();
+      await waitFor(() => expect(screen.getByTitle('temperature-input')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        const temperatureInput = screen.getByTitle('temperature-input');
+        user.click(temperatureInput);
+        // select all digits in input
+        user.keyboard('{Control>}a{/Control}');
+        user.keyboard('.5');
+        expect(temperatureInput).toBeTruthy();
+      });
     });
   });
 });

@@ -27,11 +27,15 @@ describe('testing the App', () => {
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
       timeout: 10000,
-    }).then(() => {
+    }).then(async () => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      const APITimeoutMessages = screen.getByLabelText('API Timeout');
-      user.click(APITimeoutMessages);
-      expect(APITimeoutMessages).toBeTruthy();
+      await waitFor(() => expect(screen.getByLabelText('API Timeout')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        const APITimeoutMessages = screen.getByLabelText('API Timeout');
+        user.click(APITimeoutMessages);
+        expect(APITimeoutMessages).toBeTruthy();
+      });
     });
   });
 });

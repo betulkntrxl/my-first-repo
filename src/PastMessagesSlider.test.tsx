@@ -27,11 +27,15 @@ describe('testing the App', () => {
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
       timeout: 10000,
-    }).then(() => {
+    }).then(async () => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      const previousMessages = screen.getByLabelText('Past messages included');
-      user.click(previousMessages);
-      expect(previousMessages).toBeTruthy();
+      await waitFor(() => expect(screen.getByLabelText('Past messages included')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        const previousMessages = screen.getByLabelText('Past messages included');
+        user.click(previousMessages);
+        expect(previousMessages).toBeTruthy();
+      });
     });
   });
 });

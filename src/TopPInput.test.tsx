@@ -27,14 +27,18 @@ describe('testing the App', () => {
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
       timeout: 10000,
-    }).then(() => {
+    }).then(async () => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      const toppInput = screen.getByTitle('topP-input');
-      user.click(toppInput);
-      // select all digits in input
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('0.8');
-      expect(toppInput).toBeTruthy();
+      await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        const toppInput = screen.getByTitle('topP-input');
+        user.click(toppInput);
+        // select all digits in input
+        user.keyboard('{Control>}a{/Control}');
+        user.keyboard('0.8');
+        expect(toppInput).toBeTruthy();
+      });
     });
   });
 });

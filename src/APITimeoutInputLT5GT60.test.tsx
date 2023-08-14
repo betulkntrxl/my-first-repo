@@ -27,16 +27,20 @@ describe('testing the App', () => {
     // wait for element to be rendered
     await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
       timeout: 10000,
-    }).then(() => {
+    }).then(async () => {
       fireEvent.click(screen.getByLabelText('configuration'));
-      const APITimeoutInput = screen.getByTitle('apitimeout-input');
-      user.click(APITimeoutInput);
-      // select all digits in input
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('4');
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('70');
-      expect(APITimeoutInput).toBeTruthy();
+      await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible(), {
+        timeout: 10000,
+      }).then(() => {
+        const APITimeoutInput = screen.getByTitle('apitimeout-input');
+        user.click(APITimeoutInput);
+        // select all digits in input
+        user.keyboard('{Control>}a{/Control}');
+        user.keyboard('4');
+        user.keyboard('{Control>}a{/Control}');
+        user.keyboard('70');
+        expect(APITimeoutInput).toBeTruthy();
+      });
     });
   });
 });
