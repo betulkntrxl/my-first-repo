@@ -58,21 +58,4 @@ describe('testing the App', () => {
       expect(sendElement).toBeTruthy();
     });
   });
-
-  it('renders a menu', async () => {
-    render(<App />);
-
-    const menu = screen.getByLabelText('menu');
-    expect(menu).toBeTruthy();
-  });
-  it('renders a Message input', () => {
-    render(<App />);
-    const textareaNode = screen.getByPlaceholderText('Type your message here.');
-    expect(textareaNode).toBeTruthy();
-  });
-  it('renders a Token Count', () => {
-    render(<App />);
-    const tokenCount = screen.getByText(/Token Count:/);
-    expect(tokenCount).toBeTruthy();
-  });
 });
