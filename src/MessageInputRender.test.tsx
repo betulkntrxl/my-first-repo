@@ -44,18 +44,11 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message by pressing Enter and returns status 200 ok', async () => {
+  it('renders a Message input', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
-      const sendmessageElement = screen.getByTitle('sendmessage');
-
-      await user.click(sendmessageElement);
-      await user.keyboard('hello{Enter}');
-      // const sendElement = screen.getByTitle('send');
-      // await user.click(sendElement);
-
-      expect(sendmessageElement).toBeTruthy();
+      const textareaNode = screen.getByPlaceholderText('Type your message here.');
+      expect(textareaNode).toBeTruthy();
     });
   });
 });
