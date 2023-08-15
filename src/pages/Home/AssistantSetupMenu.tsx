@@ -57,7 +57,7 @@ const AssistantSetupMenu = (props: {
       <br />
       <div style={{ marginBottom: 10, color: 'dimgray' }}>
         System message:
-        <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
+        <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality, tell it what it should and shouldn't answer, and tell it how to format responses. There's no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
           <InfoOutlinedIcon />
         </Tooltip>
       </div>
