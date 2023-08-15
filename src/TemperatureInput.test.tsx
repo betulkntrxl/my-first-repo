@@ -24,22 +24,22 @@ describe('testing the App', () => {
     await act(async () => {
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
+
       // wait for element to be rendered
       await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
         async () => {
           fireEvent.click(screen.getByLabelText('configuration'));
-          await waitFor(() => expect(screen.getByTitle('temperature-input')).toBeVisible()).then(
-            () => {
-              const temperatureInput = screen.getByTitle('temperature-input');
-              user.click(temperatureInput);
-              // select all digits in input
-              user.keyboard('{Control>}a{/Control}');
-              user.keyboard('.5');
-              expect(temperatureInput).toBeTruthy();
-            },
-          );
         },
       );
+      await waitFor(() => expect(screen.getByTitle('temperature-input')).toBeVisible()).then(() => {
+        const temperatureInput = screen.getByTitle('temperature-input');
+        user.click(temperatureInput);
+        // select all digits in input
+        user.keyboard('{Control>}a{/Control}');
+        user.keyboard('.5');
+        expect(temperatureInput).toBeTruthy();
+      });
     });
   });
 });
+// });
