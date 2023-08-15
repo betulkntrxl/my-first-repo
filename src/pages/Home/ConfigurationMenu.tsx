@@ -121,7 +121,6 @@ const ConfigurationMenu = (props: {
             value={temperature}
             size="small"
             onChange={handleTemperatureInputChange}
-            aria-label="temperature-input"
             inputProps={{
               step: 0.1,
               min: 0,
@@ -129,6 +128,7 @@ const ConfigurationMenu = (props: {
               type: 'number',
               'aria-labelledby': 'temperature-input-label',
               title: 'temperature-input',
+              'aria-label': 'temperature-input',
             }}
           />
         </Grid>
