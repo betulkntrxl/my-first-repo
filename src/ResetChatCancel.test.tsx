@@ -49,14 +49,18 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      const resetElement = screen.getByTitle('reset');
+      await waitFor(() => expect(screen.getByTitle('reset')).toBeVisible()).then(async () => {
+        const resetElement = screen.getByTitle('reset');
 
-      await user.click(resetElement);
-      // wait for element to be rendered
-      await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
-        const cancelElement = screen.getByTitle('cancel-button');
-        user.click(cancelElement);
-        expect(resetElement).toBeTruthy();
+        await user.click(resetElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(
+          async () => {
+            const cancelElement = screen.getByTitle('cancel-button');
+            await user.click(cancelElement);
+            expect(resetElement).toBeTruthy();
+          },
+        );
       });
     });
   });
