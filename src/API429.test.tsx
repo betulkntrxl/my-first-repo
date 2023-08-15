@@ -23,10 +23,11 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('sends a message and returns API Rate Limit error', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
     await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      const sendmessageElement = screen.getByTitle('sendmessage');
+
       await user.click(sendmessageElement);
       await user.keyboard('hello');
       const sendElement = screen.getByTitle('send');

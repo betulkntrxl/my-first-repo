@@ -23,9 +23,10 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders a System Message input and tests for input', async () => {
-    render(<App />);
-    const user = userEvent.setup();
     await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
 

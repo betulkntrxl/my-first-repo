@@ -45,10 +45,11 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('sends a message by clicking on Send button and returns status 200 ok', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
     await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      const sendmessageElement = screen.getByTitle('sendmessage');
+
       await user.click(sendmessageElement);
       await user.keyboard('hello');
       const sendElement = screen.getByTitle('send');

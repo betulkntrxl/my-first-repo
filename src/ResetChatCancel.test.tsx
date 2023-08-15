@@ -46,10 +46,11 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('sends a message and reset chat and cancel', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const resetElement = screen.getByTitle('reset');
     await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      const resetElement = screen.getByTitle('reset');
+
       await user.click(resetElement);
       // wait for element to be rendered
       await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {

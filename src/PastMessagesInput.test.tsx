@@ -20,9 +20,10 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders a previousMessages input', async () => {
-    render(<App />);
-    const user = userEvent.setup();
     await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+
       const menuElement = screen.getByLabelText('menu');
       await user.click(menuElement);
       // wait for element to be rendered
