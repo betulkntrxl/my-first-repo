@@ -27,7 +27,7 @@ const AssistantSetupMenu = (props: {
   };
 
   return (
-    <Typography>
+    <>
       <Typography style={{ marginBottom: 10, marginTop: 10, color: 'dimgray' }}>
         Message Template
       </Typography>
@@ -75,7 +75,7 @@ const AssistantSetupMenu = (props: {
           title: 'system-message-input',
         }}
       />
-    </Typography>
+    </>
   );
 };
 
