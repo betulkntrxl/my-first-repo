@@ -34,7 +34,7 @@ describe('testing the App', () => {
             const toppInput = screen.getByTitle('topP-input');
             fireEvent.click(toppInput);
             // select all digits in input
-            fireEvent.change(screen.getByLabelText(/temperature-input/i), {
+            fireEvent.change(screen.getByTitle(/topP-input/i), {
               target: { value: '0.8' },
             });
             // user.keyboard('{Control>}a{/Control}');
