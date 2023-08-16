@@ -101,7 +101,7 @@ const ConfigurationMenu = (props: {
         </Tooltip>
       </Typography>
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
-        <Grid item xs>
+        <Grid item xs aria-label="Temperature">
           <Slider
             style={{ width: 230 }}
             valueLabelDisplay="auto"
@@ -109,7 +109,6 @@ const ConfigurationMenu = (props: {
             max={1}
             step={0.1}
             value={temperature}
-            aria-label="Temperature"
             onChange={handleTemperatureSliderChange}
             aria-labelledby="temperature-input-label"
           />
