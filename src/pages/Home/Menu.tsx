@@ -186,7 +186,11 @@ const Menu = (props: {
             >
               ChatApp
             </Typography>
-            <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLogout}>
+            <IconButton
+              style={{ color: 'white', fontSize: '16' }}
+              aria-label="logout"
+              onClick={handleLogout}
+            >
               <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
               <Typography color="primary"> Logout</Typography>
             </IconButton>
