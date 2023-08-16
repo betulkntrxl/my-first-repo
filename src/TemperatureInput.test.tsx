@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
-// import { input } from '@testing-library/user-event/dist/types/event';
 
 const server = setupServer(
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
@@ -33,8 +32,6 @@ describe('testing the App', () => {
         await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
           async () => {
             fireEvent.click(screen.getByLabelText('configuration'));
-            //  },
-            // );
 
             await waitFor(() =>
               expect(screen.getByLabelText('temperature-input')).toBeVisible(),
@@ -42,9 +39,11 @@ describe('testing the App', () => {
               const temperatureInput = screen.getByLabelText('temperature-input');
               fireEvent.click(temperatureInput);
               // select all digits in input
-              // fireEvent.keyDown(input, { key: 'a', code: 80, ctrlKey: true });
-              await user.keyboard('{Control>}a{/Control}');
-              await user.keyboard('.5');
+              fireEvent.change(screen.getByLabelText(/temperature-input/i), {
+                target: { value: '.5' },
+              });
+              // await user.keyboard('{Control>}a{/Control}');
+              // await user.keyboard('.5');
               expect(temperatureInput).toBeTruthy();
             });
           },
