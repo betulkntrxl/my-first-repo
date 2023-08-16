@@ -26,18 +26,23 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      const sendmessageElement = screen.getByTitle('sendmessage');
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
 
-      await user.click(sendmessageElement);
-      await user.keyboard('hello');
-      const sendElement = screen.getByTitle('send');
-      await user.click(sendElement);
+        fireEvent.click(sendmessageElement);
+        fireEvent.change(sendmessageElement, {
+          target: { value: 'hello' },
+        });
+        // await user.keyboard('hello');
+        const sendElement = screen.getByTitle('send');
+        fireEvent.click(sendElement);
 
-      // wait for dialog to be rendered
-      await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
-        fireEvent.click(screen.getByTitle('close-button'));
+        // wait for dialog to be rendered
+        await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          fireEvent.click(screen.getByTitle('close-button'));
+        });
+        expect(sendElement).toBeTruthy();
       });
-      expect(sendElement).toBeTruthy();
     });
   });
 });
