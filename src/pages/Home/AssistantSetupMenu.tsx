@@ -40,6 +40,7 @@ const AssistantSetupMenu = (props: {
           value={systemMessageValue}
           label="System Message Template"
           onChange={handlesystemMessageTemplateChange}
+          aria-label="system-message-template"
         >
           <MenuItem value="Assistant is a large language model trained by OpenAI.">
             Assistant is a large language model trained by OpenAI.
