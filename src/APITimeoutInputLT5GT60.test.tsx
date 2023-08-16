@@ -33,12 +33,21 @@ describe('testing the App', () => {
           await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
             () => {
               const APITimeoutInput = screen.getByTitle('apitimeout-input');
-              user.click(APITimeoutInput);
+              fireEvent.click(APITimeoutInput);
               // select all digits in input
-              user.keyboard('{Control>}a{/Control}');
-              user.keyboard('4');
-              user.keyboard('{Control>}a{/Control}');
-              user.keyboard('70');
+              fireEvent.change(screen.getByTitle(/topP-input/i), {
+                target: { value: '4' },
+              });
+              fireEvent.change(screen.getByTitle(/topP-input/i), {
+                target: { value: '70' },
+              });
+              fireEvent.change(screen.getByTitle(/topP-input/i), {
+                target: { value: '30' },
+              });
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('4');
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('70');
               expect(APITimeoutInput).toBeTruthy();
             },
           );
