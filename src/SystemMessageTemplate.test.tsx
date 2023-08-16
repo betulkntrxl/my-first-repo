@@ -35,10 +35,12 @@ describe('testing the App', () => {
           expect(screen.getByLabelText('system-message-template')).toBeVisible(),
         ).then(() => {
           const systemMessageTemplate = screen.getByLabelText('system-message-template');
-          fireEvent.click(systemMessageTemplate);
+          // fireEvent.click(systemMessageTemplate);
           fireEvent.focus(systemMessageTemplate);
+          fireEvent.keyDown(systemMessageTemplate, { keyCode: 13 });
           fireEvent.keyDown(systemMessageTemplate, { key: 'ArrowDown', code: 40 });
-          fireEvent.keyDown(systemMessageTemplate, { key: 'Enter', code: 13 });
+          fireEvent.keyDown(systemMessageTemplate, { keyCode: 13 });
+          // fireEvent.click(screen.getByText('as a agent understanding the sentiment'));
           // select all digits in input
           // fireEvent.click(screen.getByText('as an assistant'));
           // user.keyboard('{Control>}a{/Control}');
