@@ -35,13 +35,13 @@ describe('testing the App', () => {
               const APITimeoutInput = screen.getByTitle('apitimeout-input');
               fireEvent.click(APITimeoutInput);
               // select all digits in input
-              fireEvent.change(screen.getByTitle(/topP-input/i), {
+              fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
                 target: { value: '4' },
               });
-              fireEvent.change(screen.getByTitle(/topP-input/i), {
+              fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
                 target: { value: '70' },
               });
-              fireEvent.change(screen.getByTitle(/topP-input/i), {
+              fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
                 target: { value: '30' },
               });
               // user.keyboard('{Control>}a{/Control}');
