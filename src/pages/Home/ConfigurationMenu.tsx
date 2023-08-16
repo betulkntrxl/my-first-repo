@@ -208,7 +208,7 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
       </Grid>
-      <Typography>
+      <>
         <Typography id="pastmessages-input-label" style={{ color: 'dimgray' }}>
           Past messages included:{' '}
           <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
@@ -246,8 +246,8 @@ const ConfigurationMenu = (props: {
             />
           </Grid>
         </Grid>
-      </Typography>
-      <Typography>
+      </>
+      <>
         <Typography id="apitimeout-input-label" style={{ color: 'dimgray' }}>
           API Timeout:{' '}
           <Tooltip title="API Timeout is the maximum amount of time allowed for the API to respond to a request. If the API takes longer than the specified timeout period to respond, the request will be terminated. This may need to be increased for complex prompts as the Azure OpenAI API can take time to process the request.">
@@ -285,7 +285,7 @@ const ConfigurationMenu = (props: {
             />
           </Grid>
         </Grid>
-      </Typography>
+      </>
     </>
   );
 };
