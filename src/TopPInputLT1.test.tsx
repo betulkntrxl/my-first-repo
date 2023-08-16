@@ -32,10 +32,13 @@ describe('testing the App', () => {
           fireEvent.click(screen.getByLabelText('configuration'));
           await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible()).then(() => {
             const toppInput = screen.getByTitle('topP-input');
-            user.click(toppInput);
+            fireEvent.click(toppInput);
             // select all digits in input
-            user.keyboard('{Control>}a{/Control}');
-            user.keyboard('-1');
+            fireEvent.change(screen.getByTitle(/topP-input/i), {
+              target: { value: '-1' },
+            });
+            // user.keyboard('{Control>}a{/Control}');
+            // user.keyboard('-1');
             expect(toppInput).toBeTruthy();
           });
         },
