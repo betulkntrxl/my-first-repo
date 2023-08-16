@@ -33,10 +33,13 @@ describe('testing the App', () => {
           await waitFor(() => expect(screen.getByTitle('temperature-input')).toBeVisible()).then(
             () => {
               const temperatureInput = screen.getByTitle('temperature-input');
-              user.click(temperatureInput);
+              fireEvent.click(temperatureInput);
               // select all digits in input
-              user.keyboard('{Control>}a{/Control}');
-              user.keyboard('2');
+              fireEvent.change(screen.getByLabelText(/temperature-input/i), {
+                target: { value: '2' },
+              });
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('2');
               expect(temperatureInput).toBeTruthy();
             },
           );
