@@ -101,7 +101,7 @@ const ConfigurationMenu = (props: {
         </Tooltip>
       </Typography>
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
-        <Grid item xs aria-label="Temperature">
+        <Grid aria-label="Temperature" item xs>
           <Slider
             style={{ width: 230 }}
             valueLabelDisplay="auto"
