@@ -23,22 +23,23 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-
-      const menuElement = screen.getByLabelText('menu');
-      await user.click(menuElement);
-      // wait for element to be rendered
-      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-        async () => {
-          fireEvent.click(screen.getByLabelText('configuration'));
-          await waitFor(() => expect(screen.getByLabelText('API Timeout')).toBeVisible()).then(
-            () => {
-              const APITimeoutMessages = screen.getByLabelText('API Timeout');
-              user.click(APITimeoutMessages);
-              expect(APITimeoutMessages).toBeTruthy();
-            },
-          );
-        },
-      );
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menuElement = screen.getByLabelText('menu');
+        fireEvent.click(menuElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+          async () => {
+            fireEvent.click(screen.getByLabelText('configuration'));
+            await waitFor(() => expect(screen.getByLabelText('API Timeout')).toBeVisible()).then(
+              () => {
+                const APITimeoutMessages = screen.getByLabelText('API Timeout');
+                fireEvent.mouseDown(APITimeoutMessages);
+                expect(APITimeoutMessages).toBeTruthy();
+              },
+            );
+          },
+        );
+      });
     });
   });
 });

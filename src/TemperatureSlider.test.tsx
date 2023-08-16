@@ -32,7 +32,7 @@ describe('testing the App', () => {
             fireEvent.click(screen.getByLabelText('configuration'));
             await waitFor(() => expect(screen.getByLabelText('Temperature')).toBeVisible()).then(
               async () => {
-                fireEvent.click(screen.getByLabelText('Temperature'));
+                fireEvent.mouseDown(screen.getByLabelText('Temperature'));
                 const temperatureElement = screen.getByLabelText('Temperature');
                 expect(temperatureElement).toBeTruthy();
               },

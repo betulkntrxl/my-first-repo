@@ -23,20 +23,21 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-
-      const menuElement = screen.getByLabelText('menu');
-      await user.click(menuElement);
-      // wait for element to be rendered
-      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-        async () => {
-          fireEvent.click(screen.getByLabelText('configuration'));
-          await waitFor(() => expect(screen.getByLabelText('Top P')).toBeVisible()).then(() => {
-            const topPElement = screen.getByLabelText('Top P');
-            user.click(topPElement);
-            expect(topPElement).toBeTruthy();
-          });
-        },
-      );
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menuElement = screen.getByLabelText('menu');
+        fireEvent.click(menuElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+          async () => {
+            fireEvent.click(screen.getByLabelText('configuration'));
+            await waitFor(() => expect(screen.getByLabelText('Top P')).toBeVisible()).then(() => {
+              const topPElement = screen.getByLabelText('Top P');
+              fireEvent.mouseDown(topPElement);
+              expect(topPElement).toBeTruthy();
+            });
+          },
+        );
+      });
     });
   });
 });
