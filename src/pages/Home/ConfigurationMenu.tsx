@@ -90,7 +90,7 @@ const ConfigurationMenu = (props: {
   };
 
   return (
-    <Typography>
+    <>
       <Typography
         id="temperature-input-label"
         style={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif', color: 'dimgray' }}
@@ -286,7 +286,7 @@ const ConfigurationMenu = (props: {
           </Grid>
         </Grid>
       </Typography>
-    </Typography>
+    </>
   );
 };
 
