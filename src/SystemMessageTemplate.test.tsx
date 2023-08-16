@@ -36,11 +36,11 @@ describe('testing the App', () => {
         ).then(() => {
           const systemMessageTemplate = screen.getByLabelText('system-message-template');
           fireEvent.click(systemMessageTemplate);
-
+          fireEvent.focus(systemMessageTemplate);
+          fireEvent.keyDown(systemMessageTemplate, { key: 'ArrowDown', code: 40 });
+          fireEvent.keyDown(systemMessageTemplate, { key: 'Enter', code: 13 });
           // select all digits in input
-          fireEvent.change(systemMessageTemplate, {
-            target: { value: 'as an assistant' },
-          });
+          // fireEvent.click(screen.getByText('as an assistant'));
           // user.keyboard('{Control>}a{/Control}');
           // user.keyboard('test');
           expect(systemMessageTemplate).toBeTruthy();
