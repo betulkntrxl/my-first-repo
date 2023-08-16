@@ -35,8 +35,11 @@ describe('testing the App', () => {
               const previousMessagesInput = screen.getByTitle('pastMessages-input');
               user.click(previousMessagesInput);
               // select all digits in input
-              user.keyboard('{Control>}a{/Control}');
-              user.keyboard('1');
+              fireEvent.change(screen.getByTitle(/pastMessages-input/i), {
+                target: { value: '1' },
+              });
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('1');
               expect(previousMessagesInput).toBeTruthy();
             },
           );

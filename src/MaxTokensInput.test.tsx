@@ -35,8 +35,11 @@ describe('testing the App', () => {
               fireEvent.click(screen.getByTitle('maxTokens-input'));
               const maxtokensInput = screen.getByTitle('maxTokens-input');
               // select all digits in input
-              user.keyboard('{Control>}a{/Control}');
-              user.keyboard('200');
+              fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
+                target: { value: '200' },
+              });
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('200');
               expect(maxtokensInput).toBeTruthy();
             },
           );
