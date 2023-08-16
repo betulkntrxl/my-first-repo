@@ -86,7 +86,8 @@ const Home = () => {
 
     setOpenResetChatSession(false);
     // refresh the page
-    window.history.go(0);
+    window.location.replace(window.location.href);
+    // window.history.go(0);
   };
 
   const handleSessionExpiredOpen = () => {
