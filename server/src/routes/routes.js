@@ -132,6 +132,16 @@ export const setupRoutes = (expressWebServer, appInsights) => {
             proxyRes.statusCode
           } HTTP Error Message ${responseBuffer.toString('utf8')} `,
         );
+        if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
+          appInsights.defaultClient.trackTrace({
+            message: 'ChatApp Prompt API Failed',
+            severity: 3, // Error
+            properties: {
+              httpStatusCode: proxyRes.statusCode,
+              errorMessage: responseBuffer.toString('utf8'),
+            },
+          });
+        }
       } else {
         logger.info(`Prompt request successful ${proxyRes.statusCode} `);
       }
