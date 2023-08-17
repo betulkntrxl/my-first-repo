@@ -36,7 +36,7 @@ describe('testing the App', () => {
               const previousMessagesInput = screen.getByTitle('pastMessages-input');
               // select all digits in input
               fireEvent.change(screen.getByTitle(/pastMessages-input/i), {
-                target: { value: '30' },
+                target: { value: 30 },
               });
               // user.keyboard('{Control>}a{/Control}');
               // user.keyboard('30');

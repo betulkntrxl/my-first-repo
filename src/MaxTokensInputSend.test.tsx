@@ -36,7 +36,7 @@ describe('testing the App', () => {
               const maxtokensInput = screen.getByTitle('maxTokens-input');
               // select all digits in input
               fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
-                target: { value: '500' },
+                target: { value: 500 },
               });
               // close menu
               fireEvent.click(menuElement);

@@ -36,13 +36,13 @@ describe('testing the App', () => {
               fireEvent.click(APITimeoutInput);
               // select all digits in input
               fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                target: { value: '4' },
+                target: { value: 4 },
               });
               fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                target: { value: '70' },
+                target: { value: 70 },
               });
               fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                target: { value: '30' },
+                target: { value: 30 },
               });
               // user.keyboard('{Control>}a{/Control}');
               // user.keyboard('4');

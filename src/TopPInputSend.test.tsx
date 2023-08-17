@@ -36,7 +36,7 @@ describe('testing the App', () => {
               fireEvent.click(toppInput);
               // select all digits in input
               fireEvent.change(screen.getByTitle(/topP-input/i), {
-                target: { value: '0.8' },
+                target: { value: 0.8 },
               });
               // close menu
               fireEvent.click(menuElement);

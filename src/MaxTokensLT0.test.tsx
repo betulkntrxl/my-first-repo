@@ -35,7 +35,7 @@ describe('testing the App', () => {
               fireEvent.click(screen.getByTitle('maxTokens-input'));
               const maxtokensInput = screen.getByTitle('maxTokens-input');
               fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
-                target: { value: '-1' },
+                target: { value: -1 },
               });
               // user.keyboard('{Control>}a{/Control}');
               // user.keyboard('-1');

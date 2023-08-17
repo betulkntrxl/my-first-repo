@@ -36,7 +36,7 @@ describe('testing the App', () => {
               user.click(previousMessagesInput);
               // select all digits in input
               fireEvent.change(screen.getByTitle(/pastMessages-input/i), {
-                target: { value: '1' },
+                target: { value: 1 },
               });
               // close menu
               fireEvent.click(menuElement);

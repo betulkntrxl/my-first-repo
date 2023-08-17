@@ -36,7 +36,7 @@ describe('testing the App', () => {
               fireEvent.click(APITimeoutInput);
               // enter new value
               fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                target: { value: '30' },
+                target: { value: 30 },
               });
               // close menu
               fireEvent.click(menuElement);

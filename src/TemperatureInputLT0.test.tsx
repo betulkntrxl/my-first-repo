@@ -36,7 +36,7 @@ describe('testing the App', () => {
               fireEvent.click(temperatureInput);
               // select all digits in input
               fireEvent.change(screen.getByLabelText(/temperature-input/i), {
-                target: { value: '-1' },
+                target: { value: -1 },
               });
               // user.keyboard('{Control>}a{/Control}');
               // user.keyboard('-1');

@@ -40,7 +40,7 @@ describe('testing the App', () => {
               fireEvent.click(temperatureInput);
               // select all digits in input
               fireEvent.change(screen.getByLabelText(/temperature-input/i), {
-                target: { value: '.5' },
+                target: { value: 0.5 },
               });
               // close menu
               fireEvent.click(menuElement);

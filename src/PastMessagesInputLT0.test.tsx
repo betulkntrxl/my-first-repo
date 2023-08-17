@@ -36,7 +36,7 @@ describe('testing the App', () => {
               fireEvent.click(screen.getByTitle('pastMessages-input'));
               // select all digits in input
               fireEvent.change(screen.getByTitle(/pastMessages-input/i), {
-                target: { value: '-1' },
+                target: { value: -1 },
               });
               // user.keyboard('{Control>}a{/Control}');
               // user.keyboard('-1');
