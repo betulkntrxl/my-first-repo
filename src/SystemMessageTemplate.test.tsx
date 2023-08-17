@@ -23,29 +23,31 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders a System Message Template dropdown and tests selection', async () => {
-    await act(async () => {
+    act(() => {
       render(<App />);
-      const user = userEvent.setup();
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
+    });
+    const user = userEvent.setup();
+    await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+      const menuElement = screen.getByLabelText('menu');
+      act(() => {
         fireEvent.click(menuElement);
+      });
+      // wait for dialog to be rendered
+      await waitFor(() =>
+        expect(screen.getByLabelText('system-message-template')).toBeVisible(),
+      ).then(() => {
+        const systemMessageTemplate = screen.getByLabelText('system-message-template');
 
-        // wait for dialog to be rendered
-        await waitFor(() =>
-          expect(screen.getByLabelText('system-message-template')).toBeVisible(),
-        ).then(() => {
-          const systemMessageTemplate = screen.getByLabelText('system-message-template');
+        fireEvent.focus(systemMessageTemplate);
 
-          fireEvent.focus(systemMessageTemplate);
-
-          fireEvent.keyDown(systemMessageTemplate.firstChild as any, {
-            key: 'ArrowDown',
-          });
-
-          fireEvent.click(screen.getByText('as an assistant'));
-
-          expect(systemMessageTemplate).toBeTruthy();
+        fireEvent.keyDown(systemMessageTemplate.firstChild as any, {
+          key: 'ArrowDown',
         });
+
+        act(() => {
+          fireEvent.click(screen.getByText('as an assistant'));
+        });
+        expect(systemMessageTemplate).toBeTruthy();
       });
     });
   });

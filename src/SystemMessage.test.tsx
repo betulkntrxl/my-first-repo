@@ -23,28 +23,31 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders a System Message input and tests for input', async () => {
-    await act(async () => {
+    act(() => {
       render(<App />);
-      const user = userEvent.setup();
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-
-        // wait for dialog to be rendered
-        await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible()).then(
-          () => {
-            fireEvent.click(screen.getByTitle('system-message-input'));
-            const systemMessageInput = screen.getByTitle('system-message-input');
-            // select all digits in input
+    });
+    const user = userEvent.setup();
+    await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+      const menuElement = screen.getByLabelText('menu');
+      act(() => {
+        fireEvent.click(menuElement);
+      });
+      // wait for dialog to be rendered
+      await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible()).then(
+        () => {
+          fireEvent.click(screen.getByTitle('system-message-input'));
+          const systemMessageInput = screen.getByTitle('system-message-input');
+          // select all digits in input
+          act(() => {
             fireEvent.change(screen.getByTitle(/system-message-input/i), {
               target: { value: 'test' },
             });
-            // user.keyboard('{Control>}a{/Control}');
-            // user.keyboard('test');
-            expect(systemMessageInput).toBeTruthy();
-          },
-        );
-      });
+          });
+          // user.keyboard('{Control>}a{/Control}');
+          // user.keyboard('test');
+          expect(systemMessageInput).toBeTruthy();
+        },
+      );
     });
   });
 });
