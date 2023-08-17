@@ -33,7 +33,7 @@ describe('testing the App', () => {
           await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible()).then(
             () => {
               const previousMessagesInput = screen.getByTitle('pastMessages-input');
-              user.click(previousMessagesInput);
+              fireEvent.click(previousMessagesInput);
               // select all digits in input
               fireEvent.change(screen.getByTitle(/pastMessages-input/i), {
                 target: { value: 1 },

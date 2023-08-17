@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, act } from '@testing-library/react';
+import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -47,9 +47,10 @@ describe('testing the App', () => {
   it('renders a menu', async () => {
     await act(async () => {
       render(<App />);
-
-      const menu = screen.getByLabelText('menu');
-      expect(menu).toBeTruthy();
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menu = screen.getByLabelText('menu');
+        expect(menu).toBeTruthy();
+      });
     });
   });
 });

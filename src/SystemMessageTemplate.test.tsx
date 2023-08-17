@@ -33,22 +33,17 @@ describe('testing the App', () => {
         // wait for dialog to be rendered
         await waitFor(() =>
           expect(screen.getByLabelText('system-message-template')).toBeVisible(),
-        ).then(async () => {
+        ).then(() => {
           const systemMessageTemplate = screen.getByLabelText('system-message-template');
-          // fireEvent.click(systemMessageTemplate);
+
           fireEvent.focus(systemMessageTemplate);
-          // fireEvent.keyDown(systemMessageTemplate, { keyCode: 13 });
+
           fireEvent.keyDown(systemMessageTemplate.firstChild as any, {
             key: 'ArrowDown',
           });
-          // await waitFor(() => screen.getByText('as an assistant'));
+
           fireEvent.click(screen.getByText('as an assistant'));
-          // fireEvent.keyDown(systemMessageTemplate, { keyCode: 13 });
-          // fireEvent.click(screen.getByText('as a agent understanding the sentiment'));
-          // select all digits in input
-          // fireEvent.click(screen.getByText('as an assistant'));
-          // user.keyboard('{Control>}a{/Control}');
-          // user.keyboard('test');
+
           expect(systemMessageTemplate).toBeTruthy();
         });
       });

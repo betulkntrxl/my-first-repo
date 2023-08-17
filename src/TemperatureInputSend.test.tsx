@@ -20,51 +20,60 @@ describe('testing the App', () => {
   beforeEach(cleanup);
 
   it('renders a Temperature input and tests valid input', async () => {
-    await act(async () => {
+    act(() => {
       render(<App />);
-      const user = userEvent.setup();
+    });
+    const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
+    await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+      const menuElement = screen.getByLabelText('menu');
+      act(() => {
         fireEvent.click(menuElement);
+      });
+      // wait for element to be rendered
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+        async () => {
+          fireEvent.click(screen.getByLabelText('configuration'));
 
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-
-            await waitFor(() =>
-              expect(screen.getByLabelText('temperature-input')).toBeVisible(),
-            ).then(async () => {
-              const temperatureInput = screen.getByLabelText('temperature-input');
-              fireEvent.click(temperatureInput);
-              // select all digits in input
+          await waitFor(() =>
+            expect(screen.getByLabelText('temperature-input')).toBeVisible(),
+          ).then(async () => {
+            const temperatureInput = screen.getByLabelText('temperature-input');
+            fireEvent.click(temperatureInput);
+            // select all digits in input
+            act(() => {
               fireEvent.change(screen.getByLabelText(/temperature-input/i), {
                 target: { value: 0.5 },
               });
-              // close menu
+            });
+            // close menu
+            act(() => {
               fireEvent.click(menuElement);
-              // wait for message box
-              await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(
-                async () => {
-                  const sendmessageElement = screen.getByTitle('sendmessage');
-                  fireEvent.click(sendmessageElement);
-                  // type message
+            });
+            // wait for message box
+            await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(
+              async () => {
+                const sendmessageElement = screen.getByTitle('sendmessage');
+                fireEvent.click(sendmessageElement);
+                // type message
+                act(() => {
                   fireEvent.change(sendmessageElement, {
                     target: { value: 'hi' },
                   });
-                  // send message
-                  const sendElement = screen.getByTitle('send');
+                });
+                // send message
+                const sendElement = screen.getByTitle('send');
+                act(() => {
                   fireEvent.click(sendElement);
-                  // await user.keyboard('{Control>}a{/Control}');
-                  // await user.keyboard('.5');
-                  expect(temperatureInput).toBeTruthy();
-                },
-              );
-            });
-          },
-        );
-      });
+                });
+                // await user.keyboard('{Control>}a{/Control}');
+                // await user.keyboard('.5');
+                expect(temperatureInput).toBeTruthy();
+              },
+            );
+          });
+        },
+      );
     });
   });
 });

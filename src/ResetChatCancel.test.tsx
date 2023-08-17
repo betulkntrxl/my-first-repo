@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, act } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -54,13 +54,11 @@ describe('testing the App', () => {
 
         await user.click(resetElement);
         // wait for element to be rendered
-        await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(
-          async () => {
-            const cancelElement = screen.getByTitle('cancel-button');
-            await user.click(cancelElement);
-            expect(resetElement).toBeTruthy();
-          },
-        );
+        await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
+          const cancelElement = screen.getByTitle('cancel-button');
+          fireEvent.click(cancelElement);
+          expect(resetElement).toBeTruthy();
+        });
       });
     });
   });

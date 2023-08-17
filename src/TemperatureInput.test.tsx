@@ -35,7 +35,7 @@ describe('testing the App', () => {
 
             await waitFor(() =>
               expect(screen.getByLabelText('temperature-input')).toBeVisible(),
-            ).then(async () => {
+            ).then(() => {
               const temperatureInput = screen.getByLabelText('temperature-input');
               fireEvent.click(temperatureInput);
               // select all digits in input

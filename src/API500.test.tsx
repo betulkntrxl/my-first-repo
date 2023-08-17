@@ -40,8 +40,8 @@ describe('testing the App', () => {
         // wait for dialog to be rendered
         await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
           fireEvent.click(screen.getByTitle('close-button'));
+          expect(sendElement).toBeTruthy();
         });
-        expect(sendElement).toBeTruthy();
       });
     });
   });

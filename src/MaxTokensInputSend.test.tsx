@@ -20,47 +20,55 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders a MaxTokens input and tests for valid input and sends a message', async () => {
-    await act(async () => {
+    act(() => {
       render(<App />);
-      const user = userEvent.setup();
+    });
+    const user = userEvent.setup();
 
-      const menuElement = screen.getByLabelText('menu');
+    const menuElement = screen.getByLabelText('menu');
+    await act(async () => {
       await user.click(menuElement);
-      // wait for element to be rendered
-      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-        async () => {
-          fireEvent.click(screen.getByLabelText('configuration'));
-          await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
-            async () => {
-              fireEvent.click(screen.getByTitle('maxTokens-input'));
-              const maxtokensInput = screen.getByTitle('maxTokens-input');
-              // select all digits in input
+    });
+    // wait for element to be rendered
+    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+      async () => {
+        fireEvent.click(screen.getByLabelText('configuration'));
+        await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
+          async () => {
+            fireEvent.click(screen.getByTitle('maxTokens-input'));
+            const maxtokensInput = screen.getByTitle('maxTokens-input');
+            // select all digits in input
+            act(() => {
               fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
                 target: { value: 500 },
               });
-              // close menu
+            });
+            // close menu
+            act(() => {
               fireEvent.click(menuElement);
-              // wait for message box
-              await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(
-                async () => {
-                  const sendmessageElement = screen.getByTitle('sendmessage');
-                  fireEvent.click(sendmessageElement);
-                  // type message
-                  fireEvent.change(sendmessageElement, {
-                    target: { value: 'hi' },
-                  });
-                  // send message
-                  const sendElement = screen.getByTitle('send');
-                  fireEvent.click(sendElement);
-                  // user.keyboard('{Control>}a{/Control}');
-                  // user.keyboard('200');
-                  expect(maxtokensInput).toBeTruthy();
-                },
-              );
-            },
-          );
-        },
-      );
-    });
+            });
+            // wait for message box
+            await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(() => {
+              const sendmessageElement = screen.getByTitle('sendmessage');
+              fireEvent.click(sendmessageElement);
+              // type message
+              act(() => {
+                fireEvent.change(sendmessageElement, {
+                  target: { value: 'hi' },
+                });
+              });
+              // send message
+              const sendElement = screen.getByTitle('send');
+              act(() => {
+                fireEvent.click(sendElement);
+              });
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('200');
+              expect(maxtokensInput).toBeTruthy();
+            });
+          },
+        );
+      },
+    );
   });
 });
