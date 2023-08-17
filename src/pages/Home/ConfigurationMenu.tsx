@@ -28,20 +28,20 @@ const ConfigurationMenu = (props: {
   } = props;
 
   const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
-    handleTemperatureChange(event, newValue, 1);
+    handleTemperatureChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
 
   const handleTopPSliderChange = (event: Event, newValue: number | number[]) => {
-    handleTopPChange(event, newValue, 1);
+    handleTopPChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
   const handleMaxTokensSliderChange = (event: Event, newValue: number | number[]) => {
-    handleMaxTokensChange(event, newValue, 1);
+    handleMaxTokensChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
   const handlePastMessagesSliderChange = (event: Event, newValue: number | number[]) => {
-    handlePastMessagesChange(event, newValue, 1);
+    handlePastMessagesChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
   const handleAPITimeoutSliderChange = (event: Event, newValue: number | number[]) => {
-    handleAPITimeoutChange(event, newValue, 1);
+    handleAPITimeoutChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
 
   const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

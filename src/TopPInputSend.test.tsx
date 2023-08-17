@@ -42,7 +42,7 @@ describe('testing the App', () => {
               fireEvent.click(menuElement);
               // wait for message box
               await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(
-                async () => {
+                () => {
                   const sendmessageElement = screen.getByTitle('sendmessage');
                   fireEvent.click(sendmessageElement);
                   // type message

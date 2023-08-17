@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
@@ -29,18 +28,23 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      const sendmessageElement = screen.getByTitle('sendmessage');
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
+        fireEvent.change(sendmessageElement, {
+          target: { value: 'hello' },
+        });
+        // fireEvent.click(sendmessageElement);
+        // await user.keyboard('hello');
+        const sendElement = screen.getByTitle('send');
+        fireEvent.click(sendElement);
 
-      await user.click(sendmessageElement);
-      await user.keyboard('hello');
-      const sendElement = screen.getByTitle('send');
-      await user.click(sendElement);
-
-      // wait for dialog to be rendered
-      await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible()).then(() => {
-        fireEvent.click(screen.getByTitle('continue-button'));
+        // wait for dialog to be rendered
+        await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible()).then(() => {
+          const continueElement = screen.getByTitle('continue-button');
+          fireEvent.click(continueElement);
+          expect(sendElement).toBeTruthy();
+        });
       });
-      expect(sendElement).toBeTruthy();
     });
   });
 });
