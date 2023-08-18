@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" Component={Home} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
