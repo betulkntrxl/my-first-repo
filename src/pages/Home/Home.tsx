@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import { useNavigate } from 'react-router-dom';
 
 import Menu from './Menu';
 import Messages from './Messages';
@@ -16,7 +15,6 @@ export interface DialogTitleProps {
 }
 
 const Home = () => {
-  const navigate = useNavigate();
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
   const DEFAULT_MAX_TOKENS = 200;
@@ -88,7 +86,7 @@ const Home = () => {
 
     setOpenResetChatSession(false);
     // refresh the page
-    navigate('/');
+    window.location.reload();
   };
 
   const handleSessionExpiredOpen = () => {
@@ -105,7 +103,7 @@ const Home = () => {
   const handleSessionExpiredContinue = () => {
     setOpenSessionExpired(false);
     // redirect to login
-    navigate('/api/auth/login');
+    window.location.assign('/api/auth/login');
   };
 
   const handleAPIRateLimitOpen = () => {

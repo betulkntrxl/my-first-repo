@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 
 import Home from './pages/Home/Home';
 
@@ -7,11 +6,7 @@ import Home from './pages/Home/Home';
 import './App.css';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Home />
-    </BrowserRouter>
-  );
+  return <Home />;
 }
 
 export default App;
