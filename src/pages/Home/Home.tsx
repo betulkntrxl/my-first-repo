@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
 import ContinueCancelDialog from './ContinueCancelDialog';
 import OKDialog from './OkDialog';
+import RedirectTo from './RedirectTo';
 
 export interface DialogTitleProps {
   id: string;
@@ -15,6 +17,7 @@ export interface DialogTitleProps {
 }
 
 const Home = () => {
+  const navigate = useNavigate();
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
   const DEFAULT_MAX_TOKENS = 200;
@@ -78,6 +81,10 @@ const Home = () => {
     setOpenResetChatSession(false);
   };
 
+  const refresh = () => {
+    RedirectTo('/');
+  };
+
   const handleResetChatSessionContinue = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
@@ -86,8 +93,8 @@ const Home = () => {
 
     setOpenResetChatSession(false);
     // refresh the page
-    window.location.replace(window.location.href);
-    // window.history.go(0);
+    navigate('/');
+    // window.location.reload();
   };
 
   const handleSessionExpiredOpen = () => {
@@ -104,7 +111,7 @@ const Home = () => {
   const handleSessionExpiredContinue = () => {
     setOpenSessionExpired(false);
     // redirect to login
-    window.location.href = '/api/auth/login';
+    navigate('/api/auth/login');
   };
 
   const handleAPIRateLimitOpen = () => {
