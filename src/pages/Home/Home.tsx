@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
 import ContinueCancelDialog from './ContinueCancelDialog';
 import OKDialog from './OkDialog';
-import RedirectTo from './RedirectTo';
 
 export interface DialogTitleProps {
   id: string;
@@ -81,10 +80,6 @@ const Home = () => {
     setOpenResetChatSession(false);
   };
 
-  const refresh = () => {
-    RedirectTo('/');
-  };
-
   const handleResetChatSessionContinue = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
@@ -94,7 +89,6 @@ const Home = () => {
     setOpenResetChatSession(false);
     // refresh the page
     navigate('/');
-    // window.location.reload();
   };
 
   const handleSessionExpiredOpen = () => {
