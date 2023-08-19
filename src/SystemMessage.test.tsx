@@ -35,12 +35,12 @@ describe('testing the App', () => {
       // wait for dialog to be rendered
       await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible()).then(
         () => {
-          fireEvent.click(screen.getByTitle('system-message-input'));
+          // fireEvent.click(screen.getByTitle('system-message-input'));
           const systemMessageInput = screen.getByTitle('system-message-input');
           // select all digits in input
           act(() => {
-            fireEvent.change(screen.getByTitle(/system-message-input/i), {
-              target: { value: 'test' },
+            fireEvent.change(systemMessageInput, {
+              target: { value: 'as an assistant' },
             });
           });
           // user.keyboard('{Control>}a{/Control}');
