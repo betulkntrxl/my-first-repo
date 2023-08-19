@@ -25,7 +25,10 @@ const server = setupServer(
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+afterAll(done => {
+  server.close();
+  done();
+});
 
 describe('testing the App', () => {
   afterEach(cleanup);
