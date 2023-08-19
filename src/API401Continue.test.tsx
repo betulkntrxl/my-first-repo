@@ -42,6 +42,17 @@ describe('testing the App', () => {
         // wait for dialog to be rendered
         await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible()).then(() => {
           const continueElement = screen.getByTitle('continue-button');
+
+          // mock window.location.href
+          const url = window.location.href;
+          // eslint-disable-next-line no-global-assign
+          window = Object.create(window);
+          Object.defineProperty(window, 'location', {
+            value: {
+              href: url,
+            },
+            writable: true, // possibility to override
+          });
           fireEvent.click(continueElement);
           expect(sendElement).toBeTruthy();
         });

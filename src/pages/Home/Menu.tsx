@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
 import Drawer from '@mui/material/Drawer';
@@ -32,7 +31,6 @@ const Menu = (props: {
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [version, setVersion] = useState('');
-  const navigate = useNavigate();
   const [state, setState] = useState({});
   const handleDrawerToggle = () => {
     if (!mobileOpen) {
@@ -64,7 +62,7 @@ const Menu = (props: {
     return () => {
       setState({}); // clean state
     };
-  }, []);
+  }, [state]);
 
   const drawerWidth = 400;
   const {

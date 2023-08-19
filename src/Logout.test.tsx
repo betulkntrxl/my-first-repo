@@ -54,6 +54,7 @@ describe('testing the App', () => {
 
       await waitFor(() => expect(screen.getByLabelText('logout')).toBeVisible()).then(() => {
         const logoutElement = screen.getByLabelText('logout');
+        // mock window.location.href
         const url = window.location.href;
         // eslint-disable-next-line no-global-assign
         window = Object.create(window);

@@ -105,7 +105,7 @@ const Home = () => {
   const handleSessionExpiredContinue = () => {
     setOpenSessionExpired(false);
     // redirect to login
-    navigate('/api/auth/login');
+    window.location.href = '/api/auth/logout';
   };
 
   const handleAPIRateLimitOpen = () => {
