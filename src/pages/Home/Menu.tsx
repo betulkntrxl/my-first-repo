@@ -164,7 +164,7 @@ const Menu = (props: {
       name: 'ChatApp Logout Clicked',
     });
 
-    window.location.assign('/api/auth/logout');
+    window.location.href = '/api/auth/logout';
   };
 
   return (

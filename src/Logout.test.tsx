@@ -54,6 +54,15 @@ describe('testing the App', () => {
 
       await waitFor(() => expect(screen.getByLabelText('logout')).toBeVisible()).then(() => {
         const logoutElement = screen.getByLabelText('logout');
+        const url = window.location.href;
+        // eslint-disable-next-line no-global-assign
+        window = Object.create(window);
+        Object.defineProperty(window, 'location', {
+          value: {
+            href: url,
+          },
+          writable: true, // possibility to override
+        });
 
         fireEvent.click(logoutElement);
 
