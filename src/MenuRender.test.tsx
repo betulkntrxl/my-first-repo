@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, act, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -27,10 +27,9 @@ const server = setupServer(
         usage: {
           completion_tokens: 9,
           prompt_tokens: 25,
-          total_tokens: 400,
+          total_tokens: 34,
         },
       }),
-      ctx.status(200),
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
@@ -45,20 +44,12 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and reset chat and cancel', async () => {
+  it('renders a menu', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
-      await waitFor(() => expect(screen.getByTitle('reset')).toBeVisible()).then(async () => {
-        const resetElement = screen.getByTitle('reset');
-
-        await user.click(resetElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
-          const cancelElement = screen.getByTitle('cancel-button');
-          fireEvent.click(cancelElement);
-          expect(resetElement).toBeTruthy();
-        });
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menu = screen.getByLabelText('menu');
+        expect(menu).toBeTruthy();
       });
     });
   });

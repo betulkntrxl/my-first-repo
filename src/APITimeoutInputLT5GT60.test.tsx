@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -20,23 +20,39 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders an API Timeout input and tests for input less than 5 and greater than 60', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
-    // wait for element to be rendered
-    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-      timeout: 10000,
-    }).then(() => {
-      fireEvent.click(screen.getByLabelText('configuration'));
-      const APITimeoutInput = screen.getByTitle('apitimeout-input');
-      user.click(APITimeoutInput);
-      // select all digits in input
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('4');
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('70');
-      expect(APITimeoutInput).toBeTruthy();
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+
+      const menuElement = screen.getByLabelText('menu');
+      await user.click(menuElement);
+      // wait for element to be rendered
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+        async () => {
+          fireEvent.click(screen.getByLabelText('configuration'));
+          await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
+            () => {
+              const APITimeoutInput = screen.getByTitle('apitimeout-input');
+              fireEvent.click(APITimeoutInput);
+              // select all digits in input
+              fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                target: { value: 4 },
+              });
+              fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                target: { value: 70 },
+              });
+              fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                target: { value: 30 },
+              });
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('4');
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('70');
+              expect(APITimeoutInput).toBeTruthy();
+            },
+          );
+        },
+      );
     });
   });
 });

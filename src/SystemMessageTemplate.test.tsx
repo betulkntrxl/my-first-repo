@@ -22,7 +22,7 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('renders a System Message input and tests for input', async () => {
+  it('renders a System Message Template dropdown and tests selection', async () => {
     act(() => {
       render(<App />);
     });
@@ -33,21 +33,22 @@ describe('testing the App', () => {
         fireEvent.click(menuElement);
       });
       // wait for dialog to be rendered
-      await waitFor(() => expect(screen.getByTitle('system-message-input')).toBeVisible()).then(
-        () => {
-          // fireEvent.click(screen.getByTitle('system-message-input'));
-          const systemMessageInput = screen.getByTitle('system-message-input');
-          // select all digits in input
-          act(() => {
-            fireEvent.change(systemMessageInput, {
-              target: { value: 'as an assistant' },
-            });
-          });
-          // user.keyboard('{Control>}a{/Control}');
-          // user.keyboard('test');
-          expect(systemMessageInput).toBeTruthy();
-        },
-      );
+      await waitFor(() =>
+        expect(screen.getByLabelText('system-message-template')).toBeVisible(),
+      ).then(() => {
+        const systemMessageTemplate = screen.getByLabelText('system-message-template');
+
+        fireEvent.focus(systemMessageTemplate);
+
+        fireEvent.keyDown(systemMessageTemplate.firstChild as any, {
+          key: 'ArrowDown',
+        });
+
+        act(() => {
+          fireEvent.click(screen.getByText('as an assistant'));
+        });
+        expect(systemMessageTemplate).toBeTruthy();
+      });
     });
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -34,6 +34,7 @@ const server = setupServer(
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.get('/get', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
   rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
 );
@@ -46,14 +47,17 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('sends a message and returns total tokens exceeding max token limit', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      const sendmessageElement = screen.getByTitle('sendmessage');
 
-    expect(sendElement).toBeTruthy();
-  }, 5000);
+      await user.click(sendmessageElement);
+      await user.keyboard('hello');
+      const sendElement = screen.getByTitle('send');
+      await user.click(sendElement);
+
+      expect(sendElement).toBeTruthy();
+    });
+  });
 });

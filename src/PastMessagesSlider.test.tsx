@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -20,18 +20,26 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders a Previous Messages slider', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
-    // wait for element to be rendered
-    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-      timeout: 10000,
-    }).then(() => {
-      fireEvent.click(screen.getByLabelText('configuration'));
-      const previousMessages = screen.getByLabelText('Past messages included');
-      user.click(previousMessages);
-      expect(previousMessages).toBeTruthy();
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menuElement = screen.getByLabelText('menu');
+        fireEvent.click(menuElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+          async () => {
+            fireEvent.click(screen.getByLabelText('configuration'));
+            await waitFor(() =>
+              expect(screen.getByLabelText('Past messages included')).toBeVisible(),
+            ).then(() => {
+              const previousMessages = screen.getByLabelText('Past messages included');
+              fireEvent.mouseDown(previousMessages);
+              expect(previousMessages).toBeTruthy();
+            });
+          },
+        );
+      });
     });
   });
 });

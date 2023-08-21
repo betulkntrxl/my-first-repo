@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -14,6 +14,7 @@ const server = setupServer(
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.get('/get', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
   rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
 );
@@ -26,20 +27,21 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('sends a message and returns status 401 Unauthorized error and Cancel', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello');
-    const sendElement = screen.getByTitle('send');
-    await user.click(sendElement);
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      const sendmessageElement = screen.getByTitle('sendmessage');
 
-    // wait for dialog to be rendered
-    await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible(), {
-      timeout: 10000,
-    }).then(() => {
-      fireEvent.click(screen.getByTitle('cancel-button'));
+      await user.click(sendmessageElement);
+      await user.keyboard('hello');
+      const sendElement = screen.getByTitle('send');
+      await user.click(sendElement);
+
+      // wait for dialog to be rendered
+      await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
+        fireEvent.click(screen.getByTitle('cancel-button'));
+      });
+      expect(sendElement).toBeTruthy();
     });
-    expect(sendElement).toBeTruthy();
-  }, 5000);
+  });
 });

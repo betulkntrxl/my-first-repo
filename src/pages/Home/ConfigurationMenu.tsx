@@ -28,20 +28,20 @@ const ConfigurationMenu = (props: {
   } = props;
 
   const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
-    handleTemperatureChange(event, newValue, 1);
+    handleTemperatureChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
 
   const handleTopPSliderChange = (event: Event, newValue: number | number[]) => {
-    handleTopPChange(event, newValue, 1);
+    handleTopPChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
   const handleMaxTokensSliderChange = (event: Event, newValue: number | number[]) => {
-    handleMaxTokensChange(event, newValue, 1);
+    handleMaxTokensChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
   const handlePastMessagesSliderChange = (event: Event, newValue: number | number[]) => {
-    handlePastMessagesChange(event, newValue, 1);
+    handlePastMessagesChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
   const handleAPITimeoutSliderChange = (event: Event, newValue: number | number[]) => {
-    handleAPITimeoutChange(event, newValue, 1);
+    handleAPITimeoutChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
   };
 
   const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +90,7 @@ const ConfigurationMenu = (props: {
   };
 
   return (
-    <Typography>
+    <>
       <Typography
         id="temperature-input-label"
         style={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif', color: 'dimgray' }}
@@ -102,24 +102,24 @@ const ConfigurationMenu = (props: {
       </Typography>
       <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
         <Grid item xs>
-          <Slider
-            style={{ width: 230 }}
-            valueLabelDisplay="auto"
-            min={0}
-            max={1}
-            step={0.1}
-            value={temperature}
-            defaultValue={0.7}
-            aria-label="Temperature"
-            onChange={handleTemperatureSliderChange}
-            aria-labelledby="temperature-input-label"
-          />
+          <div>
+            <Slider
+              style={{ width: 230 }}
+              valueLabelDisplay="auto"
+              min={0}
+              max={1}
+              step={0.1}
+              value={temperature}
+              onChange={handleTemperatureSliderChange}
+              aria-labelledby="temperature-input-label"
+              aria-label="Temperature"
+            />
+          </div>
         </Grid>
         <Grid item>
           <TextField
             style={{ width: 85 }}
             value={temperature}
-            defaultValue={temperature}
             size="small"
             onChange={handleTemperatureInputChange}
             inputProps={{
@@ -129,6 +129,7 @@ const ConfigurationMenu = (props: {
               type: 'number',
               'aria-labelledby': 'temperature-input-label',
               title: 'temperature-input',
+              'aria-label': 'temperature-input',
             }}
           />
         </Grid>
@@ -148,7 +149,6 @@ const ConfigurationMenu = (props: {
             max={1}
             step={0.05}
             value={topP}
-            defaultValue={0.95}
             aria-label="Top P"
             onChange={handleTopPSliderChange}
             aria-labelledby="topp-input-label"
@@ -158,7 +158,6 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 85 }}
             value={topP}
-            defaultValue={topP}
             size="small"
             onChange={handleTopPInputChange}
             inputProps={{
@@ -187,7 +186,6 @@ const ConfigurationMenu = (props: {
             max={4096}
             step={1}
             value={maxTokens}
-            defaultValue={800}
             aria-label="Max Tokens"
             onChange={handleMaxTokensSliderChange}
             aria-labelledby="maxtokens-input-label"
@@ -197,7 +195,6 @@ const ConfigurationMenu = (props: {
           <TextField
             style={{ width: 85 }}
             value={maxTokens}
-            defaultValue={maxTokens}
             size="small"
             onChange={handleMaxTokensInputChange}
             inputProps={{
@@ -211,7 +208,7 @@ const ConfigurationMenu = (props: {
           />
         </Grid>
       </Grid>
-      <Typography>
+      <>
         <Typography id="pastmessages-input-label" style={{ color: 'dimgray' }}>
           Past messages included:{' '}
           <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
@@ -227,7 +224,6 @@ const ConfigurationMenu = (props: {
               max={20}
               step={1}
               value={pastMessages}
-              defaultValue={10}
               aria-label="Past messages included"
               onChange={handlePastMessagesSliderChange}
               aria-labelledby="pastmessages-input-label"
@@ -237,7 +233,6 @@ const ConfigurationMenu = (props: {
             <TextField
               style={{ width: 85 }}
               value={pastMessages}
-              defaultValue={pastMessages}
               size="small"
               onChange={handlePastMessagesInputChange}
               inputProps={{
@@ -251,8 +246,8 @@ const ConfigurationMenu = (props: {
             />
           </Grid>
         </Grid>
-      </Typography>
-      <Typography>
+      </>
+      <>
         <Typography id="apitimeout-input-label" style={{ color: 'dimgray' }}>
           API Timeout:{' '}
           <Tooltip title="API Timeout is the maximum amount of time allowed for the API to respond to a request. If the API takes longer than the specified timeout period to respond, the request will be terminated. This may need to be increased for complex prompts as the Azure OpenAI API can take time to process the request.">
@@ -268,7 +263,6 @@ const ConfigurationMenu = (props: {
               max={60}
               step={1}
               value={APITimeout}
-              defaultValue={10}
               aria-label="API Timeout"
               onChange={handleAPITimeoutSliderChange}
               aria-labelledby="apitimeout-input-label"
@@ -278,7 +272,6 @@ const ConfigurationMenu = (props: {
             <TextField
               style={{ width: 85 }}
               value={APITimeout}
-              defaultValue={APITimeout}
               size="small"
               onChange={handleAPITimeoutInputChange}
               inputProps={{
@@ -292,8 +285,8 @@ const ConfigurationMenu = (props: {
             />
           </Grid>
         </Grid>
-      </Typography>
-    </Typography>
+      </>
+    </>
   );
 };
 

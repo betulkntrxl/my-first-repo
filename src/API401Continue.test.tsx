@@ -1,14 +1,16 @@
 import React from 'react';
 import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
   rest.post('/api/prompt', (req, res, ctx) =>
-    res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(500)),
+    res(
+      ctx.json({ errorMessage: 'User is not logged in, authenticate path is /api/auth/login' }),
+      ctx.status(401),
+    ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.get('/get', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
@@ -23,24 +25,35 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and returns API error', async () => {
+  it('sends a message and returns status 401 Unauthorized error and Continue', async () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
         const sendmessageElement = screen.getByTitle('sendmessage');
-
-        fireEvent.click(sendmessageElement);
         fireEvent.change(sendmessageElement, {
           target: { value: 'hello' },
         });
+        // fireEvent.click(sendmessageElement);
         // await user.keyboard('hello');
         const sendElement = screen.getByTitle('send');
         fireEvent.click(sendElement);
 
         // wait for dialog to be rendered
-        await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
-          fireEvent.click(screen.getByTitle('close-button'));
+        await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible()).then(() => {
+          const continueElement = screen.getByTitle('continue-button');
+
+          // mock window.location.href
+          const url = window.location.href;
+          // eslint-disable-next-line no-global-assign
+          window = Object.create(window);
+          Object.defineProperty(window, 'location', {
+            value: {
+              href: url,
+            },
+            writable: true, // possibility to override
+          });
+          fireEvent.click(continueElement);
           expect(sendElement).toBeTruthy();
         });
       });

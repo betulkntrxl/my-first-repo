@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -20,21 +20,31 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('renders a previousMessages input', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const menuElement = screen.getByLabelText('menu');
-    await user.click(menuElement);
-    // wait for element to be rendered
-    await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-      timeout: 10000,
-    }).then(() => {
-      fireEvent.click(screen.getByLabelText('configuration'));
-      const previousMessagesInput = screen.getByTitle('pastMessages-input');
-      user.click(previousMessagesInput);
-      // select all digits in input
-      user.keyboard('{Control>}a{/Control}');
-      user.keyboard('1');
-      expect(previousMessagesInput).toBeTruthy();
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+
+      const menuElement = screen.getByLabelText('menu');
+      await user.click(menuElement);
+      // wait for element to be rendered
+      await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+        async () => {
+          fireEvent.click(screen.getByLabelText('configuration'));
+          await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible()).then(
+            () => {
+              const previousMessagesInput = screen.getByTitle('pastMessages-input');
+              fireEvent.click(previousMessagesInput);
+              // select all digits in input
+              fireEvent.change(screen.getByTitle(/pastMessages-input/i), {
+                target: { value: 1 },
+              });
+              // user.keyboard('{Control>}a{/Control}');
+              // user.keyboard('1');
+              expect(previousMessagesInput).toBeTruthy();
+            },
+          );
+        },
+      );
     });
   });
 });

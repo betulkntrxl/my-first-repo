@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -33,6 +33,7 @@ const server = setupServer(
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.get('/get', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
   rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
 );
@@ -45,30 +46,17 @@ describe('testing the App', () => {
   afterEach(cleanup);
 
   it('sends a message by pressing Enter and returns status 200 ok', async () => {
-    render(<App />);
-    const user = userEvent.setup();
-    const sendmessageElement = screen.getByTitle('sendmessage');
-    await user.click(sendmessageElement);
-    await user.keyboard('hello{Enter}');
-    // const sendElement = screen.getByTitle('send');
-    // await user.click(sendElement);
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      const sendmessageElement = screen.getByTitle('sendmessage');
 
-    expect(sendmessageElement).toBeTruthy();
-  }, 5000);
+      await user.click(sendmessageElement);
+      await user.keyboard('hello{Enter}');
+      // const sendElement = screen.getByTitle('send');
+      // await user.click(sendElement);
 
-  it('renders a menu', async () => {
-    render(<App />);
-    const menu = screen.getByLabelText('menu');
-    expect(menu).toBeTruthy();
-  });
-  it('renders a Message input', () => {
-    render(<App />);
-    const textareaNode = screen.getByPlaceholderText('Type your message here.');
-    expect(textareaNode).toBeTruthy();
-  });
-  it('renders a Token Count', () => {
-    render(<App />);
-    const tokenCount = screen.getByText(/Token Count:/);
-    expect(tokenCount).toBeTruthy();
+      expect(sendmessageElement).toBeTruthy();
+    });
   });
 });

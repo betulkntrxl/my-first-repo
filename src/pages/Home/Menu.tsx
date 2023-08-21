@@ -1,4 +1,5 @@
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Drawer from '@mui/material/Drawer';
@@ -6,7 +7,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import React, { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import { Stack, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -29,9 +29,9 @@ const Menu = (props: {
   handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
   APITimeout: number;
 }) => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [version, setVersion] = React.useState('');
-
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [version, setVersion] = useState('');
+  const [state, setState] = useState({});
   const handleDrawerToggle = () => {
     if (!mobileOpen) {
       // Tracking in app insights
@@ -59,7 +59,10 @@ const Menu = (props: {
 
   useEffect(() => {
     getVersion();
-  }, []);
+    return () => {
+      setState({}); // clean state
+    };
+  }, [state]);
 
   const drawerWidth = 400;
   const {
@@ -186,7 +189,11 @@ const Menu = (props: {
             >
               ChatApp
             </Typography>
-            <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLogout}>
+            <IconButton
+              style={{ color: 'white', fontSize: '16' }}
+              aria-label="logout"
+              onClick={handleLogout}
+            >
               <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
               <Typography color="primary"> Logout</Typography>
             </IconButton>

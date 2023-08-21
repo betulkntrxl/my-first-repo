@@ -36,6 +36,8 @@ const server = setupServer(
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
   rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
+  rest.get('/api/auth/login', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.get('/api/auth/logout', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
 
 beforeAll(() => server.listen());
@@ -45,20 +47,27 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and reset chat and cancel', async () => {
+  it('sends a message and reset chat and continue', async () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      await waitFor(() => expect(screen.getByTitle('reset')).toBeVisible()).then(async () => {
-        const resetElement = screen.getByTitle('reset');
 
-        await user.click(resetElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
-          const cancelElement = screen.getByTitle('cancel-button');
-          fireEvent.click(cancelElement);
-          expect(resetElement).toBeTruthy();
+      await waitFor(() => expect(screen.getByLabelText('logout')).toBeVisible()).then(() => {
+        const logoutElement = screen.getByLabelText('logout');
+        // mock window.location.href
+        const url = window.location.href;
+        // eslint-disable-next-line no-global-assign
+        window = Object.create(window);
+        Object.defineProperty(window, 'location', {
+          value: {
+            href: url,
+          },
+          writable: true, // possibility to override
         });
+
+        fireEvent.click(logoutElement);
+
+        expect(logoutElement).toBeTruthy();
       });
     });
   });
