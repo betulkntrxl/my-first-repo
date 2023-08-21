@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -17,6 +19,8 @@ const SendMessage = (props: {
   handleResetChatSessionOpen: () => void;
   handleKeyDown: (event: { [x: string]: any; preventDefault: () => void }) => void;
 }) => {
+  const { t } = useTranslation();
+
   const {
     handleChatsessionChange,
     data,
@@ -71,7 +75,7 @@ const SendMessage = (props: {
                   variant="contained"
                   style={{ backgroundColor: '#005A8C', marginTop: 5, marginLeft: 7 }}
                 >
-                  Token Count: {tokenCount}
+                  {t('token-count')}: {tokenCount}
                 </Button>
                 {tokenMessage}
               </Grid>
@@ -80,7 +84,7 @@ const SendMessage = (props: {
                 {...(disabledInput && { disabled: true })}
                 autoComplete="off"
                 title="sendmessage"
-                placeholder="Type your message here."
+                placeholder={t('type-message')}
                 name="chatsession"
                 onChange={handleSendChange}
                 onKeyDown={handleKeyDown}
@@ -110,7 +114,7 @@ const SendMessage = (props: {
                 {...(disabledBool && { disabled: true })}
                 style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
               >
-                Send
+                {t('buttons.send')}
                 <TelegramIcon style={{ marginLeft: 10, marginBottom: 5, marginTop: 5 }} />
               </CustomButton>
             </Stack>
@@ -127,7 +131,7 @@ const SendMessage = (props: {
                   marginRight: 60,
                 }}
               >
-                Reset Chat
+                {t('buttons.reset-chat')}
                 <CachedIcon style={{ marginLeft: 5, marginBottom: 5, marginTop: 5 }} />
               </CustomButton>
             </Stack>

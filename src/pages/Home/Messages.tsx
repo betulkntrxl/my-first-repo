@@ -1,6 +1,8 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import React from 'react';
+
 import SystemIcon from './system.jpg';
 import UserIcon from './user.jpg';
 import Typing from './typing.gif';
@@ -15,6 +17,8 @@ const Messages = (props: {
   displayValue: string;
   visible: boolean;
 }) => {
+  const { t } = useTranslation();
+
   const { bottomRef, messagesDisplay, displayValue, visible } = props;
 
   function scrollToBottom() {
@@ -63,38 +67,15 @@ const Messages = (props: {
             }}
           >
             <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
-              You can ask ChatApp a question using the textbox below. Please keep the following in
-              mind when using this tool:
+              {t('background.title')}
               <br />
               <br />
               <ul style={{ textAlign: 'left' }}>
-                <li>
-                  Any questions asked or data entered will not be used to train or improve the
-                  current underlying model or future models.
-                </li>
-                <li>
-                  Use good judgement before relying on or sharing ChatApp responses as they may not
-                  always be accurate. Pressure test and verify that the response seems correct,
-                  unbiased, and explainable - does it make sense?
-                </li>
-                <li>
-                  During these early learning days, do not rely on these responses without taking
-                  additional verification steps for critical business purposes or for decisions with
-                  significant impacts (employment/hiring, financial, legal, healthcare applications
-                  or decisions, etc.).
-                </li>
-                <li>
-                  Our default models&apos; training data (i.e., the information from which the model
-                  has been developed) cuts off in 2021, so the models&apos; output may not reflect
-                  current events.
-                </li>
-                <li>
-                  McKesson Security teams and Microsoft will be monitoring all use in this McKesson
-                  GPT environment. Anyone using this application expressly consents to such
-                  monitoring. If such monitoring reveals possible activity which violates company
-                  policy and/or the law, system personnel may provide this information to relevant
-                  company legal/ethical channels and/or to law enforcement officials.
-                </li>
+                <li>{t('background.bullet1')}</li>
+                <li>{t('background.bullet2')}</li>
+                <li>{t('background.bullet3')}</li>
+                <li>{t('background.bullet4')}</li>
+                <li>{t('background.bullet5')}</li>
               </ul>
             </div>
           </div>

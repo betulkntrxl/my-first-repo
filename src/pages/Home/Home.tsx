@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Menu from './Menu';
 import Messages from './Messages';
@@ -17,6 +18,8 @@ export interface DialogTitleProps {
 
 const Home = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
   const DEFAULT_MAX_TOKENS = 200;
@@ -38,7 +41,7 @@ const Home = () => {
   const [disabledInput, setDisabledInput] = useState(false);
 
   const [systemMessageValue, setSystemMessageValue] = useState(
-    'Assistant is a large language model trained by OpenAI.',
+    t('menu.assistant-setup.message-template.system-message-template.template1'),
   );
   const systemMessageDisplay = {
     role: 'system',
@@ -50,9 +53,10 @@ const Home = () => {
     content: systemMessageValue,
   };
   const conversation = [systemMessage];
+  const welcomeMessage = t('welcome-message');
   const conversationDisplay = [
     systemMessageDisplay,
-    { role: 'system', content: "Hello, I'm the McKesson ChatApp. How can I help?", id: '1' },
+    { role: 'system', content: welcomeMessage, id: '1' },
   ];
   const [messages, setMessages] = useState(conversation);
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);

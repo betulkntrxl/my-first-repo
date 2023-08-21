@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import AppBar from '@mui/material/AppBar';
 import Drawer from '@mui/material/Drawer';
@@ -11,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import { Stack, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LanguageIcon from '@mui/icons-material/Language';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import AccordionMenu from './AccordionMenu';
 import Logo from './webimage-B31D6248-7763-4327-92184864D7920A7C.jpg';
@@ -32,6 +34,8 @@ const Menu = (props: {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [version, setVersion] = useState('');
   const [state, setState] = useState({});
+  const { t, i18n } = useTranslation();
+
   const handleDrawerToggle = () => {
     if (!mobileOpen) {
       // Tracking in app insights
@@ -97,7 +101,7 @@ const Menu = (props: {
               marginBottom: 10,
             }}
           >
-            Menu
+            {t('menu.title')}
           </div>
           <IconButton
             color="inherit"
@@ -149,12 +153,25 @@ const Menu = (props: {
           float: 'left',
         }}
       >
-        <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>About</div>
+        <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
+          {t('menu.about')}
+        </div>
 
-        <div style={{ float: 'left', marginLeft: 10 }}>Version: {version}</div>
+        <div style={{ float: 'left', marginLeft: 10 }}>
+          {t('menu.version')}: {version}
+        </div>
       </Paper>
     </div>
   );
+
+  const handleLanguage = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-event', {
+      name: 'ChatApp Language Changed',
+    });
+
+    i18n.changeLanguage(t('current-language') === 'en' ? 'cf' : 'en');
+  };
 
   const handleLogout = () => {
     // Tracking in app insights
@@ -195,7 +212,11 @@ const Menu = (props: {
               onClick={handleLogout}
             >
               <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
-              <Typography color="primary"> Logout</Typography>
+              <Typography color="primary"> {t('buttons.logout')}</Typography>
+            </IconButton>
+            <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLanguage}>
+              <LanguageIcon color="primary" style={{ fontWeight: 'bold' }} />
+              <Typography color="primary"> {t('current-language')}</Typography>
             </IconButton>
           </Toolbar>
         </AppBar>

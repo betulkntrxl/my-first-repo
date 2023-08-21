@@ -10,12 +10,15 @@ import {
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 const AssistantSetupMenu = (props: {
   handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
   systemMessageValue: string;
 }) => {
+  const { t } = useTranslation();
+
   const { handleSystemMessageValueChange, systemMessageValue } = props;
 
   const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
@@ -29,46 +32,57 @@ const AssistantSetupMenu = (props: {
   return (
     <>
       <Typography style={{ marginBottom: 10, marginTop: 10, color: 'dimgray' }}>
-        Message Template
+        {t('menu.assistant-setup.message-template.title')}
       </Typography>
       <FormControl fullWidth>
-        <InputLabel id="systemMessageTemplate-label">System Message Template</InputLabel>
+        <InputLabel id="systemMessageTemplate-label">
+          {t('menu.assistant-setup.message-template.system-message-template.title')}
+        </InputLabel>
         <Select
           fullWidth
           labelId="systemMessageTemplate-label"
           id="systemMessageTemplate"
           value={systemMessageValue}
-          label="System Message Template"
+          label={t('menu.assistant-setup.message-template.system-message-template.title')}
           onChange={handlesystemMessageTemplateChange}
           aria-label="system-message-template"
         >
-          <MenuItem value="Assistant is a large language model trained by OpenAI.">
-            Assistant is a large language model trained by OpenAI.
+          <MenuItem
+            value={t('menu.assistant-setup.message-template.system-message-template.template1')}
+          >
+            {t('menu.assistant-setup.message-template.system-message-template.template1')}
           </MenuItem>
-          <MenuItem value="as an assistant">as an assistant</MenuItem>
-          <MenuItem value="as a agent understanding the sentiment">
-            as a agent understanding the sentiment
+          <MenuItem
+            value={t('menu.assistant-setup.message-template.system-message-template.template2')}
+          >
+            {t('menu.assistant-setup.message-template.system-message-template.template2')}
           </MenuItem>
-          <MenuItem value="as a mentor using the Socratic method">
-            as a mentor using the Socratic method
+          <MenuItem
+            value={t('menu.assistant-setup.message-template.system-message-template.template3')}
+          >
+            {t('menu.assistant-setup.message-template.system-message-template.template3')}
+          </MenuItem>
+          <MenuItem
+            value={t('menu.assistant-setup.message-template.system-message-template.template4')}
+          >
+            {t('menu.assistant-setup.message-template.system-message-template.template4')}
           </MenuItem>
         </Select>
       </FormControl>
       <br />
       <br />
       <div style={{ marginBottom: 10, color: 'dimgray' }}>
-        System message:
-        <Tooltip title="Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality, tell it what it should and shouldn't answer, and tell it how to format responses. There's no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.">
+        {t('menu.assistant-setup.system-message.title')}:
+        <Tooltip title={t('menu.assistant-setup.system-message.tooltip')}>
           <InfoOutlinedIcon />
         </Tooltip>
       </div>
       <TextField
         id="outlined-multiline-static"
-        label="System message"
+        label={t('menu.assistant-setup.system-message.title')}
         multiline
         fullWidth
         rows={4}
-        //        defaultValue={systemMessageValue}
         value={systemMessageValue}
         onChange={handleSystemMessageValueChange}
         inputProps={{

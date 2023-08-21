@@ -1,0 +1,54 @@
+{
+  "current-language": "cf",
+  "background": {
+    "title": "Vous pouvez poser une question à ChatApp en utilisant la zone de texte ci-dessous. Veuillez garder à l'esprit les points suivants lorsque vous utilisez cet outil:",
+    "bullet1": "Les questions posées ou les données saisies ne seront pas utilisées pour former ou améliorer le modèle sous-jacent actuel ou les futurs modèles.",
+    "bullet2": "Faites preuve de discernement avant de vous fier aux réponses de ChatApp ou de les partager, car elles ne sont pas toujours exactes. Testez la pression et vérifiez que la réponse semble correcte, impartiale et explicable - est-ce logique ?",
+    "bullet3": "Pendant ces premières journées d'apprentissage, ne vous fiez pas à ces réponses sans prendre des mesures de vérification supplémentaires à des fins commerciales critiques ou pour des décisions ayant des impacts significatifs (emploi/embauche, finances, juridiques, demandes ou décisions de soins de santé, etc.).",
+    "bullet4": "Les données de formation de nos modèles par défaut (c'est-à-dire les informations à partir desquelles le modèle a été développé) s'arrêtent en 2021, de sorte que la sortie des modèles peut ne pas refléter les événements actuels.",
+    "bullet5": "Les équipes de McKesson Security et Microsoft surveilleront toute utilisation dans cet environnement McKesson GPT. Toute personne utilisant cette application consent expressément à une telle surveillance. Si une telle surveillance révèle une activité possible qui viole la politique de l'entreprise et/ou la loi, le personnel du système peut fournir ces informations aux canaux juridiques/éthiques de l'entreprise et/ou aux responsables de l'application des lois."
+  },
+  "welcome-message": "Bonjour, je suis McKesson ChatApp. Comment puis-je aider?",
+  "type-message": "Tapez votre message ici.",
+  "token-count": "NOMBRE DE JETONS",
+  "buttons": {
+    "send": "Envoyer",
+    "reset-chat": "Réinitialiser",
+    "logout": "Déconnexion"
+  },
+  "menu": {
+    "title": "Menu",
+    "assistant-setup": {
+      "title": "Configuration de l'assistant",
+      "message-template": {
+        "title": "Modèle de message",
+        "system-message-template": {
+          "title": "Modèle de message système",
+          "template1": "Assistant est un grand modèle de langage formé par OpenAI.",
+          "template2": "en tant qu'assistant",
+          "template3": "en tant qu'agent comprenant le sentiment",
+          "template4": "en tant que mentor en utilisant la méthode socratique"
+        }
+      },
+      "system-message": {
+        "title": "Message systèm",
+        "tooltip": "Donnez au modèle des instructions sur la façon dont il doit se comporter et tout contexte auquel il doit faire référence lors de la génération d'une réponse. Vous pouvez décrire la personnalité de l'assistant, lui dire ce qu'il doit et ne doit pas répondre, et lui dire comment formater les réponses. Il n'y a pas de limite de jetons pour cette section, mais elle sera incluse avec chaque appel d'API, elle compte donc dans la limite globale de jetons."
+      }
+    },
+    "configuration": {
+      "title": "Configuration",
+      "temperature": "Température",
+      "temperature-tooltip": "Contrôle le caractère aléatoire. L'abaissement de la température signifie que le modèle produira des réponses plus répétitives et déterministes. L'augmentation de la température entraînera des réponses plus inattendues ou créatives. Essayez de régler la température ou Top P, mais pas les deux.",
+      "top_p": "Top_P",
+      "top_p-tooltip": "Semblable à la température, cela contrôle le caractère aléatoire mais utilise une méthode différente. Abaisser Top P réduira la sélection de jetons du modèle à des jetons plus probables. L'augmentation de Top P permettra au modèle de choisir parmi des jetons à probabilité élevée et faible. Essayez de régler la température ou Top P, mais pas les deux.",
+      "max-tokens": "Jetons maximum",
+      "max-tokens-tooltip": "Définissez une limite sur le nombre de jetons par réponse de modèle. L'API prend en charge un maximum de 4 000 jetons partagés entre l'invite (y compris le message système, les exemples, l'historique des messages et la requête de l'utilisateur) et la réponse du modèle. Un jeton correspond à environ 4 caractères pour un texte anglais typique.",
+      "past-messages-included": "Messages passés inclus",
+      "past-messages-included-tooltip": "Sélectionnez le nombre de messages passés à inclure dans chaque nouvelle demande d'API. Cela permet de donner au modèle un contexte pour les nouvelles requêtes des utilisateurs. La définition de ce nombre sur 10 inclura 5 requêtes utilisateur et 5 réponses système.",
+      "api-timeout": "Délai d'expiration de l'API",
+      "api-timeout-tooltip": "Le délai d'expiration de l'API est le délai maximal accordé à l'API pour répondre à une requête. Si l'API prend plus de temps que le délai d'expiration spécifié pour répondre, la demande sera interrompue. Cela peut devoir être augmenté pour les invites complexes car l'API Azure OpenAI peut prendre du temps pour traiter la demande."
+    },
+    "about": "À propos",
+    "version": "Version"
+  }
+}
