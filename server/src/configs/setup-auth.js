@@ -1,9 +1,9 @@
-import msal from '@azure/msal-node';
+import { ConfidentialClientApplication, CryptoProvider } from '@azure/msal-node';
 import { MSAL_CONFIG, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from './auth-config.js';
 import { logger } from './logger.js';
 
-const msalInstance = new msal.ConfidentialClientApplication(MSAL_CONFIG);
-const cryptoProvider = new msal.CryptoProvider();
+const msalInstance = new ConfidentialClientApplication(MSAL_CONFIG);
+const cryptoProvider = new CryptoProvider();
 
 export const setupAuth = expressWebServer => {
   logger.info('Setting up Auth...');
@@ -13,7 +13,7 @@ export const setupAuth = expressWebServer => {
     res,
     next,
     authCodeUrlRequestParams,
-    authCodeRequestParams
+    authCodeRequestParams,
   ) {
     // Generate PKCE Codes before starting the authorization flow
     const { verifier, challenge } = await cryptoProvider.generatePkceCodes();
@@ -56,7 +56,7 @@ export const setupAuth = expressWebServer => {
       JSON.stringify({
         csrfToken: req.session.csrfToken,
         redirectTo: '/',
-      })
+      }),
     );
 
     const authCodeUrlRequestParams = {
@@ -97,7 +97,7 @@ export const setupAuth = expressWebServer => {
         }
       } else {
         logger.error(
-          `CSRF token doesn't match, destroying session and redirecting them to login again`
+          `CSRF token doesn't match, destroying session and redirecting them to login again`,
         );
 
         res.clearCookie('mt-openai-chat', {
@@ -106,7 +106,7 @@ export const setupAuth = expressWebServer => {
           secure: true,
         });
         req.session.destroy(
-          () => res.redirect('/api/auth/login') // redirect to login route
+          () => res.redirect('/api/auth/login'), // redirect to login route
         );
       }
     } else {
