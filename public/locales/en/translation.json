@@ -11,10 +11,14 @@
   "welcome-message": "Hello, I'm the McKesson ChatApp. How can I help?",
   "type-message": "Type your message here.",
   "token-count": "TOKEN COUNT",
+  "max-tokens-reached": "  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.",
   "buttons": {
     "send": "Send",
     "reset-chat": "Reset Chat",
-    "logout": "Logout"
+    "logout": "Logout",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "ok": "OK"
   },
   "menu": {
     "title": "Menu",
@@ -50,5 +54,17 @@
     },
     "about": "About",
     "version": "Version"
+  },
+  "popup-messages": {
+    "reset-chat-header": "Reset Chat",
+    "reset-chat-body": "This will reset your chat session. Do you want to continue?",
+    "session-expired-header": "Session Expired",
+    "session-expired-body": "Your session has expired. Do you want to continue?",
+    "unexpected-error-header": "Unexpected Error",
+    "unexpected-error-body": "An error has occured. The server may be busy.\nPlease try again at a later time.",
+    "api-timeout-header": "API Timeout",
+    "api-timeout-body": "Is your question complex? If so the API could take a bit more time to respond.\nYou can increase the API Timeout in the Configuration Menu.",
+    "server-busy-header": "Server is busy",
+    "server-busy-body": "The server is currently busy.\nPlease try again at a later time."
   }
 }

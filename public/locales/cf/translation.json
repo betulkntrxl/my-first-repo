@@ -11,10 +11,14 @@
   "welcome-message": "Bonjour, je suis McKesson ChatApp. Comment puis-je aider?",
   "type-message": "Tapez votre message ici.",
   "token-count": "NOMBRE DE JETONS",
+  "max-tokens-reached": "  ** La réponse est-elle courte ? Augmentez le nombre maximum de jetons dans le menu de configuration.",
   "buttons": {
     "send": "Envoyer",
     "reset-chat": "Réinitialiser",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "cancel": "Annuler",
+    "continue": "Continuer",
+    "ok": "d'accord"
   },
   "menu": {
     "title": "Menu",
@@ -50,5 +54,17 @@
     },
     "about": "À propos",
     "version": "Version"
+  },
+  "popup-messages": {
+    "reset-chat-header": "Réinitialiser le chat",
+    "reset-chat-body": "Cela réinitialisera votre session de discussion. Voulez-vous continuer?",
+    "session-expired-header": "La session a expiré",
+    "session-expired-body": "Votre session a expiré. Voulez-vous continuer?",
+    "unexpected-error-header": "Erreur inattendue",
+    "unexpected-error-body": "Une erreur est survenue. Le serveur est peut-être occupé.\nVeuillez réessayer ultérieurement.",
+    "api-timeout-header": "Délai d'expiration de l'API",
+    "api-timeout-body": "Votre question est complexe ? Si tel est le cas, l'API peut prendre un peu plus de temps pour répondre.\nVous pouvez augmenter le délai d'expiration de l'API dans le menu de configuration.",
+    "server-busy-header": "Le serveur est occupé",
+    "server-busy-body": "Le serveur est actuellement occupé.\nVeuillez réessayer ultérieurement."
   }
 }

@@ -40,7 +40,7 @@ describe('testing the App', () => {
           // select all digits in input
           act(() => {
             fireEvent.change(systemMessageInput, {
-              target: { value: 'as an assistant' },
+              target: { label: 'template1' },
             });
           });
           // user.keyboard('{Control>}a{/Control}');

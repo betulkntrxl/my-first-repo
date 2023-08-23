@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import Typography from '@mui/material/Typography';
@@ -46,6 +48,8 @@ const ContinueCancelDialog = (props: {
   headerText: string;
   bodyText: string;
 }) => {
+  const { t } = useTranslation();
+
   const { handleClose, openDialog, handleContinue, headerText, bodyText } = props;
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -78,10 +82,10 @@ const ContinueCancelDialog = (props: {
           title="cancel-button"
           data-testid="cancel-button"
         >
-          Cancel
+          {t('buttons.cancel')}
         </Button>
         <Button variant="contained" autoFocus onClick={handleContinue} title="continue-button">
-          Continue
+          {t('buttons.continue')}
         </Button>
       </DialogActions>
     </BootstrapDialog>

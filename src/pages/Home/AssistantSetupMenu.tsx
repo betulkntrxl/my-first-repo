@@ -48,6 +48,7 @@ const AssistantSetupMenu = (props: {
           aria-label="system-message-template"
         >
           <MenuItem
+            aria-label="template1"
             value={t('menu.assistant-setup.message-template.system-message-template.template1')}
           >
             {t('menu.assistant-setup.message-template.system-message-template.template1')}

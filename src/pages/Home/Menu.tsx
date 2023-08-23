@@ -165,12 +165,14 @@ const Menu = (props: {
   );
 
   const handleLanguage = () => {
+    const changeLanguageTo = t('current-language') === 'en' ? 'cf' : 'en';
+
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
-      name: 'ChatApp Language Changed',
+      name: `ChatApp Language Changed to ${changeLanguageTo}`,
     });
 
-    i18n.changeLanguage(t('current-language') === 'en' ? 'cf' : 'en');
+    i18n.changeLanguage(changeLanguageTo);
   };
 
   const handleLogout = () => {

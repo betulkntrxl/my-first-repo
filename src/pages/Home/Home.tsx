@@ -306,11 +306,8 @@ const Home = () => {
           });
         }
 
-        setTokenMessage(
-          USED_MORE_THAN_MAX_TOKENS
-            ? '  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.'
-            : '',
-        );
+        setTokenMessage(USED_MORE_THAN_MAX_TOKENS ? t('max-tokens-reached') : '');
+
         // add response to conversation
         setMessages([
           { role: 'system', content: systemMessageValue },
@@ -513,8 +510,8 @@ const Home = () => {
           handleClose: handleResetChatSessionClose,
           openDialog: openResetChatSession,
           handleContinue: handleResetChatSessionContinue,
-          headerText: 'Reset Chat',
-          bodyText: 'This will reset your chat session. Do you want to continue?',
+          headerText: t('popup-messages.reset-chat-header'),
+          bodyText: t('popup-messages.reset-chat-body'),
         }}
       />
 
@@ -523,8 +520,8 @@ const Home = () => {
           handleClose: handleSessionExpiredClose,
           openDialog: openSessionExpired,
           handleContinue: handleSessionExpiredContinue,
-          headerText: 'Session Expired',
-          bodyText: 'Your session has expired. Do you want to continue?',
+          headerText: t('popup-messages.session-expired-header'),
+          bodyText: t('popup-messages.session-expired-body'),
         }}
       />
 
@@ -532,9 +529,8 @@ const Home = () => {
         {...{
           handleClose: handleAPIErrorClose,
           openDialog: openAPIError,
-          headerText: 'Unexpected Error',
-          bodyText:
-            'An error has occured. The server may be busy.\nPlease try again at a later time.',
+          headerText: t('popup-messages.unexected-error-header'),
+          bodyText: t('popup-messages.unexpected-error-body'),
         }}
       />
 
@@ -542,9 +538,8 @@ const Home = () => {
         {...{
           handleClose: handleAPITimeoutClose,
           openDialog: openAPITimeout,
-          headerText: 'API Timeout',
-          bodyText:
-            'Is your question complex? If so the API could take a bit more time to respond.\nYou can increase the API Timeout in the Configuration Menu.',
+          headerText: t('popup-messages.api-timeout-header'),
+          bodyText: t('popup-messages.api-timeout-body'),
         }}
       />
 
@@ -552,8 +547,8 @@ const Home = () => {
         {...{
           handleClose: handleAPIRateLimitClose,
           openDialog: openAPIRateLimit,
-          headerText: 'Server is busy',
-          bodyText: 'The server is currently busy.\nPlease try again at a later time.',
+          headerText: t('popup-messages.server-busy-header'),
+          bodyText: t('popup-messages.server-busy-body'),
         }}
       />
     </div>

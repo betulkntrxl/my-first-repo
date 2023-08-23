@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import Typography from '@mui/material/Typography';
@@ -45,6 +47,8 @@ const OKDialog = (props: {
   headerText: string;
   bodyText: string;
 }) => {
+  const { t } = useTranslation();
+
   const { handleClose, openDialog, headerText, bodyText } = props;
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -70,7 +74,7 @@ const OKDialog = (props: {
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" onClick={handleClose} title="close-button">
-          Ok
+          {t('buttons.ok')}
         </Button>
       </DialogActions>
     </BootstrapDialog>
