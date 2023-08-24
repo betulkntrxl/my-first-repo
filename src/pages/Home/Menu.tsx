@@ -172,7 +172,35 @@ const Menu = (props: {
       name: `ChatApp Language Changed to ${changeLanguageTo}`,
     });
 
-    i18n.changeLanguage(changeLanguageTo);
+    // To translate the System Message, we need to get the resource bundle
+    // and get the key/values for the systemMessageTemplates
+    const resourceBundle = i18n.getResourceBundle(t('current-language'), '');
+    const systemMessageTemplates =
+      resourceBundle.menu['assistant-setup']['message-template']['system-message-template'];
+
+    // We then need to get the key for the current System message
+    // so we're doing a reverse lookup i.e. given the value what is the key
+    const systemMessageKey = (Object.keys(systemMessageTemplates) as (keyof typeof String)[]).find(
+      key => systemMessageTemplates[key] === systemMessageValue,
+    );
+
+    // Change the language for the ChatApp
+    i18n.changeLanguage(changeLanguageTo, (error, translate) => {
+      // If we found a key that matches the system message value
+      // then use that key to translate the system message.
+      // If we don't find a key then the system message value must be a custom
+      // message typed in by the user, we ignore  this and leave this text in place
+      if (systemMessageKey) {
+        handleSystemMessageValueChange({
+          target: {
+            name: '',
+            value: translate(
+              `menu.assistant-setup.message-template.system-message-template.${systemMessageKey}`,
+            ),
+          },
+        });
+      }
+    });
   };
 
   const handleLogout = () => {

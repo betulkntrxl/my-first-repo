@@ -529,7 +529,7 @@ const Home = () => {
         {...{
           handleClose: handleAPIErrorClose,
           openDialog: openAPIError,
-          headerText: t('popup-messages.unexected-error-header'),
+          headerText: t('popup-messages.unexpected-error-header'),
           bodyText: t('popup-messages.unexpected-error-body'),
         }}
       />
