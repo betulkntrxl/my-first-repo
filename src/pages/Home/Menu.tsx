@@ -244,7 +244,11 @@ const Menu = (props: {
               <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
               <Typography color="primary"> {t('buttons.logout')}</Typography>
             </IconButton>
-            <IconButton style={{ color: 'white', fontSize: '16' }} onClick={handleLanguage}>
+            <IconButton
+              style={{ color: 'white', fontSize: '16' }}
+              aria-label="language"
+              onClick={handleLanguage}
+            >
               <LanguageIcon color="primary" style={{ fontWeight: 'bold' }} />
               <Typography color="primary"> {t('current-language')}</Typography>
             </IconButton>
