@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
-import * as mockFrenchResourceBundle from '../public/locales/cf/translation.json';
 
 const server = setupServer(
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
@@ -16,6 +15,18 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const MOCK_RESOURCE_BUNDLE = {
+  menu: {
+    'assistant-setup': {
+      'message-template': {
+        'system-message-template': {
+          template1: 'cf',
+        },
+      },
+    },
+  },
+};
+
 jest.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => ({
@@ -23,7 +34,7 @@ jest.mock('react-i18next', () => ({
     i18n: {
       /* eslint-disable */
       changeLanguage: () => new Promise(() => {}),
-      getResourceBundle: (bundle: String, namespace: String) => mockFrenchResourceBundle,
+      getResourceBundle: (bundle: String, namespace: String) => MOCK_RESOURCE_BUNDLE,
       /* eslint-enable */
     },
   }),
