@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
+import * as mockFrenchResourceBundle from '../public/locales/cf/translation.json';
 
 const server = setupServer(
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
@@ -18,33 +19,11 @@ afterAll(() => server.close());
 jest.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => ({
-    t: (str: any) => 'en',
+    t: (str: any) => 'cf',
     i18n: {
       /* eslint-disable */
       changeLanguage: () => new Promise(() => {}),
-      getResourceBundle: (bundle: String, namespace: String) => ({
-        menu: {
-          title: 'Menu',
-          'assistant-setup': {
-            title: 'Assistant Setup',
-            'message-template': {
-              title: 'Message Template',
-              'system-message-template': {
-                title: 'System Message Template',
-                template1: 'Assistant is a large language model trained by OpenAI.',
-                template2: 'as an assistant',
-                template3: 'as a agent understanding the sentiment',
-                template4: 'as a mentor using the Socratic method',
-              },
-            },
-            'system-message': {
-              title: 'System Message',
-              tooltip:
-                'Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit.',
-            },
-          },
-        },
-      }),
+      getResourceBundle: (bundle: String, namespace: String) => mockFrenchResourceBundle,
       /* eslint-enable */
     },
   }),
@@ -53,7 +32,7 @@ jest.mock('react-i18next', () => ({
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('change language', async () => {
+  it('change language to french', async () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
