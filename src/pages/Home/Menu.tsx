@@ -180,9 +180,14 @@ const Menu = (props: {
 
     // We then need to get the key for the current System message
     // so we're doing a reverse lookup i.e. given the value what is the key
-    const systemMessageKey = (Object.keys(systemMessageTemplates) as (keyof typeof String)[]).find(
-      key => systemMessageTemplates[key] === systemMessageValue,
-    );
+    let systemMessageKey: string;
+    Object.keys(systemMessageTemplates).forEach(key => {
+      const value = systemMessageTemplates[key];
+
+      if (value === systemMessageValue) {
+        systemMessageKey = key;
+      }
+    });
 
     // Change the language for the ChatApp
     i18n.changeLanguage(changeLanguageTo, (error, translate) => {
