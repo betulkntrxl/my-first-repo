@@ -167,6 +167,9 @@ const Menu = (props: {
   const handleLanguage = () => {
     const changeLanguageTo = t('current-language') === 'en' ? 'cf' : 'en';
 
+    // Persist to local storage
+    localStorage.setItem('language', changeLanguageTo);
+
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
       name: `ChatApp Language Changed to ${changeLanguageTo}`,
