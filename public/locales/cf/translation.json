@@ -11,7 +11,7 @@
   "welcome-message": "Bonjour, je suis McKesson ChatApp. Comment puis-je aider?",
   "type-message": "Tapez votre message ici.",
   "token-count": "NOMBRE DE JETONS",
-  "max-tokens-reached": "  ** La réponse est-elle courte ? Augmentez le nombre maximum de jetons dans le menu de configuration.",
+  "max-tokens-reached": "  ** coupure de texte? augmenter le nombre maximum de jetons dans le menu",
   "buttons": {
     "send": "Envoyer",
     "reset-chat": "Réinitialiser",
