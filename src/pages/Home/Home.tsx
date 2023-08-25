@@ -88,7 +88,7 @@ const Home = () => {
 
     setOpenResetChatSession(false);
     // refresh the page
-    navigate('/');
+    window.location.href = '/';
   };
 
   const handleSessionExpiredOpen = () => {
@@ -105,7 +105,7 @@ const Home = () => {
   const handleSessionExpiredContinue = () => {
     setOpenSessionExpired(false);
     // redirect to login
-    window.location.href = '/api/auth/logout';
+    window.location.href = '/';
   };
 
   const handleAPIRateLimitOpen = () => {
