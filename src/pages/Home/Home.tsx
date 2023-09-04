@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Menu from './Menu';
@@ -17,9 +16,7 @@ export interface DialogTitleProps {
 }
 
 const Home = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
-
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
   const DEFAULT_MAX_TOKENS = 200;
@@ -92,7 +89,7 @@ const Home = () => {
 
     setOpenResetChatSession(false);
     // refresh the page
-    navigate('/');
+    window.location.href = '/';
   };
 
   const handleSessionExpiredOpen = () => {
@@ -109,7 +106,7 @@ const Home = () => {
   const handleSessionExpiredContinue = () => {
     setOpenSessionExpired(false);
     // redirect to login
-    window.location.href = '/api/auth/logout';
+    window.location.href = '/';
   };
 
   const handleAPIRateLimitOpen = () => {
