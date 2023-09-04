@@ -165,10 +165,10 @@ const Menu = (props: {
   );
 
   const handleLanguage = () => {
-    const changeLanguageTo = t('current-language') === 'en' ? 'cf' : 'en';
+    const changeLanguageTo = t('current-language') === 'en' ? 'fr' : 'en';
 
     // Persist to local storage
-    localStorage.setItem('language', changeLanguageTo);
+    localStorage.setItem('i18nextLng', changeLanguageTo);
 
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
