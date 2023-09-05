@@ -54,6 +54,12 @@ export const setupRoutes = (expressWebServer, appInsights) => {
     res.send(`{"version": "${VERSION}"}`);
   });
 
+  // Check if user is authenticated
+  expressWebServer.get('/api/is-authenticated', async (req, res, next) => {
+    const AUTHENTICATED = req.session.isAuthenticated === true;
+    res.send(`{"authenticated": "${AUTHENTICATED}"}`);
+  });
+
   // App Insights Events
   expressWebServer.post(
     '/api/app-insights-event',

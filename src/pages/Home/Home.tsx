@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { useTranslation } from 'react-i18next';
@@ -180,6 +180,19 @@ const Home = () => {
   const handleAPITimeoutChange = (event: Event, newValue: number | number[]): void => {
     setAPITimeout(newValue as number);
   };
+
+  useEffect(() => {
+    const AUTH_INTERVAL = setInterval(async () => {
+      await axios.get('/api/is-authenticated').then(response => {
+        if (response?.data?.authenticated === 'false') {
+          handleSessionExpiredOpen();
+        }
+      });
+    }, 30000); // every 30 seconds check if the user is authenticated
+    return () => {
+      clearInterval(AUTH_INTERVAL);
+    };
+  }, []);
 
   async function sendMessage() {
     const messageToSend = data.chatsession;
