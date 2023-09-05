@@ -28,7 +28,6 @@ describe('testing the App', () => {
   it('sends a message and returns status 401 Unauthorized error and Continue', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
         const sendmessageElement = screen.getByTitle('sendmessage');
         fireEvent.change(sendmessageElement, {

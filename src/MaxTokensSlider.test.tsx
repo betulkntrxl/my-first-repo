@@ -22,7 +22,6 @@ describe('testing the App', () => {
   it('renders a Max Tokens slider', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
       await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
         const menuElement = screen.getByLabelText('menu');
         fireEvent.click(menuElement);
