@@ -26,7 +26,6 @@ describe('testing the App', () => {
     act(() => {
       render(<App />);
     });
-    const user = userEvent.setup();
     await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
       const menuElement = screen.getByLabelText('menu');
       act(() => {

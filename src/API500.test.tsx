@@ -26,7 +26,6 @@ describe('testing the App', () => {
   it('sends a message and returns API error', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
         const sendmessageElement = screen.getByTitle('sendmessage');
 
