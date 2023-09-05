@@ -15,7 +15,7 @@ export const setupMiddleware = expressWebServer => {
   expressWebServer.use(helmet());
   expressWebServer.disable('x-powered-by');
   expressWebServer.use(morgan(':date[clf] ":method :url"'));
-  expressWebServer.use(bodyParser.json());
+  expressWebServer.use(bodyParser.json({ limit: '500kb' }));
 
   // Note: HTTPOnly and Secure Flags are set in the Kubernetes Manifest files, annotations on the ingress
   const sessionOptions = {
