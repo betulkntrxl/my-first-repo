@@ -50,7 +50,6 @@ describe('testing the App', () => {
   it('sends a message and reset chat and continue', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
 
       await waitFor(() => expect(screen.getByLabelText('logout')).toBeVisible()).then(() => {
         const logoutElement = screen.getByLabelText('logout');

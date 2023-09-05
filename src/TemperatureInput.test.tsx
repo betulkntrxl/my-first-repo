@@ -22,7 +22,6 @@ describe('testing the App', () => {
   it('renders a Temperature input and tests valid input', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
 
       await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
         const menuElement = screen.getByLabelText('menu');
