@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, cleanup, screen, waitFor, act, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -30,7 +29,7 @@ const MOCK_RESOURCE_BUNDLE = {
 jest.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => ({
-    t: (str: any) => 'en',
+    t: (_str: any) => 'en',
     i18n: {
       /* eslint-disable */
       changeLanguage: () => new Promise(() => {}),
@@ -46,7 +45,6 @@ describe('testing the App', () => {
   it('change language to english', async () => {
     await act(async () => {
       render(<App />);
-      const user = userEvent.setup();
 
       await waitFor(() => expect(screen.getByLabelText('language')).toBeVisible()).then(() => {
         const languageElement = screen.getByLabelText('language');
