@@ -59,7 +59,7 @@
     "reset-chat-header": "Reset Chat",
     "reset-chat-body": "This will reset your chat session. Do you want to continue?",
     "session-expired-header": "Session Expired",
-    "session-expired-body": "Your session has expired. Do you want to continue?",
+    "session-expired-body": "Your session has expired.\nTo continue, your chat session will be reset. Do you want to continue?",
     "unexpected-error-header": "Unexpected Error",
     "unexpected-error-body": "An error has occured. The server may be busy.\nPlease try again at a later time.",
     "api-timeout-header": "API Timeout",
