@@ -183,11 +183,21 @@ const Home = () => {
 
   useEffect(() => {
     const AUTH_INTERVAL = setInterval(async () => {
-      await axios.get('/api/is-authenticated').then(response => {
-        if (response?.data?.authenticated === 'false') {
-          handleSessionExpiredOpen();
-        }
-      });
+      // Because the cookie is a HTTPOnly cookie it means the react app can't access
+      // the cookie to check if it exists, a workaround for this is
+      // to try set a cookie with the same name, if the cookie exists after
+      // setting the cookie then we know the cookie didn't exist in the first place
+      const DATE = new Date();
+      DATE.setTime(DATE.getTime() + 1000);
+      const EXPIRES = `expires=${DATE.toUTCString()}`;
+      const COOKIE_NAME = 'mt-openai-chat';
+      document.cookie = `${COOKIE_NAME}=new_value;path=/;${EXPIRES}`;
+
+      const doesCookieExist = document.cookie.indexOf(`${COOKIE_NAME}=`) === -1;
+
+      if (!doesCookieExist) {
+        handleSessionExpiredOpen();
+      }
     }, 30000); // every 30 seconds check if the user is authenticated
     return () => {
       clearInterval(AUTH_INTERVAL);
