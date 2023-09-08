@@ -19,7 +19,7 @@ const MOCK_RESOURCE_BUNDLE = {
     'assistant-setup': {
       'message-template': {
         'system-message-template': {
-          template1: 'en',
+          template1: 'En',
         },
       },
     },
@@ -29,7 +29,7 @@ const MOCK_RESOURCE_BUNDLE = {
 jest.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => ({
-    t: (_str: any) => 'en',
+    t: (_str: any) => 'En',
     i18n: {
       /* eslint-disable */
       changeLanguage: () => new Promise(() => {}),

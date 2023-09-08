@@ -165,7 +165,7 @@ const Menu = (props: {
   );
 
   const handleLanguage = () => {
-    const changeLanguageTo = t('current-language') === 'en' ? 'fr' : 'en';
+    const changeLanguageTo = t('current-language') === 'En' ? 'Fr' : 'En';
 
     // Persist to local storage
     localStorage.setItem('i18nextLng', changeLanguageTo);
