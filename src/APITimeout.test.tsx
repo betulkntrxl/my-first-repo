@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -37,7 +36,7 @@ describe('testing the App', () => {
     act(() => {
       render(<App />);
     });
-    const user = userEvent.setup();
+
     await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
       const sendmessageElement = screen.getByTitle('sendmessage');
 
