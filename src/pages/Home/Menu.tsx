@@ -165,7 +165,7 @@ const Menu = (props: {
   );
 
   const handleLanguage = () => {
-    const changeLanguageTo = t('current-language') === 'En' ? 'Fr' : 'En';
+    const changeLanguageTo = t('current-language').toLowerCase() === 'en' ? 'fr' : 'en';
 
     // Persist to local storage
     localStorage.setItem('i18nextLng', changeLanguageTo);
@@ -177,7 +177,7 @@ const Menu = (props: {
 
     // To translate the System Message, we need to get the resource bundle
     // and get the key/values for the systemMessageTemplates
-    const resourceBundle = i18n.getResourceBundle(t('current-language'), '');
+    const resourceBundle = i18n.getResourceBundle(t('current-language').toLowerCase(), '');
     const systemMessageTemplates =
       resourceBundle.menu['assistant-setup']['message-template']['system-message-template'];
 
