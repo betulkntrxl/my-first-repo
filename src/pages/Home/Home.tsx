@@ -182,6 +182,12 @@ const Home = () => {
   };
 
   useEffect(() => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: `ChatApp default language set to ${t('current-language').toLowerCase()}`,
+      severity: 1, // Information
+    });
+
     const AUTH_INTERVAL = setInterval(async () => {
       // Because the cookie is a HTTPOnly cookie it means the react app can't access
       // the cookie to check if it exists, a workaround for this is
