@@ -32,9 +32,15 @@ const server = setupServer(
       ctx.status(200),
     ),
   ),
-  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
-  rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
-  rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
+  rest.get('http://fake-server.com/api/version', (req, res, ctx) =>
+    res(ctx.json({ greeting: 'hello there' })),
+  ),
+  rest.post('http://fake-server.com/api/app-insights-event', (req, res, ctx) =>
+    res(ctx.status(201)),
+  ),
+  rest.post('http://fake-server.com/api/app-insights-trace', (req, res, ctx) =>
+    res(ctx.status(201)),
+  ),
   rest.get('/api/auth/login', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.get('/api/auth/logout', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
@@ -46,24 +52,29 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and reset chat and continue', async () => {
+  it('click logout', async () => {
     await act(async () => {
       render(<App />);
 
       await waitFor(() => expect(screen.getByLabelText('logout')).toBeVisible()).then(() => {
         const logoutElement = screen.getByLabelText('logout');
-        // mock window.location.href
-        const url = window.location.href;
+
         // eslint-disable-next-line no-global-assign
         window = Object.create(window);
         Object.defineProperty(window, 'location', {
           value: {
-            href: url,
+            href: 'http://fake-server.com/',
           },
           writable: true, // possibility to override
         });
 
         fireEvent.click(logoutElement);
+        Object.defineProperty(window, 'location', {
+          value: {
+            href: 'http://fake-server.com/',
+          },
+          writable: true, // possibility to override
+        });
 
         expect(logoutElement).toBeTruthy();
       });
