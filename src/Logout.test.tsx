@@ -32,15 +32,9 @@ const server = setupServer(
       ctx.status(200),
     ),
   ),
-  rest.get('http://fake-server.com/api/version', (req, res, ctx) =>
-    res(ctx.json({ greeting: 'hello there' })),
-  ),
-  rest.post('http://fake-server.com/api/app-insights-event', (req, res, ctx) =>
-    res(ctx.status(201)),
-  ),
-  rest.post('http://fake-server.com/api/app-insights-trace', (req, res, ctx) =>
-    res(ctx.status(201)),
-  ),
+  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
+  rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
   rest.get('/api/auth/login', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.get('/api/auth/logout', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
 );
@@ -63,15 +57,15 @@ describe('testing the App', () => {
         window = Object.create(window);
         Object.defineProperty(window, 'location', {
           value: {
-            href: 'http://fake-server.com/',
+            href: 'http://localhost/',
           },
-          writable: true, // possibility to override
+          writable: true, // possibility to oqverride
         });
 
         fireEvent.click(logoutElement);
         Object.defineProperty(window, 'location', {
           value: {
-            href: 'http://fake-server.com/',
+            href: 'http://localhost/',
           },
           writable: true, // possibility to override
         });
