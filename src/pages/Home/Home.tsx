@@ -208,7 +208,7 @@ const Home = () => {
     return () => {
       clearInterval(AUTH_INTERVAL);
     };
-  }, []);
+  }, [t]);
 
   async function sendMessage() {
     const messageToSend = data.chatsession;
