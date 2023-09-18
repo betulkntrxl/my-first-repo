@@ -1,4 +1,7 @@
+# Ignore everything
 *
-!./certs
+
+# Except for these directories
+!/certs
 !/build
 !/server
