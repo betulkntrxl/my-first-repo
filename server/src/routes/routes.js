@@ -2,7 +2,7 @@ import express from 'express';
 import { createProxyMiddleware, fixRequestBody, responseInterceptor } from 'http-proxy-middleware';
 import { logger } from '../configs/logger.js';
 
-export const setupRoutes = (expressWebServer, appInsights) => {
+export const setupRoutes = (expressWebServer, oidc, appInsights) => {
   // Check to see if user is logged in, if not redirect them to login route
   /* eslint-disable */
   function ensureAuthenticatedRedirectIfNot(req, res, next) {
@@ -41,11 +41,9 @@ export const setupRoutes = (expressWebServer, appInsights) => {
       return true;
     }
 
-    logger.info(
-      req.session.isAuthenticated ? 'User is authenticated' : 'User is not authenticated',
-    );
+    logger.info(req.isAuthenticated() ? 'User is authenticated' : 'User is not authenticated');
 
-    return req.session.isAuthenticated;
+    return req.isAuthenticated();
   }
 
   // App Version
@@ -97,8 +95,7 @@ export const setupRoutes = (expressWebServer, appInsights) => {
       req.headers.urn = 'test-user@mckesson.com';
     } else {
       req.headers.urn =
-        req.session.account.idTokenClaims.email ||
-        req.session.account.idTokenClaims.preferred_username;
+        req.userContext.userinfo.email || req.userContext.userinfo.preferred_username;
     }
 
     // TODO: Need to figure out how to get the BU for the user
@@ -157,6 +154,10 @@ export const setupRoutes = (expressWebServer, appInsights) => {
 
   // Make sure the user is authenticated before serving static content
   expressWebServer.get('/', ensureAuthenticatedRedirectIfNot);
+
+  expressWebServer.get('/api/auth/logout', oidc.forceLogoutAndRevoke(), (req, res) => {
+    // Nothing here will execute, after the redirects the user will end up at the root / again
+  });
 
   // Serving the static content i.e. the React App
   expressWebServer.use(express.static('./build'));

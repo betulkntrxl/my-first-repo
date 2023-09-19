@@ -24,7 +24,7 @@ if (process.env.APPLICATION_INSIGHTS_CONNECTION_STRING) {
 
 import express from 'express';
 import { setupMiddleware } from './src/configs/setup-middleware.js';
-import { setupAuth } from './src/configs/setup-auth.js';
+import { oidc } from './src/configs/setup-okta.js';
 import { setupRoutes } from './src/routes/routes.js';
 import { logger } from './src/configs/logger.js';
 /* eslint-enable */
@@ -35,20 +35,36 @@ const expressWebServer = express();
 // Setting up middleware for security and logging
 setupMiddleware(expressWebServer);
 
-// Setup authz with Azure
-setupAuth(expressWebServer);
+// Setup authz routes with Okta
+expressWebServer.use(oidc.router);
 
 // Setup routes for api calls and to server the static content i.e. the React App
-setupRoutes(expressWebServer, appInsights);
+setupRoutes(expressWebServer, oidc, appInsights);
 
 const port = process.env.PORT || 8080;
 
 // Starting web server
 const start = Date.now();
-expressWebServer.listen(port, () => {
+oidc.on('ready', () => {
+  expressWebServer.listen(port, () => {
+    if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
+      const duration = Date.now() - start;
+      appInsights.defaultClient.trackMetric({ name: 'server startup time', value: duration });
+    }
+    logger.info(`MT OpenAI Chat App UI server running on port ${port}`);
+  });
+});
+
+oidc.on('error', err => {
+  logger.error(`OKTA Auth failed ${err}`);
   if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
-    const duration = Date.now() - start;
-    appInsights.defaultClient.trackMetric({ name: 'server startup time', value: duration });
+    appInsights.defaultClient.trackTrace({
+      message: 'ChatApp OKTA Setup Failed',
+      severity: 3, // Error
+      properties: {
+        error: err,
+      },
+    });
   }
-  logger.info(`MT OpenAI Chat App UI server running on port ${port}`);
+  throw err;
 });
