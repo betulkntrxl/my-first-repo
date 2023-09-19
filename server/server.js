@@ -56,7 +56,7 @@ oidc.on('ready', () => {
 });
 
 oidc.on('error', err => {
-  logger.error(`OKTA Auth failed ${err}`);
+  logger.error(`ChatApp OKTA Setup Failed ${err}`);
   if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
     appInsights.defaultClient.trackTrace({
       message: 'ChatApp OKTA Setup Failed',

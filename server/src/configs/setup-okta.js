@@ -10,15 +10,12 @@ export const oidc = new ExpressOIDC({
   scope: 'openid profile email',
   routes: {
     login: {
-      // handled by this module
       path: '/api/auth/login',
     },
     loginCallback: {
-      // handled by this module
       path: '/api/auth/redirect',
     },
     logout: {
-      // handled by this module
       path: '/',
     },
   },
