@@ -19,7 +19,7 @@ const Home = () => {
   const { t } = useTranslation();
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
-  const DEFAULT_MAX_TOKENS = 200;
+  const DEFAULT_MAX_TOKENS = 2000;
   const DEFAULT_PAST_MESSAGES = 10;
   const DEFAULT_API_TIMEOUT = 10;
   const [data, setData] = useState({ chatsession: '', response: '' });
