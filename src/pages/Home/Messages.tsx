@@ -76,6 +76,7 @@ const Messages = (props: {
                 <li>{t('background.bullet3')}</li>
                 <li>{t('background.bullet4')}</li>
                 <li>{t('background.bullet5')}</li>
+                <li>{t('background.bullet6')}</li>
               </ul>
             </div>
           </div>
