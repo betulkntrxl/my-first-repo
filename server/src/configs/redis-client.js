@@ -2,7 +2,7 @@ import redis from 'redis';
 import RedisStore from 'connect-redis';
 import { logger } from './logger.js';
 
-export const setupRedisClient = () => {
+const setupRedisClient = () => {
   logger.info('Setting up Redis for a distributed session store...');
 
   // Redis client configuration
@@ -26,3 +26,5 @@ export const setupRedisClient = () => {
   // Create and return Redis Session Store
   return new RedisStore({ client });
 };
+
+export { setupRedisClient };

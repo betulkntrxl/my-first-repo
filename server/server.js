@@ -23,8 +23,9 @@ if (process.env.APPLICATION_INSIGHTS_CONNECTION_STRING) {
 }
 
 import express from 'express';
-import { setupMiddleware } from './src/configs/setup-middleware.js';
-import { oidc } from './src/configs/setup-okta.js';
+import { setupMiddleware } from './src/configs/middleware.js';
+import { setupOktaConfig } from './src/configs/okta.js';
+import { setupMulesoftProxy } from './src/configs/mule-proxy.js';
 import { setupRoutes } from './src/routes/routes.js';
 import { logger } from './src/configs/logger.js';
 /* eslint-enable */
@@ -35,17 +36,18 @@ const expressWebServer = express();
 // Setting up middleware for security and logging
 setupMiddleware(expressWebServer);
 
-// Setup authz routes with Okta
-expressWebServer.use(oidc.router);
+// Setup Okta
+const okta = setupOktaConfig();
 
+const mulesoftProxy = setupMulesoftProxy(appInsights);
 // Setup routes for api calls and to server the static content i.e. the React App
-setupRoutes(expressWebServer, oidc, appInsights);
+setupRoutes(expressWebServer, okta, mulesoftProxy, appInsights);
 
 const port = process.env.PORT || 8080;
 
 // Starting web server
 const start = Date.now();
-oidc.on('ready', () => {
+okta.on('ready', () => {
   expressWebServer.listen(port, () => {
     if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
       const duration = Date.now() - start;
@@ -55,7 +57,7 @@ oidc.on('ready', () => {
   });
 });
 
-oidc.on('error', err => {
+okta.on('error', err => {
   logger.error(`ChatApp OKTA Setup Failed ${err}`);
   if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
     appInsights.defaultClient.trackTrace({
