@@ -14,7 +14,7 @@ const getOktaRoutes = okta => {
     // After the redirects the user will end up at the root / again, basically asking them to log back in
   });
 
-  logger.info(`Okta Routes complete`);
+  logger.info(`Okta Routes setup complete`);
 
   return oktaRoutes;
 };

@@ -10,11 +10,11 @@ const setupRoutes = (okta, mulesoftProxy, appInsights) => {
 
   appRoutes.use(getOktaRoutes(okta));
 
-  appRoutes.use(getVersionRoutes());
-
   appRoutes.use(getAppInsightsRoutes(appInsights));
 
   appRoutes.use(getPromptRoutes(mulesoftProxy));
+
+  appRoutes.use(getVersionRoutes());
 
   appRoutes.use(getStaticConentRoutes());
 

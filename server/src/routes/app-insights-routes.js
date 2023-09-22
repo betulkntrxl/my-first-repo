@@ -1,9 +1,12 @@
 import express from 'express';
 import { ensureAuthenticated401IfNot } from '../common/auth-helpers.js';
 import { sendEvent, sendTrace } from '../contollers/app-insights-controller.js';
+import { logger } from '../configs/logger-config.js';
 
 const getAppInsightsRoutes = appInsights => {
   const appInsightsRoutes = express.Router();
+
+  logger.info(`Setting up App Insights Routes...`);
 
   // App Insights Events
   appInsightsRoutes.post(
@@ -23,6 +26,8 @@ const getAppInsightsRoutes = appInsights => {
     ensureAuthenticated401IfNot,
     sendTrace(appInsights),
   );
+
+  logger.info(`App Insights Routes setup complete`);
 
   return appInsightsRoutes;
 };
