@@ -1,5 +1,5 @@
 import { createProxyMiddleware, fixRequestBody, responseInterceptor } from 'http-proxy-middleware';
-import { logger } from './logger.js';
+import { logger } from './logger-config.js';
 
 const setupMulesoftProxy = appInsights => {
   logger.info(`Setting up Mulesoft Proxy...`);

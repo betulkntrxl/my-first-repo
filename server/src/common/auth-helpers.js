@@ -1,4 +1,4 @@
-import { logger } from '../configs/logger.js';
+import { logger } from '../configs/logger-config.js';
 
 // Check to see if user is logged in, if not redirect them to login route
 /* eslint-disable */

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import session from 'express-session';
-import { setupRedisClient } from './redis-client.js';
+import { setupRedisClient } from './redis-client-config.js';
 
 const getSessionConfig = () => {
   // Note: HTTPOnly and Secure Flags are set in the Kubernetes Manifest files, annotations on the ingress

@@ -1,5 +1,5 @@
 import oidcMiddleware from '@okta/oidc-middleware';
-import { logger } from './logger.js';
+import { logger } from './logger-config.js';
 
 const setupOktaConfig = () => {
   const { ExpressOIDC } = oidcMiddleware;

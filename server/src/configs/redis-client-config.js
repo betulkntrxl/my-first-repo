@@ -1,6 +1,6 @@
 import redis from 'redis';
 import RedisStore from 'connect-redis';
-import { logger } from './logger.js';
+import { logger } from './logger-config.js';
 
 const setupRedisClient = () => {
   logger.info('Setting up Redis for a distributed session store...');

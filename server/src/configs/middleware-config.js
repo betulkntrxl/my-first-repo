@@ -3,8 +3,8 @@ import morgan from 'morgan';
 import compression from 'compression';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
-import { getSessionConfig } from './session.js';
-import { logger } from './logger.js';
+import { getSessionConfig } from './session-config.js';
+import { logger } from './logger-config.js';
 
 const setupMiddleware = expressWebServer => {
   logger.info('Setting up middleware...');
