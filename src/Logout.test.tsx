@@ -59,7 +59,7 @@ describe('testing the App', () => {
           value: {
             href: 'http://localhost/',
           },
-          writable: true, // possibility to oqverride
+          writable: true, // possibility to override
         });
 
         fireEvent.click(logoutElement);
