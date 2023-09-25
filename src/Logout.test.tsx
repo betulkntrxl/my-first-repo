@@ -46,24 +46,29 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and reset chat and continue', async () => {
+  it('click logout', async () => {
     await act(async () => {
       render(<App />);
 
       await waitFor(() => expect(screen.getByLabelText('logout')).toBeVisible()).then(() => {
         const logoutElement = screen.getByLabelText('logout');
-        // mock window.location.href
-        const url = window.location.href;
+
         // eslint-disable-next-line no-global-assign
         window = Object.create(window);
         Object.defineProperty(window, 'location', {
           value: {
-            href: url,
+            href: 'http://localhost/',
           },
           writable: true, // possibility to override
         });
 
         fireEvent.click(logoutElement);
+        Object.defineProperty(window, 'location', {
+          value: {
+            href: 'http://localhost/',
+          },
+          writable: true, // possibility to override
+        });
 
         expect(logoutElement).toBeTruthy();
       });

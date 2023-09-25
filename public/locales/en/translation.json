@@ -1,0 +1,71 @@
+{
+  "current-language": "En",
+  "background": {
+    "title": "You can ask ChatApp a question using the textbox below. Please keep the following in mind when using this tool:",
+    "bullet1": "McKesson ChatApp is a business safe alternative to the public ChatGPT application. It uses the Azure OpenAI GPT 35 Turbo model which was trained on public internet information through mid 2021 so it will not be aware of current events. It was not trained on any McKesson specific information. It will not give you any useful information on McKesson benefits, policies, etc.",
+    "bullet2": "It can be used to summarize short documents, for writing assistance (generating suggested text for emails, etc.), and asking general questions about publicly available internet information.",
+    "bullet3": "All responses should be quality checked because Large Language Models (LLMs) such as OpenAI’s GPT models can make up facts yet sound truthful. Summarizing and writing assistance are the best uses at this time. Use good judgment before relying on or sharing ChatApp responses as they may not always be accurate. Pressure test and verify that the response seems correct, unbiased, and explainable - does it make sense?",
+    "bullet4": "Any questions asked or data entered will not be used to train or improve the current underlying model or future models.",
+    "bullet5": "During these early learning days, do not rely on these responses without taking additional verification steps for critical business purposes or for decisions with significant impacts (employment/hiring, financial, legal, healthcare applications or decisions, etc.).",
+    "bullet6": "McKesson Security teams and Microsoft will be monitoring all use in this McKesson GPT environment. Anyone using this application expressly consents to such monitoring. If such monitoring reveals possible activity which violates company policy and/or the law, system personnel may provide this information to relevant company legal/ethical channels and/or to law enforcement officials."
+  },
+  "welcome-message": "Hello, I'm the McKesson ChatApp. How can I help?",
+  "type-message": "Type your message here.",
+  "token-count": "TOKEN COUNT",
+  "max-tokens-reached": "  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.",
+  "buttons": {
+    "send": "Send",
+    "reset-chat": "Reset Chat",
+    "logout": "Logout",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "ok": "OK"
+  },
+  "menu": {
+    "title": "Menu",
+    "assistant-setup": {
+      "title": "Assistant Setup",
+      "message-template": {
+        "title": "Message Template",
+        "system-message-template": {
+          "title": "System Message Template",
+          "template1": "Assistant is a large language model trained by OpenAI.",
+          "template2": "as an assistant",
+          "template3": "as a agent understanding the sentiment",
+          "template4": "as a mentor using the Socratic method"
+        }
+      },
+      "system-message": {
+        "title": "System Message",
+        "tooltip": "Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant’s personality, tell it what it should and shouldn’t answer, and tell it how to format responses. There’s no token limit for this section, but it will be included with every API call, so it counts against the overall token limit."
+      }
+    },
+    "configuration": {
+      "title": "Configuration",
+      "temperature": "Temperature",
+      "temperature-tooltip": "Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.",
+      "top_p": "Top_P",
+      "top_p-tooltip": "Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.",
+      "max-tokens": "Max Tokens",
+      "max-tokens-tooltip": "Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.",
+      "past-messages-included": "Past Messages Included",
+      "past-messages-included-tooltip": "Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.",
+      "api-timeout": "API Timeout",
+      "api-timeout-tooltip": "API Timeout is the maximum amount of time allowed for the API to respond to a request. If the API takes longer than the specified timeout period to respond, the request will be terminated. This may need to be increased for complex prompts as the Azure OpenAI API can take time to process the request."
+    },
+    "about": "About",
+    "version": "Version"
+  },
+  "popup-messages": {
+    "reset-chat-header": "Reset Chat",
+    "reset-chat-body": "This will reset your chat session. Do you want to continue?",
+    "session-expired-header": "Session Expired",
+    "session-expired-body": "Your session has expired.\nTo continue, your chat session will be reset. Do you want to continue?",
+    "unexpected-error-header": "Unexpected Error",
+    "unexpected-error-body": "An error has occured. The server may be busy.\nPlease try again at a later time.",
+    "api-timeout-header": "API Timeout",
+    "api-timeout-body": "Is your question complex? If so the API could take a bit more time to respond.\nYou can increase the API Timeout in the Configuration Menu.",
+    "server-busy-header": "Server is busy",
+    "server-busy-body": "The server is currently busy.\nPlease try again at a later time."
+  }
+}

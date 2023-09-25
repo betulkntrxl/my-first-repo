@@ -46,7 +46,7 @@ describe('testing the App', () => {
   it('renders a Token Count', async () => {
     await act(async () => {
       render(<App />);
-      const tokenCount = screen.getByText(/Token Count:/);
+      const tokenCount = screen.getByRole('button', { name: 'token-count: 0' });
       expect(tokenCount).toBeTruthy();
     });
   });

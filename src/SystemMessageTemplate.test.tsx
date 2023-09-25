@@ -44,7 +44,7 @@ describe('testing the App', () => {
         });
 
         act(() => {
-          fireEvent.click(screen.getByText('as an assistant'));
+          fireEvent.click(screen.getByLabelText('template1'));
         });
         expect(systemMessageTemplate).toBeTruthy();
       });

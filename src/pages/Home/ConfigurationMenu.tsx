@@ -1,6 +1,7 @@
 import { Grid, Slider, TextField, Tooltip, Typography } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ConfigurationMenu = (props: {
   temperature: number;
@@ -14,6 +15,7 @@ const ConfigurationMenu = (props: {
   handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
   APITimeout: number;
 }) => {
+  const { t } = useTranslation();
   const {
     temperature,
     handleTemperatureChange,
@@ -95,8 +97,8 @@ const ConfigurationMenu = (props: {
         id="temperature-input-label"
         style={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif', color: 'dimgray' }}
       >
-        Temperature:{' '}
-        <Tooltip title="Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.">
+        {t('menu.configuration.temperature')}:{' '}
+        <Tooltip title={t('menu.configuration.temperature-tooltip')}>
           <InfoOutlinedIcon />
         </Tooltip>
       </Typography>
@@ -135,8 +137,8 @@ const ConfigurationMenu = (props: {
         </Grid>
       </Grid>
       <Typography id="topp-input-label" style={{ color: 'dimgray' }}>
-        Top_P:{' '}
-        <Tooltip title="Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.">
+        {t('menu.configuration.top_p')}:{' '}
+        <Tooltip title={t('menu.configuration.top_p-tooltip')}>
           <InfoOutlinedIcon />
         </Tooltip>
       </Typography>
@@ -172,8 +174,8 @@ const ConfigurationMenu = (props: {
         </Grid>
       </Grid>
       <Typography id="maxtokens-input-label" style={{ color: 'dimgray' }}>
-        Max Tokens:{' '}
-        <Tooltip title="Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.">
+        {t('menu.configuration.max-tokens')}:{' '}
+        <Tooltip title={t('menu.configuration.max-tokens-tooltip')}>
           <InfoOutlinedIcon />
         </Tooltip>
       </Typography>
@@ -210,8 +212,8 @@ const ConfigurationMenu = (props: {
       </Grid>
       <>
         <Typography id="pastmessages-input-label" style={{ color: 'dimgray' }}>
-          Past messages included:{' '}
-          <Tooltip title="Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.">
+          {t('menu.configuration.past-messages-included')}:{' '}
+          <Tooltip title={t('menu.configuration.past-messages-included-tooltip')}>
             <InfoOutlinedIcon />
           </Tooltip>
         </Typography>
@@ -249,8 +251,8 @@ const ConfigurationMenu = (props: {
       </>
       <>
         <Typography id="apitimeout-input-label" style={{ color: 'dimgray' }}>
-          API Timeout:{' '}
-          <Tooltip title="API Timeout is the maximum amount of time allowed for the API to respond to a request. If the API takes longer than the specified timeout period to respond, the request will be terminated. This may need to be increased for complex prompts as the Azure OpenAI API can take time to process the request.">
+          {t('menu.configuration.api-timeout')}:{' '}
+          <Tooltip title={t('menu.configuration.api-timeout-tooltip')}>
             <InfoOutlinedIcon />
           </Tooltip>
         </Typography>
