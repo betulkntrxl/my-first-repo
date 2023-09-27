@@ -20,7 +20,7 @@
     "@types/node": "^20.7.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^17.0.14",
-    "axios": "^1.4.0",
+    "axios": "^1.5.1",
     "i18next": "^23.5.1",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
