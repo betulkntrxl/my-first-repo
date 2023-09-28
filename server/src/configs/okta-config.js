@@ -11,7 +11,7 @@ const setupOktaConfig = () => {
     client_id: process.env.OKTA_CLIENT_ID,
     client_secret: process.env.OKTA_CLIENT_SECRET,
     appBaseUrl: process.env.OKTA_BASE_URL,
-    scope: 'openid profile email',
+    scope: 'openid profile email ChatApp_groups',
     routes: {
       login: {
         path: '/api/auth/login',

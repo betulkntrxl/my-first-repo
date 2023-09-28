@@ -9,12 +9,11 @@ const addPromptHeaders = (req, res, next) => {
   if (process.env.ALLOW_TEST_USER === 'true' && req.header('TEST_USER_API_KEY')) {
     logger.info('using fake email for test user');
     req.headers.urn = 'test-user@mckesson.com';
+    req.headers.bu = 'McKesson Corporate';
   } else {
     req.headers.urn = req.userContext.userinfo.email || req.userContext.userinfo.preferred_username;
+    req.headers.bu = req.userContext.userinfo.company;
   }
-
-  // TODO: Need to figure out how to get the BU for the user
-  req.headers.bu = '';
 
   next();
 };
