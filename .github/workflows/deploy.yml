@@ -40,6 +40,7 @@ jobs:
         MULESOFT_OPENAI_CLIENT_SECRET: ${{ secrets.MULESOFT_OPENAI_CLIENT_SECRET }}
         OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
         OKTA_CLIENT_SECRET: ${{ secrets.OKTA_CLIENT_SECRET }}
+        OKTA_ISSUER: ${{ secrets.OKTA_ISSUER }}
         EXPRESS_SESSION_SECRET: ${{ secrets.EXPRESS_SESSION_SECRET }}
         REDIS_HOST: ${{ secrets.REDIS_HOST }}
         REDIS_KEY: ${{ secrets.REDIS_KEY }}
