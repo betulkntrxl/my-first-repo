@@ -2,12 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { useTranslation } from 'react-i18next';
+import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
 
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
 import ContinueCancelDialog from './ContinueCancelDialog';
 import OKDialog from './OkDialog';
+
+const { isWithinTokenLimit } = require('gpt-tokenizer/model/gpt-3.5-turbo-0301');
 
 export interface DialogTitleProps {
   id: string;
@@ -62,6 +65,7 @@ const Home = () => {
   const [openAPIRateLimit, setOpenAPIRateLimit] = React.useState(false);
   const [openAPITimeout, setOpenAPITimeout] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
+  const [openInputTooLarge, setOpenInputTooLarge] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
     // Tracking in app insights
@@ -156,6 +160,23 @@ const Home = () => {
 
   const handleAPIErrorClose = () => {
     setOpenAPIError(false);
+    // enable send box
+    setDisabledBool(false);
+    setDisabledInput(false);
+  };
+
+  const handleInputTooLargeOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Input Too Large',
+      severity: 3, // Error
+    });
+
+    setOpenInputTooLarge(true);
+  };
+
+  const handleInputTooLargeClose = () => {
+    setOpenInputTooLarge(false);
     // enable send box
     setDisabledBool(false);
     setDisabledInput(false);
@@ -424,6 +445,25 @@ const Home = () => {
     event.preventDefault();
     setDisabledInput(true);
     setDisabledBool(true);
+
+    const messageToSend = data.chatsession;
+
+    const newmessage =
+      [...messages].length > pastMessages + 1 ? [...messages].slice(3) : [...messages].slice(1);
+
+    const chat = [
+      { role: 'system', content: systemMessageValue },
+      ...newmessage,
+      { role: 'user', content: messageToSend },
+    ];
+
+    const withinTokenLimit = isWithinTokenLimit(chat as ChatMessage[], 4000);
+
+    if (!withinTokenLimit) {
+      handleInputTooLargeOpen();
+      return;
+    }
+
     // display user message while waiting for response
     setMessagesDisplay([
       ...messagesDisplay,
@@ -575,6 +615,15 @@ const Home = () => {
           openDialog: openAPIRateLimit,
           headerText: t('popup-messages.server-busy-header'),
           bodyText: t('popup-messages.server-busy-body'),
+        }}
+      />
+
+      <OKDialog
+        {...{
+          handleClose: handleInputTooLargeClose,
+          openDialog: openInputTooLarge,
+          headerText: t('popup-messages.input-too-large-header'),
+          bodyText: t('popup-messages.input-too-large-body'),
         }}
       />
     </div>
