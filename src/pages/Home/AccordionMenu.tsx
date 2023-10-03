@@ -1,6 +1,7 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ConfigurationMenu from './ConfigurationMenu';
 import AssistantSetupMenu from './AssistantSetupMenu';
@@ -19,6 +20,7 @@ const AccordionMenu = (propsAccordianMenu: {
   handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
   APITimeout: number;
 }) => {
+  const { t } = useTranslation();
   const {
     temperature,
     handleTemperatureChange,
@@ -114,7 +116,7 @@ const AccordionMenu = (propsAccordianMenu: {
               id="panel1a-header"
             >
               <Typography style={{ color: '#007BC7', fontFamily: 'Arial' }}>
-                Assistant Setup
+                {t('menu.assistant-setup.title')}
               </Typography>
             </AccordionSummary>
           </ThemeProvider>

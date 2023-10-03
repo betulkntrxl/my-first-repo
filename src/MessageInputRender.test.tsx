@@ -46,7 +46,7 @@ describe('testing the App', () => {
   it('renders a Message input', async () => {
     await act(async () => {
       render(<App />);
-      const textareaNode = screen.getByPlaceholderText('Type your message here.');
+      const textareaNode = screen.getByRole('textbox', { name: 'sendmessage' });
       expect(textareaNode).toBeTruthy();
     });
   });

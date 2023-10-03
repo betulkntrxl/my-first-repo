@@ -1,0 +1,71 @@
+{
+  "current-language": "Fr",
+  "background": {
+    "title": "Vous pouvez poser une question à ChatApp en utilisant la zone de texte ci-dessous. Veuillez garder à l'esprit les points suivants lorsque vous utilisez cet outil:",
+    "bullet1": "McKesson ChatApp est une alternative professionnelle sécurisée à l’application publique ChatGPT. Il utilise le modèle Azure OpenAI GPT 35 Turbo qui a été formé sur les informations publiques sur Internet jusqu’à la mi-2021 afin qu’il ne soit pas au courant des événements actuels. Il n’a été formé sur aucune information spécifique à McKesson. Il ne vous donnera aucune information utile sur les avantages, les politiques, etc. de McKesson.",
+    "bullet2": "Il peut être utilisé pour résumer de courts documents, pour aider à la rédaction (générer des suggestions de texte pour les e-mails, etc.) et poser des questions générales sur les informations accessibles au public sur Internet.",
+    "bullet3": "La qualité de toutes les réponses doit être vérifiée, car les grands modèles linguistiques (LLM) tels que les modèles GPT d’OpenAI peuvent inventer des faits tout en semblant véridiques. La synthèse et l’aide à la rédaction sont les meilleures utilisations en ce moment. Faites preuve de discernement avant de vous fier ou de partager les réponses de ChatApp, car elles peuvent ne pas toujours être exactes. Vérifiez que la réponse semble correcte, impartiale et explicable - est-ce logique?",
+    "bullet4": "Les questions posées ou les données saisies ne seront pas utilisées pour entrainer ou améliorer le modèle sous-jacent actuel ou les modèles futurs.",
+    "bullet5": "Pendant la période initiale d'apprentissage et lors d’utilisation à des fins commerciales critiques ou pour supporter des décisions ayant des impacts significatifs (emploi/embauche, finances, juridiques, demandes ou décisions de soins de santé, etc.) ne vous fiez pas à ces réponses sans prendre des mesures de vérification supplémentaires.",
+    "bullet6": "Les équipes de McKesson Security et Microsoft surveilleront toute utilisation dans cet environnement McKesson GPT. Toute personne utilisant cette application consent expressément à une telle surveillance. Si une telle surveillance révèle une activité possible qui viole les politiques de l'entreprise et/ou la loi, le gestionnaire du système peut fournir ces informations aux instances juridiques/éthiques de l'entreprise et/ou aux responsables de l'application des lois."
+  },
+  "welcome-message": "Bonjour, je suis McKesson ChatApp. Comment puis-je vous aider?",
+  "type-message": "Saisirez votre message ici.",
+  "token-count": "NOMBRE DE JETONS",
+  "max-tokens-reached": "  ** coupure de texte? augmenter le nombre maximum de jetons dans le menu",
+  "buttons": {
+    "send": "Envoyer",
+    "reset-chat": "Réinitialiser",
+    "logout": "Déconnexion",
+    "cancel": "Annuler",
+    "continue": "Continuer",
+    "ok": "d'accord"
+  },
+  "menu": {
+    "title": "Menu",
+    "assistant-setup": {
+      "title": "Configuration de l'assistant",
+      "message-template": {
+        "title": "Modèle de message",
+        "system-message-template": {
+          "title": "Modèle de message système",
+          "template1": "Assistant est un grand modèle de langage formé par OpenAI.",
+          "template2": "en tant qu'assistant",
+          "template3": "en tant qu'agent comprenant le sentiment",
+          "template4": "en tant que mentor en utilisant la méthode socratique"
+        }
+      },
+      "system-message": {
+        "title": "Message systèm",
+        "tooltip": "Donnez au modèle des instructions sur la façon dont il doit se comporter et tout contexte auquel il doit faire référence lors de la génération d'une réponse. Vous pouvez décrire la personnalité de l'assistant, lui dire ce qu'il doit et ne doit pas répondre, et lui dire comment formater les réponses. Il n'y a pas de limite de jetons pour cette section, mais elle sera incluse avec chaque appel d'API, elle compte donc dans la limite globale de jetons."
+      }
+    },
+    "configuration": {
+      "title": "Configuration",
+      "temperature": "Température",
+      "temperature-tooltip": "Contrôle le caractère aléatoire. L'abaissement de la température signifie que le modèle produira des réponses plus répétitives et déterministes. L'augmentation de la température entraînera des réponses plus inattendues ou créatives. Essayez de régler la température ou Top P, mais pas les deux.",
+      "top_p": "Top_P",
+      "top_p-tooltip": "Semblable à la température, cela contrôle le caractère aléatoire mais utilise une méthode différente. Abaisser Top P réduira la sélection de jetons du modèle à des jetons plus probables. L'augmentation de Top P permettra au modèle de choisir parmi des jetons à probabilité élevée et faible. Essayez de régler la température ou Top P, mais pas les deux.",
+      "max-tokens": "Jetons maximum",
+      "max-tokens-tooltip": "Définissez une limite sur le nombre de jetons par réponse de modèle. L'API prend en charge un maximum de 4 000 jetons partagés entre l'invite (y compris le message système, les exemples, l'historique des messages et la requête de l'utilisateur) et la réponse du modèle. Un jeton correspond à environ 4 caractères pour un texte anglais typique.",
+      "past-messages-included": "Messages passés inclus",
+      "past-messages-included-tooltip": "Sélectionnez le nombre de messages passés à inclure dans chaque nouvelle demande d'API. Cela permet de donner au modèle un contexte pour les nouvelles requêtes des utilisateurs. La définition de ce nombre sur 10 inclura 5 requêtes utilisateur et 5 réponses système.",
+      "api-timeout": "Délai d'expiration de l'API",
+      "api-timeout-tooltip": "Le délai d'expiration de l'API est le délai maximal accordé à l'API pour répondre à une requête. Si l'API prend plus de temps que le délai d'expiration spécifié pour répondre, la demande sera interrompue. Cela peut devoir être augmenté pour les invites complexes car l'API Azure OpenAI peut prendre du temps pour traiter la demande."
+    },
+    "about": "À propos",
+    "version": "Version"
+  },
+  "popup-messages": {
+    "reset-chat-header": "Réinitialiser le chat",
+    "reset-chat-body": "Cela réinitialisera votre session de discussion. Voulez-vous continuer?",
+    "session-expired-header": "La session a expiré",
+    "session-expired-body": "Votre session a expiré.\nPour continuer, votre session de chat sera réinitialisée. Voulez-vous continuer?",
+    "unexpected-error-header": "Erreur inattendue",
+    "unexpected-error-body": "Une erreur est survenue. Le serveur est peut-être occupé.\nVeuillez réessayer ultérieurement.",
+    "api-timeout-header": "Délai d'expiration de l'API",
+    "api-timeout-body": "Votre question est complexe ? Si tel est le cas, l'API peut prendre un peu plus de temps pour répondre.\nVous pouvez augmenter le délai d'expiration de l'API dans le menu de configuration.",
+    "server-busy-header": "Le serveur est occupé",
+    "server-busy-body": "Le serveur est actuellement occupé.\nVeuillez réessayer ultérieurement."
+  }
+}
