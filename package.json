@@ -39,7 +39,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "cloud-build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/?!(gpt-tokenizer)/'",
     "eject": "react-scripts eject",
     "lint": "eslint --fix --ext .ts,.tsx src/",
     "lint:check": "eslint --ext .ts,.tsx src/",

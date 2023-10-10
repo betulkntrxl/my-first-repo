@@ -3,14 +3,13 @@ import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { useTranslation } from 'react-i18next';
 import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
+import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
 
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
 import ContinueCancelDialog from './ContinueCancelDialog';
 import OKDialog from './OkDialog';
-
-const { isWithinTokenLimit } = require('gpt-tokenizer/model/gpt-3.5-turbo-0301');
 
 export interface DialogTitleProps {
   id: string;
