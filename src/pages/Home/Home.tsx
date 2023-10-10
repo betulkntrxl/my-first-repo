@@ -19,6 +19,8 @@ export interface DialogTitleProps {
 
 const Home = () => {
   const { t } = useTranslation();
+  const MAX_INPUT_TOKENS_3_5_TURBO = 4000;
+  const MAX_INPUT_TOKENS = MAX_INPUT_TOKENS_3_5_TURBO;
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
   const DEFAULT_MAX_TOKENS = 2000;
@@ -456,7 +458,7 @@ const Home = () => {
       { role: 'user', content: messageToSend },
     ];
 
-    const withinTokenLimit = isWithinTokenLimit(chat as ChatMessage[], 4000);
+    const withinTokenLimit = isWithinTokenLimit(chat as ChatMessage[], MAX_INPUT_TOKENS);
 
     if (!withinTokenLimit) {
       handleInputTooLargeOpen();
