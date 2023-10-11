@@ -66,6 +66,8 @@
     "api-timeout-header": "API Timeout",
     "api-timeout-body": "Is your question complex? If so the API could take a bit more time to respond.\nYou can increase the API Timeout in the Configuration Menu.",
     "server-busy-header": "Server is busy",
-    "server-busy-body": "The server is currently busy.\nPlease try again at a later time."
+    "server-busy-body": "The server is currently busy.\nPlease try again at a later time.",
+    "input-too-large-header": "Input too large",
+    "input-too-large-body": "The input you have entered is too large, the max is 4000 tokens which is roughly 3000 words, past messages are included in the input"
   }
 }
