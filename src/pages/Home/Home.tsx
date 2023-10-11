@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { useTranslation } from 'react-i18next';
+import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
+import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
+import { isChrome, isEdge } from 'react-device-detect';
 
 import Menu from './Menu';
 import Messages from './Messages';
@@ -17,6 +20,8 @@ export interface DialogTitleProps {
 
 const Home = () => {
   const { t } = useTranslation();
+  const MAX_INPUT_TOKENS_3_5_TURBO = 4000;
+  const MAX_INPUT_TOKENS = MAX_INPUT_TOKENS_3_5_TURBO;
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
   const DEFAULT_MAX_TOKENS = 2000;
@@ -62,6 +67,7 @@ const Home = () => {
   const [openAPIRateLimit, setOpenAPIRateLimit] = React.useState(false);
   const [openAPITimeout, setOpenAPITimeout] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
+  const [openInputTooLarge, setOpenInputTooLarge] = React.useState(false);
 
   const handleResetChatSessionOpen = () => {
     // Tracking in app insights
@@ -161,6 +167,23 @@ const Home = () => {
     setDisabledInput(false);
   };
 
+  const handleInputTooLargeOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: 'ChatApp Input Too Large',
+      severity: 3, // Error
+    });
+
+    setOpenInputTooLarge(true);
+  };
+
+  const handleInputTooLargeClose = () => {
+    setOpenInputTooLarge(false);
+    // enable send box
+    setDisabledBool(false);
+    setDisabledInput(false);
+  };
+
   const handleTemperatureChange = (event: Event, newValue: number | number[]): void => {
     setTemperature(newValue as number);
   };
@@ -189,20 +212,22 @@ const Home = () => {
     });
 
     const AUTH_INTERVAL = setInterval(async () => {
-      // Because the cookie is a HTTPOnly cookie it means the react app can't access
-      // the cookie to check if it exists, a workaround for this is
-      // to try set a cookie with the same name, if the cookie exists after
-      // setting the cookie then we know the cookie didn't exist in the first place
-      const DATE = new Date();
-      DATE.setTime(DATE.getTime() + 1000);
-      const EXPIRES = `expires=${DATE.toUTCString()}`;
-      const COOKIE_NAME = 'mt-openai-chat';
-      document.cookie = `${COOKIE_NAME}=new_value;path=/;${EXPIRES}`;
+      if (isChrome || isEdge) {
+        // Because the cookie is a HTTPOnly cookie it means the react app can't access
+        // the cookie to check if it exists, a workaround for this is
+        // to try set a cookie with the same name, if the cookie exists after
+        // setting the cookie then we know the cookie didn't exist in the first place
+        const DATE = new Date();
+        DATE.setTime(DATE.getTime() + 1000);
+        const EXPIRES = `expires=${DATE.toUTCString()}`;
+        const COOKIE_NAME = 'mt-openai-chat';
+        document.cookie = `${COOKIE_NAME}=new_value;path=/;${EXPIRES}`;
 
-      const doesCookieExist = document.cookie.indexOf(`${COOKIE_NAME}=`) === -1;
+        const doesCookieExist = document.cookie.indexOf(`${COOKIE_NAME}=`) === -1;
 
-      if (!doesCookieExist) {
-        handleSessionExpiredOpen();
+        if (!doesCookieExist) {
+          handleSessionExpiredOpen();
+        }
       }
     }, 30000); // every 30 seconds check if the user is authenticated
     return () => {
@@ -427,6 +452,25 @@ const Home = () => {
     event.preventDefault();
     setDisabledInput(true);
     setDisabledBool(true);
+
+    const messageToSend = data.chatsession;
+
+    const newmessage =
+      [...messages].length > pastMessages + 1 ? [...messages].slice(3) : [...messages].slice(1);
+
+    const chat = [
+      { role: 'system', content: systemMessageValue },
+      ...newmessage,
+      { role: 'user', content: messageToSend },
+    ];
+
+    const withinTokenLimit = isWithinTokenLimit(chat as ChatMessage[], MAX_INPUT_TOKENS);
+
+    if (!withinTokenLimit) {
+      handleInputTooLargeOpen();
+      return;
+    }
+
     // display user message while waiting for response
     setMessagesDisplay([
       ...messagesDisplay,
@@ -578,6 +622,15 @@ const Home = () => {
           openDialog: openAPIRateLimit,
           headerText: t('popup-messages.server-busy-header'),
           bodyText: t('popup-messages.server-busy-body'),
+        }}
+      />
+
+      <OKDialog
+        {...{
+          handleClose: handleInputTooLargeClose,
+          openDialog: openInputTooLarge,
+          headerText: t('popup-messages.input-too-large-header'),
+          bodyText: t('popup-messages.input-too-large-body'),
         }}
       />
     </div>

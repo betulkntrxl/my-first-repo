@@ -66,6 +66,8 @@
     "api-timeout-header": "Délai d'expiration de l'API",
     "api-timeout-body": "Votre question est complexe ? Si tel est le cas, l'API peut prendre un peu plus de temps pour répondre.\nVous pouvez augmenter le délai d'expiration de l'API dans le menu de configuration.",
     "server-busy-header": "Le serveur est occupé",
-    "server-busy-body": "Le serveur est actuellement occupé.\nVeuillez réessayer ultérieurement."
+    "server-busy-body": "Le serveur est actuellement occupé.\nVeuillez réessayer ultérieurement.",
+    "input-too-large-header": "Entrée trop grande",
+    "input-too-large-body": "L'entrée que vous avez saisie est trop grande, le maximum est de 4000 jetons, soit environ 2500 mots, les messages passés sont inclus dans l'entrée"
   }
 }
