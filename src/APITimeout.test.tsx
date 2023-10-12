@@ -12,7 +12,7 @@ function wait(milliseconds: number | undefined) {
 }
 
 const server = setupServer(
-  rest.post('/api/prompt', (req, res, ctx) => {
+  rest.post('/api/prompt/35turbo', (req, res, ctx) => {
     wait(11000);
     return res(ctx.json({ greeting: "I'm late" }));
   }),

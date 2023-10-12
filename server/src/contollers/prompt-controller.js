@@ -1,5 +1,22 @@
 import { logger } from '../configs/logger-config.js';
 
+/* eslint-disable */
+const checkIfUserIsAuthorizedForGPT4 = (req, res, next) => {
+  logger.info(`Checking if user is authorized for GPT4...`);
+
+  const userChatAppGroups = req.userContext.userinfo.ChatApp_groups;
+
+  if (!userChatAppGroups.includes(`mt-mckesson-chatapp-gpt4-${process.env.DEPLOY_STAGE}`)) {
+    logger.info(`User is not authorized to use GPT4`);
+    return res.status(403).send('User is authorized to use GPT4');
+  }
+
+  logger.info(`User is authorized to use GPT4`);
+
+  next();
+};
+/* eslint-enable */
+
 const addPromptHeaders = (req, res, next) => {
   logger.info(`Adding required and optional headers to http request to Mulesoft...`);
 
@@ -18,4 +35,4 @@ const addPromptHeaders = (req, res, next) => {
   next();
 };
 
-export { addPromptHeaders };
+export { checkIfUserIsAuthorizedForGPT4, addPromptHeaders };

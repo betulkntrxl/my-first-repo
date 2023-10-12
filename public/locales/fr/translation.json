@@ -61,6 +61,8 @@
     "reset-chat-body": "Cela réinitialisera votre session de discussion. Voulez-vous continuer?",
     "session-expired-header": "La session a expiré",
     "session-expired-body": "Votre session a expiré.\nPour continuer, votre session de chat sera réinitialisée. Voulez-vous continuer?",
+    "not-authorized-header": "Pas autorisé",
+    "not-authorized-body": "Vous n'êtes pas autorisé à utiliser ce modèle",
     "unexpected-error-header": "Erreur inattendue",
     "unexpected-error-body": "Une erreur est survenue. Le serveur est peut-être occupé.\nVeuillez réessayer ultérieurement.",
     "api-timeout-header": "Délai d'expiration de l'API",

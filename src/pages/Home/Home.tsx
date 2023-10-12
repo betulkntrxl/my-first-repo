@@ -22,12 +22,14 @@ const Home = () => {
   const { t } = useTranslation();
   const MAX_INPUT_TOKENS_3_5_TURBO = 4000;
   const MAX_INPUT_TOKENS = MAX_INPUT_TOKENS_3_5_TURBO;
+  const DEFAULT_MODEL = '35turbo';
   const DEFAULT_TEMPERATURE = 0.7;
   const DEFAULT_TOP_P = 0.95;
   const DEFAULT_MAX_TOKENS = 2000;
   const DEFAULT_PAST_MESSAGES = 10;
   const DEFAULT_API_TIMEOUT = 10;
   const [data, setData] = useState({ chatsession: '', response: '' });
+  const [model, setModel] = useState(DEFAULT_MODEL);
   const [visible, setVisible] = useState(true);
   const [temperature, setTemperature] = useState<number>(DEFAULT_TEMPERATURE);
   const [topP, setTopP] = useState(DEFAULT_TOP_P);
@@ -64,6 +66,7 @@ const Home = () => {
   const [messagesDisplay, setMessagesDisplay] = useState(conversationDisplay);
   const [openResetChatSession, setOpenResetChatSession] = React.useState(false);
   const [openSessionExpired, setOpenSessionExpired] = React.useState(false);
+  const [openNotAuthorized, setOpenNotAuthorized] = React.useState(false);
   const [openAPIRateLimit, setOpenAPIRateLimit] = React.useState(false);
   const [openAPITimeout, setOpenAPITimeout] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
@@ -104,6 +107,23 @@ const Home = () => {
 
   const handleSessionExpiredClose = () => {
     setOpenSessionExpired(false);
+    // enable send box
+    setDisabledBool(false);
+    setDisabledInput(false);
+  };
+
+  const handleNotAuthorizedOpen = () => {
+    // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: `ChatApp Not Authorized for model ${model}`,
+      severity: 3, // Error
+    });
+
+    setOpenNotAuthorized(true);
+  };
+
+  const handleNotAuthorizedClose = () => {
+    setOpenNotAuthorized(false);
     // enable send box
     setDisabledBool(false);
     setDisabledInput(false);
@@ -270,7 +290,7 @@ const Home = () => {
 
         return (
           // Only retry on prompt requests with specific error status
-          ERROR_URL === '/api/prompt' &&
+          ERROR_URL.includes('/api/prompt') &&
           HTTP_METHOD === 'post' &&
           (axiosRetry.isNetworkOrIdempotentRequestError(error) ||
             // Retry on ChatApp timeout
@@ -324,7 +344,7 @@ const Home = () => {
 
     await axios
       .post(
-        '/api/prompt',
+        `/api/prompt/${model}`,
         {
           messages: [
             { role: 'system', content: systemMessageValue },
@@ -397,6 +417,17 @@ const Home = () => {
             ]);
 
             handleSessionExpiredOpen();
+          }
+          // Authorization error
+          if (error.response.status === 403) {
+            // turn off typing animation
+            setVisible(false);
+            setMessagesDisplay([
+              ...messagesDisplay,
+              { role: 'user', content: data.chatsession, id: data.chatsession },
+            ]);
+
+            handleNotAuthorizedOpen();
           }
           // Rate Limit error
           else if (error.response.status === 429) {
@@ -595,6 +626,15 @@ const Home = () => {
           handleContinue: handleSessionExpiredContinue,
           headerText: t('popup-messages.session-expired-header'),
           bodyText: t('popup-messages.session-expired-body'),
+        }}
+      />
+
+      <OKDialog
+        {...{
+          handleClose: handleNotAuthorizedClose,
+          openDialog: openNotAuthorized,
+          headerText: t('popup-messages.not-authorized-header'),
+          bodyText: t('popup-messages.not-authorized-body'),
         }}
       />
 

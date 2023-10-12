@@ -7,7 +7,7 @@ import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
-  rest.post('/api/prompt', (req, res, ctx) =>
+  rest.post('/api/prompt/35turbo', (req, res, ctx) =>
     res(
       ctx.json({ errorMessage: 'User is not logged in, authenticate path is /api/auth/login' }),
       ctx.status(401),

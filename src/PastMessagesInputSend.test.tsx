@@ -11,7 +11,7 @@ const server = setupServer(
   rest.get('/get', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
   rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
-  rest.post('/api/prompt', (req, res, ctx) =>
+  rest.post('/api/prompt/35turbo', (req, res, ctx) =>
     res(
       ctx.json({
         id: 'chatcmpl-7gQM4JDiQa2Dc4dErFzWLnTfD0dYR',

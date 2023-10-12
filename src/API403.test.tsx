@@ -7,7 +7,7 @@ import App from './App';
 
 const server = setupServer(
   rest.post('/api/prompt/35turbo', (req, res, ctx) =>
-    res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(500)),
+    res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(403)),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
   rest.get('/get', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
@@ -22,7 +22,7 @@ afterAll(() => server.close());
 describe('testing the App', () => {
   afterEach(cleanup);
 
-  it('sends a message and returns API error', async () => {
+  it('sends a message and returns 403 API error', async () => {
     await act(async () => {
       render(<App />);
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {

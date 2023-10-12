@@ -6,7 +6,7 @@ import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
-  rest.post('/api/prompt', (req, res, ctx) =>
+  rest.post('/api/prompt/35turbo', (req, res, ctx) =>
     res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(500)),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
