@@ -4,7 +4,7 @@ import axiosRetry from 'axios-retry';
 import { useTranslation } from 'react-i18next';
 import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
 import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
-import { isChrome, isEdge } from 'react-device-detect';
+import { isChrome, isEdge, getUA } from 'react-device-detect';
 
 import Menu from './Menu';
 import Messages from './Messages';
@@ -226,6 +226,11 @@ const Home = () => {
 
   useEffect(() => {
     // Tracking in app insights
+    axios.post('/api/app-insights-trace', {
+      message: `ChatApp Browser Details ${getUA}`,
+      severity: 1, // Informational
+    });
+
     axios.post('/api/app-insights-trace', {
       message: `ChatApp default language set to ${t('current-language').toLowerCase()}`,
       severity: 1, // Information
