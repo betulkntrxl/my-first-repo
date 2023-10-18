@@ -66,7 +66,7 @@ const Messages = (props: {
               fontFamily: 'arial',
             }}
           >
-            <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
+            <div style={{ fontSize: 14, textAlign: 'center', margin: 5 }}>
               {t('background.title')}
               <br />
               <br />
@@ -77,6 +77,8 @@ const Messages = (props: {
                 <li>{t('background.bullet4')}</li>
                 <li>{t('background.bullet5')}</li>
                 <li>{t('background.bullet6')}</li>
+                <li>{t('background.bullet7')}</li>
+                <li>{t('background.bullet8')}</li>
               </ul>
             </div>
           </div>
