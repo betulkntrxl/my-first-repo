@@ -36,7 +36,7 @@ const Messages = (props: {
       sx={{ Width: '100%' }}
       style={{
         position: 'fixed',
-        top: 40,
+        top: 80,
         left: 0,
         right: 0,
         bottom: 110,
@@ -66,7 +66,7 @@ const Messages = (props: {
               fontFamily: 'arial',
             }}
           >
-            <div style={{ fontSize: 14, textAlign: 'center', margin: 30 }}>
+            <div style={{ fontSize: 14, textAlign: 'center', margin: 5 }}>
               {t('background.title')}
               <br />
               <br />
