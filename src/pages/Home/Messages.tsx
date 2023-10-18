@@ -36,7 +36,7 @@ const Messages = (props: {
       sx={{ Width: '100%' }}
       style={{
         position: 'fixed',
-        top: 80,
+        top: 40,
         left: 0,
         right: 0,
         bottom: 110,
@@ -77,6 +77,8 @@ const Messages = (props: {
                 <li>{t('background.bullet4')}</li>
                 <li>{t('background.bullet5')}</li>
                 <li>{t('background.bullet6')}</li>
+                <li>{t('background.bullet7')}</li>
+                <li>{t('background.bullet8')}</li>
               </ul>
             </div>
           </div>
