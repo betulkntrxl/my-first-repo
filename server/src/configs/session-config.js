@@ -1,22 +1,8 @@
-import express from 'express';
-import morgan from 'morgan';
-import compression from 'compression';
-import helmet from 'helmet';
-import bodyParser from 'body-parser';
 import { v4 as uuidv4 } from 'uuid';
 import session from 'express-session';
 import { setupRedisClient } from './redis-client-config.js';
-import { logger } from './logger.js';
 
-export const setupMiddleware = expressWebServer => {
-  logger.info('Setting up middleware...');
-
-  expressWebServer.use(compression());
-  expressWebServer.use(helmet());
-  expressWebServer.disable('x-powered-by');
-  expressWebServer.use(morgan(':date[clf] ":method :url"'));
-  expressWebServer.use(bodyParser.json({ limit: '500kb' }));
-
+const getSessionConfig = () => {
   // Note: HTTPOnly and Secure Flags are set in the Kubernetes Manifest files, annotations on the ingress
   const sessionOptions = {
     name: 'mt-openai-chat',
@@ -37,10 +23,7 @@ export const setupMiddleware = expressWebServer => {
     sessionOptions.store = setupRedisClient();
   }
 
-  // Setup auth session
-  expressWebServer.use(session(sessionOptions));
-
-  expressWebServer.use(express.urlencoded({ extended: false }));
-
-  logger.info('Middleware setup complete');
+  return session(sessionOptions);
 };
+
+export { getSessionConfig };

@@ -2,7 +2,7 @@ import winston from 'winston';
 
 const { combine, timestamp, printf, colorize, align } = winston.format;
 
-export const logger = winston.createLogger({
+const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'debug',
   format: combine(
     colorize({ all: true }),
@@ -10,7 +10,9 @@ export const logger = winston.createLogger({
       format: 'YYYY-MM-DD hh:mm:ss.SSS Z',
     }),
     align(),
-    printf(info => `[${info.timestamp}] ${info.level}: ${info.message}`)
+    printf(info => `[${info.timestamp}] ${info.level}: ${info.message}`),
   ),
   transports: [new winston.transports.Console()],
 });
+
+export { logger };
