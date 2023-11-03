@@ -205,15 +205,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(document.location.search);
-    // If user click on the ChatApp tile in the OKTA Dashboard
-    // Then Okta adds an iss query parameter
-    // It doesn't look great so refreshing the page to remove it
-    if (searchParams.get('iss')) {
-      // refresh the page
-      window.location.href = '/';
-    }
-
     // Tracking in app insights
     axios.post('/api/app-insights-trace', {
       message: `ChatApp Browser Details ${getUA}`,
