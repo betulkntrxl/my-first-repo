@@ -1,5 +1,15 @@
 import { createProxyMiddleware, fixRequestBody, responseInterceptor } from 'http-proxy-middleware';
+import { v4 as uuidv4 } from 'uuid';
 import { logger } from './logger-config.js';
+
+const createErrorMessage = uuid => {
+  const errorMessage = {
+    id: uuid,
+    message:
+      'Unfortunately something went wrong, the server maybe busy, if you would like to report this issue please include the id of this error.',
+  };
+  return Buffer.from(JSON.stringify(errorMessage));
+};
 
 const setupMulesoftProxy = appInsights => {
   logger.info(`Setting up Mulesoft Proxy...`);
@@ -23,26 +33,36 @@ const setupMulesoftProxy = appInsights => {
     },
     selfHandleResponse: true,
     onProxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
+      let clientResponse;
+
       if (proxyRes.statusCode !== 200) {
+        const errorId = uuidv4();
         logger.error(
-          `Chat API Failed... HTTP Status Code ${
+          `Chat API Failed... Error Id ${errorId} HTTP Status Code ${
             proxyRes.statusCode
           } HTTP Error Message ${responseBuffer.toString('utf8')} `,
         );
+
         if (process.env.DEPLOY_ENVIRONMENT === 'cloud') {
           appInsights.defaultClient.trackTrace({
             message: 'ChatApp Prompt API Failed',
             severity: 3, // Error
             properties: {
+              chatAppErrorId: errorId,
               httpStatusCode: proxyRes.statusCode,
               errorMessage: responseBuffer.toString('utf8'),
             },
           });
         }
+        // Respond with a consistent error message
+        // while also hiding api error details
+        clientResponse = createErrorMessage(errorId);
       } else {
         logger.info(`Prompt request successful ${proxyRes.statusCode} `);
+        clientResponse = responseBuffer;
       }
-      return responseBuffer;
+
+      return clientResponse;
     }),
     logger: console,
   });
