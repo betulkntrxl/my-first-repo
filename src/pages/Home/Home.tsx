@@ -205,6 +205,12 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(document.location.search);
+    if (searchParams.get('iss')) {
+      // refresh the page
+      window.location.href = '/';
+    }
+
     // Tracking in app insights
     axios.post('/api/app-insights-trace', {
       message: `ChatApp Browser Details ${getUA}`,
