@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, cleanup, screen, act } from '@testing-library/react';
+import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
 
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
+  rest.get('/api/auth/isAuthenticated', (req, res, ctx) => res(ctx.status(200))),
   rest.post('/api/prompt', (req, res, ctx) =>
     res(
       ctx.json({
@@ -46,8 +47,12 @@ describe('testing the App', () => {
   it('renders a Token Count', async () => {
     await act(async () => {
       render(<App />);
-      const tokenCount = screen.getByRole('button', { name: 'token-count: 0' });
-      expect(tokenCount).toBeTruthy();
+      await waitFor(() =>
+        expect(screen.getByRole('button', { name: 'token-count: 0' })).toBeVisible(),
+      ).then(() => {
+        const tokenCount = screen.getByRole('button', { name: 'token-count: 0' });
+        expect(tokenCount).toBeTruthy();
+      });
     });
   });
 });

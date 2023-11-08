@@ -6,6 +6,7 @@ import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
+  rest.get('/api/auth/isAuthenticated', (req, res, ctx) => res(ctx.status(200))),
   rest.post('/api/prompt', (req, res, ctx) =>
     res(ctx.json({ errorMessage: 'an error has occured' }), ctx.status(500)),
   ),

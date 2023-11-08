@@ -1,5 +1,8 @@
 import express from 'express';
-import { ensureAuthenticatedRedirectIfNot } from '../common/auth-helpers.js';
+import {
+  ensureAuthenticated401IfNot,
+  ensureAuthenticatedRedirectIfNot,
+} from '../common/auth-helpers.js';
 import { logger } from '../configs/logger-config.js';
 
 const getOktaRoutes = okta => {
@@ -9,6 +12,10 @@ const getOktaRoutes = okta => {
 
   // Setup Okta routes defined by the Okta middleware library
   oktaRoutes.use(okta.router);
+
+  oktaRoutes.get('/api/auth/isAuthenticated', ensureAuthenticated401IfNot, (req, res) => {
+    res.status(200).send('User is Authenticated');
+  });
 
   oktaRoutes.get(
     '/api/auth/logout',

@@ -7,6 +7,7 @@ import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
+  rest.get('/api/auth/isAuthenticated', (req, res, ctx) => res(ctx.status(200))),
   rest.post('/api/prompt', (req, res, ctx) =>
     res(
       ctx.json({ errorMessage: 'User is not logged in, authenticate path is /api/auth/login' }),
@@ -30,18 +31,20 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      const sendmessageElement = screen.getByTitle('sendmessage');
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
 
-      await user.click(sendmessageElement);
-      await user.keyboard('hello');
-      const sendElement = screen.getByTitle('send');
-      await user.click(sendElement);
+        await user.click(sendmessageElement);
+        await user.keyboard('hello');
+        const sendElement = screen.getByTitle('send');
+        await user.click(sendElement);
 
-      // wait for dialog to be rendered
-      await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
-        fireEvent.click(screen.getByTitle('cancel-button'));
+        // wait for dialog to be rendered
+        await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
+          fireEvent.click(screen.getByTitle('cancel-button'));
+        });
+        expect(sendElement).toBeTruthy();
       });
-      expect(sendElement).toBeTruthy();
     });
   });
 });
