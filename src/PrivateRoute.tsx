@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     axios
       .get('/api/auth/isAuthenticated')
-      .then(response => {
+      .then(() => {
         // User is authenticated
         setIsAuthenticated(true);
         setCheckingIfAuthenticated(false);
