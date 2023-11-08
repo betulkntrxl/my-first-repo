@@ -43,4 +43,4 @@ const isAuthenticated = req => {
   return req.isAuthenticated();
 };
 
-export { ensureAuthenticatedRedirectIfNot, ensureAuthenticated401IfNot };
+export { ensureAuthenticatedRedirectIfNot, ensureAuthenticated401IfNot, isAuthenticated };
