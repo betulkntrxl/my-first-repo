@@ -8,16 +8,20 @@ const PrivateRoute = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     axios
       .get('/api/auth/isAuthenticated')
-      .then(() => {
+      .then(response => {
         // User is authenticated
-        setIsAuthenticated(true);
-        setCheckingIfAuthenticated(false);
-      })
-      .catch(error => {
+        if (response.data.authenticated === 'true') {
+          setIsAuthenticated(true);
+          setCheckingIfAuthenticated(false);
+        }
         // User not authenticated, redirect to login
-        if (error.response && error.response.status === 401) {
+        else {
           window.location.href = '/api/auth/login';
         }
+      })
+      .catch(() => {
+        // Failed to check if use was authenticated, redirect to login
+        window.location.href = '/api/auth/login';
       });
   }, [setCheckingIfAuthenticated, setIsAuthenticated]);
 

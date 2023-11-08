@@ -12,7 +12,9 @@ function wait(milliseconds: number | undefined) {
 }
 
 const server = setupServer(
-  rest.get('/api/auth/isAuthenticated', (req, res, ctx) => res(ctx.status(200))),
+  rest.get('/api/auth/isAuthenticated', (req, res, ctx) =>
+    res(ctx.json({ authenticated: 'true' })),
+  ),
   rest.post('/api/prompt', (req, res, ctx) => {
     wait(11000);
     return res(ctx.json({ greeting: "I'm late" }));
