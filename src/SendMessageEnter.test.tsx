@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, act } from '@testing-library/react';
+import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { rest } from 'msw';
@@ -7,6 +7,7 @@ import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
+  rest.get('/api/auth/isAuthenticated', (req, res, ctx) => res(ctx.status(200))),
   rest.post('/api/prompt', (req, res, ctx) =>
     res(
       ctx.json({
@@ -49,14 +50,16 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      const sendmessageElement = screen.getByTitle('sendmessage');
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
 
-      await user.click(sendmessageElement);
-      await user.keyboard('hello{Enter}');
-      // const sendElement = screen.getByTitle('send');
-      // await user.click(sendElement);
+        await user.click(sendmessageElement);
+        await user.keyboard('hello{Enter}');
+        // const sendElement = screen.getByTitle('send');
+        // await user.click(sendElement);
 
-      expect(sendmessageElement).toBeTruthy();
+        expect(sendmessageElement).toBeTruthy();
+      });
     });
   });
 });

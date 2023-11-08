@@ -7,6 +7,7 @@ import { setupServer } from 'msw/node';
 import App from './App';
 
 const server = setupServer(
+  rest.get('/api/auth/isAuthenticated', (req, res, ctx) => res(ctx.status(200))),
   rest.post('/api/prompt', (req, res, ctx) =>
     res(
       ctx.json({
@@ -50,14 +51,16 @@ describe('testing the App', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      const resetElement = screen.getByTitle('reset');
+      await waitFor(() => expect(screen.getByTitle('reset')).toBeVisible()).then(async () => {
+        const resetElement = screen.getByTitle('reset');
 
-      await user.click(resetElement);
-      // wait for element to be rendered
-      await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible()).then(() => {
-        const continueElement = screen.getByTitle('continue-button');
-        fireEvent.click(continueElement);
-        expect(continueElement).toBeTruthy();
+        await user.click(resetElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByTitle('continue-button')).toBeVisible()).then(() => {
+          const continueElement = screen.getByTitle('continue-button');
+          fireEvent.click(continueElement);
+          expect(continueElement).toBeTruthy();
+        });
       });
     });
   });
