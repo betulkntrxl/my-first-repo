@@ -19,7 +19,7 @@ const PrivateRoute = ({ children }: PropsWithChildren) => {
           window.location.href = '/api/auth/login';
         }
       })
-      .catch(error => {
+      .catch(() => {
         // Failed to check if use was authenticated, redirect to login
         window.location.href = '/api/auth/login';
       });
