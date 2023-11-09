@@ -254,8 +254,15 @@ const Menu = (props: {
             <img
               alt={orgDeployment}
               width={150}
-              src={orgDeployment === 'uson' ? UsonLogo : McKessonLogo}
+              src={
+                orgDeployment === 'uson'
+                  ? UsonLogo
+                  : orgDeployment === 'mckesson'
+                  ? McKessonLogo
+                  : ''
+              }
             />
+
             <Typography
               variant="h6"
               color="#005A8C"
