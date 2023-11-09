@@ -85,10 +85,6 @@ jobs:
           --server=$CLUSTER_API \
           apply -f -
 
-        OKTA_CLIENT_ID=USON_OKTA_CLIENT_ID
-        OKTA_CLIENT_SECRET=USON_OKTA_CLIENT_SECRET
-        OKTA_ISSUER=USON_OKTA_ISSUER
-
         ###############################################
         ########## Deploying USON ChatApp #############
         ###############################################
