@@ -15,7 +15,11 @@ const addPromptHeaders = (req, res, next) => {
       req.userContext.userinfo.email ||
       req.userContext.userinfo.preferred_username ||
       'Not Available';
-    req.headers.bu = req.userContext.userinfo.company || 'Not Available';
+    if (process.env.ORG_DEPLOYMENT === 'uson') {
+      req.headers.bu = 'US Oncology';
+    } else {
+      req.headers.bu = req.userContext.userinfo.company || 'Not Available';
+    }
   }
 
   next();

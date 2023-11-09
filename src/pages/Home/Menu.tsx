@@ -15,7 +15,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import AccordionMenu from './AccordionMenu';
-import Logo from './webimage-B31D6248-7763-4327-92184864D7920A7C.jpg';
+import McKessonLogo from './webimage-B31D6248-7763-4327-92184864D7920A7C.jpg';
+import UsonLogo from './uson-logo.png';
 
 const Menu = (props: {
   temperature: number;
@@ -32,6 +33,7 @@ const Menu = (props: {
   APITimeout: number;
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [orgDeployment, setOrgDeployment] = useState('');
   const [version, setVersion] = useState('');
   const [state, setState] = useState({});
   const { t, i18n } = useTranslation();
@@ -61,7 +63,22 @@ const Menu = (props: {
     return null;
   }
 
+  async function getOrgDeployment() {
+    try {
+      await axios('/api/org-deployment').then(response => {
+        if (response && response.data) {
+          const { data } = response;
+          setOrgDeployment(data.orgDeployment);
+        }
+      });
+    } catch {
+      return '';
+    }
+    return null;
+  }
+
   useEffect(() => {
+    getOrgDeployment();
     getVersion();
     return () => {
       setState({}); // clean state
@@ -234,7 +251,11 @@ const Menu = (props: {
             >
               <MenuIcon color="primary" />
             </IconButton>
-            <img alt="McKesson" width={150} src={Logo} />
+            <img
+              alt={orgDeployment}
+              width={150}
+              src={orgDeployment === 'uson' ? UsonLogo : McKessonLogo}
+            />
             <Typography
               variant="h6"
               color="#005A8C"

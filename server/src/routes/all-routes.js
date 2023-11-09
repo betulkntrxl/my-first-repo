@@ -1,7 +1,7 @@
 import express from 'express';
 import { getAppInsightsRoutes } from './app-insights-routes.js';
 import { getPromptRoutes } from './prompt-routes.js';
-import { getVersionRoutes } from './version-routes.js';
+import { getVersionAndOrgRoutes } from './version-and-org-routes.js';
 import { getOktaRoutes } from './okta-routes.js';
 import { getStaticConentRoutes } from './static-content-routes.js';
 
@@ -14,7 +14,7 @@ const setupRoutes = (okta, mulesoftProxy, appInsights) => {
 
   appRoutes.use(getPromptRoutes(mulesoftProxy));
 
-  appRoutes.use(getVersionRoutes());
+  appRoutes.use(getVersionAndOrgRoutes());
 
   appRoutes.use(getStaticConentRoutes());
 
