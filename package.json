@@ -37,10 +37,10 @@
     "web-vitals": "^3.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "cloud-build": "GENERATE_SOURCEMAP=false react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns 'node_modules/?!(gpt-tokenizer)/'",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "cloud-build": "DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build",
+    "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test --transformIgnorePatterns 'node_modules/?!(gpt-tokenizer)/'",
     "eject": "react-scripts eject",
     "lint": "eslint --fix --ext .ts,.tsx src/",
     "lint:check": "eslint --ext .ts,.tsx src/",
