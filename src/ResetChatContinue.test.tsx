@@ -37,6 +37,7 @@ const server = setupServer(
     ),
   ),
   rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.get('/api/org-deployment', (req, res, ctx) => res(ctx.json({ orgDeployment: 'mckesson' }))),
   rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
   rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
 );
