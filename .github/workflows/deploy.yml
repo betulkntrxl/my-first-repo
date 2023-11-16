@@ -51,6 +51,7 @@ jobs:
         ALLOW_TEST_USER: ${{ secrets.ALLOW_TEST_USER }}
         TEST_USER_API_KEY: ${{ secrets.TEST_USER_API_KEY }}
         APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.APPLICATION_INSIGHTS_CONNECTION_STRING }}
+        USON_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.USON_APPLICATION_INSIGHTS_CONNECTION_STRING }}
 
       run: |
         # Setting up cluster configurations, config files are in the kubectl image
