@@ -258,8 +258,8 @@ const Menu = (props: {
                 orgDeployment === 'uson'
                   ? UsonLogo
                   : orgDeployment === 'mckesson'
-                  ? McKessonLogo
-                  : ''
+                    ? McKessonLogo
+                    : ''
               }
             />
 
