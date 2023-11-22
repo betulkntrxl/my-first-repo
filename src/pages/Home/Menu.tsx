@@ -19,6 +19,7 @@ import McKessonLogo from './webimage-B31D6248-7763-4327-92184864D7920A7C.jpg';
 import UsonLogo from './uson-logo.png';
 
 const Menu = (props: {
+  orgDeployment: string;
   temperature: number;
   handleTemperatureChange: (event: Event, value: number | number[], activeThumb: number) => void;
   topP: number;
@@ -33,7 +34,6 @@ const Menu = (props: {
   APITimeout: number;
 }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [orgDeployment, setOrgDeployment] = useState('');
   const [version, setVersion] = useState('');
   const [state, setState] = useState({});
   const { t, i18n } = useTranslation();
@@ -63,22 +63,7 @@ const Menu = (props: {
     return null;
   }
 
-  async function getOrgDeployment() {
-    try {
-      await axios('/api/org-deployment').then(response => {
-        if (response && response.data) {
-          const { data } = response;
-          setOrgDeployment(data.orgDeployment);
-        }
-      });
-    } catch {
-      return '';
-    }
-    return null;
-  }
-
   useEffect(() => {
-    getOrgDeployment();
     getVersion();
     return () => {
       setState({}); // clean state
@@ -87,6 +72,7 @@ const Menu = (props: {
 
   const drawerWidth = 400;
   const {
+    orgDeployment,
     temperature,
     handleTemperatureChange,
     topP,

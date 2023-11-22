@@ -6,11 +6,12 @@ import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
 import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
 import { isChrome, isEdge, getUA } from 'react-device-detect';
 
+import OKDialog from './OkDialog';
 import Menu from './Menu';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
 import ContinueCancelDialog from './ContinueCancelDialog';
-import OKDialog from './OkDialog';
+import TermsAndConditions from './TermsAndConditions';
 
 export interface DialogTitleProps {
   id: string;
@@ -27,6 +28,7 @@ const Home = () => {
   const DEFAULT_MAX_TOKENS = 2000;
   const DEFAULT_PAST_MESSAGES = 10;
   const DEFAULT_API_TIMEOUT = 10;
+  const [orgDeployment, setOrgDeployment] = useState('');
   const [data, setData] = useState({ chatsession: '', response: '' });
   const [visible, setVisible] = useState(true);
   const [temperature, setTemperature] = useState<number>(DEFAULT_TEMPERATURE);
@@ -68,6 +70,19 @@ const Home = () => {
   const [openAPITimeout, setOpenAPITimeout] = React.useState(false);
   const [openAPIError, setOpenAPIError] = React.useState(false);
   const [openInputTooLarge, setOpenInputTooLarge] = React.useState(false);
+
+  async function getOrgDeployment() {
+    try {
+      await axios('/api/org-deployment').then(response => {
+        if (response && response.data) {
+          setOrgDeployment(response.data.orgDeployment);
+        }
+      });
+    } catch {
+      return '';
+    }
+    return null;
+  }
 
   const handleResetChatSessionOpen = () => {
     // Tracking in app insights
@@ -215,6 +230,8 @@ const Home = () => {
       message: `ChatApp default language set to ${t('current-language').toLowerCase()}`,
       severity: 1, // Information
     });
+
+    getOrgDeployment();
 
     const AUTH_INTERVAL = setInterval(async () => {
       if (isChrome || isEdge) {
@@ -512,133 +529,138 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <Menu
-        temperature={temperature}
-        handleTemperatureChange={handleTemperatureChange}
-        topP={topP}
-        handleTopPChange={handleTopPChange}
-        maxTokens={maxTokens}
-        handleMaxTokensChange={handleMaxTokensChange}
-        handleSystemMessageValueChange={handleSystemMessageValueChange}
-        systemMessageValue={systemMessageValue}
-        handlePastMessagesChange={handlePastMessagesChange}
-        pastMessages={pastMessages}
-        handleAPITimeoutChange={handleAPITimeoutChange}
-        APITimeout={APITimeout}
-      />
+    // Wait for the Org Deployment to be set before rendering
+    !orgDeployment ? null : (
+      <div>
+        {orgDeployment === 'uson' && <TermsAndConditions />}
+        <Menu
+          orgDeployment={orgDeployment}
+          temperature={temperature}
+          handleTemperatureChange={handleTemperatureChange}
+          topP={topP}
+          handleTopPChange={handleTopPChange}
+          maxTokens={maxTokens}
+          handleMaxTokensChange={handleMaxTokensChange}
+          handleSystemMessageValueChange={handleSystemMessageValueChange}
+          systemMessageValue={systemMessageValue}
+          handlePastMessagesChange={handlePastMessagesChange}
+          pastMessages={pastMessages}
+          handleAPITimeoutChange={handleAPITimeoutChange}
+          APITimeout={APITimeout}
+        />
 
-      <div
-        style={{
-          backgroundAttachment: 'fixed',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 90px',
-          width: '100%',
-          float: 'right',
-          margin: 10,
-          height: 500,
-        }}
-      >
-        {messagesDisplay.length < 3 ? ( // hide background when chat starts
-          <div
-            style={{
-              position: 'absolute',
-              // color:'#B3CEDD',
-              color: 'steelblue',
-              //  backgroundColor: '#E5EFF3',
-              opacity: 0.6,
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              zIndex: -1,
-              overflow: 'hidden',
-              fontFamily: 'arial',
-            }}
-          />
-        ) : (
-          ''
-        )}
+        <div
+          style={{
+            backgroundAttachment: 'fixed',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center 90px',
+            width: '100%',
+            float: 'right',
+            margin: 10,
+            height: 500,
+          }}
+        >
+          {messagesDisplay.length < 3 ? ( // hide background when chat starts
+            <div
+              style={{
+                position: 'absolute',
+                // color:'#B3CEDD',
+                color: 'steelblue',
+                //  backgroundColor: '#E5EFF3',
+                opacity: 0.6,
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                zIndex: -1,
+                overflow: 'hidden',
+                fontFamily: 'arial',
+              }}
+            />
+          ) : (
+            ''
+          )}
 
-        <div style={{ float: 'right', width: '100%' }}>
-          <Messages
-            bottomRef={bottomRef}
-            messagesDisplay={messagesDisplay}
-            displayValue={displayValue}
-            visible={visible}
-          />
+          <div style={{ float: 'right', width: '100%' }}>
+            <Messages
+              bottomRef={bottomRef}
+              messagesDisplay={messagesDisplay}
+              displayValue={displayValue}
+              visible={visible}
+            />
+          </div>
+
+          <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
+            <SendMessage
+              handleChatsessionChange={handleChatsessionChange}
+              data={data}
+              tokenCount={tokenCount}
+              tokenMessage={tokenMessage}
+              disabledBool={disabledBool}
+              disabledInput={disabledInput}
+              handleResetChatSessionOpen={handleResetChatSessionOpen}
+              handleKeyDown={handleKeyDown}
+            />
+          </form>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-          <SendMessage
-            handleChatsessionChange={handleChatsessionChange}
-            data={data}
-            tokenCount={tokenCount}
-            tokenMessage={tokenMessage}
-            disabledBool={disabledBool}
-            disabledInput={disabledInput}
-            handleResetChatSessionOpen={handleResetChatSessionOpen}
-            handleKeyDown={handleKeyDown}
-          />
-        </form>
+        <ContinueCancelDialog
+          {...{
+            handleClose: handleResetChatSessionClose,
+            openDialog: openResetChatSession,
+            handleContinue: handleResetChatSessionContinue,
+            headerText: t('popup-messages.reset-chat-header'),
+            bodyText: t('popup-messages.reset-chat-body'),
+          }}
+        />
+
+        <ContinueCancelDialog
+          {...{
+            handleClose: handleSessionExpiredClose,
+            openDialog: openSessionExpired,
+            handleContinue: handleSessionExpiredContinue,
+            headerText: t('popup-messages.session-expired-header'),
+            bodyText: t('popup-messages.session-expired-body'),
+          }}
+        />
+
+        <OKDialog
+          {...{
+            handleClose: handleAPIErrorClose,
+            openDialog: openAPIError,
+            headerText: t('popup-messages.unexpected-error-header'),
+            bodyText: t('popup-messages.unexpected-error-body'),
+          }}
+        />
+
+        <OKDialog
+          {...{
+            handleClose: handleAPITimeoutClose,
+            openDialog: openAPITimeout,
+            headerText: t('popup-messages.api-timeout-header'),
+            bodyText: t('popup-messages.api-timeout-body'),
+          }}
+        />
+
+        <OKDialog
+          {...{
+            handleClose: handleAPIRateLimitClose,
+            openDialog: openAPIRateLimit,
+            headerText: t('popup-messages.server-busy-header'),
+            bodyText: t('popup-messages.server-busy-body'),
+          }}
+        />
+
+        <OKDialog
+          {...{
+            handleClose: handleInputTooLargeClose,
+            openDialog: openInputTooLarge,
+            headerText: t('popup-messages.input-too-large-header'),
+            bodyText: t('popup-messages.input-too-large-body'),
+          }}
+        />
       </div>
-
-      <ContinueCancelDialog
-        {...{
-          handleClose: handleResetChatSessionClose,
-          openDialog: openResetChatSession,
-          handleContinue: handleResetChatSessionContinue,
-          headerText: t('popup-messages.reset-chat-header'),
-          bodyText: t('popup-messages.reset-chat-body'),
-        }}
-      />
-
-      <ContinueCancelDialog
-        {...{
-          handleClose: handleSessionExpiredClose,
-          openDialog: openSessionExpired,
-          handleContinue: handleSessionExpiredContinue,
-          headerText: t('popup-messages.session-expired-header'),
-          bodyText: t('popup-messages.session-expired-body'),
-        }}
-      />
-
-      <OKDialog
-        {...{
-          handleClose: handleAPIErrorClose,
-          openDialog: openAPIError,
-          headerText: t('popup-messages.unexpected-error-header'),
-          bodyText: t('popup-messages.unexpected-error-body'),
-        }}
-      />
-
-      <OKDialog
-        {...{
-          handleClose: handleAPITimeoutClose,
-          openDialog: openAPITimeout,
-          headerText: t('popup-messages.api-timeout-header'),
-          bodyText: t('popup-messages.api-timeout-body'),
-        }}
-      />
-
-      <OKDialog
-        {...{
-          handleClose: handleAPIRateLimitClose,
-          openDialog: openAPIRateLimit,
-          headerText: t('popup-messages.server-busy-header'),
-          bodyText: t('popup-messages.server-busy-body'),
-        }}
-      />
-
-      <OKDialog
-        {...{
-          handleClose: handleInputTooLargeClose,
-          openDialog: openInputTooLarge,
-          headerText: t('popup-messages.input-too-large-header'),
-          bodyText: t('popup-messages.input-too-large-body'),
-        }}
-      />
-    </div>
+    )
   );
 };
 
