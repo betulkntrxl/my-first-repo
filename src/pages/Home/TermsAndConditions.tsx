@@ -14,7 +14,7 @@ function TermsAndConditions() {
   const handleReject = () => {
     // Tracking in app insights
     axios.post('/api/app-insights-event', {
-      name: 'ChatApp Terms Not Accepted',
+      name: 'ChatApp Terms Rejected',
     });
 
     window.location.href = '/api/auth/logout';
@@ -123,9 +123,14 @@ function TermsAndConditions() {
             <li>
               ChatApp is for business use only, therefore, the personal use of ChatApp is
               prohibited. When in doubt about the use of ChatApp, do not enter any information in
-              ChatApp. Instead, please reach out to MTAutomationTeam@McKesson.com and/or
-              DigitalandDataLegal@McKesson.com. For additional “Do’s and Don’ts,” see McKesson
-              Technology’s one-page guide.
+              ChatApp. Instead, please reach out to{' '}
+              <a href="mailto:MTAutomationTeam@McKesson.com">MTAutomationTeam@McKesson.com</a>{' '}
+              and/or
+              <a href="mailto:DigitalandDataLegal@McKesson.com">
+                {' '}
+                DigitalandDataLegal@McKesson.com
+              </a>
+              . For additional “Do’s and Don’ts,” see McKesson Technology’s one-page guide.
             </li>
             <br />
             <li>
