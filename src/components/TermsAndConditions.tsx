@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import MetricsClient from '../clients/MetricsClient';
 
 function TermsAndConditions() {
   const [open, setOpen] = useState(false);
@@ -13,7 +14,7 @@ function TermsAndConditions() {
 
   const handleReject = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'ChatApp Terms Rejected',
     });
 
@@ -22,7 +23,7 @@ function TermsAndConditions() {
 
   const handleAccept = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'ChatApp Terms Accepted',
     });
 

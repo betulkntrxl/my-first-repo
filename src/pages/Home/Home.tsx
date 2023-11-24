@@ -1,17 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import axiosRetry from 'axios-retry';
 import { useTranslation } from 'react-i18next';
 import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
 import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
 import { isChrome, isEdge, getUA } from 'react-device-detect';
 
-import OKDialog from './OkDialog';
-import Menu from './Menu';
-import Messages from './Messages';
-import SendMessage from './SendMessage';
-import ContinueCancelDialog from './ContinueCancelDialog';
-import TermsAndConditions from './TermsAndConditions';
+import OKDialog from '../../components/OkDialog';
+import OpenAIClient from '../../clients/OpenAIClient';
+import MetricsClient from '../../clients/MetricsClient';
+import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
+import SendPromptData from '../../clients/models/PromptModel';
+import { TraceSeverity } from '../../clients/models/MetricsModel';
+import Menu from '../../components/Menu';
+import Messages from '../../components/Messages';
+import SendMessage from '../../components/SendMessage';
+import ContinueCancelDialog from '../../components/ContinueCancelDialog';
+import TermsAndConditions from '../../components/TermsAndConditions';
 
 export interface DialogTitleProps {
   id: string;
@@ -72,30 +75,30 @@ const Home = () => {
   const [openInputTooLarge, setOpenInputTooLarge] = React.useState(false);
 
   async function getOrgDeployment() {
-    try {
-      await axios('/api/org-deployment').then(response => {
-        if (response && response.data) {
-          setOrgDeployment(response.data.orgDeployment);
-        }
+    VersionAndOrgClient.getOrgDeployment()
+      .then(responseData => {
+        setOrgDeployment(responseData.orgDeployment);
+      })
+      .catch(error => {
+        MetricsClient.sendTrace({
+          message: 'ChatApp failed to retrieve Org',
+          severity: TraceSeverity.CRITICAL,
+          properties: { errorResponse: error.response },
+        });
       });
-    } catch {
-      return '';
-    }
-    return null;
   }
 
   const handleResetChatSessionOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'ChatApp Reset Chat Clicked',
     });
-
     setOpenResetChatSession(true);
   };
 
   const handleResetChatSessionClose = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'ChatApp Reset Chat Closed',
     });
 
@@ -104,7 +107,7 @@ const Home = () => {
 
   const handleResetChatSessionContinue = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'ChatApp Reset Chat Continue',
     });
 
@@ -132,9 +135,9 @@ const Home = () => {
 
   const handleAPIRateLimitOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-trace', {
+    MetricsClient.sendTrace({
       message: 'ChatApp Rate Limit Hit',
-      severity: 3, // Error
+      severity: TraceSeverity.ERROR,
     });
 
     setOpenAPIRateLimit(true);
@@ -149,9 +152,9 @@ const Home = () => {
 
   const handleAPITimeoutOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-trace', {
+    MetricsClient.sendTrace({
       message: 'ChatApp Timeout',
-      severity: 3, // Error
+      severity: TraceSeverity.ERROR,
       properties: { APITimeout },
     });
 
@@ -167,9 +170,9 @@ const Home = () => {
 
   const handleAPIErrorOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-trace', {
+    MetricsClient.sendTrace({
       message: 'ChatApp Unexplained Error',
-      severity: 3, // Error
+      severity: TraceSeverity.ERROR,
     });
 
     setOpenAPIError(true);
@@ -184,9 +187,9 @@ const Home = () => {
 
   const handleInputTooLargeOpen = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-trace', {
+    MetricsClient.sendTrace({
       message: 'ChatApp Input Too Large',
-      severity: 3, // Error
+      severity: TraceSeverity.ERROR,
     });
 
     setOpenInputTooLarge(true);
@@ -221,14 +224,14 @@ const Home = () => {
 
   useEffect(() => {
     // Tracking in app insights
-    axios.post('/api/app-insights-trace', {
+    MetricsClient.sendTrace({
       message: `ChatApp Browser Details ${getUA}`,
-      severity: 1, // Informational
+      severity: TraceSeverity.INFORMATIONAL,
     });
 
-    axios.post('/api/app-insights-trace', {
+    MetricsClient.sendTrace({
       message: `ChatApp default language set to ${t('current-language').toLowerCase()}`,
-      severity: 1, // Information
+      severity: TraceSeverity.INFORMATIONAL,
     });
 
     getOrgDeployment();
@@ -266,118 +269,65 @@ const Home = () => {
     setVisible(true);
     // remove system message to replace with System message parameter
     // check for past messages greater than 10 then remove earliest message and response
-    const newmessage =
+    const newMessage =
       [...messages].length > pastMessages + 1 ? [...messages].slice(3) : [...messages].slice(1);
-
-    axiosRetry(axios, {
-      retries: 3,
-      shouldResetTimeout: true,
-      onRetry: (retryCount, error) => {
-        // error wasn't a proper object so using JSON.parse to make it so
-        const ERROR_RESPONSE = JSON.parse(JSON.stringify(error));
-
-        // Tracking retry in app insights
-        axios.post('/api/app-insights-trace', {
-          message: 'ChatApp Retry Prompt',
-          severity: 2, // Warning
-          properties: { retryCount, errorCode: error.code, errorStatusCode: ERROR_RESPONSE.status },
-        });
-      },
-      retryCondition: error => {
-        // error wasn't a proper object so using JSON.parse to make it so
-        const ERROR_RESPONSE = JSON.parse(JSON.stringify(error));
-        const HTTP_METHOD = ERROR_RESPONSE.config?.method;
-        const ERROR_RESPONSE_STATUS = ERROR_RESPONSE.status;
-        const ERROR_URL = ERROR_RESPONSE.config.url;
-
-        return (
-          // Only retry on prompt requests with specific error status
-          ERROR_URL === '/api/prompt' &&
-          HTTP_METHOD === 'post' &&
-          (axiosRetry.isNetworkOrIdempotentRequestError(error) ||
-            // Retry on ChatApp timeout
-            error.code === 'ECONNABORTED' ||
-            // Retry on Prompt OpenAI API Timeout
-            ERROR_RESPONSE_STATUS === 408 ||
-            // Retry on Prompt Mulesoft API Timeout
-            ERROR_RESPONSE_STATUS === 504 ||
-            // Retry on Prompt server error from Mulesoft
-            ERROR_RESPONSE_STATUS === 500 ||
-            // Retry on Prompt Bad Gateway from Mulesoft
-            ERROR_RESPONSE_STATUS === 502)
-        );
-      },
-    });
 
     if (temperature !== DEFAULT_TEMPERATURE) {
       // Tracking in app insights
-      axios.post('/api/app-insights-event', {
+      MetricsClient.sendEvent({
         name: `Temperature sent as ${temperature}`,
       });
     }
 
     if (topP !== DEFAULT_TOP_P) {
       // Tracking in app insights
-      axios.post('/api/app-insights-event', {
+      MetricsClient.sendEvent({
         name: `TopP sent as ${topP}`,
       });
     }
 
     if (maxTokens !== DEFAULT_MAX_TOKENS) {
       // Tracking in app insights
-      axios.post('/api/app-insights-event', {
+      MetricsClient.sendEvent({
         name: `Max Tokens sent as ${maxTokens}`,
       });
     }
 
     if (pastMessages !== DEFAULT_PAST_MESSAGES) {
       // Tracking in app insights
-      axios.post('/api/app-insights-event', {
+      MetricsClient.sendEvent({
         name: `Past Messages sent as ${pastMessages}`,
       });
     }
 
     if (APITimeout !== DEFAULT_API_TIMEOUT) {
       // Tracking in app insights
-      axios.post('/api/app-insights-event', {
+      MetricsClient.sendEvent({
         name: `API Timeout sent as ${APITimeout}`,
       });
     }
 
-    await axios
-      .post(
-        '/api/prompt',
-        {
-          messages: [
-            { role: 'system', content: systemMessageValue },
-            ...newmessage,
-            { role: 'user', content: messageToSend },
-          ],
-          temperature,
-          top_p: topP,
-          frequency_penalty: 0,
-          presence_penalty: 0,
-          max_tokens: maxTokens,
-          stop: null,
-        },
-        {
-          timeout: APITimeout * 1000, // axios expects timeout in milliseconds
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then(response => {
-        const responseData = response.data;
+    const SEND_PROMPT_DATA: SendPromptData = {
+      systemMessageValue,
+      newMessage,
+      messageToSend,
+      temperature,
+      topP,
+      maxTokens,
+      APITimeout,
+    };
+
+    OpenAIClient.sendPrompt(SEND_PROMPT_DATA)
+      .then(responseData => {
         setData({ ...data, response: responseData.choices[0].message.content, chatsession: '' });
         setTokenCount(responseData.usage.total_tokens);
         const USED_MORE_THAN_MAX_TOKENS = responseData.usage.total_tokens > maxTokens;
 
         if (USED_MORE_THAN_MAX_TOKENS) {
           // Tracking in app insights
-          axios.post('/api/app-insights-trace', {
+          MetricsClient.sendTrace({
             message: 'ChatApp Used tokens is greater than max tokens',
-            severity: 2, // Warning
+            severity: TraceSeverity.WARNING,
             properties: { maxTokens, totalTokens: responseData.usage.total_tokens },
           });
         }
@@ -387,7 +337,7 @@ const Home = () => {
         // add response to conversation
         setMessages([
           { role: 'system', content: systemMessageValue },
-          ...newmessage,
+          ...newMessage,
           { role: 'user', content: data.chatsession },
           { role: 'system', content: responseData.choices[0].message.content },
         ]);
@@ -406,6 +356,7 @@ const Home = () => {
         setDisabledInput(false);
       })
       .catch(error => {
+        console.log(`error.response ${error.response}`);
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         if (error.response) {
@@ -521,7 +472,7 @@ const Home = () => {
 
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'System Message Changed',
     });
 

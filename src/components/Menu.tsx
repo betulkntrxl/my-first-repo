@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -14,9 +13,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import MetricsClient from '../clients/MetricsClient';
+import VersionAndOrgClient from '../clients/VersionAndOrgClient';
+import { TraceSeverity } from '../clients/models/MetricsModel';
 import AccordionMenu from './AccordionMenu';
-import McKessonLogo from './webimage-B31D6248-7763-4327-92184864D7920A7C.jpg';
-import UsonLogo from './uson-logo.png';
+import McKessonLogo from '../assets/mckesson-logo.jpg';
+import UsonLogo from '../assets/uson-logo.png';
 
 const Menu = (props: {
   orgDeployment: string;
@@ -41,7 +43,7 @@ const Menu = (props: {
   const handleDrawerToggle = () => {
     if (!mobileOpen) {
       // Tracking in app insights
-      axios.post('/api/app-insights-event', {
+      MetricsClient.sendEvent({
         name: 'Menu opened',
       });
     }
@@ -50,17 +52,17 @@ const Menu = (props: {
   };
 
   async function getVersion() {
-    try {
-      await axios('/api/version').then(response => {
-        if (response && response.data) {
-          const { data } = response;
-          setVersion(data.version);
-        }
+    VersionAndOrgClient.getApplicationVersion()
+      .then(responseData => {
+        setVersion(responseData.version);
+      })
+      .catch(error => {
+        MetricsClient.sendTrace({
+          message: 'ChatApp failed to retrieve version',
+          severity: TraceSeverity.ERROR,
+          properties: { errorResponse: error.response },
+        });
       });
-    } catch {
-      return '';
-    }
-    return null;
   }
 
   useEffect(() => {
@@ -174,7 +176,7 @@ const Menu = (props: {
     localStorage.setItem('i18nextLng', changeLanguageTo);
 
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: `ChatApp Language Changed to ${changeLanguageTo}`,
     });
 
@@ -216,7 +218,7 @@ const Menu = (props: {
 
   const handleLogout = () => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'ChatApp Logout Clicked',
     });
 

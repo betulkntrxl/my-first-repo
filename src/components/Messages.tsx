@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 
-import SystemIcon from './system.jpg';
-import UserIcon from './user.jpg';
-import Typing from './typing.gif';
+import SystemIcon from '../assets/system.jpg';
+import UserIcon from '../assets/user.jpg';
+import Typing from '../assets/typing.gif';
 
 const Messages = (props: {
   bottomRef: any;

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FormControl,
   InputLabel,
@@ -8,10 +9,10 @@ import {
   Typography,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import React from 'react';
-import axios from 'axios';
+
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material/Select';
+import MetricsClient from '../clients/MetricsClient';
 
 const AssistantSetupMenu = (props: {
   handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
@@ -23,7 +24,7 @@ const AssistantSetupMenu = (props: {
 
   const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
     // Tracking in app insights
-    axios.post('/api/app-insights-event', {
+    MetricsClient.sendEvent({
       name: 'ChatApp System Message Template Changed',
     });
     handleSystemMessageValueChange(event);
