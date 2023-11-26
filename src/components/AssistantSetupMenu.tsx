@@ -1,4 +1,5 @@
 import React from 'react';
+import { signal } from '@preact/signals-react';
 import {
   FormControl,
   InputLabel,
@@ -12,15 +13,24 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material/Select';
+import i18n from '../i18n';
 import MetricsClient from '../clients/MetricsClient';
 
-const AssistantSetupMenu = (props: {
-  handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
-  systemMessageValue: string;
-}) => {
+export const systemMessageValue = signal(
+  i18n.t('menu.assistant-setup.message-template.system-message-template.template1'),
+);
+
+const AssistantSetupMenu = () => {
   const { t } = useTranslation();
 
-  const { handleSystemMessageValueChange, systemMessageValue } = props;
+  const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
+    // Tracking in app insights
+    MetricsClient.sendEvent({
+      name: 'System Message Changed',
+    });
+
+    systemMessageValue.value = event.target.value;
+  };
 
   const handlesystemMessageTemplateChange = (event: SelectChangeEvent) => {
     // Tracking in app insights
@@ -43,7 +53,7 @@ const AssistantSetupMenu = (props: {
           fullWidth
           labelId="systemMessageTemplate-label"
           id="systemMessageTemplate"
-          value={systemMessageValue}
+          value={systemMessageValue.value}
           label={t('menu.assistant-setup.message-template.system-message-template.title')}
           onChange={handlesystemMessageTemplateChange}
           aria-label="system-message-template"

@@ -19,22 +19,10 @@ import { TraceSeverity } from '../clients/models/MetricsModel';
 import AccordionMenu from './AccordionMenu';
 import McKessonLogo from '../assets/mckesson-logo.jpg';
 import UsonLogo from '../assets/uson-logo.png';
+import { orgDeployment } from '../pages/Home/Home';
+import { systemMessageValue } from './AssistantSetupMenu';
 
-const Menu = (props: {
-  orgDeployment: string;
-  temperature: number;
-  handleTemperatureChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  topP: number;
-  handleTopPChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  maxTokens: number;
-  handleMaxTokensChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
-  systemMessageValue: string;
-  handlePastMessagesChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  pastMessages: number;
-  handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  APITimeout: number;
-}) => {
+const Menu = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [version, setVersion] = useState('');
   const [state, setState] = useState({});
@@ -73,21 +61,6 @@ const Menu = (props: {
   }, [state]);
 
   const drawerWidth = 400;
-  const {
-    orgDeployment,
-    temperature,
-    handleTemperatureChange,
-    topP,
-    handleTopPChange,
-    maxTokens,
-    handleMaxTokensChange,
-    handleSystemMessageValueChange,
-    systemMessageValue,
-    handlePastMessagesChange,
-    pastMessages,
-    handleAPITimeoutChange,
-    APITimeout,
-  } = props;
 
   const drawer = (
     <div style={{ overflowX: 'hidden' }}>
@@ -130,20 +103,7 @@ const Menu = (props: {
         />
       </Stack>
 
-      <AccordionMenu
-        temperature={temperature}
-        handleTemperatureChange={handleTemperatureChange}
-        topP={topP}
-        handleTopPChange={handleTopPChange}
-        maxTokens={maxTokens}
-        handleMaxTokensChange={handleMaxTokensChange}
-        handleSystemMessageValueChange={handleSystemMessageValueChange}
-        systemMessageValue={systemMessageValue}
-        handlePastMessagesChange={handlePastMessagesChange}
-        pastMessages={pastMessages}
-        handleAPITimeoutChange={handleAPITimeoutChange}
-        APITimeout={APITimeout}
-      />
+      <AccordionMenu />
 
       <Paper
         elevation={1}
@@ -204,14 +164,9 @@ const Menu = (props: {
       // If we don't find a key then the system message value must be a custom
       // message typed in by the user, we ignore  this and leave this text in place
       if (systemMessageKey) {
-        handleSystemMessageValueChange({
-          target: {
-            name: '',
-            value: translate(
-              `menu.assistant-setup.message-template.system-message-template.${systemMessageKey}`,
-            ),
-          },
-        });
+        systemMessageValue.value = translate(
+          `menu.assistant-setup.message-template.system-message-template.${systemMessageKey}`,
+        );
       }
     });
   };
@@ -240,12 +195,12 @@ const Menu = (props: {
               <MenuIcon color="primary" />
             </IconButton>
             <img
-              alt={orgDeployment}
+              alt={orgDeployment.value}
               width={150}
               src={
-                orgDeployment === 'uson'
+                orgDeployment.value === 'uson'
                   ? UsonLogo
-                  : orgDeployment === 'mckesson'
+                  : orgDeployment.value === 'mckesson'
                     ? McKessonLogo
                     : ''
               }

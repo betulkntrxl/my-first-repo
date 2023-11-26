@@ -7,19 +7,12 @@ import SystemIcon from '../assets/system.jpg';
 import UserIcon from '../assets/user.jpg';
 import Typing from '../assets/typing.gif';
 
-const Messages = (props: {
-  bottomRef: any;
-  messagesDisplay: {
-    role: string;
-    content: string;
-    id: string;
-  }[];
-  displayValue: string;
-  visible: boolean;
-}) => {
+import { visible, displayValue, messagesDisplay } from './SendMessage';
+
+const Messages = (props: { bottomRef: any }) => {
   const { t } = useTranslation();
 
-  const { bottomRef, messagesDisplay, displayValue, visible } = props;
+  const { bottomRef } = props;
 
   function scrollToBottom() {
     setTimeout(() => {
@@ -83,7 +76,7 @@ const Messages = (props: {
             </div>
           </div>
 
-          {messagesDisplay.map((value, index) => {
+          {messagesDisplay.value.map((value, index) => {
             // check for user or system message
             if (value.role === 'user' && index !== 0) {
               return (
@@ -142,7 +135,7 @@ const Messages = (props: {
                           marginBottom: 20,
                           padding: '10px',
                           float: 'left',
-                          display: displayValue,
+                          display: displayValue.value,
                           whiteSpace: 'pre-wrap',
                         }}
                       >
@@ -174,7 +167,7 @@ const Messages = (props: {
 
           {
             // show typing bubble while system is responding
-            visible ? (
+            visible.value ? (
               <div
                 style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
               />

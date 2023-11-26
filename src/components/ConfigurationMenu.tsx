@@ -1,93 +1,85 @@
+import React from 'react';
+import { signal } from '@preact/signals-react';
+import { useTranslation } from 'react-i18next';
 import { Grid, Slider, TextField, Tooltip, Typography } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 
-const ConfigurationMenu = (props: {
-  temperature: number;
-  handleTemperatureChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  topP: number;
-  handleTopPChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  maxTokens: number;
-  handleMaxTokensChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  handlePastMessagesChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  pastMessages: number;
-  handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  APITimeout: number;
-}) => {
+export const DEFAULT_TEMPERATURE = 0.7;
+export const DEFAULT_TOP_P = 0.95;
+export const DEFAULT_MAX_TOKENS = 2000;
+export const DEFAULT_PAST_MESSAGES = 10;
+export const DEFAULT_API_TIMEOUT = 10;
+
+export const temperature = signal<number>(DEFAULT_TEMPERATURE);
+export const topP = signal<number>(DEFAULT_TOP_P);
+export const maxTokens = signal<number>(DEFAULT_MAX_TOKENS);
+export const pastMessages = signal<number>(DEFAULT_PAST_MESSAGES);
+export const APITimeout = signal<number>(DEFAULT_API_TIMEOUT);
+
+const ConfigurationMenu = () => {
   const { t } = useTranslation();
-  const {
-    temperature,
-    handleTemperatureChange,
-    topP,
-    handleTopPChange,
-    maxTokens,
-    handleMaxTokensChange,
-    handlePastMessagesChange,
-    pastMessages,
-    handleAPITimeoutChange,
-    APITimeout,
-  } = props;
 
+  /* eslint-disable */
   const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
-    handleTemperatureChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
+    Number.isNaN(newValue) ? 0 : (temperature.value = newValue as number);
   };
 
   const handleTopPSliderChange = (event: Event, newValue: number | number[]) => {
-    handleTopPChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
+    Number.isNaN(newValue) ? 0 : (topP.value = newValue as number);
   };
   const handleMaxTokensSliderChange = (event: Event, newValue: number | number[]) => {
-    handleMaxTokensChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
+    Number.isNaN(newValue) ? 0 : (maxTokens.value = newValue as number);
   };
   const handlePastMessagesSliderChange = (event: Event, newValue: number | number[]) => {
-    handlePastMessagesChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
+    Number.isNaN(newValue) ? 0 : (pastMessages.value = newValue as number);
   };
   const handleAPITimeoutSliderChange = (event: Event, newValue: number | number[]) => {
-    handleAPITimeoutChange(event, Number.isNaN(newValue) ? 0 : newValue, 1);
+    Number.isNaN(newValue) ? 0 : (APITimeout.value = newValue as number);
   };
+  /* eslint-enable */
 
   const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) > 1) {
-      handleTemperatureChange(new Event('1'), 1, 1);
+      temperature.value = 1;
     } else {
-      handleTemperatureChange(new Event(event.target.value), Number(event.target.value), 1);
+      temperature.value = Number(event.target.value);
     }
   };
 
   const handleTopPInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) > 1) {
-      handleTopPChange(new Event('1'), 1, 1);
+      topP.value = 1;
     } else {
-      handleTopPChange(new Event(event.target.value), Number(event.target.value), 1);
+      topP.value = Number(event.target.value);
     }
   };
 
   const handleMaxTokensInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) < 1) {
-      handleMaxTokensChange(new Event('1'), 1, 1);
+      maxTokens.value = 1;
     } else if (Number(event.target.value) > 4096) {
-      handleMaxTokensChange(new Event('4096'), 4096, 1);
+      maxTokens.value = 4096;
     } else {
-      handleMaxTokensChange(new Event(event.target.value), Number(event.target.value), 1);
+      maxTokens.value = Number(event.target.value);
     }
   };
 
   const handlePastMessagesInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tmpval = Number(event.target.value);
     if (tmpval > 20) {
-      handlePastMessagesChange(new Event('20'), 20, 1);
+      pastMessages.value = 20;
     } else {
-      handlePastMessagesChange(new Event(tmpval.toString()), tmpval, 1);
+      pastMessages.value = tmpval;
     }
   };
   const handleAPITimeoutInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tmpval = Number(event.target.value);
     if (tmpval <= 5) {
-      handleAPITimeoutChange(new Event('5'), 5, 1);
+      APITimeout.value = 5;
     } else if (tmpval > 60) {
-      handleAPITimeoutChange(new Event('60'), 60, 1);
+      APITimeout.value = 60;
     } else {
-      handleAPITimeoutChange(new Event(tmpval.toString()), tmpval, 1);
+      APITimeout.value = tmpval;
     }
   };
 
@@ -111,7 +103,7 @@ const ConfigurationMenu = (props: {
               min={0}
               max={1}
               step={0.1}
-              value={temperature}
+              value={temperature.value}
               onChange={handleTemperatureSliderChange}
               aria-labelledby="temperature-input-label"
               aria-label="Temperature"
@@ -150,7 +142,7 @@ const ConfigurationMenu = (props: {
             min={0}
             max={1}
             step={0.05}
-            value={topP}
+            value={topP.value}
             aria-label="Top P"
             onChange={handleTopPSliderChange}
             aria-labelledby="topp-input-label"
@@ -187,7 +179,7 @@ const ConfigurationMenu = (props: {
             min={1}
             max={4096}
             step={1}
-            value={maxTokens}
+            value={maxTokens.value}
             aria-label="Max Tokens"
             onChange={handleMaxTokensSliderChange}
             aria-labelledby="maxtokens-input-label"
@@ -196,7 +188,7 @@ const ConfigurationMenu = (props: {
         <Grid item>
           <TextField
             style={{ width: 85 }}
-            value={maxTokens}
+            value={maxTokens.value}
             size="small"
             onChange={handleMaxTokensInputChange}
             inputProps={{
@@ -225,7 +217,7 @@ const ConfigurationMenu = (props: {
               min={0}
               max={20}
               step={1}
-              value={pastMessages}
+              value={pastMessages.value}
               aria-label="Past messages included"
               onChange={handlePastMessagesSliderChange}
               aria-labelledby="pastmessages-input-label"
@@ -234,7 +226,7 @@ const ConfigurationMenu = (props: {
           <Grid item>
             <TextField
               style={{ width: 85 }}
-              value={pastMessages}
+              value={pastMessages.value}
               size="small"
               onChange={handlePastMessagesInputChange}
               inputProps={{
@@ -264,7 +256,7 @@ const ConfigurationMenu = (props: {
               min={5}
               max={60}
               step={1}
-              value={APITimeout}
+              value={APITimeout.value}
               aria-label="API Timeout"
               onChange={handleAPITimeoutSliderChange}
               aria-labelledby="apitimeout-input-label"
@@ -273,7 +265,7 @@ const ConfigurationMenu = (props: {
           <Grid item>
             <TextField
               style={{ width: 85 }}
-              value={APITimeout}
+              value={APITimeout.value}
               size="small"
               onChange={handleAPITimeoutInputChange}
               inputProps={{

@@ -6,35 +6,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ConfigurationMenu from './ConfigurationMenu';
 import AssistantSetupMenu from './AssistantSetupMenu';
 
-const AccordionMenu = (propsAccordianMenu: {
-  temperature: number;
-  handleTemperatureChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  topP: number;
-  handleTopPChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  maxTokens: number;
-  handleMaxTokensChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  handleSystemMessageValueChange: (event: { target: { name: any; value: any } }) => void;
-  systemMessageValue: string;
-  handlePastMessagesChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  pastMessages: number;
-  handleAPITimeoutChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  APITimeout: number;
-}) => {
+const AccordionMenu = () => {
   const { t } = useTranslation();
-  const {
-    temperature,
-    handleTemperatureChange,
-    topP,
-    handleTopPChange,
-    maxTokens,
-    handleMaxTokensChange,
-    handleSystemMessageValueChange,
-    systemMessageValue,
-    handlePastMessagesChange,
-    pastMessages,
-    handleAPITimeoutChange,
-    APITimeout,
-  } = propsAccordianMenu;
 
   const AccordionTheme = createTheme({
     components: {
@@ -123,10 +96,7 @@ const AccordionMenu = (propsAccordianMenu: {
           <Divider />
           <ThemeProvider theme={AccordionDetailsTheme}>
             <AccordionDetails>
-              <AssistantSetupMenu
-                handleSystemMessageValueChange={handleSystemMessageValueChange}
-                systemMessageValue={systemMessageValue}
-              />
+              <AssistantSetupMenu />
             </AccordionDetails>
           </ThemeProvider>
         </Accordion>
@@ -150,18 +120,7 @@ const AccordionMenu = (propsAccordianMenu: {
           <Divider />
           <ThemeProvider theme={AccordionDetailsTheme}>
             <AccordionDetails>
-              <ConfigurationMenu
-                temperature={temperature}
-                handleTemperatureChange={handleTemperatureChange}
-                topP={topP}
-                handleTopPChange={handleTopPChange}
-                maxTokens={maxTokens}
-                handleMaxTokensChange={handleMaxTokensChange}
-                handlePastMessagesChange={handlePastMessagesChange}
-                pastMessages={pastMessages}
-                handleAPITimeoutChange={handleAPITimeoutChange}
-                APITimeout={APITimeout}
-              />
+              <ConfigurationMenu />
             </AccordionDetails>
           </ThemeProvider>
         </Accordion>
