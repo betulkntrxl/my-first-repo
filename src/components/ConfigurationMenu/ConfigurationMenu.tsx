@@ -3,18 +3,13 @@ import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Slider, TextField, Tooltip, Typography } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ConfigurationConstants from './ConfigurationConstants';
 
-export const DEFAULT_TEMPERATURE = 0.7;
-export const DEFAULT_TOP_P = 0.95;
-export const DEFAULT_MAX_TOKENS = 2000;
-export const DEFAULT_PAST_MESSAGES = 10;
-export const DEFAULT_API_TIMEOUT = 10;
-
-export const temperature = signal<number>(DEFAULT_TEMPERATURE);
-export const topP = signal<number>(DEFAULT_TOP_P);
-export const maxTokens = signal<number>(DEFAULT_MAX_TOKENS);
-export const pastMessages = signal<number>(DEFAULT_PAST_MESSAGES);
-export const APITimeout = signal<number>(DEFAULT_API_TIMEOUT);
+export const temperature = signal<number>(ConfigurationConstants.DEFAULT_TEMPERATURE);
+export const topP = signal<number>(ConfigurationConstants.DEFAULT_TOP_P);
+export const maxTokens = signal<number>(ConfigurationConstants.DEFAULT_MAX_TOKENS);
+export const pastMessages = signal<number>(ConfigurationConstants.DEFAULT_PAST_MESSAGES);
+export const APITimeout = signal<number>(ConfigurationConstants.DEFAULT_API_TIMEOUT);
 
 const ConfigurationMenu = () => {
   const { t } = useTranslation();

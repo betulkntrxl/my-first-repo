@@ -3,16 +3,15 @@ import { useSignal, signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
 import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
-import { isChrome, isEdge, getUA } from 'react-device-detect';
+import { isChrome, isEdge } from 'react-device-detect';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
-import { string } from 'prop-types';
+import CustomButton from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
 import { TraceSeverity } from '../../clients/models/MetricsModel';
 import MetricsClient from '../../clients/MetricsClient';
@@ -25,12 +24,9 @@ import {
   maxTokens,
   pastMessages,
   APITimeout,
-  DEFAULT_TEMPERATURE,
-  DEFAULT_TOP_P,
-  DEFAULT_MAX_TOKENS,
-  DEFAULT_PAST_MESSAGES,
-  DEFAULT_API_TIMEOUT,
 } from '../ConfigurationMenu/ConfigurationMenu';
+import ConfigurationConstants from '../ConfigurationMenu/ConfigurationConstants';
+
 import PopupDialogs from './PopupDialogs';
 
 export const visible = signal<string>('true');
@@ -78,29 +74,6 @@ const SendMessage = () => {
 
   const MAX_INPUT_TOKENS_3_5_TURBO = 4000;
   const MAX_INPUT_TOKENS = MAX_INPUT_TOKENS_3_5_TURBO;
-
-  const blue = {
-    500: '#007FFF',
-    600: '#0072E5',
-    700: '#0059B2',
-  };
-
-  const CustomButton = styled(Button)`
-    font-family: Arial, sans-serif;
-    font-size: 0.875rem;
-    background-color: ${blue[500]};
-    padding: 4px 10px;
-    border-radius: 8px;
-    color: white;
-    transition: all 150ms ease;
-    cursor: pointer;
-    border: none;
-    margin-right: 10px;
-
-    &:hover {
-      background-color: ${blue[600]};
-    }
-  `;
 
   const handleResetChatSessionOpen = () => {
     // Tracking in app insights
@@ -196,35 +169,35 @@ const SendMessage = () => {
   };
 
   const gatherMetricsOnConfigurableSettings = () => {
-    if (temperature.value !== DEFAULT_TEMPERATURE) {
+    if (temperature.value !== ConfigurationConstants.DEFAULT_TEMPERATURE) {
       // Tracking in app insights
       MetricsClient.sendEvent({
         name: `Temperature sent as ${temperature}`,
       });
     }
 
-    if (topP.value !== DEFAULT_TOP_P) {
+    if (topP.value !== ConfigurationConstants.DEFAULT_TOP_P) {
       // Tracking in app insights
       MetricsClient.sendEvent({
         name: `TopP sent as ${topP}`,
       });
     }
 
-    if (maxTokens.value !== DEFAULT_MAX_TOKENS) {
+    if (maxTokens.value !== ConfigurationConstants.DEFAULT_MAX_TOKENS) {
       // Tracking in app insights
       MetricsClient.sendEvent({
         name: `Max Tokens sent as ${maxTokens}`,
       });
     }
 
-    if (pastMessages.value !== DEFAULT_PAST_MESSAGES) {
+    if (pastMessages.value !== ConfigurationConstants.DEFAULT_PAST_MESSAGES) {
       // Tracking in app insights
       MetricsClient.sendEvent({
         name: `Past Messages sent as ${pastMessages}`,
       });
     }
 
-    if (APITimeout.value !== DEFAULT_API_TIMEOUT) {
+    if (APITimeout.value !== ConfigurationConstants.DEFAULT_API_TIMEOUT) {
       // Tracking in app insights
       MetricsClient.sendEvent({
         name: `API Timeout sent as ${APITimeout}`,

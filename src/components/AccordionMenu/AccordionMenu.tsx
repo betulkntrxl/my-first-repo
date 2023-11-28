@@ -2,75 +2,17 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import {
+  AccordionTheme,
+  AccordionSummaryTheme,
+  AccordionDetailsTheme,
+} from './AccordingMenu.styles';
 import ConfigurationMenu from '../ConfigurationMenu/ConfigurationMenu';
 import AssistantSetupMenu from '../AssistantSetupMenu/AssistantSetupMenu';
 
 const AccordionMenu = () => {
   const { t } = useTranslation();
-
-  const AccordionTheme = createTheme({
-    components: {
-      MuiAccordion: {
-        defaultProps: {
-          disableGutters: true,
-          elevation: 0,
-          square: true,
-        },
-        styleOverrides: {
-          root: ({ theme }) => ({
-            border: `0px solid ${theme.palette.divider}`,
-            '&:not(:last-child)': {
-              borderBottom: '1px solid',
-              marginLeft: 20,
-              marginRight: 20,
-              color: '#e6e6e6',
-            },
-            '&:before': {
-              display: 'none',
-            },
-          }),
-        },
-      },
-    },
-  });
-
-  const AccordionSummaryTheme = createTheme({
-    components: {
-      MuiAccordionSummary: {
-        defaultProps: {
-          expandIcon: <ExpandMoreIcon sx={{ fontSize: '0.9rem' }} />,
-        },
-        styleOverrides: {
-          root: ({ theme }) => ({
-            style: 'flexGrow: 0',
-            backgroundColor:
-              theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, 0)',
-            flexDirection: 'row',
-            '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-              transform: 'rotate(180deg)',
-            },
-            '& .MuiAccordionSummary-content': {
-              marginLeft: -15,
-            },
-          }),
-        },
-      },
-    },
-  });
-
-  const AccordionDetailsTheme = createTheme({
-    components: {
-      MuiAccordionDetails: {
-        styleOverrides: {
-          root: ({ theme }) => ({
-            color: 'black',
-            padding: theme.spacing(0),
-          }),
-        },
-      },
-    },
-  });
 
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
