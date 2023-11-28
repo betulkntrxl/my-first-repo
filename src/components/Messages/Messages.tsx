@@ -3,25 +3,25 @@ import { useTranslation } from 'react-i18next';
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
 
-import SystemIcon from '../assets/system.jpg';
-import UserIcon from '../assets/user.jpg';
-import Typing from '../assets/typing.gif';
+import SystemIcon from '../../assets/system.jpg';
+import UserIcon from '../../assets/user.jpg';
+import Typing from '../../assets/typing.gif';
 
-import { visible, displayValue, messagesDisplay } from './SendMessage';
+import { visible, displayValue, allMessagesToDisplay } from '../SendMessage/SendMessage';
 
 const Messages = (props: { bottomRef: any }) => {
   const { t } = useTranslation();
 
   const { bottomRef } = props;
 
-  function scrollToBottom() {
+  const scrollToBottom = () => {
     setTimeout(() => {
       if (bottomRef.current) {
         bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
       }
     }, 500);
     return null;
-  }
+  };
 
   return (
     <Card
@@ -76,14 +76,13 @@ const Messages = (props: { bottomRef: any }) => {
             </div>
           </div>
 
-          {messagesDisplay.value.map((value, index) => {
-            // check for user or system message
-            if (value.role === 'user' && index !== 0) {
+          {allMessagesToDisplay.value.map(value => {
+            if (value.role === 'user') {
               return (
-                <div key={value.id + 1}>
+                <div key={value.id}>
                   <Stack direction="row" style={{ float: 'right' }}>
                     <Paper
-                      key={value.id + 4}
+                      key={value.id}
                       elevation={3}
                       style={{
                         marginTop: 40,
@@ -108,10 +107,9 @@ const Messages = (props: { bottomRef: any }) => {
               );
             }
 
-            // check for message from system
-            if (value.role === 'system' && index !== 0) {
+            if (value.role === 'system') {
               return (
-                <div key={value.id + 6}>
+                <div key={value.id}>
                   <Stack direction="row" style={{ float: 'left' }}>
                     <img
                       alt="assistant"
@@ -124,10 +122,9 @@ const Messages = (props: { bottomRef: any }) => {
                         marginRight: 10,
                       }}
                     />
-
                     {value.content.length > 0 ? (
                       <Paper
-                        key={value.id + 9}
+                        key={value.id}
                         elevation={3}
                         style={{
                           backgroundColor: '#E5F2F9',
@@ -167,7 +164,7 @@ const Messages = (props: { bottomRef: any }) => {
 
           {
             // show typing bubble while system is responding
-            visible.value ? (
+            visible.value === 'true' ? (
               <div
                 style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
               />

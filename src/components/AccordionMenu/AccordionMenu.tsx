@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import ConfigurationMenu from './ConfigurationMenu';
-import AssistantSetupMenu from './AssistantSetupMenu';
+import ConfigurationMenu from '../ConfigurationMenu/ConfigurationMenu';
+import AssistantSetupMenu from '../AssistantSetupMenu/AssistantSetupMenu';
 
 const AccordionMenu = () => {
   const { t } = useTranslation();

@@ -13,14 +13,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-import MetricsClient from '../clients/MetricsClient';
-import VersionAndOrgClient from '../clients/VersionAndOrgClient';
-import { TraceSeverity } from '../clients/models/MetricsModel';
-import AccordionMenu from './AccordionMenu';
-import McKessonLogo from '../assets/mckesson-logo.jpg';
-import UsonLogo from '../assets/uson-logo.png';
-import { orgDeployment } from '../pages/Home/Home';
-import { systemMessageValue } from './AssistantSetupMenu';
+import MetricsClient from '../../clients/MetricsClient';
+import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
+import { TraceSeverity } from '../../clients/models/MetricsModel';
+import AccordionMenu from '../AccordionMenu/AccordionMenu';
+import McKessonLogo from '../../assets/mckesson-logo.jpg';
+import UsonLogo from '../../assets/uson-logo.png';
+import { orgDeployment } from '../../pages/Home/Home';
+import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
 
 const Menu = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -39,7 +39,7 @@ const Menu = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  async function getVersion() {
+  const getVersion = async () => {
     VersionAndOrgClient.getApplicationVersion()
       .then(responseData => {
         setVersion(responseData.version);
@@ -51,7 +51,7 @@ const Menu = () => {
           properties: { errorResponse: error.response },
         });
       });
-  }
+  };
 
   useEffect(() => {
     getVersion();

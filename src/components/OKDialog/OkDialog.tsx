@@ -17,7 +17,7 @@ export interface DialogTitleProps {
   onClose: () => void;
 }
 
-function BootstrapDialogTitle(props: DialogTitleProps) {
+const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props;
 
   return (
@@ -39,18 +39,17 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
       ) : null}
     </DialogTitle>
   );
-}
+};
 
-const ContinueCancelDialog = (props: {
+const OKDialog = (props: {
   handleClose: () => void;
   openDialog: boolean;
-  handleContinue: () => void;
   headerText: string;
   bodyText: string;
 }) => {
   const { t } = useTranslation();
 
-  const { handleClose, openDialog, handleContinue, headerText, bodyText } = props;
+  const { handleClose, openDialog, headerText, bodyText } = props;
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -68,28 +67,18 @@ const ContinueCancelDialog = (props: {
       open={openDialog}
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
-          {headerText}
-        </div>
+        <div style={{ color: 'red', fontWeight: 'bold' }}>{headerText} !</div>
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>{bodyText}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="outlined"
-          onClick={handleClose}
-          title="cancel-button"
-          data-testid="cancel-button"
-        >
-          {t('buttons.cancel')}
-        </Button>
-        <Button variant="contained" autoFocus onClick={handleContinue} title="continue-button">
-          {t('buttons.continue')}
+        <Button variant="outlined" onClick={handleClose} title="close-button">
+          {t('buttons.ok')}
         </Button>
       </DialogActions>
     </BootstrapDialog>
   );
 };
 
-export default ContinueCancelDialog;
+export default OKDialog;

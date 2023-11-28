@@ -5,11 +5,10 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from '../App';
 
-function wait(milliseconds: number | undefined) {
-  return new Promise(resolve => {
+const wait = (milliseconds: number | undefined) =>
+  new Promise(resolve => {
     setTimeout(resolve, milliseconds);
   });
-}
 
 const server = setupServer(
   rest.get('/api/auth/isAuthenticated', (req, res, ctx) =>

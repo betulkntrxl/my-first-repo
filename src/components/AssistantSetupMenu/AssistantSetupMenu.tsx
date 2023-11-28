@@ -13,15 +13,18 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material/Select';
-import i18n from '../i18n';
-import MetricsClient from '../clients/MetricsClient';
+import MetricsClient from '../../clients/MetricsClient';
 
-export const systemMessageValue = signal(
-  i18n.t('menu.assistant-setup.message-template.system-message-template.template1'),
-);
+export const systemMessageValue = signal('intial-value');
 
 const AssistantSetupMenu = () => {
   const { t } = useTranslation();
+
+  if (systemMessageValue.value === 'intial-value') {
+    systemMessageValue.value = t(
+      'menu.assistant-setup.message-template.system-message-template.template1',
+    );
+  }
 
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
     // Tracking in app insights

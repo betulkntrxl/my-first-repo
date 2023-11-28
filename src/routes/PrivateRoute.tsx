@@ -1,7 +1,7 @@
 import React, { useState, useEffect, PropsWithChildren } from 'react';
-import AuthenticationClient from './clients/AuthenticationClient';
-import MetricsClient from './clients/MetricsClient';
-import { TraceSeverity } from './clients/models/MetricsModel';
+import AuthenticationClient from '../clients/AuthenticationClient';
+import MetricsClient from '../clients/MetricsClient';
+import { TraceSeverity } from '../clients/models/MetricsModel';
 
 const PrivateRoute = ({ children }: PropsWithChildren) => {
   const [checkingIfAuthenticated, setCheckingIfAuthenticated] = useState(true);

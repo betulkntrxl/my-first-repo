@@ -1,9 +1,6 @@
-interface SendPromptData {
+export interface SendPromptData {
   systemMessageValue: string;
-  newMessage: {
-    role: string;
-    content: any;
-  }[];
+  pastMessages: PastMessage[];
   messageToSend: string;
   temperature: number;
   topP: number;
@@ -11,4 +8,7 @@ interface SendPromptData {
   APITimeout: number;
 }
 
-export default SendPromptData;
+export interface PastMessage {
+  role: string;
+  content: any;
+}

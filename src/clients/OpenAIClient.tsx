@@ -1,5 +1,5 @@
 import axios from 'axios';
-import SendPromptData from './models/PromptModel';
+import { SendPromptData } from './models/PromptModel';
 import { setupRetryConfig } from './RetryConfig';
 
 // Setup retry logic
@@ -16,7 +16,7 @@ const OpenAIClient = {
       {
         messages: [
           { role: 'system', content: sendPromptData.systemMessageValue },
-          ...sendPromptData.newMessage,
+          ...sendPromptData.pastMessages,
           { role: 'user', content: sendPromptData.messageToSend },
         ],
         temperature: sendPromptData.temperature,

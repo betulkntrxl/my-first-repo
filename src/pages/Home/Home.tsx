@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { getUA } from 'react-device-detect';
@@ -6,17 +6,17 @@ import { getUA } from 'react-device-detect';
 import MetricsClient from '../../clients/MetricsClient';
 import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import { TraceSeverity } from '../../clients/models/MetricsModel';
-import Menu from '../../components/Menu';
-import Messages from '../../components/Messages';
-import SendMessage, { messagesDisplay } from '../../components/SendMessage';
-import TermsAndConditions from '../../components/TermsAndConditions';
+import Menu from '../../components/Menu/Menu';
+import Messages from '../../components/Messages/Messages';
+import SendMessage, { allMessagesToDisplay } from '../../components/SendMessage/SendMessage';
+import TermsAndConditions from '../../components/TermsAndConditions/TermsAndConditions';
 
 export const orgDeployment = signal<string>('');
 
 const Home = () => {
   const { t } = useTranslation();
 
-  async function getOrgDeployment() {
+  const getOrgDeployment = async () => {
     VersionAndOrgClient.getOrgDeployment()
       .then(responseData => {
         orgDeployment.value = responseData.orgDeployment;
@@ -28,7 +28,7 @@ const Home = () => {
           properties: { errorResponse: error.response },
         });
       });
-  }
+  };
 
   useEffect(() => {
     // Tracking in app insights
@@ -65,7 +65,7 @@ const Home = () => {
             height: 500,
           }}
         >
-          {messagesDisplay.value.length < 3 ? ( // hide background when chat starts
+          {allMessagesToDisplay.value.length < 3 ? ( // hide background when chat starts
             <div
               style={{
                 position: 'absolute',
