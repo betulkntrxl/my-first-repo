@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { getUA } from 'react-device-detect';
@@ -10,6 +10,7 @@ import Menu from '../../components/Menu/Menu';
 import Messages from '../../components/Messages/Messages';
 import SendMessage, { allMessagesToDisplay } from '../../components/SendMessage/SendMessage';
 import TermsAndConditions from '../../components/TermsAndConditions/TermsAndConditions';
+import { MessagesAndSendMessageDiv } from './Home.styles';
 
 export const orgDeployment = signal<string>('');
 
@@ -45,53 +46,19 @@ const Home = () => {
     getOrgDeployment();
   }, [t]);
 
-  const bottomRef: any = useRef();
-
   return (
     // Wait for the Org Deployment to be set before rendering
     orgDeployment.value === '' ? null : (
       <div>
-        {orgDeployment.value === 'uson' && <TermsAndConditions />}
+        {
+          // Only show the T&C's for USON
+          orgDeployment.value === 'uson' && <TermsAndConditions />
+        }
         <Menu />
-
-        <div
-          style={{
-            backgroundAttachment: 'fixed',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center 90px',
-            width: '100%',
-            float: 'right',
-            margin: 10,
-            height: 500,
-          }}
-        >
-          {allMessagesToDisplay.value.length < 3 ? ( // hide background when chat starts
-            <div
-              style={{
-                position: 'absolute',
-                // color:'#B3CEDD',
-                color: 'steelblue',
-                //  backgroundColor: '#E5EFF3',
-                opacity: 0.6,
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                zIndex: -1,
-                overflow: 'hidden',
-                fontFamily: 'arial',
-              }}
-            />
-          ) : (
-            ''
-          )}
-
-          <div style={{ float: 'right', width: '100%' }}>
-            <Messages bottomRef={bottomRef} />
-          </div>
-
+        <MessagesAndSendMessageDiv>
+          <Messages />
           <SendMessage />
-        </div>
+        </MessagesAndSendMessageDiv>
       </div>
     )
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -9,10 +9,9 @@ import Typing from '../../assets/typing.gif';
 
 import { visible, displayValue, allMessagesToDisplay } from '../SendMessage/SendMessage';
 
-const Messages = (props: { bottomRef: any }) => {
+const Messages = () => {
   const { t } = useTranslation();
-
-  const { bottomRef } = props;
+  const bottomRef: any = useRef();
 
   const scrollToBottom = () => {
     setTimeout(() => {

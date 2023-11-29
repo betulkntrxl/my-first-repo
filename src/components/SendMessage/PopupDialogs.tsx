@@ -1,91 +1,29 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import MetricsClient from '../../clients/MetricsClient';
 import OKDialog from '../OKDialog/OkDialog';
 import ContinueCancelDialog from '../ContinueCancelDialog/ContinueCancelDialog';
 import {
+  PopupDialogCloseHandlers,
+  PopupDialogContinueHandlers,
   openResetChatSession,
   openSessionExpired,
   openAPIRateLimit,
   openAPITimeout,
   openAPIError,
   openInputTooLarge,
-  disabledBool,
-  disabledInput,
-} from './SendMessage';
+} from './PopupDialogHandlers';
 
 const PopupDialogs = () => {
   const { t } = useTranslation();
-
-  const handleResetChatSessionClose = () => {
-    // Tracking in app insights
-    MetricsClient.sendEvent({
-      name: 'ChatApp Reset Chat Closed',
-    });
-
-    openResetChatSession.value = false;
-  };
-
-  const handleResetChatSessionContinue = () => {
-    // Tracking in app insights
-    MetricsClient.sendEvent({
-      name: 'ChatApp Reset Chat Continue',
-    });
-
-    openResetChatSession.value = false;
-    // refresh the page
-    window.location.href = '/';
-  };
-
-  const handleSessionExpiredClose = () => {
-    openSessionExpired.value = false;
-    // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
-  };
-
-  const handleSessionExpiredContinue = () => {
-    openSessionExpired.value = false;
-    // redirect to login
-    window.location.href = '/';
-  };
-
-  const handleAPIRateLimitClose = () => {
-    openAPIRateLimit.value = false;
-    // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
-  };
-
-  const handleAPITimeoutClose = () => {
-    openAPITimeout.value = false;
-    // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
-  };
-
-  const handleAPIErrorClose = () => {
-    openAPIError.value = false;
-    // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
-  };
-
-  const handleInputTooLargeClose = () => {
-    openInputTooLarge.value = false;
-    // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
-  };
 
   return (
     <>
       <ContinueCancelDialog
         {...{
-          handleClose: handleResetChatSessionClose,
+          handleClose: PopupDialogCloseHandlers.closeResetChatDialog,
           openDialog: openResetChatSession.value,
-          handleContinue: handleResetChatSessionContinue,
+          handleContinue: PopupDialogContinueHandlers.continueResetChatDialog,
           headerText: t('popup-messages.reset-chat-header'),
           bodyText: t('popup-messages.reset-chat-body'),
         }}
@@ -93,9 +31,9 @@ const PopupDialogs = () => {
 
       <ContinueCancelDialog
         {...{
-          handleClose: handleSessionExpiredClose,
+          handleClose: PopupDialogCloseHandlers.closeSessionExpiredDialog,
           openDialog: openSessionExpired.value,
-          handleContinue: handleSessionExpiredContinue,
+          handleContinue: PopupDialogContinueHandlers.continueSessionExpiredDialog,
           headerText: t('popup-messages.session-expired-header'),
           bodyText: t('popup-messages.session-expired-body'),
         }}
@@ -103,7 +41,7 @@ const PopupDialogs = () => {
 
       <OKDialog
         {...{
-          handleClose: handleAPIErrorClose,
+          handleClose: PopupDialogCloseHandlers.closeAPIGeneralErrorDialog,
           openDialog: openAPIError.value,
           headerText: t('popup-messages.unexpected-error-header'),
           bodyText: t('popup-messages.unexpected-error-body'),
@@ -112,7 +50,7 @@ const PopupDialogs = () => {
 
       <OKDialog
         {...{
-          handleClose: handleAPITimeoutClose,
+          handleClose: PopupDialogCloseHandlers.closeAPITimeoutDialog,
           openDialog: openAPITimeout.value,
           headerText: t('popup-messages.api-timeout-header'),
           bodyText: t('popup-messages.api-timeout-body'),
@@ -121,7 +59,7 @@ const PopupDialogs = () => {
 
       <OKDialog
         {...{
-          handleClose: handleAPIRateLimitClose,
+          handleClose: PopupDialogCloseHandlers.closeAPIRateLimitDialog,
           openDialog: openAPIRateLimit.value,
           headerText: t('popup-messages.server-busy-header'),
           bodyText: t('popup-messages.server-busy-body'),
@@ -130,7 +68,7 @@ const PopupDialogs = () => {
 
       <OKDialog
         {...{
-          handleClose: handleInputTooLargeClose,
+          handleClose: PopupDialogCloseHandlers.closeInputTooLargeDialog,
           openDialog: openInputTooLarge.value,
           headerText: t('popup-messages.input-too-large-header'),
           bodyText: t('popup-messages.input-too-large-body'),
