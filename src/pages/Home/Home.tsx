@@ -8,7 +8,7 @@ import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import { TraceSeverity } from '../../clients/models/MetricsModel';
 import Menu from '../../components/Menu/Menu';
 import Messages from '../../components/Messages/Messages';
-import SendMessage, { allMessagesToDisplay } from '../../components/SendMessage/SendMessage';
+import SendMessage from '../../components/SendMessage/SendMessage';
 import TermsAndConditions from '../../components/TermsAndConditions/TermsAndConditions';
 import { MessagesAndSendMessageDiv } from './Home.styles';
 
