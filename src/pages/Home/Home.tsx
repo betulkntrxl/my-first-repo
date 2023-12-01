@@ -19,8 +19,8 @@ const Home = () => {
 
   const getOrgDeployment = async () => {
     VersionAndOrgClient.getOrgDeployment()
-      .then(responseData => {
-        orgDeployment.value = responseData.orgDeployment;
+      .then(response => {
+        orgDeployment.value = response.data.orgDeployment;
       })
       .catch(error => {
         MetricsClient.sendTrace({

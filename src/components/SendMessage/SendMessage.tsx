@@ -87,7 +87,8 @@ const SendMessage = () => {
 
     // Calling OpenAI
     OpenAIClient.sendPrompt(SEND_PROMPT_DATA)
-      .then(responseData => {
+      .then(response => {
+        const responseData = response.data;
         tokenCount.value = responseData.usage.total_tokens;
         const USED_MORE_THAN_MAX_TOKENS = responseData.usage.total_tokens > maxTokens;
 
@@ -125,6 +126,8 @@ const SendMessage = () => {
           // Rate Limit error
           PopupDialogOpenHandlers.openAPIRateLimitDialog();
         } else if (error.request) {
+          console.log(`error ${JSON.stringify(error, null, 2)}`);
+          console.log(`error.request ${JSON.stringify(error.request, null, 2)}`);
           // Axios timeout will trigger this flow
           PopupDialogOpenHandlers.openAPITimeoutDialog();
         } else {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { signal } from '@preact/signals-react';
 import {
   FormControl,
@@ -15,16 +15,16 @@ import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material/Select';
 import MetricsClient from '../../clients/MetricsClient';
 
-export const systemMessageValue = signal('intial-value');
+export const systemMessageValue = signal('');
 
 const AssistantSetupMenu = () => {
   const { t } = useTranslation();
 
-  if (systemMessageValue.value === 'intial-value') {
+  useEffect(() => {
     systemMessageValue.value = t(
       'menu.assistant-setup.message-template.system-message-template.template1',
     );
-  }
+  }, []);
 
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
     // Tracking in app insights
@@ -98,7 +98,7 @@ const AssistantSetupMenu = () => {
         multiline
         fullWidth
         rows={4}
-        value={systemMessageValue}
+        value={systemMessageValue.value}
         onChange={handleSystemMessageValueChange}
         inputProps={{
           title: 'system-message-input',

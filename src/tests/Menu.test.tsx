@@ -1,28 +1,19 @@
 import React from 'react';
+import axios from 'axios';
+
 import { render, cleanup, screen, act, waitFor, fireEvent } from '@testing-library/react';
 
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import App from '../App';
+import { setupMockAxiosSuccessResponses } from './test-helper';
 
-const server = setupServer(
-  rest.get('/api/auth/isAuthenticated', (req, res, ctx) =>
-    res(ctx.json({ authenticated: 'true' })),
-  ),
-  rest.get('/api/version', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
-  rest.get('/api/org-deployment', (req, res, ctx) => res(ctx.json({ orgDeployment: 'mckesson' }))),
-  rest.post('/api/app-insights-event', (req, res, ctx) => res(ctx.status(201))),
-  rest.post('/api/app-insights-trace', (req, res, ctx) => res(ctx.status(201))),
-);
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-describe('testing the App', () => {
+describe('testing the Menu', () => {
   afterEach(cleanup);
 
   it('opens a menu', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
 

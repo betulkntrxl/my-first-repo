@@ -36,6 +36,8 @@ const ConfigurationMenu = () => {
   const handleTemperatureInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) > 1) {
       temperature.value = 1;
+    } else if (Number(event.target.value) < 0) {
+      temperature.value = 0;
     } else {
       temperature.value = Number(event.target.value);
     }
@@ -44,6 +46,8 @@ const ConfigurationMenu = () => {
   const handleTopPInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) > 1) {
       topP.value = 1;
+    } else if (Number(event.target.value) < 0) {
+      topP.value = 0;
     } else {
       topP.value = Number(event.target.value);
     }
@@ -63,6 +67,8 @@ const ConfigurationMenu = () => {
     const tmpval = Number(event.target.value);
     if (tmpval > 20) {
       pastMessages.value = 20;
+    } else if (tmpval < 0) {
+      pastMessages.value = 0;
     } else {
       pastMessages.value = tmpval;
     }

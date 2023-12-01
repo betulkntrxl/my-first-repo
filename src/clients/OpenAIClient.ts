@@ -10,8 +10,8 @@ const HEADERS = {
 };
 
 const OpenAIClient = {
-  sendPrompt: async (sendPromptData: SendPromptData) => {
-    const { data } = await axios.post(
+  sendPrompt: async (sendPromptData: SendPromptData) =>
+    axios.post(
       '/api/prompt',
       {
         messages: [
@@ -30,10 +30,7 @@ const OpenAIClient = {
         timeout: sendPromptData.APITimeout * 1000, // axios expects timeout in milliseconds
         headers: HEADERS,
       },
-    );
-
-    return data;
-  },
+    ),
 };
 
 export default OpenAIClient;

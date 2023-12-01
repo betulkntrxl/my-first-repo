@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -14,9 +14,9 @@ import AssistantSetupMenu from '../AssistantSetupMenu/AssistantSetupMenu';
 const AccordionMenu = () => {
   const { t } = useTranslation();
 
-  const [expanded, setExpanded] = React.useState<string | false>('panel1');
+  const [expanded, setExpanded] = useState<string | false>('panel1');
 
-  const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+  const handleChange = (panel: string) => (event: SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
 

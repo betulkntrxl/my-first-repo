@@ -23,10 +23,10 @@ import { orgDeployment } from '../../pages/Home/Home';
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
 
 const Menu = () => {
+  const { t, i18n } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [version, setVersion] = useState('');
   const [state, setState] = useState({});
-  const { t, i18n } = useTranslation();
 
   const handleDrawerToggle = () => {
     if (!mobileOpen) {
@@ -41,8 +41,8 @@ const Menu = () => {
 
   const getVersion = async () => {
     VersionAndOrgClient.getApplicationVersion()
-      .then(responseData => {
-        setVersion(responseData.version);
+      .then(response => {
+        setVersion(response.data.version);
       })
       .catch(error => {
         MetricsClient.sendTrace({

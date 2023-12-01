@@ -9,9 +9,9 @@ const PrivateRoute = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     AuthenticationClient.isAuthenticated()
-      .then(responseData => {
+      .then(response => {
         // User is authenticated
-        if (responseData.authenticated === 'true') {
+        if (response.data.authenticated === 'true') {
           setIsAuthenticated(true);
           setCheckingIfAuthenticated(false);
         }
