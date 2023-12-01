@@ -16,20 +16,20 @@ const ConfigurationMenu = () => {
 
   /* eslint-disable */
   const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
-    Number.isNaN(newValue) ? 0 : (temperature.value = newValue as number);
+    temperature.value = Number.isNaN(newValue) ? 0 : (newValue as number);
   };
 
   const handleTopPSliderChange = (event: Event, newValue: number | number[]) => {
-    Number.isNaN(newValue) ? 0 : (topP.value = newValue as number);
+    topP.value = Number.isNaN(newValue) ? 0 : (newValue as number);
   };
   const handleMaxTokensSliderChange = (event: Event, newValue: number | number[]) => {
-    Number.isNaN(newValue) ? 0 : (maxTokens.value = newValue as number);
+    maxTokens.value = Number.isNaN(newValue) ? 0 : (newValue as number);
   };
   const handlePastMessagesSliderChange = (event: Event, newValue: number | number[]) => {
-    Number.isNaN(newValue) ? 0 : (pastMessages.value = newValue as number);
+    pastMessages.value = Number.isNaN(newValue) ? 0 : (newValue as number);
   };
   const handleAPITimeoutSliderChange = (event: Event, newValue: number | number[]) => {
-    Number.isNaN(newValue) ? 0 : (APITimeout.value = newValue as number);
+    APITimeout.value = Number.isNaN(newValue) ? 0 : (newValue as number);
   };
   /* eslint-enable */
 
