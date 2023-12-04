@@ -2,11 +2,11 @@ import { createProxyMiddleware, fixRequestBody, responseInterceptor } from 'http
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from './logger-config.js';
 
-const createErrorMessage = uuid => {
+const createErrorMessage = (uuid, openAIErrorCode, openAIErrorMessage) => {
   const errorMessage = {
     id: uuid,
-    message:
-      'Unfortunately something went wrong, the server maybe busy, if you would like to report this issue please include the id of this error.',
+    openAIErrorCode,
+    message: openAIErrorMessage,
   };
   return Buffer.from(JSON.stringify(errorMessage));
 };
@@ -56,7 +56,22 @@ const setupMulesoftProxy = appInsights => {
         }
         // Respond with a consistent error message
         // while also hiding api error details
-        clientResponse = createErrorMessage(errorId);
+        let openAIErrorCode = 'N/A';
+        let openAIErrorMessage =
+          'Unfortunately something went wrong, if you would like to report this issue please include the id of this error.';
+
+        const mulesoftErrorMessage = JSON.parse(responseBuffer.toString('utf8'));
+        if (
+          mulesoftErrorMessage.errorDetails[1] &&
+          mulesoftErrorMessage.errorDetails[1].message &&
+          mulesoftErrorMessage.errorDetails[1].message.error &&
+          mulesoftErrorMessage.errorDetails[1].message.error.code &&
+          mulesoftErrorMessage.errorDetails[1].message.error.message
+        ) {
+          openAIErrorCode = mulesoftErrorMessage.errorDetails[1].message.error.code;
+          openAIErrorMessage = mulesoftErrorMessage.errorDetails[1].message.error.message;
+        }
+        clientResponse = createErrorMessage(errorId, openAIErrorCode, openAIErrorMessage);
       } else {
         logger.info(`Prompt request successful ${proxyRes.statusCode} `);
         clientResponse = responseBuffer;

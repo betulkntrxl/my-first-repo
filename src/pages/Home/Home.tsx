@@ -414,6 +414,22 @@ const Home = () => {
 
             handleAPIRateLimitOpen();
           }
+          // Rate Limit error
+          else if (
+            error.response.status === 400 &&
+            error.response.data &&
+            error.response.data.openAIErrorCode &&
+            error.response.data.openAIErrorCode === 'context_length_exceeded'
+          ) {
+            // turn off typing animation
+            setVisible(false);
+            setMessagesDisplay([
+              ...messagesDisplay,
+              { role: 'user', content: data.chatsession, id: data.chatsession },
+            ]);
+
+            handleInputTooLargeOpen();
+          }
           // Every other type of error
           else {
             // turn off typing animation
