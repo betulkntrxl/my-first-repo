@@ -125,9 +125,16 @@ const SendMessage = () => {
         } else if (error.response?.status === 429) {
           // Rate Limit error
           PopupDialogOpenHandlers.openAPIRateLimitDialog();
+        } else if (
+          error.response.status === 413 ||
+          (error.response.status === 400 &&
+            error.response.data &&
+            error.response.data.openAIErrorCode &&
+            error.response.data.openAIErrorCode === 'context_length_exceeded')
+        ) {
+          // Input too large error
+          PopupDialogOpenHandlers.openInputTooLargeDialog();
         } else if (error.request) {
-          console.log(`error ${JSON.stringify(error, null, 2)}`);
-          console.log(`error.request ${JSON.stringify(error.request, null, 2)}`);
           // Axios timeout will trigger this flow
           PopupDialogOpenHandlers.openAPITimeoutDialog();
         } else {
