@@ -414,12 +414,13 @@ const Home = () => {
 
             handleAPIRateLimitOpen();
           }
-          // Rate Limit error
+          // Input too large error
           else if (
-            error.response.status === 400 &&
-            error.response.data &&
-            error.response.data.openAIErrorCode &&
-            error.response.data.openAIErrorCode === 'context_length_exceeded'
+            error.response.status === 413 ||
+            (error.response.status === 400 &&
+              error.response.data &&
+              error.response.data.openAIErrorCode &&
+              error.response.data.openAIErrorCode === 'context_length_exceeded')
           ) {
             // turn off typing animation
             setVisible(false);
