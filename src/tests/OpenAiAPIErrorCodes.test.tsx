@@ -98,16 +98,14 @@ describe('OpenAI API errors', () => {
     setupMockAxiosOpenAIAPIFailureResponses(mockedAxios, 500);
     await act(async () => {
       render(<App />);
+      const user = userEvent.setup();
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
         const sendmessageElement = screen.getByTitle('sendmessage');
 
-        fireEvent.click(sendmessageElement);
-        fireEvent.change(sendmessageElement, {
-          target: { value: 'hello' },
-        });
-        // await user.keyboard('hello');
+        await user.click(sendmessageElement);
+        await user.keyboard('hello');
         const sendElement = screen.getByTitle('send');
-        fireEvent.click(sendElement);
+        await user.click(sendElement);
 
         // wait for dialog to be rendered
         await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {

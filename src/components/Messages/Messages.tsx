@@ -5,9 +5,9 @@ import Paper from '@mui/material/Paper';
 
 import SystemIcon from '../../assets/system.jpg';
 import UserIcon from '../../assets/user.jpg';
-import Typing from '../../assets/typing.gif';
+import BotThinking from '../../assets/typing.gif';
 
-import { visible, displayValue, allMessagesToDisplay } from '../SendMessage/SendMessage';
+import { displayValue, allMessagesToDisplay } from '../SendMessage/SendMessage';
 
 const Messages = () => {
   const { t } = useTranslation();
@@ -141,7 +141,7 @@ const Messages = () => {
                       <div style={{ width: '300px' }}>
                         <img
                           alt="assistant"
-                          src={Typing}
+                          src={BotThinking}
                           width="100px"
                           height={37}
                           style={{ marginTop: 40 }}
@@ -159,17 +159,6 @@ const Messages = () => {
           {
             // scroll to bottom of chat after system has responded
             scrollToBottom()
-          }
-
-          {
-            // show typing bubble while system is responding
-            visible.value === 'true' ? (
-              <div
-                style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '10%' }}
-              />
-            ) : (
-              ''
-            )
           }
         </Stack>
       </CardContent>

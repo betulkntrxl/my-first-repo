@@ -3,12 +3,16 @@ import {
   successPromptResponse,
   successIsAuthenticatedResponse,
   successGetVersionResponse,
-  successGetOrgDeployment,
+  successGetOrgDeploymentMcKesson,
+  successGetOrgDeploymentUson,
   successPostMetricEvent,
   successPostMetricTrace,
 } from './test-data';
 
-const setupMockAxiosSuccessResponses = (mockedAxios: jest.Mocked<typeof axios>) => {
+const setupMockAxiosSuccessResponses = (
+  mockedAxios: jest.Mocked<typeof axios>,
+  orgDeployment = 'mckesson',
+) => {
   mockedAxios.get.mockImplementation((url: string) => {
     switch (url) {
       case '/api/auth/isAuthenticated':
@@ -16,7 +20,11 @@ const setupMockAxiosSuccessResponses = (mockedAxios: jest.Mocked<typeof axios>) 
       case '/api/version':
         return Promise.resolve(successGetVersionResponse);
       case '/api/org-deployment':
-        return Promise.resolve(successGetOrgDeployment);
+        return Promise.resolve(
+          orgDeployment === 'mckesson'
+            ? successGetOrgDeploymentMcKesson
+            : successGetOrgDeploymentUson,
+        );
       default:
         return Promise.reject(new Error('not found'));
     }
@@ -47,7 +55,7 @@ const setupMockAxiosOpenAIAPIFailureResponses = (
       case '/api/version':
         return Promise.resolve(successGetVersionResponse);
       case '/api/org-deployment':
-        return Promise.resolve(successGetOrgDeployment);
+        return Promise.resolve(successGetOrgDeploymentMcKesson);
       default:
         return Promise.reject(new Error('not found'));
     }

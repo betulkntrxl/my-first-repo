@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import App from '../App';
 import { setupMockAxiosSuccessResponses } from './test-helper';
@@ -16,8 +17,17 @@ describe('Token Input Limit', () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
+      const user = userEvent.setup();
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
         const sendmessageElement = screen.getByTitle('sendmessage');
+
+        // For some reason user.keyboard(TOO_MUCH_TEXT) just hangs
+        // If we just use fireEvent then the send button won't become enabled
+        // And the test will fail so for a work around I'm using user.keyboard
+        // to enter some text first, this enables the send button
+        // and then use fireEvent to put in the TOO_MUCH_TEXT
+        await user.click(sendmessageElement);
+        await user.keyboard('enable send button');
 
         fireEvent.click(sendmessageElement);
         fireEvent.change(sendmessageElement, {

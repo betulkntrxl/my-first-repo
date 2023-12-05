@@ -1,6 +1,5 @@
 import { signal } from '@preact/signals-react';
 import { pastMessages } from '../ConfigurationMenu/ConfigurationMenu';
-import { visible } from './SendMessage';
 
 export interface AllDisplayMessages {
   role: string;
@@ -23,7 +22,7 @@ const updateAllMessagesToDisplay = (
   messageType: MessageType,
   allMessagesToDisplay: AllDisplayMessages[],
 ) => {
-  visible.value = 'false';
+  // increment message ID before we add a new message
   messageId.value += 1;
   return [...allMessagesToDisplay, { role: messageType, content: newMessage, id: messageId.value }];
 };

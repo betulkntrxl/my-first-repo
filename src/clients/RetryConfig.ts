@@ -4,7 +4,7 @@ import MetricsClient from './MetricsClient';
 
 const setupRetryConfig = () => {
   axiosRetry(axios, {
-    retries: 3,
+    retries: 2,
     shouldResetTimeout: true,
     onRetry: (retryCount, error) => {
       // error wasn't a proper object so using JSON.parse to make it so

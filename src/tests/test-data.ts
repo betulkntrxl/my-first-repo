@@ -37,10 +37,17 @@ const successGetVersionResponse = {
   },
 };
 
-const successGetOrgDeployment = {
+const successGetOrgDeploymentMcKesson = {
   status: 200,
   data: {
     orgDeployment: 'mckesson',
+  },
+};
+
+const successGetOrgDeploymentUson = {
+  status: 200,
+  data: {
+    orgDeployment: 'uson',
   },
 };
 
@@ -58,7 +65,8 @@ export {
   successPromptResponse,
   successIsAuthenticatedResponse,
   successGetVersionResponse,
-  successGetOrgDeployment,
+  successGetOrgDeploymentMcKesson,
+  successGetOrgDeploymentUson,
   successPostMetricEvent,
   successPostMetricTrace,
 };

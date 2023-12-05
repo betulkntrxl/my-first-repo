@@ -2,7 +2,7 @@ import { signal } from '@preact/signals-react';
 import { TraceSeverity } from '../../clients/models/MetricsModel';
 import MetricsClient from '../../clients/MetricsClient';
 
-import { disabledBool, disabledInput } from './SendMessage';
+import { sendButtonDisabled, messageInputDisabled } from './SendMessage';
 import { APITimeout } from '../ConfigurationMenu/ConfigurationMenu';
 
 export const openResetChatSession = signal<boolean>(false);
@@ -74,31 +74,27 @@ const PopupDialogCloseHandlers = {
   closeSessionExpiredDialog: () => {
     openSessionExpired.value = false;
     // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
+    messageInputDisabled.value = false;
   },
   closeAPIRateLimitDialog: () => {
     openAPIRateLimit.value = false;
     // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
+    messageInputDisabled.value = false;
   },
   closeAPITimeoutDialog: () => {
     openAPITimeout.value = false;
     // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
+    messageInputDisabled.value = false;
   },
   closeAPIGeneralErrorDialog: () => {
     openAPIError.value = false;
     // enable send box
-    disabledBool.value = false;
-    disabledInput.value = false;
+    messageInputDisabled.value = false;
   },
   closeInputTooLargeDialog: () => {
-    openSessionExpired.value = false;
-    // redirect to login
-    window.location.href = '/';
+    openInputTooLarge.value = false;
+    // enable send box
+    messageInputDisabled.value = false;
   },
 };
 

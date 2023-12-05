@@ -110,4 +110,17 @@ describe('testing Send Messages', () => {
       );
     });
   });
+
+  it('the token count is rendered', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+    await act(async () => {
+      render(<App />);
+      await waitFor(() =>
+        expect(screen.getByRole('button', { name: 'token-count: 0' })).toBeVisible(),
+      ).then(() => {
+        const tokenCount = screen.getByRole('button', { name: 'token-count: 0' });
+        expect(tokenCount).toBeTruthy();
+      });
+    });
+  });
 });

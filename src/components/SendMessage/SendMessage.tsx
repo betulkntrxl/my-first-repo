@@ -29,10 +29,8 @@ import { temperature, topP, maxTokens, APITimeout } from '../ConfigurationMenu/C
 
 import PopupDialogs from './PopupDialogs';
 
-export const visible = signal<string>('true');
-
-export const disabledBool = signal<boolean>(false);
-export const disabledInput = signal(false);
+export const sendButtonDisabled = signal<boolean>(true);
+export const messageInputDisabled = signal(false);
 
 export const displayValue = signal<string>('block');
 
@@ -41,16 +39,6 @@ export const allMessagesToDisplay = signal<AllDisplayMessages[]>([]);
 const SendMessage = () => {
   const { t } = useTranslation();
   const welcomeMessage = t('welcome-message');
-  if (allMessagesToDisplay.value.length === 0) {
-    allMessagesToDisplay.value = [
-      ...allMessagesToDisplay.value,
-      {
-        role: 'system',
-        content: welcomeMessage,
-        id: 0,
-      },
-    ];
-  }
   const promptInputText = useSignal<string>('');
   const tokenMessage = useSignal<string>('');
   const tokenCount = useSignal<number>(0);
@@ -59,6 +47,17 @@ const SendMessage = () => {
   useEffect(() => {
     // set focus to input field
     (inputRef.current as any).focus();
+
+    if (allMessagesToDisplay.value.length === 0) {
+      allMessagesToDisplay.value = [
+        ...allMessagesToDisplay.value,
+        {
+          role: 'system',
+          content: welcomeMessage,
+          id: 0,
+        },
+      ];
+    }
 
     const AUTH_INTERVAL = setInterval(async () => {
       if (hasCookieExpired()) {
@@ -90,14 +89,17 @@ const SendMessage = () => {
       .then(response => {
         const responseData = response.data;
         tokenCount.value = responseData.usage.total_tokens;
-        const USED_MORE_THAN_MAX_TOKENS = responseData.usage.total_tokens > maxTokens;
+        const USED_MORE_THAN_MAX_TOKENS = responseData.usage.total_tokens > maxTokens.value;
 
         if (USED_MORE_THAN_MAX_TOKENS) {
           // Tracking in app insights
           MetricsClient.sendTrace({
             message: 'ChatApp Used tokens is greater than max tokens',
             severity: TraceSeverity.WARNING,
-            properties: { maxTokens, totalTokens: responseData.usage.total_tokens },
+            properties: {
+              maxTokens: maxTokens.value,
+              totalTokens: responseData.usage.total_tokens,
+            },
           });
         }
 
@@ -110,8 +112,7 @@ const SendMessage = () => {
 
         displayValue.value = 'flex';
         // enable send box
-        disabledBool.value = false;
-        disabledInput.value = false;
+        messageInputDisabled.value = false;
       })
       .catch(error => {
         // Remove the last message i.e. the System message with the "thikning" gif
@@ -146,9 +147,8 @@ const SendMessage = () => {
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    disabledInput.value = true;
-    disabledBool.value = true;
-    visible.value = 'true';
+    messageInputDisabled.value = true;
+    sendButtonDisabled.value = true;
 
     gatherMetricsOnConfigurableSettings();
 
@@ -188,9 +188,9 @@ const SendMessage = () => {
     promptInputText.value = event.target.value;
 
     if (event.target.value === '') {
-      disabledBool.value = true;
+      sendButtonDisabled.value = true;
     } else {
-      disabledBool.value = false;
+      sendButtonDisabled.value = false;
     }
   };
 
@@ -223,7 +223,7 @@ const SendMessage = () => {
                   </Grid>
                   <textarea
                     ref={inputRef}
-                    // {...(disabledInput.value && { disabled: true })}
+                    {...(messageInputDisabled.value && { disabled: true })}
                     autoComplete="off"
                     title="sendmessage"
                     placeholder={t('type-message')}
@@ -253,7 +253,7 @@ const SendMessage = () => {
                     title="send"
                     variant="contained"
                     type="submit"
-                    {...(disabledBool.value && { disabled: true })}
+                    {...(sendButtonDisabled.value && { disabled: true })}
                     style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
                   >
                     {t('buttons.send')}
