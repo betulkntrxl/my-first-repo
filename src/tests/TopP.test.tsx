@@ -96,4 +96,26 @@ describe('testing TopP', () => {
       });
     });
   });
+
+  it('renders the Top P slider', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+    await act(async () => {
+      render(<App />);
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menuElement = screen.getByLabelText('menu');
+        fireEvent.click(menuElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+          async () => {
+            fireEvent.click(screen.getByLabelText('configuration'));
+            await waitFor(() => expect(screen.getByLabelText('Top P')).toBeVisible()).then(() => {
+              const topPElement = screen.getByLabelText('Top P');
+              fireEvent.mouseDown(topPElement);
+              expect(topPElement).toBeTruthy();
+            });
+          },
+        );
+      });
+    });
+  });
 });

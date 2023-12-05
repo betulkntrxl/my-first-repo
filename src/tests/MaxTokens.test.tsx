@@ -105,4 +105,28 @@ describe('testing Max Tokens', () => {
       });
     });
   });
+
+  it('renders the Max Tokens slider', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+    await act(async () => {
+      render(<App />);
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menuElement = screen.getByLabelText('menu');
+        fireEvent.click(menuElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
+          timeout: 10000,
+        }).then(async () => {
+          fireEvent.click(screen.getByLabelText('configuration'));
+          await waitFor(() => expect(screen.getByLabelText('Max Tokens')).toBeVisible()).then(
+            () => {
+              const maxTokensElement = screen.getByLabelText('Max Tokens');
+              fireEvent.mouseDown(maxTokensElement);
+              expect(maxTokensElement).toBeTruthy();
+            },
+          );
+        });
+      });
+    });
+  });
 });

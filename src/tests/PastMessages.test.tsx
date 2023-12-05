@@ -102,4 +102,28 @@ describe('testing Past Messages', () => {
       });
     });
   });
+
+  it('renders the Previous Messages slider', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+    await act(async () => {
+      render(<App />);
+      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
+        const menuElement = screen.getByLabelText('menu');
+        fireEvent.click(menuElement);
+        // wait for element to be rendered
+        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+          async () => {
+            fireEvent.click(screen.getByLabelText('configuration'));
+            await waitFor(() =>
+              expect(screen.getByLabelText('Past messages included')).toBeVisible(),
+            ).then(() => {
+              const previousMessages = screen.getByLabelText('Past messages included');
+              fireEvent.mouseDown(previousMessages);
+              expect(previousMessages).toBeTruthy();
+            });
+          },
+        );
+      });
+    });
+  });
 });
