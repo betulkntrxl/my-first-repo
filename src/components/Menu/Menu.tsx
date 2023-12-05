@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSignal } from '@preact/signals-react';
+
 import { useTranslation } from 'react-i18next';
 
 import AppBar from '@mui/material/AppBar';
@@ -24,25 +26,24 @@ import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
 
 const Menu = () => {
   const { t, i18n } = useTranslation();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [version, setVersion] = useState('');
-  const [state, setState] = useState({});
+  const mobileOpen = useSignal(false);
+  const version = useSignal('');
 
   const handleDrawerToggle = () => {
-    if (!mobileOpen) {
+    if (!mobileOpen.value) {
       // Tracking in app insights
       MetricsClient.sendEvent({
         name: 'Menu opened',
       });
     }
 
-    setMobileOpen(!mobileOpen);
+    mobileOpen.value = !mobileOpen.value;
   };
 
   const getVersion = async () => {
     VersionAndOrgClient.getApplicationVersion()
       .then(response => {
-        setVersion(response.data.version);
+        version.value = response.data.version;
       })
       .catch(error => {
         MetricsClient.sendTrace({
@@ -55,10 +56,7 @@ const Menu = () => {
 
   useEffect(() => {
     getVersion();
-    return () => {
-      setState({}); // clean state
-    };
-  }, [state]);
+  }, []);
 
   const drawerWidth = 400;
 
@@ -123,7 +121,7 @@ const Menu = () => {
         </div>
 
         <div style={{ float: 'left', marginLeft: 10 }}>
-          {t('menu.version')}: {version}
+          {t('menu.version')}: {version.value}
         </div>
       </Paper>
     </div>
@@ -246,7 +244,7 @@ const Menu = () => {
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
-          open={mobileOpen}
+          open={mobileOpen.value}
           onClose={handleDrawerToggle}
         >
           {drawer}

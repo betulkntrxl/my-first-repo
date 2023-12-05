@@ -29,7 +29,6 @@ import { temperature, topP, maxTokens, APITimeout } from '../ConfigurationMenu/C
 
 import PopupDialogs from './PopupDialogs';
 
-export const sendButtonDisabled = signal<boolean>(true);
 export const messageInputDisabled = signal(false);
 
 export const displayValue = signal<string>('block');
@@ -40,6 +39,7 @@ const SendMessage = () => {
   const { t } = useTranslation();
   const welcomeMessage = t('welcome-message');
   const promptInputText = useSignal<string>('');
+  const sendButtonDisabled = useSignal<boolean>(true);
   const tokenMessage = useSignal<string>('');
   const tokenCount = useSignal<number>(0);
   const inputRef = useRef(null);

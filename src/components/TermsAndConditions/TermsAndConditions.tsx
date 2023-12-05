@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSignal } from '@preact/signals-react';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MetricsClient from '../../clients/MetricsClient';
 
 const TermsAndConditions = () => {
-  const [open, setOpen] = useState(false);
-  const [acceptButtonDisabled, setAcceptButtonDisabled] = useState(true);
+  const open = useSignal(false);
+  const acceptButtonDisabled = useSignal(true);
 
   const handleReject = () => {
     // Tracking in app insights
@@ -28,7 +28,7 @@ const TermsAndConditions = () => {
     });
 
     localStorage.setItem('termsAccepted', '1.0.0');
-    setOpen(false);
+    open.value = false;
   };
 
   const handleScroll = (e: React.UIEvent<HTMLElement>) => {
@@ -38,20 +38,20 @@ const TermsAndConditions = () => {
       ) <= 30;
 
     if (nearBottomOfScroll) {
-      setAcceptButtonDisabled(false);
+      acceptButtonDisabled.value = false;
     }
   };
 
   useEffect(() => {
     if (localStorage.getItem('termsAccepted') !== '1.0.0') {
-      setOpen(true);
+      open.value = true;
     }
   }, []);
 
   return (
     <Dialog
       hideBackdrop
-      open={open}
+      open={open.value}
       scroll="paper"
       aria-labelledby="scroll-terms-title"
       aria-describedby="scroll-terms-description"
@@ -190,7 +190,7 @@ const TermsAndConditions = () => {
         <Button onClick={handleReject} title="reject-button">
           Reject
         </Button>
-        <Button disabled={acceptButtonDisabled} onClick={handleAccept} title="accept-button">
+        <Button disabled={acceptButtonDisabled.value} onClick={handleAccept} title="accept-button">
           Accept
         </Button>
       </DialogActions>

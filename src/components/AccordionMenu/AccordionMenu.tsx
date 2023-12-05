@@ -1,4 +1,5 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { SyntheticEvent } from 'react';
+import { useSignal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -14,16 +15,16 @@ import AssistantSetupMenu from '../AssistantSetupMenu/AssistantSetupMenu';
 const AccordionMenu = () => {
   const { t } = useTranslation();
 
-  const [expanded, setExpanded] = useState<string | false>('panel1');
+  const expanded = useSignal<string | false>('panel1');
 
   const handleChange = (panel: string) => (event: SyntheticEvent, newExpanded: boolean) => {
-    setExpanded(newExpanded ? panel : false);
+    expanded.value = newExpanded ? panel : false;
   };
 
   return (
     <>
       <ThemeProvider theme={AccordionTheme}>
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <Accordion expanded={expanded.value === 'panel1'} onChange={handleChange('panel1')}>
           <ThemeProvider theme={AccordionSummaryTheme}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -44,7 +45,7 @@ const AccordionMenu = () => {
         </Accordion>
       </ThemeProvider>
       <ThemeProvider theme={AccordionTheme}>
-        <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+        <Accordion expanded={expanded.value === 'panel2'} onChange={handleChange('panel2')}>
           <ThemeProvider theme={AccordionSummaryTheme}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

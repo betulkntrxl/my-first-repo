@@ -2,7 +2,7 @@ import { signal } from '@preact/signals-react';
 import { TraceSeverity } from '../../clients/models/MetricsModel';
 import MetricsClient from '../../clients/MetricsClient';
 
-import { sendButtonDisabled, messageInputDisabled } from './SendMessage';
+import { messageInputDisabled } from './SendMessage';
 import { APITimeout } from '../ConfigurationMenu/ConfigurationMenu';
 
 export const openResetChatSession = signal<boolean>(false);
