@@ -179,6 +179,14 @@ const SendMessage = () => {
 
     const pastMessagesToInclude = getPastMessagesToSendToOpenAiApi(allMessagesToDisplay.value);
 
+    // Check if it's going to break the token limit
+    if (
+      !isRequestWithinTokenLimit(systemMessageValue.value, pastMessagesToInclude, newMessageToSend)
+    ) {
+      PopupDialogOpenHandlers.openInputTooLargeDialog();
+      return;
+    }
+
     // Display users message
     allMessagesToDisplay.value = updateAllMessagesToDisplay(
       newMessageToSend,
@@ -192,13 +200,6 @@ const SendMessage = () => {
       MessageType.SYSTEM,
       allMessagesToDisplay.value,
     );
-
-    if (
-      !isRequestWithinTokenLimit(systemMessageValue.value, pastMessagesToInclude, newMessageToSend)
-    ) {
-      PopupDialogOpenHandlers.openInputTooLargeDialog();
-      return;
-    }
 
     sendNewMessageToOpenAiAPI(newMessageToSend, pastMessagesToInclude);
   };
