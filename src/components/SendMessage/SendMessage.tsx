@@ -117,30 +117,47 @@ const SendMessage = () => {
         messageInputDisabled.value = false;
       })
       .catch(error => {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+
         // Remove the last message i.e. the System message with the "thikning" gif
         allMessagesToDisplay.value = [...allMessagesToDisplay.value.slice(0, -1)];
 
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        if (error.response?.status === 401) {
+        if (error.response) {
           // Authentication error
-          PopupDialogOpenHandlers.openSessionExpiredDialog();
-        } else if (error.response?.status === 429) {
+          if (error.response.status === 401) {
+            // Authentication error
+            PopupDialogOpenHandlers.openSessionExpiredDialog();
+          }
           // Rate Limit error
-          PopupDialogOpenHandlers.openAPIRateLimitDialog();
-        } else if (
-          error.response.status === 413 ||
-          (error.response.status === 400 &&
-            error.response.data &&
-            error.response.data.openAIErrorCode &&
-            error.response.data.openAIErrorCode === 'context_length_exceeded')
-        ) {
+          else if (error.response.status === 429) {
+            // Rate Limit error
+            PopupDialogOpenHandlers.openAPIRateLimitDialog();
+          }
           // Input too large error
-          PopupDialogOpenHandlers.openInputTooLargeDialog();
-        } else if (error.request) {
+          else if (
+            error.response.status === 413 ||
+            (error.response.status === 400 &&
+              error.response.data &&
+              error.response.data.openAIErrorCode &&
+              error.response.data.openAIErrorCode === 'context_length_exceeded')
+          ) {
+            // Input too large error
+            PopupDialogOpenHandlers.openInputTooLargeDialog();
+          }
+          // Every other type of error
+          else {
+            // Every other type of error
+            PopupDialogOpenHandlers.openAPIGeneralErrorDialog();
+          }
+        }
+        // Axios timeout will trigger this flow
+        else if (error.request) {
           // Axios timeout will trigger this flow
           PopupDialogOpenHandlers.openAPITimeoutDialog();
-        } else {
+        }
+        // Something happened in setting up the request that triggered an Error
+        else {
           // Every other type of error
           PopupDialogOpenHandlers.openAPIGeneralErrorDialog();
         }
