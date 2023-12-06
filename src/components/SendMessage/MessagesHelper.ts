@@ -1,5 +1,6 @@
 import { signal } from '@preact/signals-react';
 import { pastMessages } from '../ConfigurationMenu/ConfigurationMenu';
+import { PastMessage } from '../../clients/models/PromptModel';
 
 export interface AllDisplayMessages {
   role: string;
@@ -43,15 +44,22 @@ const updateSystemMessageFromApiResponse = (
 // The number of past messages is configurable in the settings
 const getPastMessagesToSendToOpenAiApi = (allMessagesToDisplay: AllDisplayMessages[]) => {
   // First remove the id attribute of the messages as the OpenAI API Contract does not accept them
-  const allMessagesToDisplayWithoutId = allMessagesToDisplay.map(
-    ({ id, ...messagesWithOutIds }) => messagesWithOutIds,
-  );
-  // If all messages is greater than the pastMessages value configured in the settings
-  // then remove both the welcome message and the last user/system(bot) question/response messages
-  // Otherwise just remove the welcome message
-  return allMessagesToDisplayWithoutId.length > pastMessages.value
-    ? allMessagesToDisplayWithoutId.slice(3)
-    : allMessagesToDisplayWithoutId.slice(1);
+  // And remove the first message with slice because the first message is the welcome message
+  const allPastMessagesWithoutId = allMessagesToDisplay
+    .map(({ id, ...messagesWithOutIds }) => messagesWithOutIds)
+    .slice(1);
+
+  // Default the value to ninclude no past messages
+  let pastMessagesToInclude: PastMessage[] = [];
+  if (pastMessages.value > 0) {
+    if (allPastMessagesWithoutId.length > pastMessages.value) {
+      // using negative in the slice to get the pass messages at the end
+      pastMessagesToInclude = allPastMessagesWithoutId.slice(-pastMessages.value);
+    } else {
+      pastMessagesToInclude = allPastMessagesWithoutId;
+    }
+  }
+  return pastMessagesToInclude;
 };
 
 export {

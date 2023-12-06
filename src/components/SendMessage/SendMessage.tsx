@@ -47,7 +47,6 @@ const SendMessage = () => {
   useEffect(() => {
     // set focus to input field
     (inputRef.current as any).focus();
-
     if (allMessagesToDisplay.value.length === 0) {
       allMessagesToDisplay.value = [
         ...allMessagesToDisplay.value,
@@ -57,6 +56,9 @@ const SendMessage = () => {
           id: 0,
         },
       ];
+      systemMessageValue.value = t(
+        'menu.assistant-setup.message-template.system-message-template.template1',
+      );
     }
 
     const AUTH_INTERVAL = setInterval(async () => {
@@ -67,7 +69,7 @@ const SendMessage = () => {
     return () => {
       clearInterval(AUTH_INTERVAL);
     };
-  }, []);
+  }, [messageInputDisabled.value]);
 
   const sendNewMessageToOpenAiAPI = async (
     newMessageToSend: string,
@@ -158,6 +160,8 @@ const SendMessage = () => {
     // clear send message box while waiting
     promptInputText.value = '';
 
+    const pastMessagesToInclude = getPastMessagesToSendToOpenAiApi(allMessagesToDisplay.value);
+
     // Display users message
     allMessagesToDisplay.value = updateAllMessagesToDisplay(
       newMessageToSend,
@@ -171,8 +175,6 @@ const SendMessage = () => {
       MessageType.SYSTEM,
       allMessagesToDisplay.value,
     );
-
-    const pastMessagesToInclude = getPastMessagesToSendToOpenAiApi(allMessagesToDisplay.value);
 
     if (
       !isRequestWithinTokenLimit(systemMessageValue.value, pastMessagesToInclude, newMessageToSend)

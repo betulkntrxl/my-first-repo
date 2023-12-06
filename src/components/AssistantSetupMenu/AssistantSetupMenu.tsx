@@ -20,18 +20,7 @@ export const systemMessageValue = signal('');
 const AssistantSetupMenu = () => {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    systemMessageValue.value = t(
-      'menu.assistant-setup.message-template.system-message-template.template1',
-    );
-  }, []);
-
   const handleSystemMessageValueChange = (event: { target: { name: any; value: any } }) => {
-    // Tracking in app insights
-    MetricsClient.sendEvent({
-      name: 'System Message Changed',
-    });
-
     systemMessageValue.value = event.target.value;
   };
 
