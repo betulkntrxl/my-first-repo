@@ -38,7 +38,9 @@ const setupRetryConfig = () => {
           // Retry on Prompt server error from Mulesoft
           ERROR_RESPONSE_STATUS === 500 ||
           // Retry on Prompt Bad Gateway from Mulesoft
-          ERROR_RESPONSE_STATUS === 502)
+          ERROR_RESPONSE_STATUS === 502 ||
+          // Retry on Prompt Service Unavailable from Mulesoft
+          ERROR_RESPONSE_STATUS === 503)
       );
     },
   });
