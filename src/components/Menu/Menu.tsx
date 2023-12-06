@@ -150,7 +150,7 @@ const Menu = () => {
     Object.keys(systemMessageTemplates).forEach(key => {
       const value = systemMessageTemplates[key];
 
-      if (value === systemMessageValue) {
+      if (value === systemMessageValue.value) {
         systemMessageKey = key;
       }
     });
