@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import MetricsClient from '../../clients/MetricsClient';
 
 const TermsAndConditions = () => {
+  const T_AND_C_VERSION = '1.0.0';
   const open = useSignal(false);
   const acceptButtonDisabled = useSignal(true);
 
@@ -27,7 +28,7 @@ const TermsAndConditions = () => {
       name: 'ChatApp Terms Accepted',
     });
 
-    localStorage.setItem('termsAccepted', '1.0.0');
+    localStorage.setItem('termsAccepted', T_AND_C_VERSION);
     open.value = false;
   };
 
@@ -43,7 +44,7 @@ const TermsAndConditions = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('termsAccepted') !== '1.0.0') {
+    if (localStorage.getItem('termsAccepted') !== T_AND_C_VERSION) {
       open.value = true;
     }
   }, []);
@@ -71,7 +72,7 @@ const TermsAndConditions = () => {
           <b>EFFECTIVE DATE: December, 2023</b>
         </div>
         <div>
-          <b>VERSION: 1.0.0</b>
+          <b>VERSION: {T_AND_C_VERSION}</b>
         </div>
         <br />
         <div>
