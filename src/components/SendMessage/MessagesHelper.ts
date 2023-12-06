@@ -1,6 +1,9 @@
 import { signal } from '@preact/signals-react';
-import { pastMessages } from '../ConfigurationMenu/ConfigurationMenu';
 import { PastMessage } from '../../clients/models/PromptModel';
+import { TraceSeverity } from '../../clients/models/MetricsModel';
+import MetricsClient from '../../clients/MetricsClient';
+
+import { pastMessages } from '../ConfigurationMenu/ConfigurationMenu';
 
 export interface AllDisplayMessages {
   role: string;
@@ -16,6 +19,24 @@ export enum MessageType {
 // MessageId gets incremented BEFORE adding a new message
 // The welcome message has an id of 0, the next message will be 1 etc...
 const messageId = signal<number>(0);
+
+const getUsedTokensIsGreaterThanMaxTokensMessage = (usedTokenCount: number, maxTokens: number) => {
+  const USED_MORE_THAN_MAX_TOKENS = usedTokenCount > maxTokens;
+
+  if (USED_MORE_THAN_MAX_TOKENS) {
+    // Tracking in app insights
+    MetricsClient.sendTrace({
+      message: 'ChatApp Used tokens is greater than max tokens',
+      severity: TraceSeverity.WARNING,
+      properties: {
+        maxTokens,
+        totalTokens: usedTokenCount,
+      },
+    });
+  }
+
+  return USED_MORE_THAN_MAX_TOKENS ? 'max-tokens-reached' : '';
+};
 
 // Add message to display to the user
 const updateAllMessagesToDisplay = (
@@ -63,6 +84,7 @@ const getPastMessagesToSendToOpenAiApi = (allMessagesToDisplay: AllDisplayMessag
 };
 
 export {
+  getUsedTokensIsGreaterThanMaxTokensMessage,
   updateAllMessagesToDisplay,
   updateSystemMessageFromApiResponse,
   getPastMessagesToSendToOpenAiApi,

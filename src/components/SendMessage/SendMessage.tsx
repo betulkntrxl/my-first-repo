@@ -11,8 +11,6 @@ import CachedIcon from '@mui/icons-material/Cached';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import CustomButton from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
-import { TraceSeverity } from '../../clients/models/MetricsModel';
-import MetricsClient from '../../clients/MetricsClient';
 import OpenAIClient from '../../clients/OpenAIClient';
 import gatherMetricsOnConfigurableSettings from './MetricsOnConfigurableSettings';
 import {
@@ -21,6 +19,7 @@ import {
   updateAllMessagesToDisplay,
   updateSystemMessageFromApiResponse,
   getPastMessagesToSendToOpenAiApi,
+  getUsedTokensIsGreaterThanMaxTokensMessage,
 } from './MessagesHelper';
 import { hasCookieExpired, isRequestWithinTokenLimit } from './AdHocHelper';
 
@@ -90,23 +89,13 @@ const SendMessage = () => {
     OpenAIClient.sendPrompt(SEND_PROMPT_DATA)
       .then(response => {
         const responseData = response.data;
+
         tokenCount.value = responseData.usage.total_tokens;
-        const USED_MORE_THAN_MAX_TOKENS = responseData.usage.total_tokens > maxTokens.value;
+        tokenMessage.value = t(
+          getUsedTokensIsGreaterThanMaxTokensMessage(tokenCount.value, maxTokens.value),
+        );
 
-        if (USED_MORE_THAN_MAX_TOKENS) {
-          // Tracking in app insights
-          MetricsClient.sendTrace({
-            message: 'ChatApp Used tokens is greater than max tokens',
-            severity: TraceSeverity.WARNING,
-            properties: {
-              maxTokens: maxTokens.value,
-              totalTokens: responseData.usage.total_tokens,
-            },
-          });
-        }
-
-        tokenMessage.value = USED_MORE_THAN_MAX_TOKENS ? t('max-tokens-reached') : '';
-
+        // Update system message i.e. the thinking gif
         allMessagesToDisplay.value = updateSystemMessageFromApiResponse(
           responseData.choices[0].message.content,
           allMessagesToDisplay.value,
