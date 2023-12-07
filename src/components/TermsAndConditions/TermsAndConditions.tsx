@@ -66,7 +66,7 @@ const TermsAndConditions = () => {
         </div>
         <br />
         <div>
-          <b>U.S. Oncology Network (“USON”) Terms and Conditions of Use – McKesson’s ChatApp</b>
+          <b>The U.S. Oncology Network (“USON”) Terms and Conditions of Use – McKesson’s ChatApp</b>
         </div>
         <div>
           <b>EFFECTIVE DATE: December, 2023</b>
@@ -79,13 +79,12 @@ const TermsAndConditions = () => {
           McKesson’s ChatApp (“ChatApp” or “McKesson ChatApp”) is an enterprise-class solution
           offering a chat-based interface, akin to ChatGPT, offered by McKesson Technology to
           employees and certain, other authorized users via{' '}
-          <a href="https://chatapp.usoncology.com">chatapp.usoncology.com</a>. McKesson’s ChatApp is
-          provided to you for your convenience, to amplify productivity, and to expose you to
-          cutting-edge technology. If you are a clinical employee of a medical oncology practice
-          that has entered into a US Oncology Network Agreement for practice management services,
-          then these Terms of Use will govern your access to and/or use of McKesson’s ChatApp. The
-          following terms and conditions govern the use of McKesson’s ChatApp and the responses
-          generated and available therein.
+          <a href="https://chatapp.usoncology.com">chatapp.usoncology.com</a>. ChatApp is provided
+          to you for your convenience, to amplify productivity, and to expose you to cutting-edge
+          technology. If you are a clinical employee of a medical oncology practice that has entered
+          into a US Oncology Network Agreement for practice management services, then these Terms of
+          Use will govern your access to and/or use of ChatApp. The following terms and conditions
+          govern the use of ChatApp and the responses generated and available therein.
         </div>
         <br />
         <div>
@@ -94,7 +93,7 @@ const TermsAndConditions = () => {
         <br />
         <ol>
           <li>
-            Entering any proprietary business information, confidential information, Personal or{' '}
+            Entering any proprietary business information, confidential information, Personal or
             <strong>
               <u>
                 Protected Health Information (PHI), or other personal data (also known as “personal
@@ -104,11 +103,11 @@ const TermsAndConditions = () => {
           </li>
           <br />
           <li>
-            Access and use of McKesson’s ChatApp will be continuously tracked and monitored by
-            security personnel. By accessing and using ChatApp, you expressly consent to such
-            monitoring. In addition to continuous tracking and monitoring by security personnel, you
-            are the first and best line of defense in keeping McKesson, USON, and your practice’s
-            data, and that of its individual stakeholders, confidential and private.
+            Access and use of ChatApp will be continuously tracked and monitored by security
+            personnel. By accessing and using ChatApp, you expressly consent to such monitoring. In
+            addition to continuous tracking and monitoring by security personnel, you are the first
+            and best line of defense in keeping McKesson, USON, and your practice’s data, and that
+            of its individual stakeholders, confidential and private.
           </li>
           <br />
           <li>
@@ -132,16 +131,15 @@ const TermsAndConditions = () => {
           <li>
             You may not use, copy, modify, distribute, translate, reproduce, republish, disassemble,
             reverse engineer, decompile, mirror, frame, hyperlink or transmit any of the content or
-            materials of McKesson’s ChatApp or rent or sell use of or access to (such as on a time
-            share or service bureau basis) McKesson’s ChatApp, or any of the content or materials on
-            McKesson’s ChatApp. You may not permit third parties to access McKesson’s ChatApp or use
-            any McKesson ChatApp content.
+            materials of ChatApp or rent or sell use of or access to (such as on a time share or
+            service bureau basis) ChatApp, or any of the content or materials on ChatApp. You may
+            not permit third parties to access ChatApp or use any ChatApp content.
           </li>
           <br />
           <li>
-            You agree to use McKesson ChatApp for lawful purposes only. You may not use McKesson
-            ChatApp, or any McKesson ChatApp content, in any fashion other than as expressly
-            authorized herein, unless otherwise expressly agreed to in writing by McKesson.
+            You agree to use ChatApp for lawful purposes only. You may not use ChatApp, or any
+            ChatApp content, in any fashion other than as expressly authorized herein, unless
+            otherwise expressly agreed to in writing by McKesson.
           </li>
           <br />
           <li>
