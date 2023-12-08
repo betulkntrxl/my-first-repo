@@ -90,19 +90,17 @@ jobs:
         ########## Deploying USON ChatApp #############
         ###############################################
 
-        if [ "$ENV" = "dev" ] || [ "$ENV" = "qa" ]; then
-          # envsubst command will substitute environmental variables available to this step into the
-          # kubernetes manifest file
-          # e.g. ${IMAGE_NAME} in the manifest-dev.yml will be replaced with an actual value
-          # The output i.e. the manifest file with actual values is then piped into the kubectl
-          # apply command to deploy the resources to Kubernetes
-          envsubst < .kube/${USON_MANIFEST_NAME} | \
-          kubectl \
-            --token="$KUBERNETES_SERVICE_ACCOUNT" \
-            --certificate-authority=$CLUSTER_CERT \
-            --server=$CLUSTER_API \
-            apply -f -
-        fi
+        # envsubst command will substitute environmental variables available to this step into the
+        # kubernetes manifest file
+        # e.g. ${IMAGE_NAME} in the manifest-dev.yml will be replaced with an actual value
+        # The output i.e. the manifest file with actual values is then piped into the kubectl
+        # apply command to deploy the resources to Kubernetes
+        envsubst < .kube/${USON_MANIFEST_NAME} | \
+        kubectl \
+          --token="$KUBERNETES_SERVICE_ACCOUNT" \
+          --certificate-authority=$CLUSTER_CERT \
+          --server=$CLUSTER_API \
+          apply -f -
 
     - if: github.event.inputs.deploy-environment == 'prod'
       name: Mark Release
