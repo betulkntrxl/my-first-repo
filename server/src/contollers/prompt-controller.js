@@ -28,8 +28,15 @@ const addPromptHeaders = (req, res, next) => {
     req.headers.urn = 'test-user@mckesson.com';
     req.headers.bu = 'McKesson Corporate';
   } else {
-    req.headers.urn = req.userContext.userinfo.email || req.userContext.userinfo.preferred_username;
-    req.headers.bu = req.userContext.userinfo.company;
+    req.headers.urn =
+      req.userContext.userinfo.email ||
+      req.userContext.userinfo.preferred_username ||
+      'Not Available';
+    if (process.env.ORG_DEPLOYMENT === 'uson') {
+      req.headers.bu = 'US Oncology';
+    } else {
+      req.headers.bu = req.userContext.userinfo.company || 'Not Available';
+    }
   }
 
   next();

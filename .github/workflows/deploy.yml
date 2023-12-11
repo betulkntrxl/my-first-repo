@@ -34,6 +34,7 @@ jobs:
       env:
         KUBERNETES_SERVICE_ACCOUNT: ${{ secrets.KUBE_SA_TOKEN }}
         MANIFEST_NAME: manifest-${{ env.ENV }}.yml
+        USON_MANIFEST_NAME: manifest-uson-${{ env.ENV }}.yml
         CLUSTER_TYPE: "AKS"
         CLUSTER_REGION: "US"
         MULESOFT_OPENAI_CLIENT_ID: ${{ secrets.MULESOFT_OPENAI_CLIENT_ID }}
@@ -41,12 +42,16 @@ jobs:
         OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
         OKTA_CLIENT_SECRET: ${{ secrets.OKTA_CLIENT_SECRET }}
         OKTA_ISSUER: ${{ secrets.OKTA_ISSUER }}
+        USON_OKTA_CLIENT_ID: ${{ secrets.USON_OKTA_CLIENT_ID }}
+        USON_OKTA_CLIENT_SECRET: ${{ secrets.USON_OKTA_CLIENT_SECRET }}
+        USON_OKTA_ISSUER: ${{ secrets.USON_OKTA_ISSUER }}
         EXPRESS_SESSION_SECRET: ${{ secrets.EXPRESS_SESSION_SECRET }}
         REDIS_HOST: ${{ secrets.REDIS_HOST }}
         REDIS_KEY: ${{ secrets.REDIS_KEY }}
         ALLOW_TEST_USER: ${{ secrets.ALLOW_TEST_USER }}
         TEST_USER_API_KEY: ${{ secrets.TEST_USER_API_KEY }}
         APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.APPLICATION_INSIGHTS_CONNECTION_STRING }}
+        USON_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.USON_APPLICATION_INSIGHTS_CONNECTION_STRING }}
 
       run: |
         # Setting up cluster configurations, config files are in the kubectl image
@@ -65,12 +70,32 @@ jobs:
         eval CLUSTER_CERT="${SHARED_CLUSTER}_CERT"
         eval CLUSTER_API="${SHARED_CLUSTER}_API"
 
+        ###############################################
+        ######### Deploying McKesson ChatApp ##########
+        ###############################################
+
         # envsubst command will substitute environmental variables available to this step into the
         # kubernetes manifest file
         # e.g. ${IMAGE_NAME} in the manifest-dev.yml will be replaced with an actual value
         # The output i.e. the manifest file with actual values is then piped into the kubectl
         # apply command to deploy the resources to Kubernetes
         envsubst < .kube/${MANIFEST_NAME} | \
+        kubectl \
+          --token="$KUBERNETES_SERVICE_ACCOUNT" \
+          --certificate-authority=$CLUSTER_CERT \
+          --server=$CLUSTER_API \
+          apply -f -
+
+        ###############################################
+        ########## Deploying USON ChatApp #############
+        ###############################################
+
+        # envsubst command will substitute environmental variables available to this step into the
+        # kubernetes manifest file
+        # e.g. ${IMAGE_NAME} in the manifest-dev.yml will be replaced with an actual value
+        # The output i.e. the manifest file with actual values is then piped into the kubectl
+        # apply command to deploy the resources to Kubernetes
+        envsubst < .kube/${USON_MANIFEST_NAME} | \
         kubectl \
           --token="$KUBERNETES_SERVICE_ACCOUNT" \
           --certificate-authority=$CLUSTER_CERT \

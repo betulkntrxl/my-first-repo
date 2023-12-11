@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
@@ -42,12 +42,8 @@ jobs:
       - name: Lint/Format checks
         run: yarn lint:check && yarn prettier:check
 
-      - name: Get number of CPU cores
-        uses: SimenB/github-actions-cpu-cores@v2
-        id: cpu-cores
-
       - name: Run tests
-        run: CI=true yarn test --max-workers ${{ steps.cpu-cores.outputs.count }} --coverage .
+        run: CI=true yarn test --coverage .
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
