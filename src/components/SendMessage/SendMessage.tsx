@@ -134,6 +134,16 @@ const SendMessage = () => {
             // Input too large error
             PopupDialogOpenHandlers.openInputTooLargeDialog();
           }
+          // Azure OpenAI's Content Filter Error
+          else if (
+            error.response.status === 400 &&
+            error.response.data &&
+            error.response.data.openAIErrorCode &&
+            error.response.data.openAIErrorCode === 'content_filter'
+          ) {
+            // Input too large error
+            PopupDialogOpenHandlers.openInputTooLargeDialog();
+          }
           // Every other type of error
           else {
             // Every other type of error

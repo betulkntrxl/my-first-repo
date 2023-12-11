@@ -11,6 +11,7 @@ export const openAPIRateLimit = signal<boolean>(false);
 export const openAPITimeout = signal<boolean>(false);
 export const openAPIError = signal<boolean>(false);
 export const openInputTooLarge = signal<boolean>(false);
+export const openContentFilter = signal<boolean>(false);
 
 const PopupDialogOpenHandlers = {
   openResetChatDialog: () => {
@@ -60,6 +61,15 @@ const PopupDialogOpenHandlers = {
 
     openInputTooLarge.value = true;
   },
+  openContentFilterDialog: () => {
+    // Tracking in app insights
+    MetricsClient.sendTrace({
+      message: 'ChatApp Content Filter',
+      severity: TraceSeverity.ERROR,
+    });
+
+    openContentFilter.value = true;
+  },
 };
 
 const PopupDialogCloseHandlers = {
@@ -93,6 +103,11 @@ const PopupDialogCloseHandlers = {
   },
   closeInputTooLargeDialog: () => {
     openInputTooLarge.value = false;
+    // enable send box
+    messageInputDisabled.value = false;
+  },
+  closeContentFilterDialog: () => {
+    openContentFilter.value = false;
     // enable send box
     messageInputDisabled.value = false;
   },
