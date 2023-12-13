@@ -12,7 +12,7 @@ const getPromptRoutes = (mulesoft35TurboProxy, mulesoftGPT4Proxy) => {
 
   logger.info(`Setting up Prompt route...`);
 
-  promptRoutes.get('/api/models', getAvailableModels);
+  promptRoutes.get('/api/available-models', getAvailableModels);
 
   // Ensure prompt route is Authenticated
   // Intercept the prompt request to add headers

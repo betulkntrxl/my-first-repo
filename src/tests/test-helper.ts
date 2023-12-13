@@ -5,6 +5,7 @@ import {
   successGetVersionResponse,
   successGetOrgDeploymentMcKesson,
   successGetOrgDeploymentUson,
+  successGetAvailableModelsResponse,
   successPostMetricEvent,
   successPostMetricTrace,
 } from './test-data';
@@ -25,6 +26,8 @@ const setupMockAxiosSuccessResponses = (
             ? successGetOrgDeploymentMcKesson
             : successGetOrgDeploymentUson,
         );
+      case '/api/available-models':
+        return Promise.resolve(successGetAvailableModelsResponse);
       default:
         return Promise.reject(new Error('not found'));
     }
@@ -32,7 +35,7 @@ const setupMockAxiosSuccessResponses = (
 
   mockedAxios.post.mockImplementation((url: string) => {
     switch (url) {
-      case '/api/prompt':
+      case '/api/prompt/gpt35turbo':
         return Promise.resolve(successPromptResponse);
       case '/api/app-insights-event':
         return Promise.resolve(successPostMetricEvent);
@@ -56,6 +59,8 @@ const setupMockAxiosOpenAIAPIFailureResponses = (
         return Promise.resolve(successGetVersionResponse);
       case '/api/org-deployment':
         return Promise.resolve(successGetOrgDeploymentMcKesson);
+      case '/api/available-models':
+        return Promise.resolve(successGetAvailableModelsResponse);
       default:
         return Promise.reject(new Error('not found'));
     }
@@ -64,7 +69,7 @@ const setupMockAxiosOpenAIAPIFailureResponses = (
   mockedAxios.post.mockImplementation((url: string) => {
     switch (url) {
       /* eslint-disable */
-      case '/api/prompt':
+      case '/api/prompt/gpt35turbo':
         return Promise.reject({
           response: {
             status: httpStatusCode,

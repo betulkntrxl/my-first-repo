@@ -16,7 +16,7 @@ const HEADERS = {
 };
 
 const OpenAIClient = {
-  getAvailableModels: async () => axios.get('/api/models'),
+  getAvailableModels: async () => axios.get('/api/available-models'),
   sendPrompt: async (sendPromptData: SendPromptData, model: GPT_MODELS) =>
     axios.post(
       getPromptPath(model),
