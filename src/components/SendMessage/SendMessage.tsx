@@ -10,7 +10,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import CustomButton from './SendMessage.styles';
-import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
+import { SendPromptData, PastMessage, GPT_MODELS } from '../../clients/models/PromptModel';
 import OpenAIClient from '../../clients/OpenAIClient';
 import gatherMetricsOnConfigurableSettings from './MetricsOnConfigurableSettings';
 import {
@@ -24,7 +24,14 @@ import {
 import { hasCookieExpired, isRequestWithinTokenLimit } from './AdHocHelper';
 
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
-import { temperature, topP, maxTokens, APITimeout } from '../ConfigurationMenu/ConfigurationMenu';
+import {
+  model,
+  tokenLimit,
+  temperature,
+  topP,
+  maxTokens,
+  APITimeout,
+} from '../ConfigurationMenu/ConfigurationMenu';
 
 import PopupDialogs from './PopupDialogs';
 
@@ -86,7 +93,7 @@ const SendMessage = () => {
     };
 
     // Calling OpenAI
-    OpenAIClient.sendPrompt(SEND_PROMPT_DATA)
+    OpenAIClient.sendPrompt(SEND_PROMPT_DATA, model.value)
       .then(response => {
         const responseData = response.data;
 
@@ -170,7 +177,12 @@ const SendMessage = () => {
 
     // Check if it's going to break the token limit
     if (
-      !isRequestWithinTokenLimit(systemMessageValue.value, pastMessagesToInclude, newMessageToSend)
+      !isRequestWithinTokenLimit(
+        systemMessageValue.value,
+        pastMessagesToInclude,
+        newMessageToSend,
+        tokenLimit.value,
+      )
     ) {
       PopupDialogOpenHandlers.openInputTooLargeDialog();
       return;

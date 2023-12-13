@@ -1,5 +1,8 @@
 import { logger } from '../configs/logger-config.js';
 
+const GPT_3_5_TURBO_4K = 'GPT-3-5-Turbo-4K';
+const GPT_4_32K = 'GPT-4-32K';
+
 /* eslint-disable */
 const checkIfUserIsAuthorizedForGPT4 = (req, res, next) => {
   logger.info(`Checking if user is authorized for GPT4...`);
@@ -16,6 +19,18 @@ const checkIfUserIsAuthorizedForGPT4 = (req, res, next) => {
   next();
 };
 /* eslint-enable */
+
+const getAvailableModels = (req, res, next) => {
+  logger.info(`Getting available models...`);
+  const models = [GPT_3_5_TURBO_4K];
+  const userChatAppGroups = req.userContext.userinfo.ChatApp_groups;
+
+  if (userChatAppGroups.includes(`mt-mckesson-chatapp-gpt4-${process.env.DEPLOY_STAGE}`)) {
+    logger.info(`User has GPT4 access`);
+    models.push(GPT_4_32K);
+  }
+  res.send(`{"availableModels": ${JSON.stringify(models)}}`);
+};
 
 const addPromptHeaders = (req, res, next) => {
   logger.info(`Adding required and optional headers to http request to Mulesoft...`);
@@ -42,4 +57,4 @@ const addPromptHeaders = (req, res, next) => {
   next();
 };
 
-export { checkIfUserIsAuthorizedForGPT4, addPromptHeaders };
+export { checkIfUserIsAuthorizedForGPT4, getAvailableModels, addPromptHeaders };

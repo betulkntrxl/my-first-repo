@@ -4,6 +4,8 @@ const ConfigurationConstants = {
   DEFAULT_MAX_TOKENS: 2000,
   DEFAULT_PAST_MESSAGES: 10,
   DEFAULT_API_TIMEOUT: 10,
+  TOKEN_LIMIT_GPT_3_5_TURBO_4K: 4096,
+  TOKEN_LIMIT_GPT_4_32K: 8192,
 } as const;
 
 export default ConfigurationConstants;

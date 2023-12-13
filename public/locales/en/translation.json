@@ -44,12 +44,14 @@
     },
     "configuration": {
       "title": "Configuration",
+      "model": "Model",
+      "model-tooltip": "Choose which model to execute your prompts against.",
       "temperature": "Temperature",
       "temperature-tooltip": "Controls randomness. Lowering the temperature means that the model will produce more repetitive and deterministic responses. Increasing the temperature will result in more unexpected or creative responses. Try adjusting temperature or Top P but not both.",
       "top_p": "Top_P",
       "top_p-tooltip": "Similar to temperature, this controls randomness but uses a different method. Lowering Top P will narrow the model’s token selection to likelier tokens. Increasing Top P will let the model choose from tokens with both high and low likelihood. Try adjusting temperature or Top P but not both.",
       "max-tokens": "Max Tokens",
-      "max-tokens-tooltip": "Set a limit on the number of tokens per model response. The API supports a maximum of 4000 tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.",
+      "max-tokens-tooltip": "Set a limit on the number of tokens per model response. The API supports a maximum of number of tokens shared between the prompt (including system message, examples, message history, and user query) and the model's response. One token is roughly 4 characters for typical English text.",
       "past-messages-included": "Past Messages Included",
       "past-messages-included-tooltip": "Select the number of past messages to include in each new API request. This helps give the model context for new user queries. Setting this number to 10 will include 5 user queries and 5 system responses.",
       "api-timeout": "API Timeout",
@@ -72,6 +74,7 @@
     "server-busy-header": "Server is busy",
     "server-busy-body": "The server is currently busy.\nPlease try again at a later time.",
     "input-too-large-header": "Input too large",
-    "input-too-large-body": "The input you have entered is too large, the max is 4000 tokens which is roughly 3000 words, past messages are included in the input. Reset the chat or edit past messages in the configuration."
+    "input-too-large-35turbo-body": "The input you have entered is too large, the max is 4000 tokens which is roughly 3000 words, past messages are included in the input. Reset the chat or edit past messages in the configuration.",
+    "input-too-large-gpt432K-body": "The input you have entered is too large, the max is 32000 tokens which is roughly 3000 words, past messages are included in the input. Reset the chat or edit past messages in the configuration."
   }
 }
