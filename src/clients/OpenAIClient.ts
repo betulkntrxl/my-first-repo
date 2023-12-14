@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GPT_MODELS, SendPromptData } from './models/PromptModel';
-import { setupRetryConfig } from './RetryConfig';
+import { setupRetryConfig } from './configs/RetryConfig';
 
 // Setup retry logic
 setupRetryConfig();

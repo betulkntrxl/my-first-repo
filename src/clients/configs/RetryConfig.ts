@@ -1,6 +1,6 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import MetricsClient from './MetricsClient';
+import MetricsClient from '../MetricsClient';
 
 const setupRetryConfig = () => {
   axiosRetry(axios, {
@@ -26,7 +26,7 @@ const setupRetryConfig = () => {
 
       return (
         // Only retry on prompt requests with specific error status
-        ERROR_URL === '/api/prompt' &&
+        ERROR_URL.includes('/api/prompt') &&
         HTTP_METHOD === 'post' &&
         (axiosRetry.isNetworkOrIdempotentRequestError(error) ||
           // Retry on ChatApp timeout
