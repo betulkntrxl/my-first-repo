@@ -17,30 +17,32 @@ describe('testing Temperature', () => {
     await act(async () => {
       render(<App />);
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
 
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
 
-            await waitFor(() =>
-              expect(screen.getByLabelText('temperature-input')).toBeVisible(),
-            ).then(() => {
-              const temperatureInput = screen.getByLabelText('temperature-input');
-              fireEvent.click(temperatureInput);
-              // select all digits in input
-              fireEvent.change(screen.getByLabelText(/temperature-input/i), {
-                target: { value: 0.5 },
+              await waitFor(() =>
+                expect(screen.getByLabelText('temperature-input')).toBeVisible(),
+              ).then(() => {
+                const temperatureInput = screen.getByLabelText('temperature-input');
+                fireEvent.click(temperatureInput);
+                // select all digits in input
+                fireEvent.change(screen.getByLabelText(/temperature-input/i), {
+                  target: { value: 0.5 },
+                });
+
+                expect(temperatureInput).toHaveValue(0.5);
               });
-
-              expect(temperatureInput).toHaveValue(0.5);
-            });
-          },
-        );
-      });
+            },
+          );
+        },
+      );
     });
   });
 
@@ -49,30 +51,32 @@ describe('testing Temperature', () => {
     await act(async () => {
       render(<App />);
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
 
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
 
-            await waitFor(() =>
-              expect(screen.getByLabelText('temperature-input')).toBeVisible(),
-            ).then(() => {
-              const temperatureInput = screen.getByLabelText('temperature-input');
-              fireEvent.click(temperatureInput);
-              // select all digits in input
-              fireEvent.change(screen.getByLabelText(/temperature-input/i), {
-                target: { value: -1 },
+              await waitFor(() =>
+                expect(screen.getByLabelText('temperature-input')).toBeVisible(),
+              ).then(() => {
+                const temperatureInput = screen.getByLabelText('temperature-input');
+                fireEvent.click(temperatureInput);
+                // select all digits in input
+                fireEvent.change(screen.getByLabelText(/temperature-input/i), {
+                  target: { value: -1 },
+                });
+
+                expect(temperatureInput).toHaveValue(0);
               });
-
-              expect(temperatureInput).toHaveValue(0);
-            });
-          },
-        );
-      });
+            },
+          );
+        },
+      );
     });
   });
 
@@ -81,30 +85,32 @@ describe('testing Temperature', () => {
     await act(async () => {
       render(<App />);
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
 
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
 
-            await waitFor(() =>
-              expect(screen.getByLabelText('temperature-input')).toBeVisible(),
-            ).then(() => {
-              const temperatureInput = screen.getByLabelText('temperature-input');
-              fireEvent.click(temperatureInput);
-              // select all digits in input
-              fireEvent.change(screen.getByLabelText(/temperature-input/i), {
-                target: { value: 2 },
+              await waitFor(() =>
+                expect(screen.getByLabelText('temperature-input')).toBeVisible(),
+              ).then(() => {
+                const temperatureInput = screen.getByLabelText('temperature-input');
+                fireEvent.click(temperatureInput);
+                // select all digits in input
+                fireEvent.change(screen.getByLabelText(/temperature-input/i), {
+                  target: { value: 2 },
+                });
+
+                expect(temperatureInput).toHaveValue(1);
               });
-
-              expect(temperatureInput).toHaveValue(1);
-            });
-          },
-        );
-      });
+            },
+          );
+        },
+      );
     });
   });
 
@@ -112,23 +118,25 @@ describe('testing Temperature', () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByLabelText('Temperature')).toBeVisible()).then(
-              () => {
-                fireEvent.mouseDown(screen.getByLabelText('Temperature'));
-                const temperatureElement = screen.getByLabelText('Temperature');
-                expect(temperatureElement).toBeTruthy();
-              },
-            );
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByLabelText('Temperature')).toBeVisible()).then(
+                () => {
+                  fireEvent.mouseDown(screen.getByLabelText('Temperature'));
+                  const temperatureElement = screen.getByLabelText('Temperature');
+                  expect(temperatureElement).toBeTruthy();
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 });

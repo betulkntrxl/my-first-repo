@@ -26,7 +26,7 @@ const NavBar = () => {
   const drawerWidth = 400;
 
   const handleDrawerToggle = () => {
-    menuDrawerOpen.value = !menuDrawerOpen.value;
+    menuDrawerOpen.value = true;
   };
 
   const handleLanguage = () => {
@@ -88,7 +88,7 @@ const NavBar = () => {
             <IconButton
               edge="start"
               color="inherit"
-              aria-label="menu"
+              aria-label="open-menu"
               sx={{ mr: 1 }}
               onClick={handleDrawerToggle}
             >

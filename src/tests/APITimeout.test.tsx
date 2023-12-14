@@ -18,33 +18,35 @@ describe('testing API Timeout', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
-              () => {
-                const APITimeoutInput = screen.getByTitle('apitimeout-input');
-                fireEvent.click(APITimeoutInput);
-                // select all digits in input
-                fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                  target: { value: 5 },
-                });
-                fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                  target: { value: 60 },
-                });
-                fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                  target: { value: 30 },
-                });
-                expect(APITimeoutInput).toHaveValue(30);
-              },
-            );
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
+                () => {
+                  const APITimeoutInput = screen.getByTitle('apitimeout-input');
+                  fireEvent.click(APITimeoutInput);
+                  // select all digits in input
+                  fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                    target: { value: 5 },
+                  });
+                  fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                    target: { value: 60 },
+                  });
+                  fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                    target: { value: 30 },
+                  });
+                  expect(APITimeoutInput).toHaveValue(30);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -53,28 +55,30 @@ describe('testing API Timeout', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
-              () => {
-                const APITimeoutInput = screen.getByTitle('apitimeout-input');
-                fireEvent.click(APITimeoutInput);
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
+                () => {
+                  const APITimeoutInput = screen.getByTitle('apitimeout-input');
+                  fireEvent.click(APITimeoutInput);
 
-                fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                  target: { value: 1 },
-                });
+                  fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                    target: { value: 1 },
+                  });
 
-                expect(APITimeoutInput).toHaveValue(5);
-              },
-            );
-          },
-        );
-      });
+                  expect(APITimeoutInput).toHaveValue(5);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -83,28 +87,30 @@ describe('testing API Timeout', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
-              () => {
-                const APITimeoutInput = screen.getByTitle('apitimeout-input');
-                fireEvent.click(APITimeoutInput);
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('apitimeout-input')).toBeVisible()).then(
+                () => {
+                  const APITimeoutInput = screen.getByTitle('apitimeout-input');
+                  fireEvent.click(APITimeoutInput);
 
-                fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
-                  target: { value: 70 },
-                });
+                  fireEvent.change(screen.getByTitle(/apitimeout-input/i), {
+                    target: { value: 70 },
+                  });
 
-                expect(APITimeoutInput).toHaveValue(60);
-              },
-            );
-          },
-        );
-      });
+                  expect(APITimeoutInput).toHaveValue(60);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -112,23 +118,25 @@ describe('testing API Timeout', () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByLabelText('API Timeout')).toBeVisible()).then(
-              () => {
-                const APITimeoutMessages = screen.getByLabelText('API Timeout');
-                fireEvent.mouseDown(APITimeoutMessages);
-                expect(APITimeoutMessages).toBeTruthy();
-              },
-            );
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByLabelText('API Timeout')).toBeVisible()).then(
+                () => {
+                  const APITimeoutMessages = screen.getByLabelText('API Timeout');
+                  fireEvent.mouseDown(APITimeoutMessages);
+                  expect(APITimeoutMessages).toBeTruthy();
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 });

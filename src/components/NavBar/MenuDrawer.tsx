@@ -61,7 +61,7 @@ const MenuDrawer = () => {
           </div>
           <IconButton
             color="inherit"
-            aria-label="menu"
+            aria-label="close-menu"
             sx={{ mr: 2 }}
             onClick={handleDrawerClose}
             style={{ float: 'right', marginRight: 5 }}
