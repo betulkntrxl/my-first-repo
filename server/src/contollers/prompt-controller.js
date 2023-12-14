@@ -25,6 +25,8 @@ const getAvailableModels = (req, res, next) => {
   const models = [GPT_3_5_TURBO_4K];
   const userChatAppGroups = req.userContext.userinfo.ChatApp_groups;
 
+  logger.debug(`userChatAppGroups ${JSON.stringify(userChatAppGroups, null, 2)}`);
+
   if (userChatAppGroups.includes(`mt-mckesson-chatapp-gpt4-${process.env.DEPLOY_STAGE}`)) {
     logger.info(`User has GPT4 access`);
     models.push(GPT_4_32K);

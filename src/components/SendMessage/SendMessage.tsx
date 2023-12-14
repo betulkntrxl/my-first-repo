@@ -75,7 +75,7 @@ const SendMessage = () => {
     return () => {
       clearInterval(AUTH_INTERVAL);
     };
-  }, [messageInputDisabled.value]);
+  }, [messageInputDisabled, t, welcomeMessage]);
 
   const sendNewMessageToOpenAiAPI = async (
     newMessageToSend: string,

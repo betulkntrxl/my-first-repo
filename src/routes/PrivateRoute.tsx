@@ -31,7 +31,7 @@ const PrivateRoute = ({ children }: PropsWithChildren) => {
         // Failed to check if use was authenticated, redirect to login
         window.location.href = '/api/auth/login';
       });
-  }, [checkingIfAuthenticated.value, isAuthenticated.value]);
+  }, [checkingIfAuthenticated, isAuthenticated]);
 
   // This is the view while the auth check is being carried out:
   if (checkingIfAuthenticated.value) {

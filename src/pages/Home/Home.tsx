@@ -7,7 +7,7 @@ import MetricsClient from '../../clients/MetricsClient';
 import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import OpenAIClient from '../../clients/OpenAIClient';
 import { TraceSeverity } from '../../clients/models/MetricsModel';
-import Menu from '../../components/Menu/Menu';
+import NavBar from '../../components/NavBar/NavBar';
 import Messages from '../../components/Messages/Messages';
 import SendMessage from '../../components/SendMessage/SendMessage';
 import TermsAndConditions from '../../components/TermsAndConditions/TermsAndConditions';
@@ -83,7 +83,7 @@ const Home = () => {
           // Only show the T&C's for USON
           orgDeployment.value === 'uson' && <TermsAndConditions />
         }
-        <Menu />
+        <NavBar />
         <MessagesAndSendMessageDiv>
           <Messages />
           <SendMessage />
