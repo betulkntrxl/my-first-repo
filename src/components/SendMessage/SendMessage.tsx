@@ -125,6 +125,11 @@ const SendMessage = () => {
             // Authentication error
             PopupDialogOpenHandlers.openSessionExpiredDialog();
           }
+          // Authentication error
+          if (error.response.status === 403) {
+            // Authorized error
+            PopupDialogOpenHandlers.openNotAuthorizedDialog(model.value);
+          }
           // Rate Limit error
           else if (error.response.status === 429) {
             // Rate Limit error
