@@ -26,7 +26,7 @@ const NavBar = () => {
   const drawerWidth = 400;
 
   const handleDrawerToggle = () => {
-    menuDrawerOpen.value = true;
+    menuDrawerOpen.value = !menuDrawerOpen.value;
   };
 
   const handleLanguage = () => {

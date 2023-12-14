@@ -31,16 +31,25 @@ const PrivateRoute = ({ children }: PropsWithChildren) => {
         // Failed to check if use was authenticated, redirect to login
         window.location.href = '/api/auth/login';
       });
-  }, [checkingIfAuthenticated, isAuthenticated]);
+  }, [
+    checkingIfAuthenticated,
+    checkingIfAuthenticated.value,
+    isAuthenticated,
+    isAuthenticated.value,
+  ]);
 
   // This is the view while the auth check is being carried out:
   if (checkingIfAuthenticated.value) {
     return false;
   }
 
+  // User is not authenticated, user will be redirected so they probably won't
+  // see the Redirecting text below
   if (!isAuthenticated.value) {
     return <>Redirecting to OKTA...</>;
   }
+
+  // User is authenticated, render the children which is the application
   return React.createElement(React.Fragment, null, children);
 };
 

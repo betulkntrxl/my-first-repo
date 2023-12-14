@@ -53,6 +53,7 @@ const SendMessage = () => {
   useEffect(() => {
     // set focus to input field
     (inputRef.current as any).focus();
+
     if (allMessagesToDisplay.value.length === 0) {
       allMessagesToDisplay.value = [
         ...allMessagesToDisplay.value,
@@ -75,7 +76,7 @@ const SendMessage = () => {
     return () => {
       clearInterval(AUTH_INTERVAL);
     };
-  }, [messageInputDisabled, t, welcomeMessage]);
+  }, [messageInputDisabled, messageInputDisabled.value, t, welcomeMessage]);
 
   const sendNewMessageToOpenAiAPI = async (
     newMessageToSend: string,
@@ -122,17 +123,14 @@ const SendMessage = () => {
         if (error.response) {
           // Authentication error
           if (error.response.status === 401) {
-            // Authentication error
             PopupDialogOpenHandlers.openSessionExpiredDialog();
           }
-          // Authentication error
-          if (error.response.status === 403) {
-            // Authorized error
+          // Authorized error
+          else if (error.response.status === 403) {
             PopupDialogOpenHandlers.openNotAuthorizedDialog(model.value);
           }
           // Rate Limit error
           else if (error.response.status === 429) {
-            // Rate Limit error
             PopupDialogOpenHandlers.openAPIRateLimitDialog();
           }
           // Input too large error
@@ -143,18 +141,15 @@ const SendMessage = () => {
               error.response.data.openAIErrorCode &&
               error.response.data.openAIErrorCode === 'context_length_exceeded')
           ) {
-            // Input too large error
             PopupDialogOpenHandlers.openInputTooLargeDialog();
           }
-          // Every other type of error
+          // Every other type of error with an error response
           else {
-            // Every other type of error
             PopupDialogOpenHandlers.openAPIGeneralErrorDialog();
           }
         }
         // Axios timeout will trigger this flow
         else if (error.request) {
-          // Axios timeout will trigger this flow
           PopupDialogOpenHandlers.openAPITimeoutDialog();
         }
         // Something happened in setting up the request that triggered an Error
