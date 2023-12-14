@@ -10,7 +10,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import CustomButton from './SendMessage.styles';
-import { SendPromptData, PastMessage, GPT_MODELS } from '../../clients/models/PromptModel';
+import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
 import OpenAIClient from '../../clients/OpenAIClient';
 import gatherMetricsOnConfigurableSettings from './MetricsOnConfigurableSettings';
 import {

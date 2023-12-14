@@ -132,7 +132,7 @@ const ConfigurationMenu = () => {
                 aria-label="model"
               >
                 {availableModels.value.map(availableModel => (
-                  <MenuItem aria-label="model" value={availableModel}>
+                  <MenuItem key={availableModel} aria-label="model" value={availableModel}>
                     {availableModel}
                   </MenuItem>
                 ))}
