@@ -23,14 +23,38 @@ const checkIfUserIsAuthorizedForGPT4 = (req, res, next) => {
 const getAvailableModels = (req, res, next) => {
   logger.info(`Getting available models...`);
   const models = [GPT_3_5_TURBO_4K];
-  const userChatAppGroups = req.userContext.userinfo.ChatApp_groups;
 
-  logger.debug(`userChatAppGroups ${JSON.stringify(userChatAppGroups, null, 2)}`);
+  // OKTA Custom Claims to retrieve what ChatApp groups the user
+  // is a member of is only configured for McKesson Okta
+  // These custom claims will populate any group the user is a member
+  // of if the group starts with 'mt-mckesson-chatapp'
+  if (process.env.ORG_DEPLOYMENT === 'mckesson') {
+    const chatAppGroupsUserIsAMemberOf = req.userContext.userinfo.ChatApp_groups;
+    logger.debug(
+      `OKTA Custom Claim ChatApp_groups ${JSON.stringify(chatAppGroupsUserIsAMemberOf, null, 2)}`,
+    );
 
-  if (userChatAppGroups.includes(`mt-mckesson-chatapp-gpt4-${process.env.DEPLOY_STAGE}`)) {
-    logger.info(`User has GPT4 access`);
-    models.push(GPT_4_32K);
+    // AD Groups in NMACK that were created for GPT4 authorization are:
+    // mt-mckesson-chatapp-gpt4-dev
+    // mt-mckesson-chatapp-gpt4-uat
+    // mt-mckesson-chatapp-gpt4-prod
+    const GPT4_AUTHORIZATION_GROUP = `mt-mckesson-chatapp-gpt4-${process.env.DEPLOY_STAGE}`;
+
+    if (
+      chatAppGroupsUserIsAMemberOf &&
+      chatAppGroupsUserIsAMemberOf.includes(GPT4_AUTHORIZATION_GROUP)
+    ) {
+      logger.info(`User has GPT4 access`);
+      models.push(GPT_4_32K);
+    }
+  } else {
+    logger.debug(
+      `OKTA Custom Claim ChatApp_groups not available for org deployment ${process.env.ORG_DEPLOYMENT}`,
+    );
   }
+
+  logger.debug(`availableModels ${JSON.stringify(models, null, 2)}`);
+
   res.send(`{"availableModels": ${JSON.stringify(models)}}`);
 };
 

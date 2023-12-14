@@ -7,8 +7,10 @@ import {
   APITimeout,
 } from '../ConfigurationMenu/ConfigurationMenu';
 import ConfigurationConstants from '../ConfigurationMenu/ConfigurationConstants';
+import { getMaxTokensDefault } from '../ConfigurationMenu/ConfigurationHelper';
+import { GPT_MODELS } from '../../clients/models/PromptModel';
 
-const gatherMetricsOnConfigurableSettings = () => {
+const gatherMetricsOnConfigurableSettings = (model: GPT_MODELS) => {
   if (temperature.value !== ConfigurationConstants.DEFAULT_TEMPERATURE) {
     // Tracking in app insights
     MetricsClient.sendEvent({
@@ -23,7 +25,7 @@ const gatherMetricsOnConfigurableSettings = () => {
     });
   }
 
-  if (maxTokens.value !== ConfigurationConstants.DEFAULT_MAX_TOKENS) {
+  if (maxTokens.value !== getMaxTokensDefault(model)) {
     // Tracking in app insights
     MetricsClient.sendEvent({
       name: `Max Tokens sent as ${maxTokens}`,

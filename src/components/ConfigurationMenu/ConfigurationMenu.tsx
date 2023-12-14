@@ -14,29 +14,26 @@ import {
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ConfigurationConstants from './ConfigurationConstants';
-import { availableModels } from '../../pages/Home/Home';
 import { GPT_MODELS } from '../../clients/models/PromptModel';
+import { getTokenLimit, getMaxTokensDefault } from './ConfigurationHelper';
+
+import { availableModels } from '../../pages/Home/Home';
 
 export const model = signal<GPT_MODELS>(GPT_MODELS.NONE);
 export const tokenLimit = signal<number>(0);
 export const temperature = signal<number>(ConfigurationConstants.DEFAULT_TEMPERATURE);
 export const topP = signal<number>(ConfigurationConstants.DEFAULT_TOP_P);
-export const maxTokens = signal<number>(ConfigurationConstants.DEFAULT_MAX_TOKENS);
+export const maxTokens = signal<number>(0);
 export const pastMessages = signal<number>(ConfigurationConstants.DEFAULT_PAST_MESSAGES);
 export const APITimeout = signal<number>(ConfigurationConstants.DEFAULT_API_TIMEOUT);
 
 const ConfigurationMenu = () => {
   const { t } = useTranslation();
 
-  const getTokenLimit = (modelSelected: GPT_MODELS) =>
-    modelSelected === GPT_MODELS.GPT_3_5_TURBO_4K
-      ? ConfigurationConstants.TOKEN_LIMIT_GPT_3_5_TURBO_4K
-      : ConfigurationConstants.TOKEN_LIMIT_GPT_4_32K;
-
   const handleModelChange = (event: { target: { name: any; value: any } }) => {
     model.value = event.target.value;
     tokenLimit.value = getTokenLimit(model.value);
-    maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS;
+    maxTokens.value = getMaxTokensDefault(model.value);
   };
 
   /* eslint-disable */

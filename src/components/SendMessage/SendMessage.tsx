@@ -165,7 +165,7 @@ const SendMessage = () => {
     messageInputDisabled.value = true;
     sendButtonDisabled.value = true;
 
-    gatherMetricsOnConfigurableSettings();
+    gatherMetricsOnConfigurableSettings(model.value);
 
     // Save a copy of the new message
     const newMessageToSend = promptInputText.value;

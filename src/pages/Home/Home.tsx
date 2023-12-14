@@ -13,7 +13,7 @@ import SendMessage from '../../components/SendMessage/SendMessage';
 import TermsAndConditions from '../../components/TermsAndConditions/TermsAndConditions';
 import { MessagesAndSendMessageDiv } from './Home.styles';
 import { GPT_MODELS } from '../../clients/models/PromptModel';
-import { model, tokenLimit } from '../../components/ConfigurationMenu/ConfigurationMenu';
+import { model, tokenLimit, maxTokens } from '../../components/ConfigurationMenu/ConfigurationMenu';
 import ConfigurationConstants from '../../components/ConfigurationMenu/ConfigurationConstants';
 
 export const orgDeployment = signal<string>('');
@@ -45,9 +45,11 @@ const Home = () => {
         if (availableModels.value.includes(GPT_MODELS.GPT_4_32K)) {
           model.value = GPT_MODELS.GPT_4_32K;
           tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_4_32K;
+          maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_4_32K;
         } else {
           model.value = GPT_MODELS.GPT_3_5_TURBO_4K;
           tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_3_5_TURBO_4K;
+          maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_3_5_TURBO_4K;
         }
       })
       .catch(error => {

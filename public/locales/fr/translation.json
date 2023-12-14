@@ -74,6 +74,7 @@
     "server-busy-header": "Le serveur est occupé",
     "server-busy-body": "Le serveur est actuellement occupé.\nVeuillez réessayer ultérieurement.",
     "input-too-large-header": "Entrée trop grande",
-    "input-too-large-body": "L'entrée que vous avez saisie est trop grande, le maximum est de 4000 jetons, soit environ 2500 mots, les messages passés sont inclus dans l'entrée. Réinitialiser le chat ou modifier les messages passés dans la configuration."
+    "input-too-large-35turbo-4k-body": "L'entrée que vous avez saisie est trop grande, le maximum est de 4,000 jetons, soit environ 2,500 mots, les messages passés sont inclus dans l'entrée. Réinitialiser le chat ou modifier les messages passés dans la configuration.",
+    "input-too-large-gpt4-32K-body": "L'entrée que vous avez saisie est trop grande, le maximum est de 32,000 jetons, soit environ 20,000 mots, les messages passés sont inclus dans l'entrée. Réinitialiser le chat ou modifier les messages passés dans la configuration."
   }
 }

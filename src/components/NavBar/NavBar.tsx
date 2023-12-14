@@ -97,13 +97,7 @@ const NavBar = () => {
             <img
               alt={orgDeployment.value}
               width={150}
-              src={
-                orgDeployment.value === 'uson'
-                  ? UsonLogo
-                  : orgDeployment.value === 'mckesson'
-                    ? McKessonLogo
-                    : ''
-              }
+              src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
             />
 
             <Typography
