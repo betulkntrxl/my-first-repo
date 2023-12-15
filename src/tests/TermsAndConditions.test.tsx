@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, act } from '@testing-library/react';
 
 import App from '../App';
 import { setupMockAxiosSuccessResponses } from './test-helper';

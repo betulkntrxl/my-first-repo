@@ -1,18 +1,40 @@
 import React from 'react';
 import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Slider, TextField, Tooltip, Typography } from '@mui/material';
+import {
+  Grid,
+  Slider,
+  TextField,
+  Tooltip,
+  Typography,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ConfigurationConstants from './ConfigurationConstants';
+import { GPT_MODELS } from '../../clients/models/PromptModel';
+import { getTokenLimit, getMaxTokensDefault } from './ConfigurationHelper';
 
+import { availableModels } from '../../pages/Home/Home';
+
+export const model = signal<GPT_MODELS>(GPT_MODELS.NONE);
+export const tokenLimit = signal<number>(0);
 export const temperature = signal<number>(ConfigurationConstants.DEFAULT_TEMPERATURE);
 export const topP = signal<number>(ConfigurationConstants.DEFAULT_TOP_P);
-export const maxTokens = signal<number>(ConfigurationConstants.DEFAULT_MAX_TOKENS);
+export const maxTokens = signal<number>(0);
 export const pastMessages = signal<number>(ConfigurationConstants.DEFAULT_PAST_MESSAGES);
 export const APITimeout = signal<number>(ConfigurationConstants.DEFAULT_API_TIMEOUT);
 
 const ConfigurationMenu = () => {
   const { t } = useTranslation();
+
+  const handleModelChange = (event: { target: { name: any; value: any } }) => {
+    model.value = event.target.value;
+    tokenLimit.value = getTokenLimit(model.value);
+    maxTokens.value = getMaxTokensDefault(model.value);
+  };
 
   /* eslint-disable */
   const handleTemperatureSliderChange = (event: Event, newValue: number | number[]) => {
@@ -56,8 +78,8 @@ const ConfigurationMenu = () => {
   const handleMaxTokensInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value) < 1) {
       maxTokens.value = 1;
-    } else if (Number(event.target.value) > 4096) {
-      maxTokens.value = 4096;
+    } else if (Number(event.target.value) > tokenLimit.value) {
+      maxTokens.value = tokenLimit.value;
     } else {
       maxTokens.value = Number(event.target.value);
     }
@@ -86,6 +108,39 @@ const ConfigurationMenu = () => {
 
   return (
     <>
+      {
+        // Only showing model dropdown if there's
+        // more than 1 model available
+        availableModels.value.length > 1 && (
+          <Grid item xs>
+            <Typography style={{ marginBottom: 10, marginTop: 10, color: 'dimgray' }}>
+              {t('menu.configuration.model')}:{' '}
+              <Tooltip title={t('menu.configuration.model-tooltip')}>
+                <InfoOutlinedIcon />
+              </Tooltip>
+            </Typography>
+
+            <FormControl fullWidth style={{ marginBottom: 10 }}>
+              <InputLabel id="model">{t('menu.configuration.model')}</InputLabel>
+              <Select
+                fullWidth
+                labelId="model-label"
+                id="model"
+                value={model.value}
+                onChange={handleModelChange}
+                label={t('menu.configuration.model')}
+                aria-label="model"
+              >
+                {availableModels.value.map(availableModel => (
+                  <MenuItem key={availableModel} aria-label="model" value={availableModel}>
+                    {availableModel}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        )
+      }
       <Typography
         id="temperature-input-label"
         style={{ fontFamily: 'Roboto, Helvetica, Arial, sans-serif', color: 'dimgray' }}
@@ -178,7 +233,7 @@ const ConfigurationMenu = () => {
             style={{ width: 230 }}
             valueLabelDisplay="auto"
             min={1}
-            max={4096}
+            max={tokenLimit.value}
             step={1}
             value={maxTokens.value}
             aria-label="Max Tokens"
@@ -195,7 +250,7 @@ const ConfigurationMenu = () => {
             inputProps={{
               step: 1,
               min: 1,
-              max: 4096,
+              max: tokenLimit.value,
               type: 'number',
               'aria-labelledby': 'maxtokens-input-label',
               title: 'maxTokens-input',

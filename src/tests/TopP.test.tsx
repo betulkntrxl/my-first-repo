@@ -19,25 +19,29 @@ describe('testing TopP', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible()).then(() => {
-              const toppInput = screen.getByTitle('topP-input');
-              fireEvent.click(toppInput);
-              // select all digits in input
-              fireEvent.change(screen.getByTitle(/topP-input/i), {
-                target: { value: 0.8 },
-              });
-              expect(toppInput).toHaveValue(0.8);
-            });
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible()).then(
+                () => {
+                  const toppInput = screen.getByTitle('topP-input');
+                  fireEvent.click(toppInput);
+                  // select all digits in input
+                  fireEvent.change(screen.getByTitle(/topP-input/i), {
+                    target: { value: 0.8 },
+                  });
+                  expect(toppInput).toHaveValue(0.8);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -47,25 +51,29 @@ describe('testing TopP', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible()).then(() => {
-              const toppInput = screen.getByTitle('topP-input');
-              fireEvent.click(toppInput);
-              // select all digits in input
-              fireEvent.change(screen.getByTitle(/topP-input/i), {
-                target: { value: -1 },
-              });
-              expect(toppInput).toHaveValue(0);
-            });
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible()).then(
+                () => {
+                  const toppInput = screen.getByTitle('topP-input');
+                  fireEvent.click(toppInput);
+                  // select all digits in input
+                  fireEvent.change(screen.getByTitle(/topP-input/i), {
+                    target: { value: -1 },
+                  });
+                  expect(toppInput).toHaveValue(0);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -75,25 +83,29 @@ describe('testing TopP', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible()).then(() => {
-              const toppInput = screen.getByTitle('topP-input');
-              fireEvent.click(toppInput);
-              // select all digits in input
-              fireEvent.change(screen.getByTitle(/topP-input/i), {
-                target: { value: 2 },
-              });
-              expect(toppInput).toHaveValue(1);
-            });
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('topP-input')).toBeVisible()).then(
+                () => {
+                  const toppInput = screen.getByTitle('topP-input');
+                  fireEvent.click(toppInput);
+                  // select all digits in input
+                  fireEvent.change(screen.getByTitle(/topP-input/i), {
+                    target: { value: 2 },
+                  });
+                  expect(toppInput).toHaveValue(1);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -101,21 +113,23 @@ describe('testing TopP', () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByLabelText('Top P')).toBeVisible()).then(() => {
-              const topPElement = screen.getByLabelText('Top P');
-              fireEvent.mouseDown(topPElement);
-              expect(topPElement).toBeTruthy();
-            });
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByLabelText('Top P')).toBeVisible()).then(() => {
+                const topPElement = screen.getByLabelText('Top P');
+                fireEvent.mouseDown(topPElement);
+                expect(topPElement).toBeTruthy();
+              });
+            },
+          );
+        },
+      );
     });
   });
 });

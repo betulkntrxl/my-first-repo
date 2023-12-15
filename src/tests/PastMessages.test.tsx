@@ -19,15 +19,17 @@ describe('testing Past Messages', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible()).then(
-              () => {
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() =>
+                expect(screen.getByTitle('pastMessages-input')).toBeVisible(),
+              ).then(() => {
                 const previousMessagesInput = screen.getByTitle('pastMessages-input');
                 fireEvent.click(previousMessagesInput);
                 // select all digits in input
@@ -35,11 +37,11 @@ describe('testing Past Messages', () => {
                   target: { value: 10 },
                 });
                 expect(previousMessagesInput).toHaveValue(10);
-              },
-            );
-          },
-        );
-      });
+              });
+            },
+          );
+        },
+      );
     });
   });
 
@@ -49,15 +51,17 @@ describe('testing Past Messages', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible()).then(
-              () => {
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() =>
+                expect(screen.getByTitle('pastMessages-input')).toBeVisible(),
+              ).then(() => {
                 const previousMessagesInput = screen.getByTitle('pastMessages-input');
                 fireEvent.click(previousMessagesInput);
                 // select all digits in input
@@ -65,11 +69,11 @@ describe('testing Past Messages', () => {
                   target: { value: -10 },
                 });
                 expect(previousMessagesInput).toHaveValue(0);
-              },
-            );
-          },
-        );
-      });
+              });
+            },
+          );
+        },
+      );
     });
   });
 
@@ -79,15 +83,17 @@ describe('testing Past Messages', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('pastMessages-input')).toBeVisible()).then(
-              () => {
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() =>
+                expect(screen.getByTitle('pastMessages-input')).toBeVisible(),
+              ).then(() => {
                 const previousMessagesInput = screen.getByTitle('pastMessages-input');
                 fireEvent.click(previousMessagesInput);
                 // select all digits in input
@@ -95,11 +101,11 @@ describe('testing Past Messages', () => {
                   target: { value: 50 },
                 });
                 expect(previousMessagesInput).toHaveValue(20);
-              },
-            );
-          },
-        );
-      });
+              });
+            },
+          );
+        },
+      );
     });
   });
 
@@ -107,23 +113,25 @@ describe('testing Past Messages', () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() =>
-              expect(screen.getByLabelText('Past messages included')).toBeVisible(),
-            ).then(() => {
-              const previousMessages = screen.getByLabelText('Past messages included');
-              fireEvent.mouseDown(previousMessages);
-              expect(previousMessages).toBeTruthy();
-            });
-          },
-        );
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() =>
+                expect(screen.getByLabelText('Past messages included')).toBeVisible(),
+              ).then(() => {
+                const previousMessages = screen.getByLabelText('Past messages included');
+                fireEvent.mouseDown(previousMessages);
+                expect(previousMessages).toBeTruthy();
+              });
+            },
+          );
+        },
+      );
     });
   });
 });

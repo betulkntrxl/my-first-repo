@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSignal } from '@preact/signals-react';
+import React from 'react';
+import { signal } from '@preact/signals-react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,123 +9,25 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import Paper from '@mui/material/Paper';
-import { Stack, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Typography } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import MetricsClient from '../../clients/MetricsClient';
-import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
-import { TraceSeverity } from '../../clients/models/MetricsModel';
-import AccordionMenu from '../AccordionMenu/AccordionMenu';
 import McKessonLogo from '../../assets/mckesson-logo.jpg';
 import UsonLogo from '../../assets/uson-logo.png';
+import MenuDrawer from './MenuDrawer';
 import { orgDeployment } from '../../pages/Home/Home';
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
 
-const Menu = () => {
+export const menuDrawerOpen = signal(false);
+
+const NavBar = () => {
   const { t, i18n } = useTranslation();
-  const mobileOpen = useSignal(false);
-  const version = useSignal('');
-
-  const handleDrawerToggle = () => {
-    if (!mobileOpen.value) {
-      // Tracking in app insights
-      MetricsClient.sendEvent({
-        name: 'Menu opened',
-      });
-    }
-
-    mobileOpen.value = !mobileOpen.value;
-  };
-
-  const getVersion = async () => {
-    VersionAndOrgClient.getApplicationVersion()
-      .then(response => {
-        version.value = response.data.version;
-      })
-      .catch(error => {
-        MetricsClient.sendTrace({
-          message: 'ChatApp failed to retrieve version',
-          severity: TraceSeverity.ERROR,
-          properties: { errorResponse: error.response },
-        });
-      });
-  };
-
-  useEffect(() => {
-    getVersion();
-  }, []);
-
   const drawerWidth = 400;
 
-  const drawer = (
-    <div style={{ overflowX: 'hidden' }}>
-      <Stack direction="column">
-        <Stack direction="row">
-          <div
-            style={{
-              width: 340,
-              textAlign: 'left',
-              color: '#007BC7',
-              fontSize: '18px',
-              fontWeight: 'bolder',
-              fontFamily: 'Arial',
-              marginLeft: 20,
-              marginTop: 30,
-              marginBottom: 10,
-            }}
-          >
-            {t('menu.title')}
-          </div>
-          <IconButton
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={handleDrawerToggle}
-            style={{ float: 'right', marginRight: 5 }}
-          >
-            <CloseIcon style={{ color: '#007BC7', fontWeight: 'bold' }} />
-          </IconButton>
-        </Stack>
-        <HorizontalRuleIcon
-          preserveAspectRatio="none"
-          sx={{
-            color: '#007BC7',
-            marginLeft: '-70px',
-            width: '540px',
-            maxWidth: 600,
-            fontWeight: 'bolder',
-          }}
-        />
-      </Stack>
-
-      <AccordionMenu />
-
-      <Paper
-        elevation={1}
-        style={{
-          backgroundColor: '#e6e6e6',
-          position: 'fixed',
-          bottom: 0,
-          width: 320,
-          maxWidth: 500,
-          padding: '10px',
-          margin: 10,
-          float: 'left',
-        }}
-      >
-        <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
-          {t('menu.about')}
-        </div>
-
-        <div style={{ float: 'left', marginLeft: 10 }}>
-          {t('menu.version')}: {version.value}
-        </div>
-      </Paper>
-    </div>
-  );
+  const handleDrawerToggle = () => {
+    menuDrawerOpen.value = !menuDrawerOpen.value;
+  };
 
   const handleLanguage = () => {
     const changeLanguageTo = t('current-language').toLowerCase() === 'en' ? 'fr' : 'en';
@@ -186,7 +88,7 @@ const Menu = () => {
             <IconButton
               edge="start"
               color="inherit"
-              aria-label="menu"
+              aria-label="open-menu"
               sx={{ mr: 1 }}
               onClick={handleDrawerToggle}
             >
@@ -195,13 +97,7 @@ const Menu = () => {
             <img
               alt={orgDeployment.value}
               width={150}
-              src={
-                orgDeployment.value === 'uson'
-                  ? UsonLogo
-                  : orgDeployment.value === 'mckesson'
-                    ? McKessonLogo
-                    : ''
-              }
+              src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
             />
 
             <Typography
@@ -244,14 +140,14 @@ const Menu = () => {
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
-          open={mobileOpen.value}
+          open={menuDrawerOpen.value}
           onClose={handleDrawerToggle}
         >
-          {drawer}
+          <MenuDrawer />
         </Drawer>
       </Box>
     </>
   );
 };
 
-export default Menu;
+export default NavBar;

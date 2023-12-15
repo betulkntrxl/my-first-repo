@@ -3,9 +3,6 @@ import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
 import { isChrome, isEdge } from 'react-device-detect';
 import { PastMessage } from '../../clients/models/PromptModel';
 
-const MAX_INPUT_TOKENS_3_5_TURBO = 4000;
-const MAX_INPUT_TOKENS = MAX_INPUT_TOKENS_3_5_TURBO;
-
 const hasCookieExpired = () => {
   // The below logic doesn't work for some browsers e.g. Safari
   // Only including supported browsers, other browsers won't get a proactive popup
@@ -33,6 +30,7 @@ const isRequestWithinTokenLimit = (
   systemMessageValue: string,
   pastMessagesToInclude: PastMessage[],
   newMessage: string,
+  tokenLimit: number,
 ) => {
   const chat = [
     { role: 'system', content: systemMessageValue },
@@ -40,7 +38,7 @@ const isRequestWithinTokenLimit = (
     { role: 'user', content: newMessage },
   ];
 
-  return isWithinTokenLimit(chat as ChatMessage[], MAX_INPUT_TOKENS);
+  return isWithinTokenLimit(chat as ChatMessage[], tokenLimit);
 };
 
 export { hasCookieExpired, isRequestWithinTokenLimit };

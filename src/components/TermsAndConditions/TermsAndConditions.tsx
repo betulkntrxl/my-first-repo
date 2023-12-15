@@ -47,7 +47,7 @@ const TermsAndConditions = () => {
     if (localStorage.getItem('termsAccepted') !== T_AND_C_VERSION) {
       open.value = true;
     }
-  }, []);
+  }, [open, open.value]);
 
   return (
     <Dialog
