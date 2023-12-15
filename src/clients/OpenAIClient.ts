@@ -1,18 +1,25 @@
 import axios from 'axios';
-import { SendPromptData } from './models/PromptModel';
-import { setupRetryConfig } from './RetryConfig';
+import { GPT_MODELS, SendPromptData } from './models/PromptModel';
+import { setupRetryConfig } from './configs/RetryConfig';
 
 // Setup retry logic
 setupRetryConfig();
+
+const GPT_3_5_TURBO_4K_PATH = '/api/prompt/gpt35turbo';
+const GPT_4_32K_PATH = '/api/prompt/gpt4';
+
+const getPromptPath = (model: GPT_MODELS) =>
+  model === GPT_MODELS.GPT_3_5_TURBO_4K ? GPT_3_5_TURBO_4K_PATH : GPT_4_32K_PATH;
 
 const HEADERS = {
   'Content-Type': 'application/json',
 };
 
 const OpenAIClient = {
-  sendPrompt: async (sendPromptData: SendPromptData) =>
+  getAvailableModels: async () => axios.get('/api/available-models'),
+  sendPrompt: async (sendPromptData: SendPromptData, model: GPT_MODELS) =>
     axios.post(
-      '/api/prompt',
+      getPromptPath(model),
       {
         messages: [
           { role: 'system', content: sendPromptData.systemMessageValue },

@@ -4,7 +4,9 @@ import MetricsClient from '../../clients/MetricsClient';
 
 import { messageInputDisabled } from './SendMessage';
 import { APITimeout } from '../ConfigurationMenu/ConfigurationMenu';
+import { GPT_MODELS } from '../../clients/models/PromptModel';
 
+export const openNotAuthorizedForModel = signal<boolean>(false);
 export const openResetChatSession = signal<boolean>(false);
 export const openSessionExpired = signal<boolean>(false);
 export const openAPIRateLimit = signal<boolean>(false);
@@ -14,6 +16,13 @@ export const openInputTooLarge = signal<boolean>(false);
 export const openContentFilter = signal<boolean>(false);
 
 const PopupDialogOpenHandlers = {
+  openNotAuthorizedDialog: (model: GPT_MODELS) => {
+    // Tracking in app insights
+    MetricsClient.sendEvent({
+      name: `ChatApp Not Authorized to use model ${model}`,
+    });
+    openNotAuthorizedForModel.value = true;
+  },
   openResetChatDialog: () => {
     // Tracking in app insights
     MetricsClient.sendEvent({
@@ -73,6 +82,11 @@ const PopupDialogOpenHandlers = {
 };
 
 const PopupDialogCloseHandlers = {
+  closeNotAuthorizedDialog: () => {
+    openNotAuthorizedForModel.value = false;
+    // enable send box
+    messageInputDisabled.value = false;
+  },
   closeResetChatDialog: () => {
     // Tracking in app insights
     MetricsClient.sendEvent({

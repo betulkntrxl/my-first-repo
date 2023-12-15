@@ -1,3 +1,9 @@
+export enum GPT_MODELS {
+  NONE = '',
+  GPT_3_5_TURBO_4K = 'GPT-3-5-Turbo-4K',
+  GPT_4_32K = 'GPT-4-32K',
+}
+
 export interface SendPromptData {
   systemMessageValue: string;
   pastMessages: PastMessage[];

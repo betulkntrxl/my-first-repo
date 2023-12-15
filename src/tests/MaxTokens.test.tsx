@@ -19,28 +19,30 @@ describe('testing Max Tokens', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
-              () => {
-                fireEvent.click(screen.getByTitle('maxTokens-input'));
-                const maxtokensInput = screen.getByTitle('maxTokens-input');
-                // select all digits in input
-                fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
-                  target: { value: 2000 },
-                });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
+                () => {
+                  fireEvent.click(screen.getByTitle('maxTokens-input'));
+                  const maxtokensInput = screen.getByTitle('maxTokens-input');
+                  // select all digits in input
+                  fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
+                    target: { value: 2000 },
+                  });
 
-                expect(maxtokensInput).toHaveValue(2000);
-              },
-            );
-          },
-        );
-      });
+                  expect(maxtokensInput).toHaveValue(2000);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -50,28 +52,30 @@ describe('testing Max Tokens', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
-              () => {
-                fireEvent.click(screen.getByTitle('maxTokens-input'));
-                const maxtokensInput = screen.getByTitle('maxTokens-input');
-                // select all digits in input
-                fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
-                  target: { value: -1 },
-                });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
+                () => {
+                  fireEvent.click(screen.getByTitle('maxTokens-input'));
+                  const maxtokensInput = screen.getByTitle('maxTokens-input');
+                  // select all digits in input
+                  fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
+                    target: { value: -1 },
+                  });
 
-                expect(maxtokensInput).toHaveValue(1);
-              },
-            );
-          },
-        );
-      });
+                  expect(maxtokensInput).toHaveValue(1);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -81,28 +85,30 @@ describe('testing Max Tokens', () => {
       render(<App />);
       const user = userEvent.setup();
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        await user.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
-          async () => {
-            fireEvent.click(screen.getByLabelText('configuration'));
-            await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
-              () => {
-                fireEvent.click(screen.getByTitle('maxTokens-input'));
-                const maxtokensInput = screen.getByTitle('maxTokens-input');
-                // select all digits in input
-                fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
-                  target: { value: 5000 },
-                });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          await user.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
+            async () => {
+              fireEvent.click(screen.getByLabelText('configuration'));
+              await waitFor(() => expect(screen.getByTitle('maxTokens-input')).toBeVisible()).then(
+                () => {
+                  fireEvent.click(screen.getByTitle('maxTokens-input'));
+                  const maxtokensInput = screen.getByTitle('maxTokens-input');
+                  // select all digits in input
+                  fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
+                    target: { value: 5000 },
+                  });
 
-                expect(maxtokensInput).toHaveValue(4096);
-              },
-            );
-          },
-        );
-      });
+                  expect(maxtokensInput).toHaveValue(4096);
+                },
+              );
+            },
+          );
+        },
+      );
     });
   });
 
@@ -110,23 +116,25 @@ describe('testing Max Tokens', () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
-        // wait for element to be rendered
-        await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
-          timeout: 10000,
-        }).then(async () => {
-          fireEvent.click(screen.getByLabelText('configuration'));
-          await waitFor(() => expect(screen.getByLabelText('Max Tokens')).toBeVisible()).then(
-            () => {
-              const maxTokensElement = screen.getByLabelText('Max Tokens');
-              fireEvent.mouseDown(maxTokensElement);
-              expect(maxTokensElement).toBeTruthy();
-            },
-          );
-        });
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
+          // wait for element to be rendered
+          await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible(), {
+            timeout: 10000,
+          }).then(async () => {
+            fireEvent.click(screen.getByLabelText('configuration'));
+            await waitFor(() => expect(screen.getByLabelText('Max Tokens')).toBeVisible()).then(
+              () => {
+                const maxTokensElement = screen.getByLabelText('Max Tokens');
+                fireEvent.mouseDown(maxTokensElement);
+                expect(maxTokensElement).toBeTruthy();
+              },
+            );
+          });
+        },
+      );
     });
   });
 });

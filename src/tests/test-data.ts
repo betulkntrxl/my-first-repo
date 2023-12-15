@@ -51,6 +51,13 @@ const successGetOrgDeploymentUson = {
   },
 };
 
+const successGetAvailableModelsResponse = {
+  status: 200,
+  data: {
+    availableModels: ['GPT-3-5-Turbo-4K'],
+  },
+};
+
 const successPostMetricEvent = {
   status: 201,
   data: {},
@@ -67,6 +74,7 @@ export {
   successGetVersionResponse,
   successGetOrgDeploymentMcKesson,
   successGetOrgDeploymentUson,
+  successGetAvailableModelsResponse,
   successPostMetricEvent,
   successPostMetricTrace,
 };

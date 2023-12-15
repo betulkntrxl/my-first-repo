@@ -25,7 +25,10 @@ if (process.env.APPLICATION_INSIGHTS_CONNECTION_STRING) {
 import express from 'express';
 import { setupMiddleware } from './src/configs/middleware-config.js';
 import { setupOktaConfig } from './src/configs/okta-config.js';
-import { setupMulesoftProxy } from './src/configs/mule-proxy-config.js';
+import {
+  setupMulesoftProxyGPT35Turbo,
+  setupMulesoftProxyGPT4,
+} from './src/configs/mule-proxy-config.js';
 import { setupRoutes } from './src/routes/all-routes.js';
 import { logger } from './src/configs/logger-config.js';
 /* eslint-enable */
@@ -39,11 +42,14 @@ setupMiddleware(expressWebServer);
 // Setup Okta
 const okta = setupOktaConfig();
 
-// Setup proxy to send prompts to Mulesoft
-const mulesoftProxy = setupMulesoftProxy(appInsights);
+// Setup 3.5 Turbo proxy to send prompts to Mulesoft
+const mulesoft35TurboProxy = setupMulesoftProxyGPT35Turbo(appInsights);
+
+// Setup GPT4 Turbo proxy to send prompts to Mulesoft
+const mulesoftGPT4Proxy = setupMulesoftProxyGPT4(appInsights);
 
 // Setup routes for api calls and to server the static content i.e. the React App
-expressWebServer.use(setupRoutes(okta, mulesoftProxy, appInsights));
+expressWebServer.use(setupRoutes(okta, mulesoft35TurboProxy, mulesoftGPT4Proxy, appInsights));
 
 const port = process.env.PORT || 8080;
 

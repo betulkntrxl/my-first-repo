@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 
 import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import App from '../App';
 import { setupMockAxiosSuccessResponses } from './test-helper';
@@ -15,6 +14,25 @@ describe('testing Send Messages', () => {
 
   it('send message and expect a response from the bot', async () => {
     setupMockAxiosSuccessResponses(mockedAxios);
+    act(() => {
+      render(<App />);
+    });
+    // wait for message box
+    await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+      const sendmessageElement = screen.getByTitle('sendmessage');
+      fireEvent.click(sendmessageElement);
+      // type message
+      act(() => {
+        fireEvent.change(sendmessageElement, {
+          target: { value: 'hi' },
+        });
+      });
+      // send messages
+      const sendElement = screen.getByTitle('send');
+      await act(async () => {
+        fireEvent.click(sendElement);
+      });
+    });
   });
 
   it('send message with different configuration values, check metrics were called on each configuration value', async () => {
@@ -23,10 +41,10 @@ describe('testing Send Messages', () => {
       render(<App />);
     });
 
-    await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-      const menuElement = screen.getByLabelText('menu');
+    await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(async () => {
+      const openMenuElement = screen.getByLabelText('open-menu');
       act(() => {
-        fireEvent.click(menuElement);
+        fireEvent.click(openMenuElement);
       });
       // wait for element to be rendered
       await waitFor(() => expect(screen.getByLabelText('configuration')).toBeVisible()).then(
@@ -81,9 +99,10 @@ describe('testing Send Messages', () => {
               });
             });
 
+            const closeMenuElement = screen.getByLabelText('close-menu');
             // close menu
             act(() => {
-              fireEvent.click(menuElement);
+              fireEvent.click(closeMenuElement);
             });
             // wait for message box
             await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(

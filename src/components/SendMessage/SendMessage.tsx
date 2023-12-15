@@ -24,7 +24,14 @@ import {
 import { hasCookieExpired, isRequestWithinTokenLimit } from './AdHocHelper';
 
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
-import { temperature, topP, maxTokens, APITimeout } from '../ConfigurationMenu/ConfigurationMenu';
+import {
+  model,
+  tokenLimit,
+  temperature,
+  topP,
+  maxTokens,
+  APITimeout,
+} from '../ConfigurationMenu/ConfigurationMenu';
 
 import PopupDialogs from './PopupDialogs';
 
@@ -46,6 +53,7 @@ const SendMessage = () => {
   useEffect(() => {
     // set focus to input field
     (inputRef.current as any).focus();
+
     if (allMessagesToDisplay.value.length === 0) {
       allMessagesToDisplay.value = [
         ...allMessagesToDisplay.value,
@@ -68,7 +76,7 @@ const SendMessage = () => {
     return () => {
       clearInterval(AUTH_INTERVAL);
     };
-  }, [messageInputDisabled.value]);
+  }, [messageInputDisabled, messageInputDisabled.value, t, welcomeMessage]);
 
   const sendNewMessageToOpenAiAPI = async (
     newMessageToSend: string,
@@ -86,7 +94,7 @@ const SendMessage = () => {
     };
 
     // Calling OpenAI
-    OpenAIClient.sendPrompt(SEND_PROMPT_DATA)
+    OpenAIClient.sendPrompt(SEND_PROMPT_DATA, model.value)
       .then(response => {
         const responseData = response.data;
 
@@ -115,12 +123,14 @@ const SendMessage = () => {
         if (error.response) {
           // Authentication error
           if (error.response.status === 401) {
-            // Authentication error
             PopupDialogOpenHandlers.openSessionExpiredDialog();
+          }
+          // Authorized error
+          else if (error.response.status === 403) {
+            PopupDialogOpenHandlers.openNotAuthorizedDialog(model.value);
           }
           // Rate Limit error
           else if (error.response.status === 429) {
-            // Rate Limit error
             PopupDialogOpenHandlers.openAPIRateLimitDialog();
           }
           // Input too large error
@@ -131,7 +141,6 @@ const SendMessage = () => {
               error.response.data.openAIErrorCode &&
               error.response.data.openAIErrorCode === 'context_length_exceeded')
           ) {
-            // Input too large error
             PopupDialogOpenHandlers.openInputTooLargeDialog();
           }
           // Azure OpenAI's Content Filter Error
@@ -141,18 +150,15 @@ const SendMessage = () => {
             error.response.data.openAIErrorCode &&
             error.response.data.openAIErrorCode === 'content_filter'
           ) {
-            // Input too large error
-            PopupDialogOpenHandlers.openInputTooLargeDialog();
+            PopupDialogOpenHandlers.openContentFilterDialog();
           }
-          // Every other type of error
+          // Every other type of error with an error response
           else {
-            // Every other type of error
             PopupDialogOpenHandlers.openAPIGeneralErrorDialog();
           }
         }
         // Axios timeout will trigger this flow
         else if (error.request) {
-          // Axios timeout will trigger this flow
           PopupDialogOpenHandlers.openAPITimeoutDialog();
         }
         // Something happened in setting up the request that triggered an Error
@@ -168,7 +174,7 @@ const SendMessage = () => {
     messageInputDisabled.value = true;
     sendButtonDisabled.value = true;
 
-    gatherMetricsOnConfigurableSettings();
+    gatherMetricsOnConfigurableSettings(model.value);
 
     // Save a copy of the new message
     const newMessageToSend = promptInputText.value;
@@ -180,7 +186,12 @@ const SendMessage = () => {
 
     // Check if it's going to break the token limit
     if (
-      !isRequestWithinTokenLimit(systemMessageValue.value, pastMessagesToInclude, newMessageToSend)
+      !isRequestWithinTokenLimit(
+        systemMessageValue.value,
+        pastMessagesToInclude,
+        newMessageToSend,
+        tokenLimit.value,
+      )
     ) {
       PopupDialogOpenHandlers.openInputTooLargeDialog();
       return;

@@ -17,11 +17,13 @@ describe('testing the Menu', () => {
     await act(async () => {
       render(<App />);
 
-      await waitFor(() => expect(screen.getByLabelText('menu')).toBeVisible()).then(async () => {
-        const menuElement = screen.getByLabelText('menu');
-        fireEvent.click(menuElement);
-        expect(menuElement).toBeTruthy();
-      });
+      await waitFor(() => expect(screen.getByLabelText('open-menu')).toBeVisible()).then(
+        async () => {
+          const openMenuElement = screen.getByLabelText('open-menu');
+          fireEvent.click(openMenuElement);
+          expect(openMenuElement).toBeTruthy();
+        },
+      );
     });
   });
 });

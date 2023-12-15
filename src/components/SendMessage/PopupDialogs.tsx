@@ -12,7 +12,11 @@ import {
   openAPITimeout,
   openAPIError,
   openInputTooLarge,
+  openNotAuthorizedForModel,
+  openContentFilter,
 } from './PopupDialogHandlers';
+import { model } from '../ConfigurationMenu/ConfigurationMenu';
+import { GPT_MODELS } from '../../clients/models/PromptModel';
 
 const PopupDialogs = () => {
   const { t } = useTranslation();
@@ -71,7 +75,28 @@ const PopupDialogs = () => {
           handleClose: PopupDialogCloseHandlers.closeInputTooLargeDialog,
           openDialog: openInputTooLarge.value,
           headerText: t('popup-messages.input-too-large-header'),
-          bodyText: t('popup-messages.input-too-large-body'),
+          bodyText:
+            model.value === GPT_MODELS.GPT_3_5_TURBO_4K
+              ? t('popup-messages.input-too-large-35turbo-4k-body')
+              : t('popup-messages.input-too-large-gpt4-32K-body'),
+        }}
+      />
+
+      <OKDialog
+        {...{
+          handleClose: PopupDialogCloseHandlers.closeNotAuthorizedDialog,
+          openDialog: openNotAuthorizedForModel.value,
+          headerText: t('popup-messages.not-authorized-header'),
+          bodyText: t('popup-messages.not-authorized-body'),
+        }}
+      />
+
+      <OKDialog
+        {...{
+          handleClose: PopupDialogCloseHandlers.closeContentFilterDialog,
+          openDialog: openContentFilter.value,
+          headerText: t('popup-messages.content-filter-header'),
+          bodyText: t('popup-messages.content-filter-body'),
         }}
       />
     </>
