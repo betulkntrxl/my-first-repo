@@ -120,7 +120,7 @@ const ConfigurationMenu = () => {
               </Tooltip>
             </Typography>
 
-            <FormControl fullWidth>
+            <FormControl fullWidth style={{ marginBottom: 10 }}>
               <InputLabel id="model">{t('menu.configuration.model')}</InputLabel>
               <Select
                 fullWidth
