@@ -20,7 +20,7 @@ const checkIfUserIsAuthorizedForGPT4 = (req, res, next) => {
     !chatAppGroupsUserIsAMemberOf.includes(GPT4_AUTHORIZATION_GROUP)
   ) {
     logger.info(`User is not authorized to use GPT4`);
-    return res.status(403).send('User is authorized to use GPT4');
+    return res.status(403).send('User is not authorized to use GPT4');
   }
 
   logger.info(`User is authorized to use GPT4`);
