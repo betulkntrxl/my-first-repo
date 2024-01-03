@@ -122,10 +122,10 @@
   dependencies:
     lodash "^4.17.15"
 
-"@okta/oidc-middleware@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@okta/oidc-middleware/-/oidc-middleware-5.2.0.tgz#b0332c2f0bb8ae62db979459f39c68f15c50e210"
-  integrity sha512-VQBqm4Yz3LuyRw1OTc3Mi1U0SnAs/WLHafC0dE9gQnN/JqWojCznsPemhOq8RLJNW5+p4vDYgYvko33bcS3SIw==
+"@okta/oidc-middleware@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@okta/oidc-middleware/-/oidc-middleware-5.2.1.tgz#5e231fd2f3fbc404c2ab4c88d36a5ebb1bc743d9"
+  integrity sha512-BReSvNeTOiQ/Ui8WyBEo0mBP5chYz1Hk+TN95e0VvEYsy9l2ND4P2nfHP4ODyM8F/1sSDsHjCS6Y9BEgqsxNyg==
   dependencies:
     "@okta/configuration-validation" "^0.4.1"
     "@types/csurf" "^1.11.2"
