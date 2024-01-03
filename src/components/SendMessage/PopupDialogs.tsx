@@ -13,6 +13,7 @@ import {
   openAPIError,
   openInputTooLarge,
   openNotAuthorizedForModel,
+  openContentFilter,
 } from './PopupDialogHandlers';
 import { model } from '../ConfigurationMenu/ConfigurationMenu';
 import { GPT_MODELS } from '../../clients/models/PromptModel';
@@ -87,6 +88,15 @@ const PopupDialogs = () => {
           openDialog: openNotAuthorizedForModel.value,
           headerText: t('popup-messages.not-authorized-header'),
           bodyText: t('popup-messages.not-authorized-body'),
+        }}
+      />
+
+      <OKDialog
+        {...{
+          handleClose: PopupDialogCloseHandlers.closeContentFilterDialog,
+          openDialog: openContentFilter.value,
+          headerText: t('popup-messages.content-filter-header'),
+          bodyText: t('popup-messages.content-filter-body'),
         }}
       />
     </>

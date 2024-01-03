@@ -143,6 +143,15 @@ const SendMessage = () => {
           ) {
             PopupDialogOpenHandlers.openInputTooLargeDialog();
           }
+          // Azure OpenAI's Content Filter Error
+          else if (
+            error.response.status === 400 &&
+            error.response.data &&
+            error.response.data.openAIErrorCode &&
+            error.response.data.openAIErrorCode === 'content_filter'
+          ) {
+            PopupDialogOpenHandlers.openContentFilterDialog();
+          }
           // Every other type of error with an error response
           else {
             PopupDialogOpenHandlers.openAPIGeneralErrorDialog();
@@ -285,7 +294,7 @@ const SendMessage = () => {
                   <CustomButton
                     title="reset"
                     variant="contained"
-                    onClick={PopupDialogOpenHandlers.openSessionExpiredDialog}
+                    onClick={PopupDialogOpenHandlers.openResetChatDialog}
                     style={{
                       marginLeft: '10px',
                       width: '150px',

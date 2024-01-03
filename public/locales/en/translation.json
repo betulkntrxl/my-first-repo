@@ -75,6 +75,8 @@
     "server-busy-body": "The server is currently busy.\nPlease try again at a later time.",
     "input-too-large-header": "Input too large",
     "input-too-large-35turbo-4k-body": "The input you have entered is too large, the max is 4,000 tokens which is roughly 3,000 words, past messages are included in the input. Reset the chat or edit past messages in the configuration.",
-    "input-too-large-gpt4-32K-body": "The input you have entered is too large, the max is 32,000 tokens which is roughly 24,000 words, past messages are included in the input. Reset the chat or edit past messages in the configuration."
+    "input-too-large-gpt4-32K-body": "The input you have entered is too large, the max is 32,000 tokens which is roughly 24,000 words, past messages are included in the input. Reset the chat or edit past messages in the configuration.",
+    "content-filter-header": "Azure OpenAI Content Filter",
+    "content-filter-body": "Azure OpenAI's Content Filter has been triggerd. Please modify your prompt and retry."
   }
 }
