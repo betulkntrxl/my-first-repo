@@ -50,6 +50,7 @@ const setupMockAxiosSuccessResponses = (
 const setupMockAxiosOpenAIAPIFailureResponses = (
   mockedAxios: jest.Mocked<typeof axios>,
   httpStatusCode: number,
+  openAIErrorCode = '',
 ) => {
   mockedAxios.get.mockImplementation((url: string) => {
     switch (url) {
@@ -73,6 +74,9 @@ const setupMockAxiosOpenAIAPIFailureResponses = (
         return Promise.reject({
           response: {
             status: httpStatusCode,
+            data: {
+              openAIErrorCode: openAIErrorCode,
+            },
           },
         });
       /* eslint-enable */

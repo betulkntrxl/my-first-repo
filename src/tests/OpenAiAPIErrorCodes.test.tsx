@@ -50,7 +50,7 @@ describe('OpenAI API errors', () => {
   //     });
   //   });
 
-  it('returns status 401 Unauthorized error and Cancel', async () => {
+  it('returns status 401 Unauthenticated error and Cancel', async () => {
     setupMockAxiosOpenAIAPIFailureResponses(mockedAxios, 401);
     await act(async () => {
       render(<App />);
@@ -65,9 +65,37 @@ describe('OpenAI API errors', () => {
 
         // wait for dialog to be rendered
         await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.session-expired-header', { exact: false }),
+          ).toBeTruthy();
           fireEvent.click(screen.getByTitle('cancel-button'));
+          expect(sendElement).toBeTruthy();
         });
-        expect(sendElement).toBeTruthy();
+      });
+    });
+  });
+
+  it('returns status 403 Unauthorized error and Cancel', async () => {
+    setupMockAxiosOpenAIAPIFailureResponses(mockedAxios, 403);
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
+
+        await user.click(sendmessageElement);
+        await user.keyboard('hello');
+        const sendElement = screen.getByTitle('send');
+        await user.click(sendElement);
+
+        // wait for dialog to be rendered
+        await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.not-authorized-header', { exact: false }),
+          ).toBeTruthy();
+          fireEvent.click(screen.getByTitle('close-button'));
+          expect(sendElement).toBeTruthy();
+        });
       });
     });
   });
@@ -87,6 +115,84 @@ describe('OpenAI API errors', () => {
 
         // wait for dialog to be rendered
         await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.server-busy-header', { exact: false }),
+          ).toBeTruthy();
+          fireEvent.click(screen.getByTitle('close-button'));
+          expect(sendElement).toBeTruthy();
+        });
+      });
+    });
+  });
+
+  it('returns 413 Content Length Exceeded error', async () => {
+    setupMockAxiosOpenAIAPIFailureResponses(mockedAxios, 413);
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
+
+        await user.click(sendmessageElement);
+        await user.keyboard('hello');
+        const sendElement = screen.getByTitle('send');
+        await user.click(sendElement);
+
+        // wait for dialog to be rendered
+        await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.input-too-large-header', { exact: false }),
+          ).toBeTruthy();
+          fireEvent.click(screen.getByTitle('close-button'));
+          expect(sendElement).toBeTruthy();
+        });
+      });
+    });
+  });
+
+  it('returns 400 Context Length Exceeded API error', async () => {
+    setupMockAxiosOpenAIAPIFailureResponses(mockedAxios, 400, 'context_length_exceeded');
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
+
+        await user.click(sendmessageElement);
+        await user.keyboard('hello');
+        const sendElement = screen.getByTitle('send');
+        await user.click(sendElement);
+
+        // wait for dialog to be rendered
+        await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.input-too-large-header', { exact: false }),
+          ).toBeTruthy();
+          fireEvent.click(screen.getByTitle('close-button'));
+          expect(sendElement).toBeTruthy();
+        });
+      });
+    });
+  });
+
+  it('returns 400 Content Filter API error', async () => {
+    setupMockAxiosOpenAIAPIFailureResponses(mockedAxios, 400, 'content_filter');
+    await act(async () => {
+      render(<App />);
+      const user = userEvent.setup();
+      await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
+        const sendmessageElement = screen.getByTitle('sendmessage');
+
+        await user.click(sendmessageElement);
+        await user.keyboard('hello');
+        const sendElement = screen.getByTitle('send');
+        await user.click(sendElement);
+
+        // wait for dialog to be rendered
+        await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.content-filter-header', { exact: false }),
+          ).toBeTruthy();
           fireEvent.click(screen.getByTitle('close-button'));
           expect(sendElement).toBeTruthy();
         });
@@ -109,6 +215,9 @@ describe('OpenAI API errors', () => {
 
         // wait for dialog to be rendered
         await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.unexpected-error-header', { exact: false }),
+          ).toBeTruthy();
           fireEvent.click(screen.getByTitle('close-button'));
           expect(sendElement).toBeTruthy();
         });

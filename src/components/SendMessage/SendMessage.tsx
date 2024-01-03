@@ -294,7 +294,7 @@ const SendMessage = () => {
                   <CustomButton
                     title="reset"
                     variant="contained"
-                    onClick={PopupDialogOpenHandlers.openSessionExpiredDialog}
+                    onClick={PopupDialogOpenHandlers.openResetChatDialog}
                     style={{
                       marginLeft: '10px',
                       width: '150px',

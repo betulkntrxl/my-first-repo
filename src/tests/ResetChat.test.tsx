@@ -24,6 +24,9 @@ describe('testing Reset Chat', () => {
         await user.click(resetElement);
         // wait for element to be rendered
         await waitFor(() => expect(screen.getByTitle('cancel-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.reset-chat-header', { exact: false }),
+          ).toBeTruthy();
           const cancelElement = screen.getByTitle('cancel-button');
           fireEvent.click(cancelElement);
           expect(resetElement).toBeTruthy();

@@ -42,6 +42,9 @@ describe('Token Input Limit', () => {
 
         // wait for dialog to be rendered
         await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
+          expect(
+            screen.getByText('popup-messages.input-too-large-header', { exact: false }),
+          ).toBeTruthy();
           fireEvent.click(screen.getByTitle('close-button'));
           expect(sendElement).toBeTruthy();
         });
