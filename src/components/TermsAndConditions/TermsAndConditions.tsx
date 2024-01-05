@@ -69,7 +69,7 @@ const TermsAndConditions = () => {
           <b>The U.S. Oncology Network (“USON”) Terms and Conditions of Use – McKesson’s ChatApp</b>
         </div>
         <div>
-          <b>EFFECTIVE DATE: December, 2023</b>
+          <b>EFFECTIVE DATE: 8th December, 2023</b>
         </div>
         <div>
           <b>VERSION: {T_AND_C_VERSION}</b>
