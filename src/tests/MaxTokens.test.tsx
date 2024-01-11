@@ -83,7 +83,7 @@ describe('testing Max Tokens', () => {
     });
   });
 
-  it('enter value greater than max tokens range, should display max range 4096', async () => {
+  it('enter value greater than max tokens range, should display max range 4000', async () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
@@ -106,7 +106,7 @@ describe('testing Max Tokens', () => {
                     target: { value: 5000 },
                   });
 
-                  expect(maxtokensInput).toHaveValue(4096);
+                  expect(maxtokensInput).toHaveValue(4000);
                 },
               );
             },
