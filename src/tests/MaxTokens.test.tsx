@@ -31,7 +31,11 @@ describe('testing Max Tokens', () => {
                 () => {
                   fireEvent.click(screen.getByTitle('maxTokens-input'));
                   const maxtokensInput = screen.getByTitle('maxTokens-input');
-                  // select all digits in input
+
+                  // Check the default value
+                  expect(maxtokensInput).toHaveValue(800);
+
+                  // Check you can change the value
                   fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
                     target: { value: 2000 },
                   });
