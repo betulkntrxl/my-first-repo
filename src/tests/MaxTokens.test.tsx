@@ -31,7 +31,11 @@ describe('testing Max Tokens', () => {
                 () => {
                   fireEvent.click(screen.getByTitle('maxTokens-input'));
                   const maxtokensInput = screen.getByTitle('maxTokens-input');
-                  // select all digits in input
+
+                  // Check the default value
+                  expect(maxtokensInput).toHaveValue(800);
+
+                  // Check you can change the value
                   fireEvent.change(screen.getByTitle(/maxTokens-input/i), {
                     target: { value: 2000 },
                   });
@@ -79,7 +83,7 @@ describe('testing Max Tokens', () => {
     });
   });
 
-  it('enter value greater than max tokens range, should display max range 4096', async () => {
+  it('enter value greater than max tokens range, should display max range 4000', async () => {
     setupMockAxiosSuccessResponses(mockedAxios);
     await act(async () => {
       render(<App />);
@@ -102,7 +106,7 @@ describe('testing Max Tokens', () => {
                     target: { value: 5000 },
                   });
 
-                  expect(maxtokensInput).toHaveValue(4096);
+                  expect(maxtokensInput).toHaveValue(4000);
                 },
               );
             },

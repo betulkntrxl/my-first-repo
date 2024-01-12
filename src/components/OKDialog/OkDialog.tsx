@@ -70,7 +70,9 @@ const OKDialog = (props: {
         <div style={{ color: 'red', fontWeight: 'bold' }}>{headerText} !</div>
       </BootstrapDialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>{bodyText}</Typography>
+        <Typography gutterBottom style={{ whiteSpace: 'pre-line' }}>
+          {bodyText}
+        </Typography>
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" onClick={handleClose} title="close-button">

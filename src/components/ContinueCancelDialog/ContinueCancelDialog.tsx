@@ -73,7 +73,9 @@ const ContinueCancelDialog = (props: {
         </div>
       </BootstrapDialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>{bodyText}</Typography>
+        <Typography gutterBottom style={{ whiteSpace: 'pre-line' }}>
+          {bodyText}
+        </Typography>
       </DialogContent>
       <DialogActions>
         <Button
