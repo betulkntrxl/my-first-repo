@@ -37,55 +37,49 @@ Below are the environmetal variables you need to set, sensitive values are ommit
 
 The certs are checked into this repository in the [certs folder](certs/) so we just need to set the following environmental variable
 
-NODE_EXTRA_CA_CERTS=certs/mule-chain.pem
+- NODE_EXTRA_CA_CERTS=certs/mule-chain.pem
 
 ### Mulesoft Creds:
 
-MULESOFT_OPENAI_CLIENT_SECRET=
-
-MULESOFT_OPENAI_CLIENT_ID=
+- MULESOFT_OPENAI_CLIENT_SECRET=
+- MULESOFT_OPENAI_CLIENT_ID=
 
 ### Mulesoft URLs:
 
-// GPT-3.5 Turbo 4K
+#### GPT-3.5 Turbo 4K URL:
 
-MULESOFT_OPENAI_CHAT_API_URL=
+- MULESOFT_OPENAI_CHAT_API_URL=
 
-// GPT-4
+#### GPT-4 URL:
 
-MULESOFT_OPENAI_CHAT_API_URL_GPT4=
+- MULESOFT_OPENAI_CHAT_API_URL_GPT4=
 
-### Run McKesson Instance:
+### Run McKesson or USON Instance:
 
-ORG_DEPLOYMENT='mckesson'
+#### Run McKesson Instance:
 
-OKTA_APP_BASE_URL=
+- ORG_DEPLOYMENT='mckesson'
 
-OKTA_CLIENT_SECRET=
+#### Run USON Instance:
 
-OKTA_CLIENT_ID=
+- ORG_DEPLOYMENT='uson'
 
-OKTA_ISSUER=
+### OKTA:
 
-### Run USON Instance:
+There are different values depending if you are running the McKesson or USON instance
 
-ORG_DEPLOYMENT='uson'
-
-USON_OKTA_BASE_URL=
-
-USON_OKTA_CLIENT_SECRET=
-
-USON_OKTA_CLIENT_ID=
-
-USON_OKTA_ISSUER=
+- OKTA_APP_BASE_URL=
+- OKTA_CLIENT_SECRET=
+- OKTA_CLIENT_ID=
+- OKTA_ISSUER=
 
 ## Installing dependencies:
 
-In the root folder type the following to install dependencies for the React code
+In the [root folder](/) type the following to install dependencies for the React code
 
 - yarn
 
-In the root folder type the following to install dependencies for the Server code
+In the [root folder](/) type the following to install dependencies for the Server code
 
 - cd server
 - yarn
@@ -94,7 +88,7 @@ In the root folder type the following to install dependencies for the Server cod
 
 NOTE: You need to be on VPN to run locally because the Mulesoft APIs are internal only
 
-In the root folder follow these steps
+In the [root folder](/) follow these steps
 
 - yarn prod-server
 - When the server starts go to http://localhost:8080 the ChatApp UI should now be running
