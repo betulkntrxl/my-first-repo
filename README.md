@@ -2,7 +2,7 @@
 
 This is the code repository for ChatApp. ChatApp is a web application which has similar functionality to ChatGPT. The ChatApp supports two languages, English and French.
 
-Currently there are two instances running in production
+Currently there are two instances running in production (You need to be on VPN)
 
 - [McKesson ChatApp](https://chatapp.mckesson.com/)
 - [Uson ChatApp](https://chatapp.usoncology.com/)
