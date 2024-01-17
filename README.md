@@ -29,9 +29,9 @@ Currently there are two instances running in production (You need to be on VPN)
 
 To run the application locally you need to trust the internal CA certs and set environmental variables to communicate with Okta, Mulesoft etc...
 
-When running locally the session store is configured to be in memory so no configuration/creds is needed, in the deployed Kubernetes environment this the session store is configured to use Redis.
+When running locally the session store is configured to be in memory so no configuration/creds is needed, in the deployed Kubernetes environment the session store is configured to use Redis.
 
-Below are the environmetal variables you need to set, where you see a missing value, these values can be got from an Azure KeyVault ``
+Below are the environmetal variables you need to set, sensitive values are ommitted, these values can be got from another developer working on ChatApp or from our ChatApp Azure KeyVault <TODO: link to Azure KeyVault>
 
 ### Trust CA Certs:
 
@@ -91,6 +91,8 @@ In the root folder type the following to install dependencies for the Server cod
 - yarn
 
 ## Running locally:
+
+NOTE: You need to be on VPN to run locally because the Mulesoft APIs are internal only
 
 In the root folder type
 
