@@ -17,9 +17,15 @@ Currently there are two instances running in production
 - GitHub Actions CI/CD and dependabot workflows [workflows folder](.github/workflows/)
 - General development configuration, linting, formatting, SonarQube etc...
 
-# ChatApp Architecture
+# Setting up locally for development
 
-# How to run locally
+## Install Requirements:
+
+- Node 18.16.0+
+- Npm 9.8.0+
+- Yarn 1.22.19+
+
+## Set up environmental variables:
 
 To run the application locally you need to trust the internal CA certs and set environmental variables to communicate with Okta, Mulesoft etc...
 
@@ -27,19 +33,19 @@ When running locally the session store is configured to be in memory so no confi
 
 Below are the environmetal variables you need to set, where you see a missing value, these values can be got from an Azure KeyVault ``
 
-## Trust CA Certs :
+### Trust CA Certs:
 
 The certs are checked into this repository in the [certs folder](certs/) so we just need to set the following environmental variable
 
 NODE_EXTRA_CA_CERTS=certs/mule-chain.pem
 
-## Mulesoft Creds:
+### Mulesoft Creds:
 
 MULESOFT_OPENAI_CLIENT_SECRET=
 
 MULESOFT_OPENAI_CLIENT_ID=
 
-## Mulesoft URLs:
+### Mulesoft URLs:
 
 // GPT-3.5 Turbo 4K
 
@@ -49,7 +55,7 @@ MULESOFT_OPENAI_CHAT_API_URL=
 
 MULESOFT_OPENAI_CHAT_API_URL_GPT4=
 
-## Run McKesson Instance:
+### Run McKesson Instance:
 
 ORG_DEPLOYMENT='mckesson'
 
@@ -61,7 +67,7 @@ OKTA_CLIENT_ID=
 
 OKTA_ISSUER=
 
-## Run USON Instance:
+### Run USON Instance:
 
 ORG_DEPLOYMENT='uson'
 
@@ -72,3 +78,21 @@ USON_OKTA_CLIENT_SECRET=
 USON_OKTA_CLIENT_ID=
 
 USON_OKTA_ISSUER=
+
+## Installing dependencies:
+
+In the root folder type the following to install dependencies for the React code
+
+- yarn
+
+In the root folder type the following to install dependencies for the Server code
+
+- cd server
+- yarn
+
+## Running locally:
+
+In the root folder type
+
+- yarn prod-server
+- When the server starts go to http://localhost:8080 the ChatApp UI should now be running
