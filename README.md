@@ -33,6 +33,22 @@ The certs are checked into this repository in the [certs folder](certs/) so we j
 
 NODE_EXTRA_CA_CERTS=certs/mule-chain.pem
 
+## Mulesoft Creds:
+
+MULESOFT_OPENAI_CLIENT_SECRET=
+
+MULESOFT_OPENAI_CLIENT_ID=
+
+## Mulesoft URLs:
+
+// GPT-3.5 Turbo 4K
+
+MULESOFT_OPENAI_CHAT_API_URL=
+
+// GPT-4
+
+MULESOFT_OPENAI_CHAT_API_URL_GPT4=
+
 ## Run McKesson Instance:
 
 ORG_DEPLOYMENT='mckesson'
@@ -56,19 +72,3 @@ USON_OKTA_CLIENT_SECRET=
 USON_OKTA_CLIENT_ID=
 
 USON_OKTA_ISSUER=
-
-## Mulesoft Creds:
-
-MULESOFT_OPENAI_CLIENT_SECRET=
-
-MULESOFT_OPENAI_CLIENT_ID=
-
-## Mulesoft URLs:
-
-// GPT-3.5 Turbo 4K
-
-MULESOFT_OPENAI_CHAT_API_URL=
-
-// GPT-4
-
-MULESOFT_OPENAI_CHAT_API_URL_GPT4=
