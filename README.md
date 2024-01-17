@@ -94,7 +94,7 @@ In the root folder type the following to install dependencies for the Server cod
 
 NOTE: You need to be on VPN to run locally because the Mulesoft APIs are internal only
 
-In the root folder type
+In the root folder follow these steps
 
 - yarn prod-server
 - When the server starts go to http://localhost:8080 the ChatApp UI should now be running
