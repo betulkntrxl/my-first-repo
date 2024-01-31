@@ -76,8 +76,8 @@ const PopupDialogs = () => {
           openDialog: openInputTooLarge.value,
           headerText: t('popup-messages.input-too-large-header'),
           bodyText:
-            model.value === GPT_MODELS.GPT_3_5_TURBO_4K
-              ? t('popup-messages.input-too-large-35turbo-4k-body')
+            model.value === GPT_MODELS.GPT_3_5_TURBO_16K
+              ? t('popup-messages.input-too-large-35turbo-16k-body')
               : t('popup-messages.input-too-large-gpt4-32K-body'),
         }}
       />

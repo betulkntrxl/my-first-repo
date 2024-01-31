@@ -5,11 +5,11 @@ import { setupRetryConfig } from './configs/RetryConfig';
 // Setup retry logic
 setupRetryConfig();
 
-const GPT_3_5_TURBO_4K_PATH = '/api/prompt/gpt35turbo';
+const GPT_3_5_TURBO_PATH = '/api/prompt/gpt35turbo';
 const GPT_4_32K_PATH = '/api/prompt/gpt4';
 
 const getPromptPath = (model: GPT_MODELS) =>
-  model === GPT_MODELS.GPT_3_5_TURBO_4K ? GPT_3_5_TURBO_4K_PATH : GPT_4_32K_PATH;
+  model === GPT_MODELS.GPT_3_5_TURBO_16K ? GPT_3_5_TURBO_PATH : GPT_4_32K_PATH;
 
 const HEADERS = {
   'Content-Type': 'application/json',

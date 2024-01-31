@@ -1,6 +1,6 @@
 import { logger } from '../configs/logger-config.js';
 
-const GPT_3_5_TURBO_4K = 'GPT-3-5-Turbo-4K';
+const GPT_3_5_TURBO_16K = 'GPT-3-5-Turbo-16K';
 const GPT_4_32K = 'GPT-4-32K';
 
 // AD Groups in NMACK that were created for GPT4 authorization are:
@@ -31,7 +31,7 @@ const checkIfUserIsAuthorizedForGPT4 = (req, res, next) => {
 
 const getAvailableModels = (req, res, next) => {
   logger.info(`Getting available models...`);
-  const models = [GPT_3_5_TURBO_4K];
+  const models = [GPT_3_5_TURBO_16K];
 
   // OKTA Custom Claims to retrieve what ChatApp groups the user
   // is a member of is only configured for McKesson Okta
