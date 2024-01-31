@@ -17,7 +17,7 @@ import { model, tokenLimit, maxTokens } from '../../components/ConfigurationMenu
 import ConfigurationConstants from '../../components/ConfigurationMenu/ConfigurationConstants';
 
 export const orgDeployment = signal<string>('');
-export const availableModels = signal<string[]>([GPT_MODELS.GPT_3_5_TURBO_4K]);
+export const availableModels = signal<string[]>([GPT_MODELS.GPT_3_5_TURBO_16K]);
 
 const Home = () => {
   const { t } = useTranslation();
@@ -47,9 +47,9 @@ const Home = () => {
           tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_4_32K;
           maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_4_32K;
         } else {
-          model.value = GPT_MODELS.GPT_3_5_TURBO_4K;
-          tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_3_5_TURBO_4K;
-          maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_3_5_TURBO_4K;
+          model.value = GPT_MODELS.GPT_3_5_TURBO_16K;
+          tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_3_5_TURBO_16K;
+          maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_3_5_TURBO_16K;
         }
       })
       .catch(error => {
