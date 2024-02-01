@@ -48,7 +48,9 @@
     "prepare": "husky install",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
     "prettier:check": "prettier --check 'src/**/*.{ts,tsx}'",
-    "prod-server": "yarn build && node server/server.js"
+    "prod-server": "yarn build && node server/server.js",
+    "fake-server": "json-server --watch fake-data/db.json --routes fake-data/routes.json --port 3001",
+    "dev-server": "concurrently \"yarn fake-server\" \"yarn start\""
   },
   "browserslist": {
     "production": [
@@ -89,7 +91,7 @@
       "text"
     ]
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:3001",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/runtime": "^7.23.8",
