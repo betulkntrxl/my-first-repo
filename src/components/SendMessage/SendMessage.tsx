@@ -3,6 +3,7 @@ import { useSignal, signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
 import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -318,18 +319,24 @@ const SendMessage = () => {
     //   </form>
     //   <PopupDialogs />
     // </>
-
-    <Grid container spacing={{ xs: 1, sm: 6 }}>
+    <Grid container spacing={{ xs: 1, sm: 6 }} sx={{ px: 2 }}>
       {/* <Grid item xs={6} sm={7} lg={9}> */}
       <Grid item xs>
         <TextField
           size="small"
           fullWidth
-          placeholder="Type a message"
           variant="outlined"
-          ref={inputRef}
           multiline
           maxRows={2}
+          ref={inputRef}
+          {...(messageInputDisabled.value && { disabled: true })}
+          autoComplete="off"
+          title="sendmessage"
+          placeholder={t('type-message')}
+          name="chatsession"
+          onChange={handleChatMessageTyping}
+          onKeyDown={handleKeyDown}
+          value={promptInputText.value}
         />
       </Grid>
       {/* <Grid item xs={6} sm={5} lg={3} display="inline-flex"> */}

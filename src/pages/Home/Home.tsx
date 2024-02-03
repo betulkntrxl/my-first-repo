@@ -107,7 +107,14 @@ const Home = () => {
           <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
             <Messages />
           </Box>
-          <Box sx={{ p: 2, backgroundColor: 'background.default' }}>
+          <Box
+            sx={{
+              pt: 2,
+              mb: 1,
+              backgroundColor: 'background.default',
+              boxShadow: '0px -5px 10px rgba(0, 0, 0, 0.1)',
+            }}
+          >
             <SendMessage />
           </Box>
         </Box>
