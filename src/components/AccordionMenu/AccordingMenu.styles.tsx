@@ -15,8 +15,10 @@ const AccordionTheme = createTheme({
           border: `0px solid ${theme.palette.divider}`,
           '&:not(:last-child)': {
             borderBottom: '1px solid',
-            marginLeft: 20,
-            marginRight: 20,
+            marginLeft: -6,
+            marginRight: -6,
+            marginBottom: 8,
+            padding: 8,
             color: '#e6e6e6',
           },
           '&:before': {

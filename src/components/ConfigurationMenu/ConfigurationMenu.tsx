@@ -150,25 +150,22 @@ const ConfigurationMenu = () => {
           <InfoOutlinedIcon />
         </Tooltip>
       </Typography>
-      <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
+      <Grid container spacing={2} alignItems="center" justifyContent="space-between">
         <Grid item xs>
-          <div>
-            <Slider
-              style={{ width: 230 }}
-              valueLabelDisplay="auto"
-              min={0}
-              max={1}
-              step={0.1}
-              value={temperature.value}
-              onChange={handleTemperatureSliderChange}
-              aria-labelledby="temperature-input-label"
-              aria-label="Temperature"
-            />
-          </div>
+          <Slider
+            valueLabelDisplay="auto"
+            min={0}
+            max={1}
+            step={0.1}
+            value={temperature.value}
+            onChange={handleTemperatureSliderChange}
+            aria-labelledby="temperature-input-label"
+            aria-label="Temperature"
+          />
         </Grid>
         <Grid item>
           <TextField
-            style={{ width: 85 }}
+            sx={{ minWidth: 75 }}
             value={temperature}
             size="small"
             onChange={handleTemperatureInputChange}
@@ -190,10 +187,9 @@ const ConfigurationMenu = () => {
           <InfoOutlinedIcon />
         </Tooltip>
       </Typography>
-      <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
+      <Grid container spacing={2} alignItems="center" justifyContent="space-between">
         <Grid item xs>
           <Slider
-            style={{ width: 230 }}
             valueLabelDisplay="auto"
             min={0}
             max={1}
@@ -206,7 +202,7 @@ const ConfigurationMenu = () => {
         </Grid>
         <Grid item>
           <TextField
-            style={{ width: 85 }}
+            sx={{ minWidth: 75 }}
             value={topP}
             size="small"
             onChange={handleTopPInputChange}
@@ -227,10 +223,9 @@ const ConfigurationMenu = () => {
           <InfoOutlinedIcon />
         </Tooltip>
       </Typography>
-      <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs>
           <Slider
-            style={{ width: 230 }}
             valueLabelDisplay="auto"
             min={1}
             max={tokenLimit.value}
@@ -243,7 +238,7 @@ const ConfigurationMenu = () => {
         </Grid>
         <Grid item>
           <TextField
-            style={{ width: 85 }}
+            sx={{ minWidth: 75 }}
             value={maxTokens.value}
             size="small"
             onChange={handleMaxTokensInputChange}
@@ -265,10 +260,9 @@ const ConfigurationMenu = () => {
             <InfoOutlinedIcon />
           </Tooltip>
         </Typography>
-        <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
+        <Grid container spacing={2} alignItems="center">
           <Grid item xs>
             <Slider
-              style={{ width: 230 }}
               valueLabelDisplay="auto"
               min={0}
               max={20}
@@ -281,7 +275,7 @@ const ConfigurationMenu = () => {
           </Grid>
           <Grid item>
             <TextField
-              style={{ width: 85 }}
+              sx={{ minWidth: 75 }}
               value={pastMessages.value}
               size="small"
               onChange={handlePastMessagesInputChange}
@@ -304,10 +298,9 @@ const ConfigurationMenu = () => {
             <InfoOutlinedIcon />
           </Tooltip>
         </Typography>
-        <Grid container spacing={2} alignItems="center" style={{ width: 370 }}>
+        <Grid container spacing={2} alignItems="center">
           <Grid item xs>
             <Slider
-              style={{ width: 230 }}
               valueLabelDisplay="auto"
               min={5}
               max={60}
@@ -320,7 +313,7 @@ const ConfigurationMenu = () => {
           </Grid>
           <Grid item>
             <TextField
-              style={{ width: 85 }}
+              sx={{ minWidth: 75 }}
               value={APITimeout.value}
               size="small"
               onChange={handleAPITimeoutInputChange}

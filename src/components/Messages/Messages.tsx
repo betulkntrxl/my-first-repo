@@ -1,7 +1,10 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent, Stack } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 
 import SystemIcon from '../../assets/system.jpg';
 import UserIcon from '../../assets/user.jpg';
@@ -23,20 +26,18 @@ const Messages = () => {
   };
 
   return (
-    <Card
-      variant="elevation"
+    <Box
+      // variant="elevation"
       sx={{ Width: '100%' }}
       style={{
-        position: 'fixed',
-        top: 80,
-        left: 0,
-        right: 0,
-        bottom: 110,
+        // position: 'fixed',
+        // top: 80,
+        // left: 0,
+        // right: 0,
+        // bottom: 110,
         overflow: 'auto',
         overflowY: 'auto',
-        // zIndex: -2,
         backgroundColor: 'transparent',
-        //        backgroundColor:'#E5EFF3'
       }}
       ref={bottomRef}
     >
@@ -44,17 +45,11 @@ const Messages = () => {
         <Stack direction="column">
           <div
             style={{
-              //            position: 'absolute',
-              // color:'#B3CEDD',
               color: 'steelblue',
-              //  backgroundColor: '#E5EFF3',
               opacity: 0.6,
               top: 0,
               left: 0,
-              //  bottom: 0,
               right: 0,
-              //   zIndex: -1,
-              //   overflow: 'hidden',
               fontFamily: 'arial',
             }}
           >
@@ -62,7 +57,7 @@ const Messages = () => {
               {t('background.title')}
               <br />
               <br />
-              <ul style={{ textAlign: 'left' }}>
+              <ul style={{ textAlign: 'left', paddingLeft: '0px' }}>
                 <li>{t('background.bullet1')}</li>
                 <li>{t('background.bullet2')}</li>
                 <li>{t('background.bullet3')}</li>
@@ -116,8 +111,8 @@ const Messages = () => {
                       style={{
                         width: 40,
                         height: 40,
-                        marginTop: 20,
-                        marginLeft: 20,
+                        marginTop: 40,
+                        marginLeft: 0,
                         marginRight: 10,
                       }}
                     />
@@ -162,7 +157,7 @@ const Messages = () => {
           }
         </Stack>
       </CardContent>
-    </Card>
+    </Box>
   );
 };
 

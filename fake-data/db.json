@@ -12,7 +12,7 @@
     "authenticated": "true"
   },
   "app-insights-event": {
-    "name": "TopP sent as 0.35"
+    "name": "ChatApp Language Changed to en"
   },
   "app-insights-trace": {
     "message": "ChatApp default language set to en",

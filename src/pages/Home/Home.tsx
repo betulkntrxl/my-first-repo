@@ -3,6 +3,8 @@ import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { getUA } from 'react-device-detect';
 
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import MetricsClient from '../../clients/MetricsClient';
 import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import OpenAIClient from '../../clients/OpenAIClient';
@@ -85,11 +87,30 @@ const Home = () => {
           // Only show the T&C's for USON
           orgDeployment.value === 'uson' && <TermsAndConditions />
         }
-        <NavBar />
+        {/* <NavBar />
         <MessagesAndSendMessageDiv>
           <Messages />
           <SendMessage />
-        </MessagesAndSendMessageDiv>
+        </MessagesAndSendMessageDiv> */}
+
+        <Box
+          sx={{
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            // bgcolor: "grey.200",
+          }}
+        >
+          <Box sx={{ p: 2, backgroundColor: 'background.default' }}>
+            <NavBar />
+          </Box>
+          <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
+            <Messages />
+          </Box>
+          <Box sx={{ p: 2, backgroundColor: 'background.default' }}>
+            <SendMessage />
+          </Box>
+        </Box>
       </div>
     )
   );
