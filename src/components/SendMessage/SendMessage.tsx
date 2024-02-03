@@ -319,8 +319,9 @@ const SendMessage = () => {
     //   <PopupDialogs />
     // </>
 
-    <Grid container spacing={2}>
-      <Grid item xs={6} sm={7} lg={9}>
+    <Grid container spacing={{ xs: 1, sm: 6 }}>
+      {/* <Grid item xs={6} sm={7} lg={9}> */}
+      <Grid item xs>
         <TextField
           size="small"
           fullWidth
@@ -331,29 +332,22 @@ const SendMessage = () => {
           maxRows={2}
         />
       </Grid>
-      <Grid item xs={6} sm={5} lg={3} display="inline-flex">
+      {/* <Grid item xs={6} sm={5} lg={3} display="inline-flex"> */}
+      <Grid item>
         {/* <Stack direction="row" spacing={1}> */}
         {/* <Button fullWidth variant="contained" endIcon={<TelegramIcon />} sx={{ whiteSpace: 'nowrap', height: '100%', "& .MuiButton-endIcon": { marginLeft: { xs: 0, sm: 8 } } }}><Typography sx={{ display: { xs: 'none', md: 'block' } }}>{t('buttons.send')}</Typography></Button> */}
         {/* <Button fullWidth variant="contained" endIcon={<CachedIcon />} sx={{ whiteSpace: 'nowrap', height: '100%', "& .MuiButton-endIcon": { marginLeft: { xs: 0, sm: 8 } } }}><Typography sx={{ display: { xs: 'none', md: 'block' } }}>{t('buttons.reset-chat')}</Typography></Button> */}
-        <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ whiteSpace: 'nowrap', height: '100%', padding: { xs: '5px', md: '5px' } }}
-            >
+        <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
+          <Grid item xs>
+            <Button fullWidth variant="contained" sx={{ whiteSpace: 'nowrap', height: '100%' }}>
               <Typography sx={{ display: { xs: 'none', md: 'block' } }}>
                 {t('buttons.send')}
               </Typography>
               <TelegramIcon style={{ marginLeft: 0, marginBottom: 5, marginTop: 5 }} />
             </Button>
           </Grid>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ whiteSpace: 'nowrap', height: '100%', padding: { xs: '5px', md: '5px' } }}
-            >
+          <Grid item xs>
+            <Button fullWidth variant="contained" sx={{ whiteSpace: 'nowrap', height: '100%' }}>
               <Typography sx={{ display: { xs: 'none', md: 'block' } }}>
                 {t('buttons.reset-chat')}
               </Typography>
