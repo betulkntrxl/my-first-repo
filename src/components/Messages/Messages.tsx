@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Paper from '@mui/material/Paper';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -27,14 +26,8 @@ const Messages = () => {
 
   return (
     <Box
-      // variant="elevation"
       sx={{ Width: '100%' }}
       style={{
-        // position: 'fixed',
-        // top: 80,
-        // left: 0,
-        // right: 0,
-        // bottom: 110,
         overflow: 'auto',
         overflowY: 'auto',
         backgroundColor: 'transparent',
@@ -79,7 +72,7 @@ const Messages = () => {
                       key={value.id}
                       elevation={3}
                       style={{
-                        marginTop: 40,
+                        marginTop: 20,
                         marginBottom: 20,
                         backgroundColor: 'gainsboro',
                         padding: '10px',

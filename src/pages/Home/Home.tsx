@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { getUA } from 'react-device-detect';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import MetricsClient from '../../clients/MetricsClient';
 import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import OpenAIClient from '../../clients/OpenAIClient';
@@ -98,7 +97,6 @@ const Home = () => {
             height: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            // bgcolor: "grey.200",
           }}
         >
           <Box sx={{ p: 2, backgroundColor: 'background.default' }}>

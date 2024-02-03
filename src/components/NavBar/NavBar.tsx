@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { signal, useSignal } from '@preact/signals-react';
 
 import { useTranslation } from 'react-i18next';
 
 import AppBar from '@mui/material/AppBar';
 import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -13,7 +12,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
 import Divider from '@mui/material/Divider';
@@ -109,199 +107,116 @@ const NavBar = () => {
   }, [version]);
 
   return (
-    <>
-      {/* <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{ backgroundColor: 'white' }}>
-          <Toolbar variant="regular" style={{ width: '95%' }}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open-menu"
-              sx={{ mr: 1 }}
-              onClick={handleDrawerToggle}
-            >
-              <MenuIcon color="primary" />
-            </IconButton>
-            <img
-              alt={orgDeployment.value}
-              width={150}
-              src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
-            />
-
-            <Typography
-              variant="h6"
-              color="#005A8C"
-              component="div"
-              sx={{ flexGrow: 1, fontWeight: 'bold', fontFamily: 'arial', marginLeft: 1 }}
-              title="menutitle"
-            >
-              ChatApp
-            </Typography>
-            <IconButton
-              style={{ color: 'white', fontSize: '16' }}
-              aria-label="logout"
-              onClick={handleLogout}
-            >
-              <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
-              <Typography color="primary"> {t('buttons.logout')}</Typography>
-            </IconButton>
-            <IconButton
-              style={{ color: 'white', fontSize: '16' }}
-              aria-label="language"
-              onClick={handleLanguage}
-            >
-              <LanguageIcon color="primary" style={{ fontWeight: 'bold' }} />
-              <Typography color="primary"> {t('current-language')}</Typography>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box> */}
-      {/* <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="Settings"
-      > */}
-      {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-      {/* <Drawer
-          variant="temporary"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-          open={menuDrawerOpen.value}
-          onClose={handleDrawerToggle}
+    <AppBar sx={{ background: 'white' }}>
+      <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
+          <MenuIcon color="primary" />
+        </IconButton>
+        <img
+          alt={orgDeployment.value}
+          width={150}
+          src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
+        />
+        <Typography
+          variant="h6"
+          color="#005A8C"
+          component="div"
+          sx={{ fontWeight: 'bold', fontFamily: 'arial', marginLeft: 1 }}
+          title="menutitle"
         >
-          <MenuDrawer />
-        </Drawer>
-      </Box> */}
-      <AppBar sx={{ background: 'white' }}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            // onClick={() => setIsDrawerOpen(true)}
-            onClick={handleDrawerToggle}
-          >
-            <MenuIcon color="primary" />
-          </IconButton>
-          <img
-            alt={orgDeployment.value}
-            width={150}
-            src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
-          />
-          <Typography
-            variant="h6"
-            color="#005A8C"
-            component="div"
-            sx={{ fontWeight: 'bold', fontFamily: 'arial', marginLeft: 1 }}
-            title="menutitle"
-          >
-            ChatApp
-          </Typography>
+          ChatApp
+        </Typography>
 
-          {/* <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} > */}
-          <Drawer
-            open={menuDrawerOpen.value}
-            onClose={() => handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-            sx={{
-              '& .MuiDrawer-paper': {
-                boxSizing: 'border-box',
-                maxWidth: { xs: '320px', sm: drawerWidth },
-              },
-            }}
-          >
-            <List sx={{ height: '100%' }}>
-              <ListItem>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  spacing={2}
-                  sx={{ width: '100%' }}
-                >
-                  <div
-                    style={{
-                      width: '100%',
-                      textAlign: 'left',
-                      color: '#007BC7',
-                      fontSize: '18px',
-                      fontWeight: 'bolder',
-                      fontFamily: 'Arial',
-                      marginLeft: 8,
-                      // marginTop: 30,
-                      // marginBottom: 10,
-                    }}
-                  >
-                    {t('menu.title')}
-                  </div>
-                  <IconButton color="inherit" aria-label="close-menu" onClick={handleDrawerToggle}>
-                    <CloseIcon style={{ color: '#007BC7', fontWeight: 'bold' }} />
-                  </IconButton>
-                </Stack>
-              </ListItem>
-              <Divider sx={{ background: '#007BC7', height: '1px' }} />
-              <ListItem>
-                <IconButton
-                  style={{ color: 'white', fontSize: '16' }}
-                  aria-label="logout"
-                  onClick={handleLogout}
-                >
-                  <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
-                  <Typography color="primary"> {t('buttons.logout')}</Typography>
-                </IconButton>
-              </ListItem>
-
-              <ListItem>
-                <IconButton
-                  style={{ color: 'white', fontSize: '16' }}
-                  aria-label="language"
-                  onClick={handleLanguage}
-                >
-                  <LanguageIcon color="primary" style={{ fontWeight: 'bold' }} />
-                  <Typography color="primary"> {t('current-language')}</Typography>
-                </IconButton>
-              </ListItem>
-              <Divider />
-
-              <ListItem>
-                <MenuDrawer />
-              </ListItem>
-
-              <ListItem sx={{ position: 'absolute', bottom: 0 }}>
-                <Paper
-                  elevation={1}
-                  sx={{
-                    backgroundColor: '#e6e6e6',
-                    // position: 'absolute',
-                    // bottom: 0,
+        <Drawer
+          open={menuDrawerOpen.value}
+          onClose={() => handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              maxWidth: { xs: '320px', sm: drawerWidth },
+            },
+          }}
+        >
+          <List sx={{ height: '100%' }}>
+            <ListItem>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                spacing={2}
+                sx={{ width: '100%' }}
+              >
+                <div
+                  style={{
                     width: '100%',
-                    // // maxWidth: 500,
-                    // maxWidth: { xs: '320px', sm: drawerWidth },
-                    padding: '10px',
-                    // margin: 10,
-                    // float: 'left',
-                    // minHeight: '6vh',
-                    // maxHeight: '6vh',
+                    textAlign: 'left',
+                    color: '#007BC7',
+                    fontSize: '18px',
+                    fontWeight: 'bolder',
+                    fontFamily: 'Arial',
+                    marginLeft: 8,
                   }}
                 >
-                  <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
-                    {t('menu.about')}
-                  </div>
+                  {t('menu.title')}
+                </div>
+                <IconButton color="inherit" aria-label="close-menu" onClick={handleDrawerToggle}>
+                  <CloseIcon style={{ color: '#007BC7', fontWeight: 'bold' }} />
+                </IconButton>
+              </Stack>
+            </ListItem>
+            <Divider sx={{ background: '#007BC7', height: '1px' }} />
+            <ListItem>
+              <IconButton
+                style={{ color: 'white', fontSize: '16' }}
+                aria-label="logout"
+                onClick={handleLogout}
+              >
+                <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
+                <Typography color="primary"> {t('buttons.logout')}</Typography>
+              </IconButton>
+            </ListItem>
 
-                  <div style={{ float: 'left' }}>
-                    {t('menu.version')}: {version.value}
-                  </div>
-                </Paper>
-              </ListItem>
-            </List>
-          </Drawer>
-        </Toolbar>
-      </AppBar>
-    </>
+            <ListItem>
+              <IconButton
+                style={{ color: 'white', fontSize: '16' }}
+                aria-label="language"
+                onClick={handleLanguage}
+              >
+                <LanguageIcon color="primary" style={{ fontWeight: 'bold' }} />
+                <Typography color="primary"> {t('current-language')}</Typography>
+              </IconButton>
+            </ListItem>
+            <Divider />
+
+            <ListItem>
+              <MenuDrawer />
+            </ListItem>
+
+            <ListItem sx={{ position: 'absolute', bottom: 0 }}>
+              <Paper
+                elevation={1}
+                sx={{
+                  backgroundColor: '#e6e6e6',
+                  width: '100%',
+                  padding: '10px',
+                }}
+              >
+                <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
+                  {t('menu.about')}
+                </div>
+
+                <div style={{ float: 'left' }}>
+                  {t('menu.version')}: {version.value}
+                </div>
+              </Paper>
+            </ListItem>
+          </List>
+        </Drawer>
+      </Toolbar>
+    </AppBar>
   );
 };
 
