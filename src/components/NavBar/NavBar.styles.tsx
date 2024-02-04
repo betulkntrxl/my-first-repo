@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
 export const AboutListItem = styled(ListItem)`
-  position: fixed;
+  position: sticky;
   bottom: 0;
 `;
 
