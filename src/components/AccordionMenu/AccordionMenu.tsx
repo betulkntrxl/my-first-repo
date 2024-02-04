@@ -62,7 +62,7 @@ const AccordionMenu = () => {
           </ThemeProvider>
           <Divider />
           <ThemeProvider theme={AccordionDetailsTheme}>
-            <AccordionDetails>
+            <AccordionDetails sx={{ mb: '100px' }}>
               <ConfigurationMenu />
             </AccordionDetails>
           </ThemeProvider>
