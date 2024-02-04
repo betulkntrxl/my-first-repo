@@ -26,11 +26,10 @@ const Messages = () => {
 
   return (
     <Box
-      sx={{ Width: '100%' }}
+      sx={{ width: '100%' }}
       style={{
         overflow: 'auto',
         overflowY: 'auto',
-        backgroundColor: 'transparent',
       }}
       ref={bottomRef}
     >

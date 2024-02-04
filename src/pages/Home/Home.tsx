@@ -12,7 +12,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import Messages from '../../components/Messages/Messages';
 import SendMessage from '../../components/SendMessage/SendMessage';
 import TermsAndConditions from '../../components/TermsAndConditions/TermsAndConditions';
-import { MessagesAndSendMessageDiv } from './Home.styles';
+import { MainBox, MessagesBox, SendMessageBox } from './Home.styles';
 import { GPT_MODELS } from '../../clients/models/PromptModel';
 import { model, tokenLimit, maxTokens } from '../../components/ConfigurationMenu/ConfigurationMenu';
 import ConfigurationConstants from '../../components/ConfigurationMenu/ConfigurationConstants';
@@ -86,36 +86,17 @@ const Home = () => {
           // Only show the T&C's for USON
           orgDeployment.value === 'uson' && <TermsAndConditions />
         }
-        {/* <NavBar />
-        <MessagesAndSendMessageDiv>
-          <Messages />
-          <SendMessage />
-        </MessagesAndSendMessageDiv> */}
-
-        <Box
-          sx={{
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Box sx={{ p: 2, backgroundColor: 'background.default' }}>
+        <MainBox>
+          <Box sx={{ p: 2 }}>
             <NavBar />
           </Box>
-          <Box sx={{ flexGrow: 1, overflow: 'auto', p: 2 }}>
+          <MessagesBox>
             <Messages />
-          </Box>
-          <Box
-            sx={{
-              pt: 2,
-              mb: 1,
-              backgroundColor: 'background.default',
-              boxShadow: '0px -5px 10px rgba(0, 0, 0, 0.1)',
-            }}
-          >
+          </MessagesBox>
+          <SendMessageBox>
             <SendMessage />
-          </Box>
-        </Box>
+          </SendMessageBox>
+        </MainBox>
       </div>
     )
   );

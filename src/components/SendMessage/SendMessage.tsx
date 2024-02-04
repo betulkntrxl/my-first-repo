@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
-import CustomButton from './SendMessage.styles';
+import { CustomButton, CustomIcon, CustomButtonText } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
 import OpenAIClient from '../../clients/OpenAIClient';
 import gatherMetricsOnConfigurableSettings from './MetricsOnConfigurableSettings';
@@ -234,11 +234,17 @@ const SendMessage = () => {
 
   return (
     <Box onSubmit={handleSubmit} component="form">
-      <Grid container spacing={{ xs: 1, sm: 6 }} sx={{ px: 2 }}>
+      <Grid
+        container
+        spacing={{ xs: 1, sm: 6 }}
+        sx={{ px: 2 }}
+        alignContent="center"
+        alignItems="center"
+      >
         <Grid item xs>
           <TextField
             inputRef={inputRef}
-            size="small"
+            size="medium"
             fullWidth
             variant="outlined"
             multiline
@@ -256,33 +262,31 @@ const SendMessage = () => {
         <Grid item>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
             <Grid item xs>
-              <Button
+              <CustomButton
                 fullWidth
                 variant="contained"
-                sx={{ whiteSpace: 'nowrap', height: '100%' }}
                 title={t('buttons.send')}
                 type="submit"
                 {...(sendButtonDisabled.value && { disabled: true })}
               >
-                <Typography sx={{ display: { xs: 'none', md: 'block' } }}>
-                  {t('buttons.send')}
-                </Typography>
-                <TelegramIcon style={{ marginLeft: 0, marginBottom: 5, marginTop: 5 }} />
-              </Button>
+                <CustomButtonText>{t('buttons.send')}</CustomButtonText>
+                <CustomIcon>
+                  <TelegramIcon />
+                </CustomIcon>
+              </CustomButton>
             </Grid>
             <Grid item xs>
-              <Button
+              <CustomButton
                 fullWidth
                 variant="contained"
-                sx={{ whiteSpace: 'nowrap', height: '100%' }}
                 title="reset"
                 onClick={PopupDialogOpenHandlers.openResetChatDialog}
               >
-                <Typography sx={{ display: { xs: 'none', md: 'block' } }}>
-                  {t('buttons.reset-chat')}
-                </Typography>
-                <CachedIcon style={{ marginLeft: 0, marginBottom: 5, marginTop: 5 }} />
-              </Button>
+                <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
+                <CustomIcon>
+                  <CachedIcon />
+                </CustomIcon>
+              </CustomButton>
             </Grid>
           </Grid>
         </Grid>

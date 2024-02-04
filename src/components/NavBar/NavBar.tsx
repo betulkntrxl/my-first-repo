@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { signal, useSignal } from '@preact/signals-react';
-
+import React from 'react';
+import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
 import AppBar from '@mui/material/AppBar';
@@ -16,22 +15,20 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
 import Divider from '@mui/material/Divider';
 import CloseIcon from '@mui/icons-material/Close';
-import Paper from '@mui/material/Paper';
 import MetricsClient from '../../clients/MetricsClient';
 import McKessonLogo from '../../assets/mckesson-logo.jpg';
 import UsonLogo from '../../assets/uson-logo.png';
 import MenuDrawer from './MenuDrawer';
 import { orgDeployment } from '../../pages/Home/Home';
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
-import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
-import { TraceSeverity } from '../../clients/models/MetricsModel';
+import { About } from './About';
+import { AboutListItem, ChatAppLogo, MenuDivider } from './NavBar.styles';
 
 export const menuDrawerOpen = signal(false);
 export const drawerWidth = 400;
 
 const NavBar = () => {
   const { t, i18n } = useTranslation();
-  const version = useSignal('');
 
   const handleDrawerToggle = () => {
     menuDrawerOpen.value = !menuDrawerOpen.value;
@@ -88,55 +85,37 @@ const NavBar = () => {
     window.location.href = '/api/auth/logout';
   };
 
-  const getVersion = async () => {
-    VersionAndOrgClient.getApplicationVersion()
-      .then(response => {
-        version.value = response.data.version;
-      })
-      .catch(error => {
-        MetricsClient.sendTrace({
-          message: 'ChatApp failed to retrieve version',
-          severity: TraceSeverity.ERROR,
-          properties: { errorResponse: error.response },
-        });
-      });
-  };
-
-  useEffect(() => {
-    getVersion();
-  }, [version]);
-
   return (
     <AppBar sx={{ background: 'white' }}>
-      <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
+      <Toolbar sx={{ height: '66px' }}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={() => handleDrawerToggle()}
+        >
           <MenuIcon color="primary" />
         </IconButton>
-        <img
-          alt={orgDeployment.value}
-          width={150}
-          src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
-        />
-        <Typography
-          variant="h6"
-          color="#005A8C"
-          component="div"
-          sx={{ fontWeight: 'bold', fontFamily: 'arial', marginLeft: 1 }}
-          title="menutitle"
-        >
-          ChatApp
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <img
+            alt={orgDeployment.value}
+            width={150}
+            src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
+          />
+          <ChatAppLogo title="ChatApp">ChatApp</ChatAppLogo>
+        </Stack>
 
         <Drawer
+          variant="temporary"
           open={menuDrawerOpen.value}
-          onClose={() => handleDrawerToggle}
+          onClose={() => handleDrawerToggle()}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
-              maxWidth: { xs: '320px', sm: drawerWidth },
+              maxWidth: { xs: '100%', sm: drawerWidth },
             },
           }}
         >
@@ -149,43 +128,30 @@ const NavBar = () => {
                 spacing={2}
                 sx={{ width: '100%' }}
               >
-                <div
-                  style={{
-                    width: '100%',
-                    textAlign: 'left',
-                    color: '#007BC7',
-                    fontSize: '18px',
-                    fontWeight: 'bolder',
-                    fontFamily: 'Arial',
-                    marginLeft: 8,
-                  }}
+                <Typography fontWeight="bold" color="#007BC7" fontSize="18px">
+                  {' '}
+                  {t('menu.title')}{' '}
+                </Typography>
+                <IconButton
+                  color="inherit"
+                  aria-label="close-menu"
+                  onClick={() => handleDrawerToggle()}
                 >
-                  {t('menu.title')}
-                </div>
-                <IconButton color="inherit" aria-label="close-menu" onClick={handleDrawerToggle}>
-                  <CloseIcon style={{ color: '#007BC7', fontWeight: 'bold' }} />
+                  <CloseIcon sx={{ color: '#007BC7' }} />
                 </IconButton>
               </Stack>
             </ListItem>
-            <Divider sx={{ background: '#007BC7', height: '1px' }} />
+            <MenuDivider />
             <ListItem>
-              <IconButton
-                style={{ color: 'white', fontSize: '16' }}
-                aria-label="logout"
-                onClick={handleLogout}
-              >
-                <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
+              <IconButton sx={{ color: 'white' }} aria-label="logout" onClick={handleLogout}>
+                <LogoutIcon color="primary" />
                 <Typography color="primary"> {t('buttons.logout')}</Typography>
               </IconButton>
             </ListItem>
 
             <ListItem>
-              <IconButton
-                style={{ color: 'white', fontSize: '16' }}
-                aria-label="language"
-                onClick={handleLanguage}
-              >
-                <LanguageIcon color="primary" style={{ fontWeight: 'bold' }} />
+              <IconButton aria-label="language" onClick={handleLanguage}>
+                <LanguageIcon color="primary" />
                 <Typography color="primary"> {t('current-language')}</Typography>
               </IconButton>
             </ListItem>
@@ -195,24 +161,9 @@ const NavBar = () => {
               <MenuDrawer />
             </ListItem>
 
-            <ListItem sx={{ position: 'absolute', bottom: 0 }}>
-              <Paper
-                elevation={1}
-                sx={{
-                  backgroundColor: '#e6e6e6',
-                  width: '100%',
-                  padding: '10px',
-                }}
-              >
-                <div style={{ color: '#007BC7', fontWeight: 'bold', fontFamily: 'Arial' }}>
-                  {t('menu.about')}
-                </div>
-
-                <div style={{ float: 'left' }}>
-                  {t('menu.version')}: {version.value}
-                </div>
-              </Paper>
-            </ListItem>
+            <AboutListItem>
+              <About />
+            </AboutListItem>
           </List>
         </Drawer>
       </Toolbar>
