@@ -4,6 +4,8 @@ import Paper from '@mui/material/Paper';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 
 import SystemIcon from '../../assets/system.jpg';
 import UserIcon from '../../assets/user.jpg';
@@ -66,7 +68,11 @@ const Messages = () => {
             if (value.role === 'user') {
               return (
                 <div key={value.id}>
-                  <Stack direction="row" style={{ float: 'right' }}>
+                  <Stack
+                    direction="row"
+                    justifyContent="flex-end"
+                    // style={{ float: 'right' }}
+                  >
                     <Paper
                       key={value.id}
                       elevation={3}
@@ -75,10 +81,12 @@ const Messages = () => {
                         marginBottom: 20,
                         backgroundColor: 'gainsboro',
                         padding: '10px',
-                        display: value.content.length === 0 ? 'none' : 'block',
+                        display: value.content.length === 0 ? 'none' : 'inline',
                         justifyContent: 'flex-end',
-                        float: 'right',
+                        // float: 'right',
                         whiteSpace: 'pre-wrap',
+                        overflowWrap: 'break-word',
+                        width: 'calc(100% - 70px)',
                       }}
                     >
                       {value.content}
@@ -89,6 +97,38 @@ const Messages = () => {
                       style={{ width: 40, height: 40, marginTop: 20, marginLeft: 10 }}
                     />
                   </Stack>
+                  {/* <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: value.role !== 'user' ? "flex-start" : "flex-end",
+                      mb: 2,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: value.role !== 'user' ? "row" : "row-reverse",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Avatar sx={{ bgcolor: value.role !== 'user' ? "primary.main" : "secondary.main" }}>
+                        {value.role !== 'user' ? "B" : "U"}
+                      </Avatar>
+                      <Paper
+                        variant="outlined"
+                        sx={{
+                          p: 2,
+                          ml: value.role !== 'user' ? 1 : 0,
+                          mr: value.role !== 'user' ? 0 : 1,
+                          backgroundColor: value.role !== 'user' ? "primary.light" : "secondary.light",
+                          borderRadius: value.role !== 'user' ? "20px 20px 20px 5px" : "20px 20px 5px 20px",
+                          display: value.content.length === 0 ? 'none' : 'block',
+                        }}
+                      >
+                        <Typography variant="body1">{value.content}</Typography>
+                      </Paper>
+                    </Box>
+                  </Box> */}
                 </div>
               );
             }
