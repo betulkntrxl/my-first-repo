@@ -70,7 +70,7 @@ const OKDialog = (props: {
         <div style={{ color: 'red', fontWeight: 'bold' }}>{headerText} !</div>
       </BootstrapDialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom style={{ whiteSpace: 'pre-line' }}>
+        <Typography gutterBottom sx={{ whiteSpace: 'pre-line' }}>
           {bodyText}
         </Typography>
       </DialogContent>

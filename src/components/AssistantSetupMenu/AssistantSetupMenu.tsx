@@ -34,7 +34,7 @@ const AssistantSetupMenu = () => {
 
   return (
     <>
-      <Typography style={{ marginBottom: 10, marginTop: 10, color: 'dimgray' }}>
+      <Typography color="dimgray" sx={{ marginBottom: 10, marginTop: 10 }}>
         {t('menu.assistant-setup.message-template.title')}
       </Typography>
       <FormControl fullWidth>

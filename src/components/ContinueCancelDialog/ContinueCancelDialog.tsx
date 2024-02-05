@@ -68,12 +68,12 @@ const ContinueCancelDialog = (props: {
       open={openDialog}
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        <div style={{ color: 'steelblue', fontWeight: 'bold', fontFamily: 'arial' }}>
+        <Typography color="steelblue" fontWeight="bold">
           {headerText}
-        </div>
+        </Typography>
       </BootstrapDialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom style={{ whiteSpace: 'pre-line' }}>
+        <Typography gutterBottom sx={{ whiteSpace: 'pre-line' }}>
           {bodyText}
         </Typography>
       </DialogContent>

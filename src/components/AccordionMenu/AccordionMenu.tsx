@@ -31,9 +31,7 @@ const AccordionMenu = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography style={{ color: '#007BC7', fontFamily: 'Arial' }}>
-                {t('menu.assistant-setup.title')}
-              </Typography>
+              <Typography color="#007BC7">{t('menu.assistant-setup.title')}</Typography>
             </AccordionSummary>
           </ThemeProvider>
           <Divider />
@@ -52,10 +50,7 @@ const AccordionMenu = () => {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography
-                style={{ color: '#007BC7', fontFamily: 'Arial' }}
-                aria-label="configuration"
-              >
+              <Typography color="#007BC7" aria-label="configuration">
                 Configuration
               </Typography>
             </AccordionSummary>
