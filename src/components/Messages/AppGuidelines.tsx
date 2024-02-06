@@ -7,7 +7,7 @@ export const AppGuidelines = () => {
 
   return (
     <Box
-      sx={{ display: { xs: 'none', sm: 'block' } }}
+      sx={{ display: { xs: 'none', sm: 'none', lg: 'block' } }}
       style={{
         color: 'steelblue',
         opacity: 0.6,
