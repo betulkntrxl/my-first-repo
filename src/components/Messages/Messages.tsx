@@ -11,6 +11,7 @@ import BotThinking from '../../assets/typing.gif';
 
 import { displayValue, allMessagesToDisplay } from '../SendMessage/SendMessage';
 import { AppGuidelines } from './AppGuidelines';
+import { MessagesBox } from './Messages.styles';
 
 const Messages = () => {
   const { t } = useTranslation();
@@ -21,19 +22,12 @@ const Messages = () => {
       if (bottomRef.current) {
         bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
       }
-    }, 500);
+    }, 200);
     return null;
   };
 
   return (
-    <Box
-      sx={{ width: '100%' }}
-      style={{
-        overflow: 'auto',
-        overflowY: 'auto',
-      }}
-      ref={bottomRef}
-    >
+    <MessagesBox ref={bottomRef}>
       <CardContent>
         <Stack direction="column">
           <AppGuidelines />
@@ -140,7 +134,7 @@ const Messages = () => {
           }
         </Stack>
       </CardContent>
-    </Box>
+    </MessagesBox>
   );
 };
 
