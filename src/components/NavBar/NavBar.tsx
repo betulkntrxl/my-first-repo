@@ -96,13 +96,26 @@ const NavBar = () => {
         >
           <MenuIcon color="primary" />
         </IconButton>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <img
-            alt={orgDeployment.value}
-            width={150}
-            src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
-          />
-          <ChatAppLogo title="ChatApp">ChatApp</ChatAppLogo>
+
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={0}
+          sx={{ width: '100%' }}
+        >
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <img
+              alt={orgDeployment.value}
+              width={150}
+              src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
+            />
+            <ChatAppLogo title="ChatApp">ChatApp</ChatAppLogo>
+          </Stack>
+          <IconButton aria-label="language" onClick={handleLanguage}>
+            <LanguageIcon color="primary" />
+            <Typography color="primary"> {t('current-language')}</Typography>
+          </IconButton>
         </Stack>
 
         <Drawer
@@ -142,6 +155,21 @@ const NavBar = () => {
               </Stack>
             </ListItem>
             <MenuDivider />
+
+            {/* <ListItem>
+              <IconButton aria-label="language" onClick={handleLanguage}>
+                <LanguageIcon color="primary" />
+                <Typography color="primary"> {t('current-language')}</Typography>
+              </IconButton>
+            </ListItem> */}
+            <Divider />
+
+            <ListItem>
+              <MenuDrawer />
+            </ListItem>
+
+            <Divider />
+
             <ListItem>
               <IconButton sx={{ color: 'white' }} aria-label="logout" onClick={handleLogout}>
                 <LogoutIcon color="primary" />
@@ -149,17 +177,7 @@ const NavBar = () => {
               </IconButton>
             </ListItem>
 
-            <ListItem>
-              <IconButton aria-label="language" onClick={handleLanguage}>
-                <LanguageIcon color="primary" />
-                <Typography color="primary"> {t('current-language')}</Typography>
-              </IconButton>
-            </ListItem>
             <Divider />
-
-            <ListItem>
-              <MenuDrawer />
-            </ListItem>
 
             <AboutListItem>
               <About />

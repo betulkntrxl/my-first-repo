@@ -5,12 +5,12 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
 import SystemIcon from '../../assets/system.jpg';
 import UserIcon from '../../assets/user.jpg';
 import BotThinking from '../../assets/typing.gif';
 
 import { displayValue, allMessagesToDisplay } from '../SendMessage/SendMessage';
+import { AppGuidelines } from './AppGuidelines';
 
 const Messages = () => {
   const { t } = useTranslation();
@@ -36,32 +36,7 @@ const Messages = () => {
     >
       <CardContent>
         <Stack direction="column">
-          <div
-            style={{
-              color: 'steelblue',
-              opacity: 0.6,
-              top: 0,
-              left: 0,
-              right: 0,
-              fontFamily: 'arial',
-            }}
-          >
-            <div style={{ fontSize: 14, textAlign: 'center', margin: 5 }}>
-              {t('background.title')}
-              <br />
-              <br />
-              <ul style={{ textAlign: 'left', paddingLeft: '0px' }}>
-                <li>{t('background.bullet1')}</li>
-                <li>{t('background.bullet2')}</li>
-                <li>{t('background.bullet3')}</li>
-                <li>{t('background.bullet4')}</li>
-                <li>{t('background.bullet5')}</li>
-                <li>{t('background.bullet6')}</li>
-                <li>{t('background.bullet7')}</li>
-                <li>{t('background.bullet8')}</li>
-              </ul>
-            </div>
-          </div>
+          <AppGuidelines />
 
           {allMessagesToDisplay.value.map(value => {
             if (value.role === 'user') {

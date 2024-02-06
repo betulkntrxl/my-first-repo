@@ -3,12 +3,10 @@ import { useSignal, signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import { CustomButton, CustomIcon, CustomButtonText } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
@@ -248,7 +246,8 @@ const SendMessage = () => {
             fullWidth
             variant="outlined"
             multiline
-            maxRows={2}
+            maxRows={1} // Fix for the resizing observer, please keep both maxRows and minRows
+            minRows={1}
             {...(messageInputDisabled.value && { disabled: true })}
             autoComplete="off"
             title="sendmessage"
