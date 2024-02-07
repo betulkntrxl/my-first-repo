@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
 
 export const AppGuidelines = () => {
   const { t } = useTranslation();
@@ -20,15 +21,31 @@ export const AppGuidelines = () => {
       <div style={{ fontSize: 14, textAlign: 'center', margin: 5 }}>
         {t('background.title')}
 
-        <ul style={{ textAlign: 'left', paddingLeft: '0px' }}>
-          <li>{t('background.bullet1')}</li>
-          <li>{t('background.bullet2')}</li>
-          <li>{t('background.bullet3')}</li>
-          <li>{t('background.bullet4')}</li>
-          <li>{t('background.bullet5')}</li>
-          <li>{t('background.bullet6')}</li>
-          <li>{t('background.bullet7')}</li>
-          <li>{t('background.bullet8')}</li>
+        <ul style={{ textAlign: 'left', paddingLeft: '16px' }}>
+          <li>
+            <Typography variant="body2">{t('background.bullet1')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('background.bullet2')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('background.bullet3')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('background.bullet4')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('background.bullet5')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('background.bullet6')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('background.bullet7')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('background.bullet8')}</Typography>
+          </li>
         </ul>
       </div>
     </Box>

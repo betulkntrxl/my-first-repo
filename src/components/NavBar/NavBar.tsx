@@ -133,8 +133,7 @@ const NavBar = () => {
                 alignItems="center"
                 spacing={2}
               >
-                <Typography fontWeight="bold" color="#007BC7" fontSize="18px">
-                  {' '}
+                <Typography variant="h3" color="secondary">
                   {t('menu.title')}
                 </Typography>
                 <IconButton

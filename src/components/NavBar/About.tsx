@@ -38,11 +38,11 @@ export const About = () => {
         padding: '10px',
       }}
     >
-      <Typography color="#007BC7" fontWeight="bold">
+      <Typography variant="h4" color="secondary">
         {t('menu.about')}
       </Typography>
 
-      <Typography>
+      <Typography variant="body1">
         {t('menu.version')}: {version.value}
       </Typography>
     </Paper>
