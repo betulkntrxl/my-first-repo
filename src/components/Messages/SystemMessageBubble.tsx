@@ -10,6 +10,10 @@ type SystemBubbleProps = {
   value: AllDisplayMessages;
 };
 
+export type SystemBubbleContentProps = {
+  displayValue: string;
+};
+
 export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
   const { content } = value;
 
@@ -23,12 +27,7 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
     <SystemBubble direction="row" columnGap={2}>
       <img alt="assistant" src={SystemIcon} />
       {content.length > 0 ? (
-        <SystemBubbleContent
-          elevation={3}
-          sx={{
-            display: displayValue.value,
-          }}
-        >
+        <SystemBubbleContent elevation={3} displayValue={displayValue.value}>
           <Typography variant="body1">{content}</Typography>
         </SystemBubbleContent>
       ) : (

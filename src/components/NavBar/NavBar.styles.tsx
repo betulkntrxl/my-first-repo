@@ -2,6 +2,9 @@ import { styled } from '@mui/system';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+
+export const drawerWidth = 400;
 
 export const AboutListItem = styled(ListItem)`
   position: sticky;
@@ -23,4 +26,12 @@ export const ChatAppLogo = styled(Typography)`
 export const MenuDivider = styled(Divider)`
   background: #007bc7;
   height: 1px;
+`;
+
+export const DrawerContainer = styled(Drawer)`
+  .MuiDrawer-paper {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: ${drawerWidth}px;
+  }
 `;

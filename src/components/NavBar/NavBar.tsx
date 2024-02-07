@@ -3,7 +3,6 @@ import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
 import AppBar from '@mui/material/AppBar';
-import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -22,10 +21,9 @@ import MenuDrawer from './MenuDrawer';
 import { orgDeployment } from '../../pages/Home/Home';
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
 import { About } from './About';
-import { AboutListItem, ChatAppLogo, MenuDivider } from './NavBar.styles';
+import { AboutListItem, ChatAppLogo, DrawerContainer, MenuDivider } from './NavBar.styles';
 
 export const menuDrawerOpen = signal(false);
-export const drawerWidth = 400;
 
 const NavBar = () => {
   const { t, i18n } = useTranslation();
@@ -118,32 +116,26 @@ const NavBar = () => {
           </IconButton>
         </Stack>
 
-        <Drawer
+        <DrawerContainer
           variant="temporary"
           open={menuDrawerOpen.value}
           onClose={() => handleDrawerToggle()}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
-          sx={{
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              maxWidth: { xs: '100%', sm: drawerWidth },
-            },
-          }}
         >
           <List sx={{ height: '100%' }}>
             <ListItem>
               <Stack
+                minWidth="100%"
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
                 spacing={2}
-                sx={{ width: '100%' }}
               >
                 <Typography fontWeight="bold" color="#007BC7" fontSize="18px">
                   {' '}
-                  {t('menu.title')}{' '}
+                  {t('menu.title')}
                 </Typography>
                 <IconButton
                   color="inherit"
@@ -156,12 +148,6 @@ const NavBar = () => {
             </ListItem>
             <MenuDivider />
 
-            {/* <ListItem>
-              <IconButton aria-label="language" onClick={handleLanguage}>
-                <LanguageIcon color="primary" />
-                <Typography color="primary"> {t('current-language')}</Typography>
-              </IconButton>
-            </ListItem> */}
             <Divider />
 
             <ListItem>
@@ -171,7 +157,7 @@ const NavBar = () => {
             <Divider />
 
             <ListItem>
-              <IconButton sx={{ color: 'white' }} aria-label="logout" onClick={handleLogout}>
+              <IconButton aria-label="logout" onClick={handleLogout}>
                 <LogoutIcon color="primary" />
                 <Typography color="primary"> {t('buttons.logout')}</Typography>
               </IconButton>
@@ -183,7 +169,7 @@ const NavBar = () => {
               <About />
             </AboutListItem>
           </List>
-        </Drawer>
+        </DrawerContainer>
       </Toolbar>
     </AppBar>
   );

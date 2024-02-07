@@ -67,7 +67,9 @@ const OKDialog = (props: {
       open={openDialog}
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        <div style={{ color: 'red', fontWeight: 'bold' }}>{headerText} !</div>
+        <Typography color="red" fontWeight="bold">
+          {headerText} !
+        </Typography>
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom sx={{ whiteSpace: 'pre-line' }}>

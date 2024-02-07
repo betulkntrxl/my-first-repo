@@ -2,6 +2,8 @@ import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+import { UserBubbleContentProps } from './UserMessageBubble';
+import { SystemBubbleContentProps } from './SystemMessageBubble';
 
 export const MessagesBox = styled(Box)`
   width: 100%;
@@ -46,11 +48,14 @@ export const BubbleContent = styled(Paper)`
   white-space: pre-wrap;
 `;
 
-export const UserBubbleContent = styled(BubbleContent)`
+export const UserBubbleContent = styled(BubbleContent)<UserBubbleContentProps>`
   background-color: gainsboro;
+  display: ${({ content }) => (content?.length === 0 ? 'none' : 'block')};
 `;
-export const SystemBubbleContent = styled(BubbleContent)`
+
+export const SystemBubbleContent = styled(BubbleContent)<SystemBubbleContentProps>`
   background-color: #e5f2f9;
+  display: ${({ displayValue }) => displayValue};
 `;
 
 export const BotThinkingImg = styled('div')`
