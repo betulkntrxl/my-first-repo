@@ -2,6 +2,7 @@ import React from 'react';
 import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
+import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
@@ -133,7 +134,7 @@ const NavBar = () => {
                 alignItems="center"
                 spacing={2}
               >
-                <Typography variant="h3" color="secondary">
+                <Typography variant="h3" color="secondary" sx={{ paddingLeft: '10px' }}>
                   {t('menu.title')}
                 </Typography>
                 <IconButton
@@ -149,7 +150,7 @@ const NavBar = () => {
 
             <Divider />
 
-            <ListItem>
+            <ListItem sx={{ padding: 0 }}>
               <MenuDrawer />
             </ListItem>
 

@@ -1,4 +1,6 @@
 import { createTheme } from '@mui/material/styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from 'react';
 
 export const theme = createTheme({
   palette: {
@@ -165,6 +167,59 @@ export const theme = createTheme({
       styleOverrides: {
         paper: {
           marginLeft: '30px',
+        },
+      },
+    },
+
+    MuiAccordion: {
+      defaultProps: {
+        disableGutters: true,
+        elevation: 0,
+        square: true,
+      },
+      styleOverrides: {
+        root: () => ({
+          border: `0px solid ${theme.palette.divider}`,
+          '&:before': {
+            display: 'none',
+          },
+        }),
+      },
+    },
+
+    MuiAccordionSummary: {
+      defaultProps: {
+        expandIcon: <ExpandMoreIcon sx={{ fontSize: '1.8rem' }} />,
+      },
+      styleOverrides: {
+        root: () => ({
+          backgroundColor:
+            theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, 0)',
+          '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+            transform: 'rotate(180deg)',
+          },
+          '& .MuiAccordionSummary-content': {
+            padding: '4px 0 4px 10px',
+          },
+          padding: '0px 22px 0 16px',
+        }),
+      },
+    },
+
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: () => ({
+          color: 'black',
+          paddingLeft: theme.spacing(2),
+          paddingRight: theme.spacing(2),
+        }),
+      },
+    },
+
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: '#2e85d4',
         },
       },
     },
