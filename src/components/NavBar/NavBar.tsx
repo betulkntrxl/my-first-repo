@@ -2,7 +2,6 @@ import React from 'react';
 import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
-import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
