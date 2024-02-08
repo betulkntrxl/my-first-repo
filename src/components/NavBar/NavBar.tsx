@@ -90,7 +90,7 @@ const NavBar = () => {
         <IconButton
           edge="start"
           color="inherit"
-          aria-label="menu"
+          aria-label="open-menu"
           onClick={() => handleDrawerToggle()}
         >
           <MenuIcon color="primary" />
