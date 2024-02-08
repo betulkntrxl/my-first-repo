@@ -55,7 +55,7 @@ export const UserBubbleContent = styled(BubbleContent)<UserBubbleContentProps>`
 
 export const SystemBubbleContent = styled(BubbleContent)<SystemBubbleContentProps>`
   background-color: #e5f2f9;
-  display: ${({ displayValue }) => displayValue};
+  display: ${({ displayvalue }) => displayvalue};
 `;
 
 export const BotThinkingImg = styled('div')`
