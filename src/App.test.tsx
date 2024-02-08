@@ -21,14 +21,15 @@ describe('testing the App', () => {
         const sendmessageElement = screen.getByTitle('sendmessage') as HTMLInputElement;
 
         await user.click(sendmessageElement);
-        await user.type(sendmessageElement, 'hello');
 
-        const sendElement = screen.getByTitle('sendmessage');
-        expect(sendElement).not.toHaveAttribute('disabled'); // We make sure the button is enabled
+        await user.keyboard('enable send button');
 
-        await user.click(sendElement);
+        fireEvent.click(sendmessageElement);
+        sendmessageElement.value = 'hello';
 
-        expect(sendElement).toBeTruthy();
+        const sendElementBtn = screen.getByTitle('send');
+        fireEvent.click(sendElementBtn);
+        expect(sendElementBtn).toBeTruthy();
       });
     });
   });

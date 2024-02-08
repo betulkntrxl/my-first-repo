@@ -267,6 +267,7 @@ const SendMessage = () => {
                 title="send"
                 type="submit"
                 disabled={sendButtonDisabled.value}
+                aria-disabled={sendButtonDisabled.value}
               >
                 <CustomButtonText>{t('buttons.send')}</CustomButtonText>
                 <CustomIcon>

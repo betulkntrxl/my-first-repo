@@ -40,8 +40,8 @@ describe('Token Input Limit', () => {
         //   /* eslint-enable */
         // });
 
-        const sendElement = screen.getByTitle('send');
-        fireEvent.click(sendElement);
+        const sendElementBtn = screen.getByTitle('send');
+        fireEvent.click(sendElementBtn);
 
         // wait for dialog to be rendered
         await waitFor(() => {
@@ -51,7 +51,7 @@ describe('Token Input Limit', () => {
             screen.getByText('popup-messages.input-too-large-header', { exact: false }),
           ).toBeTruthy();
           fireEvent.click(screen.getByTitle('close-button'));
-          expect(sendElement).toBeTruthy();
+          expect(sendElementBtn).toBeTruthy();
         });
       });
     });

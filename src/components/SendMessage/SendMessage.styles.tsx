@@ -8,22 +8,6 @@ const blue = {
   700: '#0059B2',
 };
 
-// export const CustomButton = styled(Button)`
-//   font-family: Arial, sans-serif;
-//   font-size: 0.875rem;
-//   background-color: ${blue[500]};
-//   border-radius: 8px;
-//   color: white;
-//   transition: all 150ms ease;
-//   cursor: pointer;
-//   border: none;
-//   white-space: nowrap;
-//   pointer-event: ${({ disabled }) => (disabled ? 'auto' : 'auto')};
-
-//   &:hover {
-//     background-color: ${blue[600]};
-//   }
-// `;
 export const CustomButton = styled(Button)`
   font-family: Arial, sans-serif;
   font-size: 0.875rem;
