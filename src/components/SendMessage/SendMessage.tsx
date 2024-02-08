@@ -266,7 +266,7 @@ const SendMessage = () => {
                 variant="contained"
                 title="send"
                 type="submit"
-                {...(sendButtonDisabled.value && { disabled: true })}
+                disabled={sendButtonDisabled.value}
               >
                 <CustomButtonText>{t('buttons.send')}</CustomButtonText>
                 <CustomIcon>

@@ -29,11 +29,10 @@ describe('Token Input Limit', () => {
         // and then use fireEvent to put in the TOO_MUCH_TEXT
         await user.click(sendmessageElement);
 
-        sendmessageElement.value = TOO_MUCH_TEXT;
-
         await user.keyboard('enable send button');
 
         fireEvent.click(sendmessageElement);
+        sendmessageElement.value = TOO_MUCH_TEXT;
         // fireEvent.change(sendmessageElement, {
         //   // For file readability TOO_MUCH_TEXT is defined at the end of this file
         //   /* eslint-disable */

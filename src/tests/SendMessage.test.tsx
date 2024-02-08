@@ -19,13 +19,14 @@ describe('testing Send Messages', () => {
     });
     // wait for message box
     await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
-      const sendmessageElement = screen.getByTitle('sendmessage');
+      const sendmessageElement = screen.getByTitle('sendmessage') as HTMLInputElement;
       fireEvent.click(sendmessageElement);
       // type message
       act(() => {
-        fireEvent.change(sendmessageElement, {
-          target: { value: 'hi' },
-        });
+        // fireEvent.change(sendmessageElement, {
+        //   target: { value: 'hi' },
+        // });
+        sendmessageElement.value = 'hi';
       });
       // send messages
       const sendElement = screen.getByTitle('send');
@@ -107,13 +108,14 @@ describe('testing Send Messages', () => {
             // wait for message box
             await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(
               async () => {
-                const sendmessageElement = screen.getByTitle('sendmessage');
+                const sendmessageElement = screen.getByTitle('sendmessage') as HTMLInputElement;
                 fireEvent.click(sendmessageElement);
                 // type message
                 act(() => {
-                  fireEvent.change(sendmessageElement, {
-                    target: { value: 'hi' },
-                  });
+                  // fireEvent.change(sendmessageElement, {
+                  //   target: { value: 'hi' },
+                  // });
+                  sendmessageElement.value = 'hi';
                 });
                 // send messages
                 const sendElement = screen.getByTitle('send');

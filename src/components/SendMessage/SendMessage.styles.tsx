@@ -8,19 +8,35 @@ const blue = {
   700: '#0059B2',
 };
 
+// export const CustomButton = styled(Button)`
+//   font-family: Arial, sans-serif;
+//   font-size: 0.875rem;
+//   background-color: ${blue[500]};
+//   border-radius: 8px;
+//   color: white;
+//   transition: all 150ms ease;
+//   cursor: pointer;
+//   border: none;
+//   white-space: nowrap;
+//   pointer-event: ${({ disabled }) => (disabled ? 'auto' : 'auto')};
+
+//   &:hover {
+//     background-color: ${blue[600]};
+//   }
+// `;
 export const CustomButton = styled(Button)`
   font-family: Arial, sans-serif;
   font-size: 0.875rem;
-  background-color: ${blue[500]};
+  background-color: ${({ disabled }) => (disabled ? 'gray' : blue[500])};
   border-radius: 8px;
-  color: white;
+  color: ${({ disabled }) => (disabled ? 'rgba(255, 255, 255, 0.5)' : 'white')};
   transition: all 150ms ease;
-  cursor: pointer;
   border: none;
   white-space: nowrap;
+  pointer-events: auto;
 
   &:hover {
-    background-color: ${blue[600]};
+    background-color: ${({ disabled }) => (disabled ? null : blue[600])};
   }
 `;
 
