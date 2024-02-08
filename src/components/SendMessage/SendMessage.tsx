@@ -5,10 +5,9 @@ import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
-import { CustomButton, CustomIcon, CustomButtonText } from './SendMessage.styles';
+import { CustomButton, CustomIcon, CustomButtonText, CustomTextarea } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
 import OpenAIClient from '../../clients/OpenAIClient';
 import gatherMetricsOnConfigurableSettings from './MetricsOnConfigurableSettings';
@@ -240,23 +239,20 @@ const SendMessage = () => {
         alignItems="center"
       >
         <Grid item xs>
-          <TextField
-            inputRef={inputRef}
-            size="medium"
-            fullWidth
-            variant="outlined"
-            multiline
-            maxRows={1} // Fix for the resizing observer, please keep both maxRows and minRows
-            minRows={1}
-            {...(messageInputDisabled.value && { disabled: true })}
-            autoComplete="off"
-            title="sendmessage"
-            placeholder={t('type-message')}
-            name="chatsession"
-            onChange={handleChatMessageTyping}
-            onKeyDown={handleKeyDown}
-            value={promptInputText.value}
-          />
+          <Box sx={{ display: 'flex' }}>
+            <CustomTextarea
+              ref={inputRef}
+              {...(messageInputDisabled.value && { disabled: true })}
+              autoComplete="off"
+              title="sendmessage"
+              placeholder={t('type-message')}
+              name="chatsession"
+              onChange={handleChatMessageTyping}
+              onKeyDown={handleKeyDown}
+              value={promptInputText.value}
+              rows={2}
+            />
+          </Box>
         </Grid>
         <Grid item>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
@@ -266,7 +262,8 @@ const SendMessage = () => {
                 variant="contained"
                 title="send"
                 type="submit"
-                disabled={sendButtonDisabled.value}
+                // disabled={sendButtonDisabled.value}
+                {...(sendButtonDisabled.value && { disabled: true })}
                 aria-disabled={sendButtonDisabled.value}
               >
                 <CustomButtonText>{t('buttons.send')}</CustomButtonText>

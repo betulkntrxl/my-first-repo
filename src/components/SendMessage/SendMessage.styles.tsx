@@ -8,6 +8,18 @@ const blue = {
   700: '#0059B2',
 };
 
+export const CustomTextarea = styled('textarea')`
+  width: 100%;
+  font-family: inherit;
+  padding: 10px;
+  font-size: inherit;
+  border-radius: 8px;
+  display: inline-flex;
+  color: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  resize: none;
+`;
+
 export const CustomButton = styled(Button)`
   font-family: Arial, sans-serif;
   font-size: 0.875rem;
