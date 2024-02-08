@@ -264,7 +264,7 @@ const SendMessage = () => {
               <CustomButton
                 fullWidth
                 variant="contained"
-                title={t('buttons.send')}
+                title="send"
                 type="submit"
                 {...(sendButtonDisabled.value && { disabled: true })}
               >
