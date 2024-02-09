@@ -20,7 +20,7 @@ describe('Token Input Limit', () => {
       render(<App />);
       const user = userEvent.setup();
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
-        const sendmessageElement = screen.getByTitle('sendmessage') as HTMLInputElement;
+        const sendmessageElement = screen.getByTitle('sendmessage');
 
         // For some reason user.keyboard(TOO_MUCH_TEXT) just hangs
         // If we just use fireEvent then the send button won't become enabled
@@ -28,30 +28,26 @@ describe('Token Input Limit', () => {
         // to enter some text first, this enables the send button
         // and then use fireEvent to put in the TOO_MUCH_TEXT
         await user.click(sendmessageElement);
-
         await user.keyboard('enable send button');
 
         fireEvent.click(sendmessageElement);
-        sendmessageElement.value = TOO_MUCH_TEXT;
-        // fireEvent.change(sendmessageElement, {
-        //   // For file readability TOO_MUCH_TEXT is defined at the end of this file
-        //   /* eslint-disable */
-        //   target: { value: TOO_MUCH_TEXT },
-        //   /* eslint-enable */
-        // });
+        fireEvent.change(sendmessageElement, {
+          // For file readability TOO_MUCH_TEXT is defined at the end of this file
+          /* eslint-disable */
+          target: { value: TOO_MUCH_TEXT },
+          /* eslint-enable */
+        });
 
-        const sendElementBtn = screen.getByTitle('send');
-        fireEvent.click(sendElementBtn);
+        const sendElement = screen.getByTitle('send');
+        fireEvent.click(sendElement);
 
         // wait for dialog to be rendered
-        await waitFor(() => {
-          expect(screen.getByTitle('close-button')).toBeVisible();
-        }).then(() => {
+        await waitFor(() => expect(screen.getByTitle('close-button')).toBeVisible()).then(() => {
           expect(
             screen.getByText('popup-messages.input-too-large-header', { exact: false }),
           ).toBeTruthy();
           fireEvent.click(screen.getByTitle('close-button'));
-          expect(sendElementBtn).toBeTruthy();
+          expect(sendElement).toBeTruthy();
         });
       });
     });
