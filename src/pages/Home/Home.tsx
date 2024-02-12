@@ -3,6 +3,7 @@ import { signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { getUA } from 'react-device-detect';
 
+import Box from '@mui/material/Box';
 import MetricsClient from '../../clients/MetricsClient';
 import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import OpenAIClient from '../../clients/OpenAIClient';
@@ -11,7 +12,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import Messages from '../../components/Messages/Messages';
 import SendMessage from '../../components/SendMessage/SendMessage';
 import TermsAndConditions from '../../components/TermsAndConditions/TermsAndConditions';
-import { MessagesAndSendMessageDiv } from './Home.styles';
+import { MainBox, MessagesBox, SendMessageBox } from './Home.styles';
 import { GPT_MODELS } from '../../clients/models/PromptModel';
 import { model, tokenLimit, maxTokens } from '../../components/ConfigurationMenu/ConfigurationMenu';
 import ConfigurationConstants from '../../components/ConfigurationMenu/ConfigurationConstants';
@@ -85,11 +86,17 @@ const Home = () => {
           // Only show the T&C's for USON
           orgDeployment.value === 'uson' && <TermsAndConditions />
         }
-        <NavBar />
-        <MessagesAndSendMessageDiv>
-          <Messages />
-          <SendMessage />
-        </MessagesAndSendMessageDiv>
+        <MainBox>
+          <Box sx={{ p: 2 }}>
+            <NavBar />
+          </Box>
+          <MessagesBox>
+            <Messages />
+          </MessagesBox>
+          <SendMessageBox>
+            <SendMessage />
+          </SendMessageBox>
+        </MainBox>
       </div>
     )
   );

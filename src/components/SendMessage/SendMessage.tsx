@@ -2,14 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { useSignal, signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
+import Box from '@mui/material/Box';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
-import CustomButton from './SendMessage.styles';
+import { CustomButton, CustomIcon, CustomButtonText, CustomTextarea } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
 import OpenAIClient from '../../clients/OpenAIClient';
 import gatherMetricsOnConfigurableSettings from './MetricsOnConfigurableSettings';
@@ -67,7 +65,6 @@ const SendMessage = () => {
         'menu.assistant-setup.message-template.system-message-template.template1',
       );
     }
-
     const AUTH_INTERVAL = setInterval(async () => {
       if (hasCookieExpired()) {
         PopupDialogOpenHandlers.openSessionExpiredDialog();
@@ -232,88 +229,66 @@ const SendMessage = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} style={{ marginLeft: '20px', marginTop: '20px' }}>
-        <Paper
-          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '110px' }}
-          elevation={3}
-        >
-          <Stack direction="row">
-            <Paper style={{ width: '100%', backgroundColor: '#f8f8f8' }}>
-              <Stack direction="row">
-                <Stack direction="column" style={{ marginLeft: 20, width: '100%' }}>
-                  <Grid item xs={4} style={{ marginTop: 0 }}>
-                    <Button
-                      variant="contained"
-                      style={{ backgroundColor: '#005A8C', marginTop: 5, marginLeft: 7 }}
-                    >
-                      {t('token-count')}: {tokenCount}
-                    </Button>
-                    {tokenMessage}
-                  </Grid>
-                  <textarea
-                    ref={inputRef}
-                    {...(messageInputDisabled.value && { disabled: true })}
-                    autoComplete="off"
-                    title="sendmessage"
-                    placeholder={t('type-message')}
-                    name="chatsession"
-                    onChange={handleChatMessageTyping}
-                    onKeyDown={handleKeyDown}
-                    value={promptInputText.value}
-                    style={{
-                      marginTop: 0,
-                      marginLeft: 7,
-                      marginBottom: 25,
-                      // margin: '7px',
-                      width: '100%',
-                      fontFamily: 'sans-serif',
-                      padding: 10,
-                      boxSizing: 'border-box',
-                      border: '1',
-                      borderRadius: '4px',
-                      fontSize: '16px',
-                      resize: 'none',
-                    }}
-                  />
-                  <input type="submit" style={{ display: 'none' }} />
-                </Stack>
-                <Stack>
-                  <CustomButton
-                    title="send"
-                    variant="contained"
-                    type="submit"
-                    {...(sendButtonDisabled.value && { disabled: true })}
-                    style={{ marginLeft: '25px', width: '150px', marginTop: 42 }}
-                  >
-                    {t('buttons.send')}
-                    <TelegramIcon style={{ marginLeft: 10, marginBottom: 5, marginTop: 5 }} />
-                  </CustomButton>
-                </Stack>
-                <Stack>
-                  <CustomButton
-                    title="reset"
-                    variant="contained"
-                    onClick={PopupDialogOpenHandlers.openResetChatDialog}
-                    style={{
-                      marginLeft: '10px',
-                      width: '150px',
-                      marginTop: 42,
-                      height: 43,
-                      marginRight: 60,
-                    }}
-                  >
-                    {t('buttons.reset-chat')}
-                    <CachedIcon style={{ marginLeft: 5, marginBottom: 5, marginTop: 5 }} />
-                  </CustomButton>
-                </Stack>
-              </Stack>
-            </Paper>
-          </Stack>
-        </Paper>
-      </form>
+    <Box onSubmit={handleSubmit} component="form">
+      <Grid
+        container
+        spacing={{ xs: 1, sm: 6 }}
+        sx={{ px: 2 }}
+        alignContent="center"
+        alignItems="center"
+      >
+        <Grid item xs>
+          <Box sx={{ display: 'flex' }}>
+            <CustomTextarea
+              ref={inputRef}
+              {...(messageInputDisabled.value && { disabled: true })}
+              autoComplete="off"
+              title="sendmessage"
+              placeholder={t('type-message')}
+              name="chatsession"
+              onChange={handleChatMessageTyping}
+              onKeyDown={handleKeyDown}
+              value={promptInputText.value}
+              rows={2}
+            />
+          </Box>
+        </Grid>
+        <Grid item>
+          <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
+            <Grid item xs>
+              <CustomButton
+                fullWidth
+                variant="contained"
+                title="send"
+                type="submit"
+                // disabled={sendButtonDisabled.value}
+                {...(sendButtonDisabled.value && { disabled: true })}
+                aria-disabled={sendButtonDisabled.value}
+              >
+                <CustomButtonText>{t('buttons.send')}</CustomButtonText>
+                <CustomIcon>
+                  <TelegramIcon />
+                </CustomIcon>
+              </CustomButton>
+            </Grid>
+            <Grid item xs>
+              <CustomButton
+                fullWidth
+                variant="contained"
+                title="reset"
+                onClick={PopupDialogOpenHandlers.openResetChatDialog}
+              >
+                <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
+                <CustomIcon>
+                  <CachedIcon />
+                </CustomIcon>
+              </CustomButton>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
       <PopupDialogs />
-    </>
+    </Box>
   );
 };
 

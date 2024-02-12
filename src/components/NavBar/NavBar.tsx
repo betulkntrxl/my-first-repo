@@ -1,29 +1,32 @@
 import React from 'react';
 import { signal } from '@preact/signals-react';
-
 import { useTranslation } from 'react-i18next';
 
 import AppBar from '@mui/material/AppBar';
-import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LanguageIcon from '@mui/icons-material/Language';
+import Divider from '@mui/material/Divider';
+import CloseIcon from '@mui/icons-material/Close';
 import MetricsClient from '../../clients/MetricsClient';
 import McKessonLogo from '../../assets/mckesson-logo.jpg';
 import UsonLogo from '../../assets/uson-logo.png';
 import MenuDrawer from './MenuDrawer';
 import { orgDeployment } from '../../pages/Home/Home';
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
+import { About } from './About';
+import { AboutListItem, ChatAppLogo, DrawerContainer, MenuDivider } from './NavBar.styles';
 
 export const menuDrawerOpen = signal(false);
 
 const NavBar = () => {
   const { t, i18n } = useTranslation();
-  const drawerWidth = 400;
 
   const handleDrawerToggle = () => {
     menuDrawerOpen.value = !menuDrawerOpen.value;
@@ -81,72 +84,93 @@ const NavBar = () => {
   };
 
   return (
-    <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{ backgroundColor: 'white' }}>
-          <Toolbar variant="regular" style={{ width: '95%' }}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open-menu"
-              sx={{ mr: 1 }}
-              onClick={handleDrawerToggle}
-            >
-              <MenuIcon color="primary" />
-            </IconButton>
+    <AppBar sx={{ background: 'white' }}>
+      <Toolbar sx={{ height: '66px' }}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="open-menu"
+          onClick={() => handleDrawerToggle()}
+        >
+          <MenuIcon color="primary" />
+        </IconButton>
+
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={0}
+          sx={{ width: '100%' }}
+        >
+          <Stack direction="row" alignItems="center" spacing={1}>
             <img
               alt={orgDeployment.value}
               width={150}
               src={orgDeployment.value === 'uson' ? UsonLogo : McKessonLogo}
             />
+            <ChatAppLogo title="ChatApp">ChatApp</ChatAppLogo>
+          </Stack>
+          <IconButton aria-label="language" onClick={handleLanguage}>
+            <LanguageIcon color="primary" />
+            <Typography color="primary"> {t('current-language')}</Typography>
+          </IconButton>
+        </Stack>
 
-            <Typography
-              variant="h6"
-              color="#005A8C"
-              component="div"
-              sx={{ flexGrow: 1, fontWeight: 'bold', fontFamily: 'arial', marginLeft: 1 }}
-              title="menutitle"
-            >
-              ChatApp
-            </Typography>
-            <IconButton
-              style={{ color: 'white', fontSize: '16' }}
-              aria-label="logout"
-              onClick={handleLogout}
-            >
-              <LogoutIcon color="primary" style={{ fontWeight: 'bold' }} />
-              <Typography color="primary"> {t('buttons.logout')}</Typography>
-            </IconButton>
-            <IconButton
-              style={{ color: 'white', fontSize: '16' }}
-              aria-label="language"
-              onClick={handleLanguage}
-            >
-              <LanguageIcon color="primary" style={{ fontWeight: 'bold' }} />
-              <Typography color="primary"> {t('current-language')}</Typography>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="Settings"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
+        <DrawerContainer
           variant="temporary"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
           open={menuDrawerOpen.value}
-          onClose={handleDrawerToggle}
+          onClose={() => handleDrawerToggle()}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
         >
-          <MenuDrawer />
-        </Drawer>
-      </Box>
-    </>
+          <List sx={{ height: '100%' }}>
+            <ListItem>
+              <Stack
+                minWidth="100%"
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                spacing={2}
+              >
+                <Typography variant="h3" color="secondary" sx={{ paddingLeft: '10px' }}>
+                  {t('menu.title')}
+                </Typography>
+                <IconButton
+                  color="inherit"
+                  aria-label="close-menu"
+                  onClick={() => handleDrawerToggle()}
+                >
+                  <CloseIcon sx={{ color: '#007BC7' }} />
+                </IconButton>
+              </Stack>
+            </ListItem>
+            <MenuDivider />
+
+            <Divider />
+
+            <ListItem sx={{ padding: 0 }}>
+              <MenuDrawer />
+            </ListItem>
+
+            <Divider />
+
+            <ListItem>
+              <IconButton aria-label="logout" onClick={handleLogout}>
+                <LogoutIcon color="primary" />
+                <Typography color="primary"> {t('buttons.logout')}</Typography>
+              </IconButton>
+            </ListItem>
+
+            <Divider />
+
+            <AboutListItem>
+              <About />
+            </AboutListItem>
+          </List>
+        </DrawerContainer>
+      </Toolbar>
+    </AppBar>
   );
 };
 

@@ -19,13 +19,14 @@ describe('testing Send Messages', () => {
     });
     // wait for message box
     await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
-      const sendmessageElement = screen.getByTitle('sendmessage');
+      const sendmessageElement = screen.getByTitle('sendmessage') as HTMLInputElement;
       fireEvent.click(sendmessageElement);
       // type message
       act(() => {
-        fireEvent.change(sendmessageElement, {
-          target: { value: 'hi' },
-        });
+        // fireEvent.change(sendmessageElement, {
+        //   target: { value: 'hi' },
+        // });
+        sendmessageElement.value = 'hi';
       });
       // send messages
       const sendElement = screen.getByTitle('send');
@@ -107,13 +108,14 @@ describe('testing Send Messages', () => {
             // wait for message box
             await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(
               async () => {
-                const sendmessageElement = screen.getByTitle('sendmessage');
+                const sendmessageElement = screen.getByTitle('sendmessage') as HTMLInputElement;
                 fireEvent.click(sendmessageElement);
                 // type message
                 act(() => {
-                  fireEvent.change(sendmessageElement, {
-                    target: { value: 'hi' },
-                  });
+                  // fireEvent.change(sendmessageElement, {
+                  //   target: { value: 'hi' },
+                  // });
+                  sendmessageElement.value = 'hi';
                 });
                 // send messages
                 const sendElement = screen.getByTitle('send');
@@ -130,16 +132,17 @@ describe('testing Send Messages', () => {
     });
   });
 
-  it('the token count is rendered', async () => {
-    setupMockAxiosSuccessResponses(mockedAxios);
-    await act(async () => {
-      render(<App />);
-      await waitFor(() =>
-        expect(screen.getByRole('button', { name: 'token-count: 0' })).toBeVisible(),
-      ).then(() => {
-        const tokenCount = screen.getByRole('button', { name: 'token-count: 0' });
-        expect(tokenCount).toBeTruthy();
-      });
-    });
-  });
+  // Commenting this out as we are not whowing this component anymore
+  // it('the token count is rendered', async () => {
+  //   setupMockAxiosSuccessResponses(mockedAxios);
+  //   await act(async () => {
+  //     render(<App />);
+  //     await waitFor(() =>
+  //       expect(screen.getByRole('button', { name: 'token-count: 0' })).toBeVisible(),
+  //     ).then(() => {
+  //       const tokenCount = screen.getByRole('button', { name: 'token-count: 0' });
+  //       expect(tokenCount).toBeTruthy();
+  //     });
+  //   });
+  // });
 });

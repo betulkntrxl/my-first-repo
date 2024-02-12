@@ -1,19 +1,11 @@
 import React from 'react';
 import { signal } from '@preact/signals-react';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
 import { SelectChangeEvent } from '@mui/material/Select';
 import MetricsClient from '../../clients/MetricsClient';
+import AccordionItemTitleAndTooltip from '../AccordionItemTitleAndTooltip/AccordionItemTitleAndTooltip';
 
 export const systemMessageValue = signal('');
 
@@ -34,10 +26,11 @@ const AssistantSetupMenu = () => {
 
   return (
     <>
-      <Typography style={{ marginBottom: 10, marginTop: 10, color: 'dimgray' }}>
-        {t('menu.assistant-setup.message-template.title')}
-      </Typography>
-      <FormControl fullWidth>
+      <AccordionItemTitleAndTooltip
+        title={t('menu.assistant-setup.message-template.title')}
+        id="systemMessageTemplate"
+      />
+      <FormControl fullWidth sx={{ marginTop: '15px' }}>
         <InputLabel id="systemMessageTemplate-label">
           {t('menu.assistant-setup.message-template.system-message-template.title')}
         </InputLabel>
@@ -73,14 +66,12 @@ const AssistantSetupMenu = () => {
           </MenuItem>
         </Select>
       </FormControl>
-      <br />
-      <br />
-      <div style={{ marginBottom: 10, color: 'dimgray' }}>
-        {t('menu.assistant-setup.system-message.title')}:
-        <Tooltip title={t('menu.assistant-setup.system-message.tooltip')}>
-          <InfoOutlinedIcon />
-        </Tooltip>
-      </div>
+
+      <AccordionItemTitleAndTooltip
+        title={t('menu.assistant-setup.system-message.title')}
+        tooltipTitle={t('menu.assistant-setup.system-message.tooltip')}
+        id="outlined-multiline-static"
+      />
       <TextField
         id="outlined-multiline-static"
         label={t('menu.assistant-setup.system-message.title')}
@@ -92,6 +83,7 @@ const AssistantSetupMenu = () => {
         inputProps={{
           title: 'system-message-input',
         }}
+        sx={{ marginTop: '15px' }}
       />
     </>
   );

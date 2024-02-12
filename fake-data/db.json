@@ -1,0 +1,57 @@
+{
+  "available-models": {
+    "availableModels": ["GPT-3-5-Turbo-16K", "GPT-4-32K"]
+  },
+  "version": {
+    "version": "1.0.0"
+  },
+  "org-deployment": {
+    "orgDeployment": "mckesson"
+  },
+  "isAuthenticated": {
+    "authenticated": "true"
+  },
+  "app-insights-event": {
+    "name": "ChatApp Reset Chat Continue"
+  },
+  "app-insights-trace": {
+    "message": "ChatApp default language set to en",
+    "severity": 1
+  },
+  "gpt35turbo": {
+    "messages": [
+      {
+        "role": "system",
+        "content": "Assistant is a large language model trained by OpenAI."
+      },
+      {
+        "role": "user",
+        "content": "hi"
+      }
+    ],
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "max_tokens": 17096,
+    "stop": null
+  },
+  "gpt4": {
+    "messages": [
+      {
+        "role": "system",
+        "content": "Assistant is a large language model trained by OpenAI."
+      },
+      {
+        "role": "user",
+        "content": "dadadasd\nasdadsadas\n\n\nsdfsdfsdfdsf"
+      }
+    ],
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "max_tokens": 4000,
+    "stop": null
+  }
+}

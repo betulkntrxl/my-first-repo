@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, screen, act, waitFor } from '@testing-library/react';
+import { render, cleanup, screen, act, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import App from './App';
@@ -16,15 +16,20 @@ describe('testing the App', () => {
     await act(async () => {
       render(<App />);
       const user = userEvent.setup();
+
       await waitFor(() => expect(screen.getByTitle('sendmessage')).toBeVisible()).then(async () => {
-        const sendmessageElement = screen.getByTitle('sendmessage');
+        const sendmessageElement = screen.getByTitle('sendmessage') as HTMLInputElement;
 
         await user.click(sendmessageElement);
-        await user.keyboard('hello');
-        const sendElement = screen.getByTitle('send');
-        await user.click(sendElement);
 
-        expect(sendElement).toBeTruthy();
+        await user.keyboard('enable send button');
+
+        fireEvent.click(sendmessageElement);
+        sendmessageElement.value = 'hello';
+
+        const sendElementBtn = screen.getByTitle('send');
+        fireEvent.click(sendElementBtn);
+        expect(sendElementBtn).toBeTruthy();
       });
     });
   });

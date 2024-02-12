@@ -1,0 +1,9 @@
+{
+  "/api/auth/isAuthenticated": "/isAuthenticated",
+  "/api/available-models": "/available-models",
+  "/api/version": "/version",
+  "/api/org-deployment": "/org-deployment",
+  "/api/app-insights-event": "/app-insights-event",
+  "/api/app-insights-trace": "/app-insights-trace",
+  "/api/prompt/*": "/$1"
+}
