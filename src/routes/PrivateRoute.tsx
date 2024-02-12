@@ -12,8 +12,6 @@ const PrivateRoute = ({ children }: PropsWithChildren) => {
     AuthenticationClient.isAuthenticated()
       .then(response => {
         // User is authenticated
-        console.log('auth', response.data);
-
         if (response.data.authenticated === 'true') {
           isAuthenticated.value = true;
           checkingIfAuthenticated.value = false;
