@@ -17,33 +17,6 @@ const HEADERS = {
 
 const OpenAIClient = {
   getAvailableModels: async () => axios.get('/api/available-models'),
-  // TODO REMOVE THIS FAKE SEND PROMPT
-  // sendPrompt: async (sendPromptData: SendPromptData, model: GPT_MODELS) =>
-  //   Promise.resolve({
-  //     status: 200,
-  //     data: {
-  //       id: 'chatcmpl-7gQM4JDiQa2Dc4dErFzWLnTfD0dYR',
-  //       object: 'chat.completion',
-  //       created: 1690345440,
-  //       model: 'gpt-35-turbo',
-  //       choices: [
-  //         {
-  //           index: 0,
-  //           finish_reason: 'stop',
-  //           message: {
-  //             role: 'assistant',
-  //             content: 'Are you finshed yet Akis? Hurry up!',
-  //           },
-  //         },
-  //       ],
-  //       usage: {
-  //         completion_tokens: 9,
-  //         prompt_tokens: 25,
-  //         total_tokens: 34,
-  //       },
-  //     },
-  //   }),
-  // TODO REMOVE COMMENTS, THIS SHOULD BE LIVE CODE
   sendPrompt: async (sendPromptData: SendPromptData, model: GPT_MODELS) =>
     axios.post(
       getPromptPath(model),

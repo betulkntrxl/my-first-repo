@@ -5,7 +5,11 @@ import { Typography } from '@mui/material';
 
 export const AppGuidelines = () => {
   const { t } = useTranslation();
-
+  const getAppGuidelineBulletPoint = (bulletPoint: string) => (
+    <li>
+      <Typography variant="body2">{bulletPoint}</Typography>
+    </li>
+  );
   return (
     <Box
       sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }}
@@ -22,30 +26,14 @@ export const AppGuidelines = () => {
         {t('background.title')}
 
         <ul style={{ textAlign: 'left', paddingLeft: '16px' }}>
-          <li>
-            <Typography variant="body2">{t('background.bullet1')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('background.bullet2')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('background.bullet3')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('background.bullet4')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('background.bullet5')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('background.bullet6')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('background.bullet7')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('background.bullet8')}</Typography>
-          </li>
+          {getAppGuidelineBulletPoint(t('background.bullet1'))}
+          {getAppGuidelineBulletPoint(t('background.bullet2'))}
+          {getAppGuidelineBulletPoint(t('background.bullet3'))}
+          {getAppGuidelineBulletPoint(t('background.bullet4'))}
+          {getAppGuidelineBulletPoint(t('background.bullet5'))}
+          {getAppGuidelineBulletPoint(t('background.bullet6'))}
+          {getAppGuidelineBulletPoint(t('background.bullet7'))}
+          {getAppGuidelineBulletPoint(t('background.bullet8'))}
         </ul>
       </div>
     </Box>

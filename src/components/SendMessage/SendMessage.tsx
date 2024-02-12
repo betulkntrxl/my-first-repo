@@ -65,15 +65,14 @@ const SendMessage = () => {
         'menu.assistant-setup.message-template.system-message-template.template1',
       );
     }
-    // TODO REMOVE COMMENTS, THIS SHOULD BE LIVE CODE
-    // const AUTH_INTERVAL = setInterval(async () => {
-    //   if (hasCookieExpired()) {
-    //     PopupDialogOpenHandlers.openSessionExpiredDialog();
-    //   }
-    // }, 30000); // every 30 seconds check if the user is authenticated
-    // return () => {
-    //   clearInterval(AUTH_INTERVAL);
-    // };
+    const AUTH_INTERVAL = setInterval(async () => {
+      if (hasCookieExpired()) {
+        PopupDialogOpenHandlers.openSessionExpiredDialog();
+      }
+    }, 30000); // every 30 seconds check if the user is authenticated
+    return () => {
+      clearInterval(AUTH_INTERVAL);
+    };
   }, [messageInputDisabled, messageInputDisabled.value, t, welcomeMessage]);
 
   const sendNewMessageToOpenAiAPI = async (
