@@ -70,7 +70,7 @@ const AssistantSetupMenu = () => {
       <AccordionItemTitleAndTooltip
         title={t('menu.assistant-setup.system-message.title')}
         tooltipTitle={t('menu.assistant-setup.system-message.tooltip')}
-        id="outlined-multiline-static"
+        id="outlined-multiline-static-static"
       />
       <TextField
         id="outlined-multiline-static"
