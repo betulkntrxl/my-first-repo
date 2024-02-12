@@ -188,7 +188,7 @@ const ConfigurationMenu = () => {
             value={topP.value}
             aria-label="Top P"
             onChange={handleTopPSliderChange}
-            aria-labelledby="top-input-label"
+            aria-labelledby="topp-input-label"
           />
         </Grid>
         <Grid item>
