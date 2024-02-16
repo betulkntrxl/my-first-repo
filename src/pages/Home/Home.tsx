@@ -96,7 +96,14 @@ const Home = () => {
           </MessagesBox>
           <SendMessageBox>
             <BottomNavigation
-              sx={{ position: 'fixed', bottom: 0, width: '100%', display: 'inline' }}
+              sx={{
+                position: 'fixed',
+                bottom: 0,
+                width: '100%',
+                display: 'inline',
+                paddingBottom: '11px',
+                paddingTop: '8px',
+              }}
             >
               <SendMessage />
             </BottomNavigation>
