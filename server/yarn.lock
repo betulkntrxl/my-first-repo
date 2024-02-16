@@ -368,10 +368,10 @@ applicationinsights-native-metrics@^0.0.10:
     "@mapbox/node-pre-gyp" "^1.0.11"
     nan "^2.17.0"
 
-applicationinsights@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.9.2.tgz#a83b4bb3201da350cf438015d1e5032cb9978fe1"
-  integrity sha512-wlDiD7v0BQNM8oNzsf9C836R5ze25u+CuCEZsbA5xMIXYYBxkqkWE/mo9GFJM7rsKaiGqpxEwWmePHKD2Lwy2w==
+applicationinsights@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.9.3.tgz#3cb42057d201a0baec7ef3f25c49591ef23f8a52"
+  integrity sha512-sgz4w2d9HPad/vEppA1yODsciCPzUit1+TQDhgN222So8Eqrnvz2JvUYwK6OfFGiPHFURqTAdXLLH0FrhxHn/Q==
   dependencies:
     "@azure/core-auth" "^1.5.0"
     "@azure/core-rest-pipeline" "1.10.1"
