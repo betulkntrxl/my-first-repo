@@ -9,8 +9,8 @@ export const MessagesBox = styled(Stack)`
   // position: fixed;
 
   position: relative;
-  height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   height: 100%;
+  height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 
   // top: 66px;
   left: 0;
