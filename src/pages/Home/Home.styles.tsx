@@ -15,6 +15,7 @@ export const MessagesBox = styled(Box)`
 
 export const SendMessageBox = styled(Box)`
   padding-top: 16px;
-  margin-bottom: 16px;
+  padding-bottom: 16px;
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
+  height: 40px;
 `;
