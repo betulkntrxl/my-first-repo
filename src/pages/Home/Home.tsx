@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { getUA } from 'react-device-detect';
 
 import Box from '@mui/material/Box';
+import BottomNavigation from '@mui/material/BottomNavigation';
 import MetricsClient from '../../clients/MetricsClient';
 import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import OpenAIClient from '../../clients/OpenAIClient';
@@ -94,7 +95,18 @@ const Home = () => {
             <Messages />
           </MessagesBox>
           <SendMessageBox>
-            <SendMessage />
+            <BottomNavigation
+              sx={{
+                position: 'fixed',
+                bottom: 0,
+                width: '100%',
+                display: 'inline',
+                paddingBottom: '11px',
+                paddingTop: '8px',
+              }}
+            >
+              <SendMessage />
+            </BottomNavigation>
           </SendMessageBox>
         </MainBox>
       </div>
