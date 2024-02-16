@@ -143,6 +143,7 @@ export const theme = createTheme({
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
+          fontSize: '16px',
           p: 0,
           boxShadow:
             '0px 1px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)',
@@ -158,14 +159,14 @@ export const theme = createTheme({
     MuiMenu: {
       styleOverrides: {
         root: {
-          marginLeft: '30px',
+          // marginLeft: '30px',
         },
       },
     },
     MuiPopover: {
       styleOverrides: {
         paper: {
-          marginLeft: '30px',
+          // marginLeft: '30px',
         },
       },
     },
