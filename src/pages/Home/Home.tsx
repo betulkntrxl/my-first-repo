@@ -101,7 +101,7 @@ const Home = () => {
                 bottom: 0,
                 width: '100%',
                 display: 'inline',
-                paddingBottom: '11px',
+                paddingBottom: '8px',
                 paddingTop: '8px',
               }}
             >
