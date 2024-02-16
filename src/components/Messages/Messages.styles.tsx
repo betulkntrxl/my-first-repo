@@ -1,11 +1,10 @@
 import { styled } from '@mui/system';
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { UserBubbleContentProps } from './UserMessageBubble';
 import { SystemBubbleContentProps } from './SystemMessageBubble';
 
-export const MessagesBox = styled(Box)`
+export const MessagesBox = styled(Stack)`
   width: 100%;
   position: fixed;
   top: 66px;

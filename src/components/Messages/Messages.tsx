@@ -30,7 +30,7 @@ const Messages = () => {
   );
 
   return (
-    <MessagesBox ref={bottomRef}>
+    <MessagesBox ref={bottomRef} justifyContent="flex-end">
       <CardContent>
         <Stack direction="column">
           <AppGuidelines />
