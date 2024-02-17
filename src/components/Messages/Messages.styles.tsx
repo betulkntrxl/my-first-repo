@@ -68,5 +68,6 @@ export const BotThinkingImg = styled('div')`
     width: 100%;
     height: auto;
     margin-top: 26px;
+    margin-bottom: 16px;
   }
 `;
