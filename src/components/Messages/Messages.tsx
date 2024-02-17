@@ -30,13 +30,13 @@ const Messages = () => {
   );
 
   return (
-    <MessagesBox ref={bottomRef} justifyContent="flex-end">
+    <MessagesBox ref={bottomRef}>
       <CardContent
         sx={{
           paddingBottom: 0,
         }}
       >
-        <Stack direction="column" sx={{ height: '100vh' }}>
+        <Stack direction="column" sx={{ height: '100vh' }} justifyContent="flex-end">
           <AppGuidelines />
           {renderMessages}
         </Stack>
