@@ -14,6 +14,11 @@
   --fontBody: 14px;
 }
 
+html {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 input[type=number] {
   text-align:right;
 }
