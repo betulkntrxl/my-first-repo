@@ -36,7 +36,11 @@ const Messages = () => {
           paddingBottom: 0,
         }}
       >
-        <Stack direction="column" sx={{ height: '100vh' }} justifyContent="flex-end">
+        <Stack
+          direction="column"
+          sx={{ minHeight: '100vh', height: 'auto' }}
+          justifyContent="flex-end"
+        >
           <AppGuidelines />
           {renderMessages}
         </Stack>
