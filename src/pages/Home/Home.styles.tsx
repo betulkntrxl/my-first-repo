@@ -10,7 +10,7 @@ export const MainBox = styled(Box)`
 export const MessagesBox = styled(Box)`
   flex-grow: 1;
   overflow: auto;
-  padding: 34px 16px 16px;
+  padding: 34px 16px 22px;
 `;
 
 export const SendMessageBox = styled(Box)`
