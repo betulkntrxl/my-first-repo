@@ -6,16 +6,16 @@ import { SystemBubbleContentProps } from './SystemMessageBubble';
 
 export const MessagesBox = styled(Stack)`
   width: 100%;
-  // position: fixed;
+  position: fixed;
 
-  position: relative;
-  height: calc(100% - 10px);
-  height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10px);
+  // position: relative;
+  // height: calc(100% - 130px);
+  // height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10px);
 
-  // top: 66px;
+  top: 66px;
   left: 0;
   right: 0;
-  // bottom: 90px;
+  bottom: 92px;
   overflow: auto;
   overflow-y: auto;
   background-color: transparent;
