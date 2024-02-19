@@ -88,7 +88,7 @@ const Home = () => {
           orgDeployment.value === 'uson' && <TermsAndConditions />
         }
         <MainBox>
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ px: 2 }}>
             <NavBar />
           </Box>
           <MessagesBox>
