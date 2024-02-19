@@ -110,7 +110,7 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
-"@microsoft/applicationinsights-web-snippet@^1.0.1":
+"@microsoft/applicationinsights-web-snippet@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@microsoft/applicationinsights-web-snippet/-/applicationinsights-web-snippet-1.0.1.tgz#6bb788b2902e48bf5d460c38c6bb7fedd686ddd7"
   integrity sha512-2IHAOaLauc8qaAitvWS+U931T+ze+7MNWrDHY47IENP5y2UA0vqJDu67kWZDdpCN1fFC77sfgfB+HV7SrKshnQ==
@@ -368,16 +368,16 @@ applicationinsights-native-metrics@^0.0.10:
     "@mapbox/node-pre-gyp" "^1.0.11"
     nan "^2.17.0"
 
-applicationinsights@^2.9.3:
-  version "2.9.3"
-  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.9.3.tgz#3cb42057d201a0baec7ef3f25c49591ef23f8a52"
-  integrity sha512-sgz4w2d9HPad/vEppA1yODsciCPzUit1+TQDhgN222So8Eqrnvz2JvUYwK6OfFGiPHFURqTAdXLLH0FrhxHn/Q==
+applicationinsights@^2.9.4:
+  version "2.9.4"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.9.4.tgz#c61527357645dbc4c5b134aae854e5620c95a993"
+  integrity sha512-mMWW/E+1wy3oreeH1xJd2N5WIwIz4xj3JKneHOi7gHFqPjxgFV68mdKMEeM3YhLK1nC6k+M6Ekhf7e9WhQCSSw==
   dependencies:
     "@azure/core-auth" "^1.5.0"
     "@azure/core-rest-pipeline" "1.10.1"
     "@azure/core-util" "1.2.0"
     "@azure/opentelemetry-instrumentation-azure-sdk" "^1.0.0-beta.5"
-    "@microsoft/applicationinsights-web-snippet" "^1.0.1"
+    "@microsoft/applicationinsights-web-snippet" "1.0.1"
     "@opentelemetry/api" "^1.7.0"
     "@opentelemetry/core" "^1.19.0"
     "@opentelemetry/sdk-trace-base" "^1.19.0"
