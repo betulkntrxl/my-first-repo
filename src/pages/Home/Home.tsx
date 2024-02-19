@@ -43,16 +43,10 @@ const Home = () => {
       .then(response => {
         availableModels.value = response.data.availableModels;
 
-        // Set default model
-        if (availableModels.value.includes(GPT_MODELS.GPT_4_32K)) {
-          model.value = GPT_MODELS.GPT_4_32K;
-          tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_4_32K;
-          maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_4_32K;
-        } else {
-          model.value = GPT_MODELS.GPT_3_5_TURBO_16K;
-          tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_3_5_TURBO_16K;
-          maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_3_5_TURBO_16K;
-        }
+        // Set defaults
+        model.value = GPT_MODELS.GPT_3_5_TURBO_16K;
+        tokenLimit.value = ConfigurationConstants.TOKEN_LIMIT_GPT_3_5_TURBO_16K;
+        maxTokens.value = ConfigurationConstants.DEFAULT_MAX_TOKENS_GPT_3_5_TURBO_16K;
       })
       .catch(error => {
         MetricsClient.sendTrace({
