@@ -1,6 +1,6 @@
 import { ChatMessage } from 'gpt-tokenizer/esm/GptEncoding';
 import { isWithinTokenLimit } from 'gpt-tokenizer/esm/model/gpt-3.5-turbo-0301';
-import { isChrome, isEdge } from 'react-device-detect';
+import { isChrome, isEdge, isIOS } from 'react-device-detect';
 import { PastMessage } from '../../clients/models/PromptModel';
 
 const hasCookieExpired = () => {
@@ -8,7 +8,7 @@ const hasCookieExpired = () => {
   // Only including supported browsers, other browsers won't get a proactive popup
   // notifying them of their expired session, they will find out when they hit the send button
   let doesCookieExist = true;
-  if (isChrome || isEdge) {
+  if (!isIOS && (isChrome || isEdge)) {
     // Because the cookie is a HTTPOnly cookie it means the react app can't access
     // the cookie to check if it exists, a workaround for this is
     // to try set a cookie with the same name, if the cookie exists after
