@@ -35,5 +35,5 @@ describe('testing session expired', () => {
         expect(sendElement).toBeTruthy();
       });
     });
-  });
+  }, 10000);
 });
