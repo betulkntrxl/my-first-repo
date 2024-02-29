@@ -26,9 +26,9 @@ export const availableModels = signal<string[]>([GPT_MODELS.GPT_3_5_TURBO_16K]);
 const Home = () => {
   const { t } = useTranslation();
 
-  const isAuthenticated = async () =>
+  const hasAuthenticationExpired = async () =>
     AuthenticationClient.isAuthenticated()
-      .then(response => response.data.authenticated === 'true')
+      .then(response => response.data.authenticated === 'false')
       .catch(error => {
         MetricsClient.sendTrace({
           message: 'ChatApp failed to retrieve isAuthenticated',
@@ -36,7 +36,7 @@ const Home = () => {
           properties: { errorResponse: error.response },
         });
 
-        return false;
+        return true;
       });
 
   const getOrgDeployment = async () => {
@@ -88,7 +88,7 @@ const Home = () => {
     getAvailableModels();
 
     const AUTH_INTERVAL = setInterval(async () => {
-      if (await isAuthenticated()) {
+      if (await hasAuthenticationExpired()) {
         PopupDialogOpenHandlers.openSessionExpiredDialog();
       }
     }, 30000); // every 30 seconds check if the user is authenticated
