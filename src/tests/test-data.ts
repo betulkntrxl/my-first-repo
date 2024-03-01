@@ -30,6 +30,13 @@ const successIsAuthenticatedResponse = {
   },
 };
 
+const successIsAuthenticatedNotAuthenticatedResponse = {
+  status: 200,
+  data: {
+    authenticated: 'false',
+  },
+};
+
 const successGetVersionResponse = {
   status: 200,
   data: {
@@ -71,6 +78,7 @@ const successPostMetricTrace = {
 export {
   successPromptResponse,
   successIsAuthenticatedResponse,
+  successIsAuthenticatedNotAuthenticatedResponse,
   successGetVersionResponse,
   successGetOrgDeploymentMcKesson,
   successGetOrgDeploymentUson,

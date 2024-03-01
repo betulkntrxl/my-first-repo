@@ -5,7 +5,9 @@ import { getUA } from 'react-device-detect';
 
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
+import { PopupDialogOpenHandlers } from '../../components/SendMessage/PopupDialogHandlers';
 import MetricsClient from '../../clients/MetricsClient';
+import AuthenticationClient from '../../clients/AuthenticationClient';
 import VersionAndOrgClient from '../../clients/VersionAndOrgClient';
 import OpenAIClient from '../../clients/OpenAIClient';
 import { TraceSeverity } from '../../clients/models/MetricsModel';
@@ -23,6 +25,19 @@ export const availableModels = signal<string[]>([GPT_MODELS.GPT_3_5_TURBO_16K]);
 
 const Home = () => {
   const { t } = useTranslation();
+
+  const hasAuthenticationExpired = async () =>
+    AuthenticationClient.isAuthenticated()
+      .then(response => response.data.authenticated === 'false')
+      .catch(error => {
+        MetricsClient.sendTrace({
+          message: 'ChatApp failed to retrieve isAuthenticated',
+          severity: TraceSeverity.CRITICAL,
+          properties: { errorResponse: error.response },
+        });
+
+        return true;
+      });
 
   const getOrgDeployment = async () => {
     VersionAndOrgClient.getOrgDeployment()
@@ -71,6 +86,15 @@ const Home = () => {
 
     getOrgDeployment();
     getAvailableModels();
+
+    const AUTH_INTERVAL = setInterval(async () => {
+      if (await hasAuthenticationExpired()) {
+        PopupDialogOpenHandlers.openSessionExpiredDialog();
+      }
+    }, 30000); // every 30 seconds check if the user is authenticated
+    return () => {
+      clearInterval(AUTH_INTERVAL);
+    };
   }, [t]);
 
   return (
