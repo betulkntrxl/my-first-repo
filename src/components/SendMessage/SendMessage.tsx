@@ -35,7 +35,8 @@ import PopupDialogs from './PopupDialogs';
 
 export const messageInputDisabled = signal(false);
 
-export const displayValue = signal<string>('block');
+export const displayValue = signal<string>('flex');
+export const iconDisplayValue = signal<string>('flex');
 
 export const allMessagesToDisplay = signal<AllDisplayMessages[]>([]);
 
@@ -65,14 +66,14 @@ const SendMessage = () => {
         'menu.assistant-setup.message-template.system-message-template.template1',
       );
     }
-    const AUTH_INTERVAL = setInterval(async () => {
-      if (hasCookieExpired()) {
-        PopupDialogOpenHandlers.openSessionExpiredDialog();
-      }
-    }, 30000); // every 30 seconds check if the user is authenticated
-    return () => {
-      clearInterval(AUTH_INTERVAL);
-    };
+    /*   const AUTH_INTERVAL = setInterval(async () => {
+        if (hasCookieExpired()) {
+          PopupDialogOpenHandlers.openSessionExpiredDialog();
+        }
+      }, 30000); // every 30 seconds check if the user is authenticated
+      return () => {
+        clearInterval(AUTH_INTERVAL);
+      }; */
   }, [messageInputDisabled, messageInputDisabled.value, t, welcomeMessage]);
 
   const sendNewMessageToOpenAiAPI = async (

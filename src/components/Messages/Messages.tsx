@@ -6,6 +6,7 @@ import { AppGuidelines } from './AppGuidelines';
 import { MessagesBox } from './Messages.styles';
 import { UserMessageBubble } from './UserMessageBubble';
 import { SystemMessageBubble } from './SystemMessageBubble';
+import SimpleSnackbar from '../SnackBar/SnackBar';
 
 const Messages = () => {
   const bottomRef: any = useRef();

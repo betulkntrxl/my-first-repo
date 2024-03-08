@@ -2,7 +2,7 @@ import { styled } from '@mui/system';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { UserBubbleContentProps } from './UserMessageBubble';
-import { SystemBubbleContentProps } from './SystemMessageBubble';
+import { CopyIconcontentProps, SystemBubbleContentProps } from './SystemMessageBubble';
 
 export const MessagesBox = styled(Stack)`
   width: 100%;
@@ -43,20 +43,38 @@ export const SystemBubble = styled(Bubble)`
 `;
 
 export const BubbleContent = styled(Paper)`
-  padding: 6px 10px;
+  padding: 6px 7px;
   margin: 20px 0;
   border-radius: 5px;
   overflow-wrap: break-word;
   width: auto;
-  max-width: calc(100% - 70px);
+  gap: 5px;
+  white-space: pre-wrap;
+`;
+
+export const CopyContent = styled('div')`
+  margin: 5px 0;
+  border: none;
+  overflow-wrap: break-word;
+  cursor: pointer;
+  width: auto;
+  align-items: flex-end;
   white-space: pre-wrap;
 `;
 
 export const UserBubbleContent = styled(BubbleContent)<UserBubbleContentProps>`
   background-color: gainsboro;
-  display: ${({ content }) => (content?.length === 0 ? 'none' : 'block')};
+  display: ${({ content }) => (content?.length === 0 ? 'none' : 'flex')};
+`;
+export const CopyIconUserContent = styled(CopyContent)<UserBubbleContentProps>`
+  background-color: gainsboro;
+  display: flex)};
 `;
 
+export const CopyIconSystemContent = styled(CopyContent)<CopyIconcontentProps>`
+  background-color: #e5f2f9;
+  display: ${({ iconDisplayvalue }) => iconDisplayvalue};
+`;
 export const SystemBubbleContent = styled(BubbleContent)<SystemBubbleContentProps>`
   background-color: #e5f2f9;
   display: ${({ displayvalue }) => displayvalue};
