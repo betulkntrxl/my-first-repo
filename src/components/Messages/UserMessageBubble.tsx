@@ -21,11 +21,15 @@ export const UserMessageBubble = ({ value }: UserMessageBubbleProps) => {
   const delay = 2000;
 
   const copyText = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    showSnackbar.value = true;
-    setTimeout(() => {
-      showSnackbar.value = false;
-    }, delay);
+    try {
+      await navigator.clipboard.writeText(text);
+      showSnackbar.value = true;
+      setTimeout(() => {
+        showSnackbar.value = false;
+      }, delay);
+    } catch (error) {
+      console.log('error copying data');
+    }
   };
 
   return (

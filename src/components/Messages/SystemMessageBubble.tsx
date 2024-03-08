@@ -36,12 +36,16 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
     </BotThinkingImg>
   );
   const copyText = async (text: string) => {
-    await navigator.clipboard.writeText(text);
+    try {
+      await navigator.clipboard.writeText(text);
 
-    showSnackbar.value = true;
-    setTimeout(() => {
-      showSnackbar.value = false;
-    }, delay);
+      showSnackbar.value = true;
+      setTimeout(() => {
+        showSnackbar.value = false;
+      }, delay);
+    } catch (error) {
+      console.log('error copying data');
+    }
   };
 
   return (

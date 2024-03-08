@@ -68,7 +68,7 @@ export const UserBubbleContent = styled(BubbleContent)<UserBubbleContentProps>`
 `;
 export const CopyIconUserContent = styled(CopyContent)<UserBubbleContentProps>`
   background-color: gainsboro;
-  display: flex)};
+  display: flex;
 `;
 
 export const CopyIconSystemContent = styled(CopyContent)<CopyIconcontentProps>`
