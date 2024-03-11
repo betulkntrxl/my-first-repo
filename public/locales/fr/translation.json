@@ -13,6 +13,8 @@
   },
   "welcome-message": "Bonjour, comment puis-je vous aider?",
   "type-message": "Saisirez votre message ici.",
+  "copy-alert": "Contenu copié dans le presse-papiers",
+  "copy-tooltip": "Copier le texte",
   "token-count": "NOMBRE DE JETONS",
   "max-tokens-reached": "  ** coupure de texte? augmenter le nombre maximum de jetons dans le menu",
   "buttons": {

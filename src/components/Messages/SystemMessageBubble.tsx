@@ -2,10 +2,11 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Tooltip } from '@mui/material';
+import { t } from 'i18next';
 import { AllDisplayMessages } from '../SendMessage/MessagesHelper';
 import SystemIcon from '../../assets/system.jpg';
 import BotThinking from '../../assets/typing.gif';
-import { displayValue, iconDisplayValue } from '../SendMessage/SendMessage';
+import { displayValue, icondisplayvalue } from '../SendMessage/SendMessage';
 import {
   BotThinkingImg,
   SystemBubble,
@@ -13,13 +14,15 @@ import {
   CopyIconSystemContent,
 } from './Messages.styles';
 import { showSnackbar } from '../../App';
+import MetricsClient from '../../clients/MetricsClient';
+import { TraceSeverity } from '../../clients/models/MetricsModel';
 
 type SystemBubbleProps = {
   value: AllDisplayMessages;
 };
 
 export type CopyIconcontentProps = {
-  iconDisplayvalue: string;
+  icondisplayvalue: string;
 };
 
 export type SystemBubbleContentProps = {
@@ -43,8 +46,16 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
       setTimeout(() => {
         showSnackbar.value = false;
       }, delay);
-    } catch (error) {
-      console.log('error copying data');
+
+      MetricsClient.sendEvent({
+        name: `TextCopied ${text}`,
+      });
+    } catch (error: any) {
+      MetricsClient.sendTrace({
+        message: 'Failed to Copy Text',
+        severity: TraceSeverity.CRITICAL,
+        properties: { errorResponse: error.response },
+      });
     }
   };
 
@@ -54,9 +65,9 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
       {content.length > 0 ? (
         <SystemBubbleContent elevation={3} displayvalue={displayValue.value}>
           <Typography variant="body1">{content}</Typography>
-          <Tooltip title="Copy Text">
+          <Tooltip title={t('copy-tooltip')}>
             <CopyIconSystemContent
-              iconDisplayvalue={iconDisplayValue.value}
+              icondisplayvalue={icondisplayvalue.value}
               onClick={() => copyText(content)}
             >
               <ContentCopyIcon sx={{ width: '12px', height: '12px', color: { color } }} />

@@ -73,7 +73,7 @@ export const CopyIconUserContent = styled(CopyContent)<UserBubbleContentProps>`
 
 export const CopyIconSystemContent = styled(CopyContent)<CopyIconcontentProps>`
   background-color: #e5f2f9;
-  display: ${({ iconDisplayvalue }) => iconDisplayvalue};
+  display: ${({ icondisplayvalue }) => icondisplayvalue};
 `;
 export const SystemBubbleContent = styled(BubbleContent)<SystemBubbleContentProps>`
   background-color: #e5f2f9;

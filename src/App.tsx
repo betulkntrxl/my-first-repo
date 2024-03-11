@@ -7,14 +7,14 @@ import Home from './pages/Home/Home';
 import { theme } from './Theme';
 // Css
 import './App.css';
-import SimpleSnackbar from './components/SnackBar/SnackBar';
+import SnackbarComponent from './components/SnackBar/SnackBar';
 
 export const showSnackbar = signal(false);
 
 const App = () => (
   <Suspense fallback="">
     <ThemeProvider theme={theme}>
-      <SimpleSnackbar showStatus={showSnackbar.value} />
+      <SnackbarComponent showStatus={showSnackbar.value} />
       <BrowserRouter>
         <Routes>
           <Route

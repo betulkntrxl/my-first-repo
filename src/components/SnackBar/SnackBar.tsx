@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useSignal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 
-export default function SimpleSnackbar({ showStatus }: any) {
+export default function SnackbarComponent({ showStatus }: any) {
   const setOpen = useSignal<boolean>(false);
   const { t } = useTranslation();
 
@@ -34,7 +34,7 @@ export default function SimpleSnackbar({ showStatus }: any) {
         open={setOpen.value}
         autoHideDuration={2000}
         onClose={handleClose}
-        message={t('Content copied to clipboard')}
+        message={t('copy-alert')}
         action={action}
       />
     </div>

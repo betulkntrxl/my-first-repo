@@ -36,7 +36,7 @@ import PopupDialogs from './PopupDialogs';
 export const messageInputDisabled = signal(false);
 
 export const displayValue = signal<string>('flex');
-export const iconDisplayValue = signal<string>('flex');
+export const icondisplayvalue = signal<string>('flex');
 
 export const allMessagesToDisplay = signal<AllDisplayMessages[]>([]);
 
