@@ -69,6 +69,8 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
             <CopyIconSystemContent
               icondisplayvalue={icondisplayvalue.value}
               onClick={() => copyText(content)}
+              aria-label="copy-system-text"
+              data-testid="system"
             >
               <ContentCopyIcon sx={{ width: '12px', height: '12px', color: { color } }} />
             </CopyIconSystemContent>

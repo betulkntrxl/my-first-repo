@@ -7,6 +7,8 @@ import { AllDisplayMessages } from '../SendMessage/MessagesHelper';
 import UserIcon from '../../assets/user.jpg';
 import { UserBubbleContent, CopyIconUserContent, UserBubble } from './Messages.styles';
 import { showSnackbar } from '../../App';
+import MetricsClient from '../../clients/MetricsClient';
+import { TraceSeverity } from '../../clients/models/MetricsModel';
 
 type UserMessageBubbleProps = {
   value: AllDisplayMessages;
@@ -28,8 +30,15 @@ export const UserMessageBubble = ({ value }: UserMessageBubbleProps) => {
       setTimeout(() => {
         showSnackbar.value = false;
       }, delay);
-    } catch (error) {
-      console.log('error copying data');
+      MetricsClient.sendEvent({
+        name: `TextCopied ${text}`,
+      });
+    } catch (error: any) {
+      MetricsClient.sendTrace({
+        message: 'Failed to Copy Text',
+        severity: TraceSeverity.CRITICAL,
+        properties: { errorResponse: error.response },
+      });
     }
   };
 
@@ -38,7 +47,12 @@ export const UserMessageBubble = ({ value }: UserMessageBubbleProps) => {
       <UserBubbleContent elevation={3} content={content}>
         <Typography variant="body1">{content}</Typography>
         <Tooltip title={t('copy-tooltip')}>
-          <CopyIconUserContent content={content} onClick={() => copyText(content)}>
+          <CopyIconUserContent
+            content={content}
+            onClick={() => copyText(content)}
+            aria-label="copy-user-text"
+            data-testid="user"
+          >
             <ContentCopyIcon sx={{ width: '12px', height: '12px', color: { color } }} />
           </CopyIconUserContent>
         </Tooltip>

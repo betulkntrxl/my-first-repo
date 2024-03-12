@@ -14,28 +14,13 @@ export default function SnackbarComponent({ showStatus }: any) {
     setOpen.value = showStatus;
   }, [showStatus]);
 
-  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen.value = false;
-  };
-
-  const action = (
-    <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-      <CloseIcon fontSize="small" />
-    </IconButton>
-  );
-
   return (
     <div>
       <Snackbar
         open={setOpen.value}
         autoHideDuration={2000}
-        onClose={handleClose}
+        data-testid="copy-snackbar"
         message={t('copy-alert')}
-        action={action}
       />
     </div>
   );

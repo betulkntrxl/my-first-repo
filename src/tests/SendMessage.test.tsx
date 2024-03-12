@@ -1,10 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
-import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act, within } from '@testing-library/react';
 
+import userEvent from '@testing-library/user-event';
+import { Snackbar } from '@mui/material';
 import App from '../App';
 import { setupMockAxiosSuccessResponses } from './test-helper';
+import { UserMessageBubble } from '../components/Messages/UserMessageBubble';
+import { AllDisplayMessages } from '../components/SendMessage/MessagesHelper';
+import { SystemMessageBubble } from '../components/Messages/SystemMessageBubble';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -34,6 +39,33 @@ describe('testing Send Messages', () => {
         fireEvent.click(sendElement);
       });
     });
+  });
+  it('Check system copy message', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+
+    const msg: AllDisplayMessages = {
+      role: '',
+      content: 'Hi',
+      id: 1,
+    };
+
+    const { getByTestId } = render(<SystemMessageBubble value={msg} />);
+    expect(getByTestId('system')).toBeInTheDocument();
+    fireEvent.click(getByTestId('system'));
+  });
+
+  it('Check user copy message', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+
+    const msg: AllDisplayMessages = {
+      role: '',
+      content: 'Hi',
+      id: 1,
+    };
+
+    const { getByTestId } = render(<UserMessageBubble value={msg} />);
+    expect(getByTestId('user')).toBeInTheDocument();
+    fireEvent.click(getByTestId('user'));
   });
 
   it('send message with different configuration values, check metrics were called on each configuration value', async () => {
