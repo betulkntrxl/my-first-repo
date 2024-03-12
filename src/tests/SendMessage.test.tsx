@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-import { render, cleanup, screen, waitFor, fireEvent, act, within } from '@testing-library/react';
+import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 
-import userEvent from '@testing-library/user-event';
-import { Snackbar } from '@mui/material';
 import App from '../App';
 import { setupMockAxiosSuccessResponses } from './test-helper';
 import { UserMessageBubble } from '../components/Messages/UserMessageBubble';

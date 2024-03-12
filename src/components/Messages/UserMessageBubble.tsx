@@ -6,9 +6,8 @@ import { t } from 'i18next';
 import { AllDisplayMessages } from '../SendMessage/MessagesHelper';
 import UserIcon from '../../assets/user.jpg';
 import { UserBubbleContent, CopyIconUserContent, UserBubble } from './Messages.styles';
-import { showSnackbar } from '../../App';
-import MetricsClient from '../../clients/MetricsClient';
-import { TraceSeverity } from '../../clients/models/MetricsModel';
+
+import { copyText } from './MessageUtils';
 
 type UserMessageBubbleProps = {
   value: AllDisplayMessages;
@@ -19,28 +18,7 @@ export type UserBubbleContentProps = {
 
 export const UserMessageBubble = ({ value }: UserMessageBubbleProps) => {
   const { content } = value;
-
   const color = '#757171';
-  const delay = 2000;
-
-  const copyText = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      showSnackbar.value = true;
-      setTimeout(() => {
-        showSnackbar.value = false;
-      }, delay);
-      MetricsClient.sendEvent({
-        name: `TextCopied ${text}`,
-      });
-    } catch (error: any) {
-      MetricsClient.sendTrace({
-        message: 'Failed to Copy Text',
-        severity: TraceSeverity.CRITICAL,
-        properties: { errorResponse: error.response },
-      });
-    }
-  };
 
   return (
     <UserBubble direction="row" columnGap={2}>

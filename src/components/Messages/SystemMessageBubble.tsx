@@ -13,9 +13,7 @@ import {
   SystemBubbleContent,
   CopyIconSystemContent,
 } from './Messages.styles';
-import { showSnackbar } from '../../App';
-import MetricsClient from '../../clients/MetricsClient';
-import { TraceSeverity } from '../../clients/models/MetricsModel';
+import { copyText } from './MessageUtils';
 
 type SystemBubbleProps = {
   value: AllDisplayMessages;
@@ -38,26 +36,6 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
       <img alt="assistant" src={BotThinking} />
     </BotThinkingImg>
   );
-  const copyText = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-
-      showSnackbar.value = true;
-      setTimeout(() => {
-        showSnackbar.value = false;
-      }, delay);
-
-      MetricsClient.sendEvent({
-        name: `TextCopied ${text}`,
-      });
-    } catch (error: any) {
-      MetricsClient.sendTrace({
-        message: 'Failed to Copy Text',
-        severity: TraceSeverity.CRITICAL,
-        properties: { errorResponse: error.response },
-      });
-    }
-  };
 
   return (
     <SystemBubble direction="row" columnGap={2}>
