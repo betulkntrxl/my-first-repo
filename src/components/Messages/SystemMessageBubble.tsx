@@ -32,7 +32,7 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
   const color = '#87a7b9';
   const delay = 2000;
   const renderBotThinking = (
-    <BotThinkingImg style={{ width: '70px' }}>
+    <BotThinkingImg style={{ width: '70px' }} data-testid="bot">
       <img alt="assistant" src={BotThinking} />
     </BotThinkingImg>
   );

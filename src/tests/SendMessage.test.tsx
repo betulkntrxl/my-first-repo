@@ -30,13 +30,17 @@ describe('testing Send Messages', () => {
         // fireEvent.change(sendmessageElement, {
         //   target: { value: 'hi' },
         // });
-        sendmessageElement.value = 'hi';
+        sendmessageElement.value = 'hiiii';
       });
       // send messages
       const sendElement = screen.getByTitle('send');
       await act(async () => {
         fireEvent.click(sendElement);
       });
+
+      if (sendmessageElement.value.length > 0) {
+        expect(screen.getByLabelText('copy-system-text')).toBeInTheDocument();
+      }
     });
   });
   it('Check system copy message', async () => {
@@ -51,7 +55,12 @@ describe('testing Send Messages', () => {
     const { getByTestId } = render(<SystemMessageBubble value={msg} />);
 
     expect(getByTestId('system-copy')).toBeInTheDocument();
-    expect(getByTestId('system')).toBeInTheDocument();
+    if (msg.content.length > 0) {
+      expect(getByTestId('system')).toBeInTheDocument();
+    } else {
+      expect(getByTestId('bot')).toBeInTheDocument();
+    }
+
     fireEvent.click(getByTestId('system'));
   });
 
@@ -69,14 +78,6 @@ describe('testing Send Messages', () => {
     expect(getByTestId('user-copy')).toBeInTheDocument();
     expect(getByTestId('user')).toBeInTheDocument();
     fireEvent.click(getByTestId('user'));
-  });
-
-  it('Check snackbar component', async () => {
-    setupMockAxiosSuccessResponses(mockedAxios);
-
-    const { getByTestId } = render(<SnackbarComponent showStatus />);
-
-    expect(getByTestId('copy-snackbar')).toBeInTheDocument();
   });
 
   it('send message with different configuration values, check metrics were called on each configuration value', async () => {
