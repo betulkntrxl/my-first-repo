@@ -2,7 +2,6 @@ import React, { SyntheticEvent } from 'react';
 import { useSignal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionDetails, AccordionSummary, Divider, Typography } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ConfigurationMenu from '../ConfigurationMenu/ConfigurationMenu';
 import AssistantSetupMenu from '../AssistantSetupMenu/AssistantSetupMenu';
 
