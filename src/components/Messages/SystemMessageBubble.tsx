@@ -13,7 +13,7 @@ import {
   SystemBubbleContent,
   CopyIconSystemContent,
 } from './Messages.styles';
-import { copyText } from './MessageUtils';
+import { copyText, PromptType } from './MessageUtils';
 
 type SystemBubbleProps = {
   value: AllDisplayMessages;
@@ -30,7 +30,7 @@ export type SystemBubbleContentProps = {
 export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
   const { content } = value;
   const color = '#87a7b9';
-  const delay = 2000;
+
   const renderBotThinking = (
     <BotThinkingImg style={{ width: '70px' }} data-testid="bot">
       <img alt="assistant" src={BotThinking} />
@@ -46,7 +46,7 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
           <Tooltip title={t('copy-tooltip')} data-testid="tooltip">
             <CopyIconSystemContent
               icondisplayvalue={icondisplayvalue.value}
-              onClick={() => copyText(content)}
+              onClick={() => copyText(PromptType.SYSTEM, content)}
               aria-label="copy-system-text"
               data-testid="system"
             >

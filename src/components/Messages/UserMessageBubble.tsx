@@ -7,7 +7,7 @@ import { AllDisplayMessages } from '../SendMessage/MessagesHelper';
 import UserIcon from '../../assets/user.jpg';
 import { UserBubbleContent, CopyIconUserContent, UserBubble } from './Messages.styles';
 
-import { copyText } from './MessageUtils';
+import { copyText, PromptType } from './MessageUtils';
 
 type UserMessageBubbleProps = {
   value: AllDisplayMessages;
@@ -27,7 +27,7 @@ export const UserMessageBubble = ({ value }: UserMessageBubbleProps) => {
         <Tooltip title={t('copy-tooltip')} data-testid="tooltip-user">
           <CopyIconUserContent
             content={content}
-            onClick={() => copyText(content)}
+            onClick={() => copyText(PromptType.USER, content)}
             aria-label="copy-user-text"
             data-testid="user"
           >

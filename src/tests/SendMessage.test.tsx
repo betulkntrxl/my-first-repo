@@ -8,7 +8,6 @@ import { setupMockAxiosSuccessResponses } from './test-helper';
 import { UserMessageBubble } from '../components/Messages/UserMessageBubble';
 import { AllDisplayMessages } from '../components/SendMessage/MessagesHelper';
 import { SystemMessageBubble } from '../components/Messages/SystemMessageBubble';
-import SnackbarComponent from '../components/SnackBar/SnackBar';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
