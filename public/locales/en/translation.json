@@ -14,6 +14,8 @@
   "welcome-message": "Hello, how can I help?",
   "type-message": "Type your message here.",
   "token-count": "TOKEN COUNT",
+  "copy-alert": "Content copied to clipboard",
+  "copy-tooltip": "Copy Text",
   "max-tokens-reached": "  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.",
   "buttons": {
     "send": "Send",

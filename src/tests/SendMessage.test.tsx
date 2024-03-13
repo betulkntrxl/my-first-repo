@@ -5,6 +5,9 @@ import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-libra
 
 import App from '../App';
 import { setupMockAxiosSuccessResponses } from './test-helper';
+import { UserMessageBubble } from '../components/Messages/UserMessageBubble';
+import { AllDisplayMessages } from '../components/SendMessage/MessagesHelper';
+import { SystemMessageBubble } from '../components/Messages/SystemMessageBubble';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -26,14 +29,54 @@ describe('testing Send Messages', () => {
         // fireEvent.change(sendmessageElement, {
         //   target: { value: 'hi' },
         // });
-        sendmessageElement.value = 'hi';
+        sendmessageElement.value = 'hiiii';
       });
       // send messages
       const sendElement = screen.getByTitle('send');
       await act(async () => {
         fireEvent.click(sendElement);
       });
+
+      if (sendmessageElement.value.length > 0) {
+        expect(screen.getByLabelText('copy-system-text')).toBeInTheDocument();
+      }
     });
+  });
+  it('Check system copy message', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+
+    const msg: AllDisplayMessages = {
+      role: '',
+      content: 'Hi',
+      id: 1,
+    };
+
+    const { getByTestId } = render(<SystemMessageBubble value={msg} />);
+
+    expect(getByTestId('system-copy')).toBeInTheDocument();
+    if (msg.content.length > 0) {
+      expect(getByTestId('system')).toBeInTheDocument();
+    } else {
+      expect(getByTestId('bot')).toBeInTheDocument();
+    }
+
+    fireEvent.click(getByTestId('system'));
+  });
+
+  it('Check user copy message', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+
+    const msg: AllDisplayMessages = {
+      role: '',
+      content: 'Hi',
+      id: 1,
+    };
+
+    const { getByTestId } = render(<UserMessageBubble value={msg} />);
+
+    expect(getByTestId('user-copy')).toBeInTheDocument();
+    expect(getByTestId('user')).toBeInTheDocument();
+    fireEvent.click(getByTestId('user'));
   });
 
   it('send message with different configuration values, check metrics were called on each configuration value', async () => {
