@@ -8,6 +8,7 @@ import { setupMockAxiosSuccessResponses } from './test-helper';
 import { UserMessageBubble } from '../components/Messages/UserMessageBubble';
 import { AllDisplayMessages } from '../components/SendMessage/MessagesHelper';
 import { SystemMessageBubble } from '../components/Messages/SystemMessageBubble';
+import SnackbarComponent from '../components/SnackBar/SnackBar';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -48,6 +49,8 @@ describe('testing Send Messages', () => {
     };
 
     const { getByTestId } = render(<SystemMessageBubble value={msg} />);
+
+    expect(getByTestId('system-copy')).toBeInTheDocument();
     expect(getByTestId('system')).toBeInTheDocument();
     fireEvent.click(getByTestId('system'));
   });
@@ -62,8 +65,18 @@ describe('testing Send Messages', () => {
     };
 
     const { getByTestId } = render(<UserMessageBubble value={msg} />);
+
+    expect(getByTestId('user-copy')).toBeInTheDocument();
     expect(getByTestId('user')).toBeInTheDocument();
     fireEvent.click(getByTestId('user'));
+  });
+
+  it('Check snackbar component', async () => {
+    setupMockAxiosSuccessResponses(mockedAxios);
+
+    const { getByTestId } = render(<SnackbarComponent showStatus />);
+
+    expect(getByTestId('copy-snackbar')).toBeInTheDocument();
   });
 
   it('send message with different configuration values, check metrics were called on each configuration value', async () => {

@@ -24,14 +24,17 @@ export const UserMessageBubble = ({ value }: UserMessageBubbleProps) => {
     <UserBubble direction="row" columnGap={2}>
       <UserBubbleContent elevation={3} content={content}>
         <Typography variant="body1">{content}</Typography>
-        <Tooltip title={t('copy-tooltip')}>
+        <Tooltip title={t('copy-tooltip')} data-testid="tooltip-user">
           <CopyIconUserContent
             content={content}
             onClick={() => copyText(content)}
             aria-label="copy-user-text"
             data-testid="user"
           >
-            <ContentCopyIcon sx={{ width: '12px', height: '12px', color: { color } }} />
+            <ContentCopyIcon
+              sx={{ width: '12px', height: '12px', color: { color } }}
+              data-testid="user-copy"
+            />
           </CopyIconUserContent>
         </Tooltip>
       </UserBubbleContent>

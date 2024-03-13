@@ -43,14 +43,17 @@ export const SystemMessageBubble = ({ value }: SystemBubbleProps) => {
       {content.length > 0 ? (
         <SystemBubbleContent elevation={3} displayvalue={displayValue.value}>
           <Typography variant="body1">{content}</Typography>
-          <Tooltip title={t('copy-tooltip')}>
+          <Tooltip title={t('copy-tooltip')} data-testid="tooltip">
             <CopyIconSystemContent
               icondisplayvalue={icondisplayvalue.value}
               onClick={() => copyText(content)}
               aria-label="copy-system-text"
               data-testid="system"
             >
-              <ContentCopyIcon sx={{ width: '12px', height: '12px', color: { color } }} />
+              <ContentCopyIcon
+                sx={{ width: '12px', height: '12px', color: { color } }}
+                data-testid="system-copy"
+              />
             </CopyIconSystemContent>
           </Tooltip>
         </SystemBubbleContent>
