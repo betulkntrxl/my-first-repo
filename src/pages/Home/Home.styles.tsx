@@ -9,11 +9,11 @@ export const MainBox = styled(Box)`
 
 export const MessagesBox = styled(Box)`
   flex-grow: 1;
-  overflow: auto;
+  overflow: hidden;
   padding: 34px 16px 22px;
 `;
 
 export const SendMessageBox = styled(Box)`
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);
-  height: 78px;
+  height: 100px;
 `;

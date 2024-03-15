@@ -1,6 +1,7 @@
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { TextField } from '@mui/material';
 
 const blue = {
   500: '#007FFF',
@@ -12,12 +13,24 @@ export const CustomTextarea = styled('textarea')`
   width: 100%;
   font-family: inherit;
   padding: 10px;
+
   font-size: inherit;
   border-radius: 8px;
+
+  max-height: 167px;
+
   display: inline-flex;
+
+  overflow: hidden;
   color: inherit;
-  border: 1px solid rgba(0, 0, 0, 0.12);
   resize: none;
+
+  &:active {
+    outline-color: black;
+  }
+  &.Mui-focused fieldset {
+    border-color: black;
+  }
 `;
 
 export const CustomButton = styled(Button)`
@@ -27,9 +40,11 @@ export const CustomButton = styled(Button)`
   border-radius: 8px;
   color: ${({ disabled }) => (disabled ? 'rgba(255, 255, 255, 0.5)' : 'white')};
   transition: all 150ms ease;
+  padding: 4px 16px;
+  pointerEvents: auto,
   border: none;
   white-space: nowrap;
-  pointer-events: auto;
+  
 
   &:hover {
     background-color: ${({ disabled }) => (disabled ? null : blue[600])};
@@ -45,6 +60,7 @@ export const CustomIcon = styled('div')`
 export const CustomButtonText = styled(Typography)(({ theme }) => ({
   display: 'none',
   paddingRight: '8px',
+  pointerEvents: 'auto',
   [theme.breakpoints.up('md')]: {
     display: 'block',
   },

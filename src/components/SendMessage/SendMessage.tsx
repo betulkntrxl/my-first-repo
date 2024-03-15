@@ -47,7 +47,10 @@ const SendMessage = () => {
   const sendButtonDisabled = useSignal<boolean>(true);
   const tokenMessage = useSignal<string>('');
   const tokenCount = useSignal<number>(0);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const MAX_HEIGHT = 167;
+  const MIN_HEIGHT = 46;
+  const THRESHHOLD = 83;
 
   useEffect(() => {
     // set focus to input field
@@ -66,15 +69,36 @@ const SendMessage = () => {
         'menu.assistant-setup.message-template.system-message-template.template1',
       );
     }
-    const AUTH_INTERVAL = setInterval(async () => {
-      if (hasCookieExpired()) {
-        PopupDialogOpenHandlers.openSessionExpiredDialog();
-      }
-    }, 30000); // every 30 seconds check if the user is authenticated
-    return () => {
-      clearInterval(AUTH_INTERVAL);
-    };
+    /*  const AUTH_INTERVAL = setInterval(async () => {
+       if (hasCookieExpired()) {
+         PopupDialogOpenHandlers.openSessionExpiredDialog();
+       }
+     }, 30000); // every 30 seconds check if the user is authenticated
+     return () => {
+       clearInterval(AUTH_INTERVAL);
+     }; */
   }, [messageInputDisabled, messageInputDisabled.value, t, welcomeMessage]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = '0px';
+      const { scrollHeight } = inputRef.current;
+
+      if (scrollHeight <= MAX_HEIGHT) {
+        inputRef.current.style.height = `${scrollHeight - 30}px`;
+        inputRef.current.style.overflow = 'hidden';
+        inputRef.current.style.padding = '10px';
+      } else {
+        inputRef.current.style.height = `${MAX_HEIGHT}px`;
+        inputRef.current.style.overflow = 'auto';
+        inputRef.current.style.padding = '0px';
+      }
+
+      if (scrollHeight < THRESHHOLD) {
+        inputRef.current.style.height = `${MIN_HEIGHT}px`;
+      }
+    }
+  }, [inputRef.current, promptInputText.value]);
 
   const sendNewMessageToOpenAiAPI = async (
     newMessageToSend: string,
@@ -227,10 +251,28 @@ const SendMessage = () => {
     if (event.key === 'Enter' && !event.shiftKey) {
       handleSubmit(event);
     }
+
+    if (event.key === 'Enter' && event.shiftKey) {
+      if (inputRef.current) {
+        /*  inputRef.current.style.height = '0px';
+         const { scrollHeight } = inputRef.current;
+         if (scrollHeight < MAX_HEIGHT) {
+           inputRef.current.style.height = `${scrollHeight - 25}px`;
+         } else {
+           inputRef.current.style.height = `${MAX_HEIGHT - 1}px`;
+         }
+         // inputRef.current.style.height = `${scrollHeight - 25}px`;
+         console.log('here', inputRef.current.style.height, scrollHeight); */
+      }
+    }
   };
 
   return (
-    <Box onSubmit={handleSubmit} component="form">
+    <Box
+      onSubmit={handleSubmit}
+      component="form"
+      sx={{ display: 'flex', paddingBottom: '2px', paddingTop: '5px' }}
+    >
       <Grid
         container
         spacing={{ xs: 1, sm: 6 }}
@@ -239,24 +281,39 @@ const SendMessage = () => {
         alignItems="center"
       >
         <Grid item xs>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', paddingBottom: '2px' }}>
             <CustomTextarea
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  padding: '8px',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(0, 0, 0, 0.12)',
+                  outline: 'none',
+                },
+
+                '&.Mui-focused fieldset': {
+                  borderColor: 'black',
+                },
+
+                /* '&:active': { outlineColor: 'black' } */
+              }}
               ref={inputRef}
               {...(messageInputDisabled.value && { disabled: true })}
               autoComplete="off"
               title="sendmessage"
               placeholder={t('type-message')}
               name="chatsession"
+              data-testid="sendmessage"
               onChange={handleChatMessageTyping}
               onKeyDown={handleKeyDown}
               value={promptInputText.value}
-              rows={2}
+              rows={4}
             />
           </Box>
         </Grid>
-        <Grid item>
+        <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '2px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
-            <Grid item xs>
+            <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
                 fullWidth
                 variant="contained"
@@ -272,7 +329,7 @@ const SendMessage = () => {
                 </CustomIcon>
               </CustomButton>
             </Grid>
-            <Grid item xs>
+            <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
                 fullWidth
                 variant="contained"
