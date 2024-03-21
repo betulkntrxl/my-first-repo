@@ -21,7 +21,7 @@ Currently there are two instances running in production (You need to be on VPN)
 
 ## Install Requirements:
 
-- Node 18.16.0+
+- Node 20.11.1+
 - Npm 9.8.0+
 - Yarn 1.22.19+
 
