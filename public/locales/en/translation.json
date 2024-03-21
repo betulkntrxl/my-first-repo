@@ -2,7 +2,7 @@
   "current-language": "En",
   "background": {
     "title": "You can ask ChatApp a question using the textbox below. Please keep the following in mind when using this tool:",
-    "bullet1": "ChatApp is a business safe alternative to the public ChatGPT application. It uses the Azure OpenAI GPT 35 Turbo model which was trained on public internet information through mid 2021 so it will not be aware of current events. It was not trained on any McKesson specific information. It will not give you any useful information on McKesson benefits, policies, etc.",
+    "bullet1": "ChatApp is a business safe alternative to the public ChatGPT application. It uses the Azure OpenAI GPT 3.5 Turbo model which was trained on public internet information through mid 2021 so it will not be aware of current events. It was not trained on any McKesson specific information. It will not give you any useful information on McKesson benefits, policies, etc.",
     "bullet2": "It can be used to summarize short documents, for writing assistance (generating suggested text for emails, etc.), and asking general questions about publicly available internet information.",
     "bullet3": "DO NOT input any personal information of any kind into the ChatApp, in particular any sensitive personal information (e.g. personal health information, financial information of any individual, the personal information of children, etc.)",
     "bullet4": "DO NOT use the ChatApp as a sole decision maker with regard to any services provided to any patient or customer of McKesson.",
