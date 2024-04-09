@@ -1,7 +1,6 @@
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { TextField } from '@mui/material';
 
 const blue = {
   500: '#007FFF',
@@ -16,11 +15,11 @@ export const CustomTextarea = styled('textarea')`
 
   font-size: inherit;
   border-radius: 8px;
-
-  max-height: 167px;
-
+  padding: 10px;
+  max-height: 165px;
+  line-height: 24px;
   display: inline-flex;
-
+  flex: 1;
   overflow: hidden;
   color: inherit;
   resize: none;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
-import { allMessagesToDisplay } from '../SendMessage/SendMessage';
+import { allMessagesToDisplay, heightChange } from '../SendMessage/SendMessage';
 import { AppGuidelines } from './AppGuidelines';
 import { MessagesBox } from './Messages.styles';
 import { UserMessageBubble } from './UserMessageBubble';
@@ -21,7 +21,7 @@ const Messages = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [allMessagesToDisplay.value]);
+  }, [allMessagesToDisplay.value, heightChange.value]);
 
   const renderMessages = allMessagesToDisplay.value.map(
     value =>

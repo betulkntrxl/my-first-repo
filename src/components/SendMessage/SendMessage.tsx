@@ -39,7 +39,7 @@ export const displayValue = signal<string>('flex');
 export const icondisplayvalue = signal<string>('flex');
 
 export const allMessagesToDisplay = signal<AllDisplayMessages[]>([]);
-
+export const heightChange = signal<string>('');
 const SendMessage = () => {
   const { t } = useTranslation();
   const welcomeMessage = t('welcome-message');
@@ -48,9 +48,7 @@ const SendMessage = () => {
   const tokenMessage = useSignal<string>('');
   const tokenCount = useSignal<number>(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const MAX_HEIGHT = 167;
-  const MIN_HEIGHT = 46;
-  const THRESHHOLD = 83;
+  const MAX_HEIGHT = 165;
 
   useEffect(() => {
     // set focus to input field
@@ -69,36 +67,34 @@ const SendMessage = () => {
         'menu.assistant-setup.message-template.system-message-template.template1',
       );
     }
-    /*  const AUTH_INTERVAL = setInterval(async () => {
-       if (hasCookieExpired()) {
-         PopupDialogOpenHandlers.openSessionExpiredDialog();
-       }
-     }, 30000); // every 30 seconds check if the user is authenticated
-     return () => {
-       clearInterval(AUTH_INTERVAL);
-     }; */
+    const AUTH_INTERVAL = setInterval(async () => {
+      if (hasCookieExpired()) {
+        PopupDialogOpenHandlers.openSessionExpiredDialog();
+      }
+    }, 30000); // every 30 seconds check if the user is authenticated
+    return () => {
+      clearInterval(AUTH_INTERVAL);
+    };
   }, [messageInputDisabled, messageInputDisabled.value, t, welcomeMessage]);
 
-  useEffect(() => {
+  const adjustTextareaHeight = () => {
     if (inputRef.current) {
-      inputRef.current.style.height = '0px';
-      const { scrollHeight } = inputRef.current;
+      if (inputRef.current) {
+        inputRef.current.style.overflowY = 'hidden';
+        inputRef.current.style.maxHeight = `${MAX_HEIGHT}px`;
+        inputRef.current.style.height = 'auto';
+        if (inputRef.current.scrollHeight >= MAX_HEIGHT) {
+          inputRef.current.style.overflowY = 'scroll';
+        }
+        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
 
-      if (scrollHeight <= MAX_HEIGHT) {
-        inputRef.current.style.height = `${scrollHeight - 30}px`;
-        inputRef.current.style.overflow = 'hidden';
-        inputRef.current.style.padding = '10px';
-      } else {
-        inputRef.current.style.height = `${MAX_HEIGHT}px`;
-        inputRef.current.style.overflow = 'auto';
-        inputRef.current.style.padding = '0px';
-      }
-
-      if (scrollHeight < THRESHHOLD) {
-        inputRef.current.style.height = `${MIN_HEIGHT}px`;
+        heightChange.value = inputRef.current.style.height; // update the message box scroll to bottom on textarea height change.
       }
     }
-  }, [inputRef.current, promptInputText.value]);
+  };
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [promptInputText.value]);
 
   const sendNewMessageToOpenAiAPI = async (
     newMessageToSend: string,
@@ -251,27 +247,13 @@ const SendMessage = () => {
     if (event.key === 'Enter' && !event.shiftKey) {
       handleSubmit(event);
     }
-
-    if (event.key === 'Enter' && event.shiftKey) {
-      if (inputRef.current) {
-        /*  inputRef.current.style.height = '0px';
-         const { scrollHeight } = inputRef.current;
-         if (scrollHeight < MAX_HEIGHT) {
-           inputRef.current.style.height = `${scrollHeight - 25}px`;
-         } else {
-           inputRef.current.style.height = `${MAX_HEIGHT - 1}px`;
-         }
-         // inputRef.current.style.height = `${scrollHeight - 25}px`;
-         console.log('here', inputRef.current.style.height, scrollHeight); */
-      }
-    }
   };
 
   return (
     <Box
       onSubmit={handleSubmit}
       component="form"
-      sx={{ display: 'flex', paddingBottom: '2px', paddingTop: '5px' }}
+      sx={{ display: 'flex', paddingBottom: '2px', paddingTop: '10px' }}
     >
       <Grid
         container
@@ -280,8 +262,8 @@ const SendMessage = () => {
         alignContent="center"
         alignItems="center"
       >
-        <Grid item xs>
-          <Box sx={{ display: 'flex', paddingBottom: '2px' }}>
+        <Grid item xs sx={{ alignSelf: 'flex-end' }}>
+          <Box sx={{ display: 'flex', paddingBottom: '0px' }}>
             <CustomTextarea
               sx={{
                 '& .MuiOutlinedInput-root': {
@@ -307,11 +289,11 @@ const SendMessage = () => {
               onChange={handleChatMessageTyping}
               onKeyDown={handleKeyDown}
               value={promptInputText.value}
-              rows={4}
+              rows={1}
             />
           </Box>
         </Grid>
-        <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '2px' }}>
+        <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
             <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
