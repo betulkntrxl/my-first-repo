@@ -10,7 +10,14 @@ const setupMiddleware = expressWebServer => {
   logger.info('Setting up middleware...');
 
   expressWebServer.use(compression());
-  expressWebServer.use(helmet());
+  expressWebServer.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        frameAncestors: ['*.teams.microsoft.com'],
+        'script-src': ["'self'", '*.teams.microsoft.com'],
+      },
+    }),
+  );
   expressWebServer.disable('x-powered-by');
   expressWebServer.use(morgan(':date[clf] ":method :url"'));
   expressWebServer.use(bodyParser.json({ limit: '500kb' }));
