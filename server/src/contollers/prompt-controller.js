@@ -3,7 +3,8 @@ import { logger } from '../configs/logger-config.js';
 const GPT_3_5_TURBO_16K = 'GPT-3-5-Turbo-16K';
 const GPT_4_32K = 'GPT-4-32K';
 
-// AD Groups in NMACK that were created for GPT4 authorization are:
+// AD Groups were created in each domain i.e. NAMCK, CA and USON for GPT4 authorization
+// The AD Group names are:
 // mt-mckesson-chatapp-gpt4-dev
 // mt-mckesson-chatapp-gpt4-uat
 // mt-mckesson-chatapp-gpt4-prod
@@ -16,7 +17,7 @@ const checkIfUserIsAuthorizedForGPT4 = (req, res, next) => {
   const chatAppGroupsUserIsAMemberOf = req.userContext.userinfo.ChatApp_groups;
 
   if (
-    process.env.ORG_DEPLOYMENT === 'uson' ||
+    chatAppGroupsUserIsAMemberOf &&
     !chatAppGroupsUserIsAMemberOf.includes(GPT4_AUTHORIZATION_GROUP)
   ) {
     logger.info(`User is not authorized to use GPT4`);
@@ -33,25 +34,20 @@ const getAvailableModels = (req, res, next) => {
   logger.info(`Getting available models...`);
   const models = [GPT_3_5_TURBO_16K];
 
-  // OKTA Custom Claims to retrieve what ChatApp groups the user
-  // is a member of is only configured for McKesson Okta
   // These custom claims will populate any group the user is a member
   // of if the group starts with 'mt-mckesson-chatapp'
-  if (process.env.ORG_DEPLOYMENT === 'mckesson') {
-    const chatAppGroupsUserIsAMemberOf = req.userContext.userinfo.ChatApp_groups;
+  const chatAppGroupsUserIsAMemberOf = req.userContext.userinfo.ChatApp_groups;
+  if (chatAppGroupsUserIsAMemberOf) {
     logger.debug(
       `OKTA Custom Claim ChatApp_groups ${JSON.stringify(chatAppGroupsUserIsAMemberOf, null, 2)}`,
     );
 
-    if (
-      chatAppGroupsUserIsAMemberOf &&
-      chatAppGroupsUserIsAMemberOf.includes(GPT4_AUTHORIZATION_GROUP)
-    ) {
+    if (chatAppGroupsUserIsAMemberOf.includes(GPT4_AUTHORIZATION_GROUP)) {
       logger.info(`User has GPT4 access`);
       models.push(GPT_4_32K);
     }
   } else {
-    logger.debug(
+    logger.error(
       `OKTA Custom Claim ChatApp_groups not available for org deployment ${process.env.ORG_DEPLOYMENT}`,
     );
   }
