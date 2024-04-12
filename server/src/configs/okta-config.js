@@ -7,10 +7,7 @@ const setupOktaConfig = () => {
   logger.info('Setting up Okta Config...');
 
   // We have custom claims / scopes for the McKesson ChatApp deployment to retrieve BU and extra groups
-  const SCOPES =
-    process.env.ORG_DEPLOYMENT === 'uson'
-      ? 'openid profile email'
-      : 'openid profile email ChatApp_groups';
+  const SCOPES = 'openid profile email ChatApp_groups';
 
   const oidc = new ExpressOIDC({
     issuer: process.env.OKTA_ISSUER,
