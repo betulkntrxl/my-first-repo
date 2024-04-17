@@ -6,16 +6,10 @@ import { CopyIconcontentProps, SystemBubbleContentProps } from './SystemMessageB
 
 export const MessagesBox = styled(Stack)`
   width: 100%;
-  position: fixed;
-
-  // position: relative;
-  // height: calc(100% - 130px);
-  // height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 10px);
-
-  top: 66px;
+  height: 100%;
+  position: relative;
   left: 0;
   right: 0;
-  bottom: 92px;
   overflow: auto;
   overflow-y: auto;
   background-color: transparent;

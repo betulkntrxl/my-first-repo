@@ -39,7 +39,7 @@ export const displayValue = signal<string>('flex');
 export const icondisplayvalue = signal<string>('flex');
 
 export const allMessagesToDisplay = signal<AllDisplayMessages[]>([]);
-
+export const heightChange = signal<string>('');
 const SendMessage = () => {
   const { t } = useTranslation();
   const welcomeMessage = t('welcome-message');
@@ -47,7 +47,8 @@ const SendMessage = () => {
   const sendButtonDisabled = useSignal<boolean>(true);
   const tokenMessage = useSignal<string>('');
   const tokenCount = useSignal<number>(0);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const MAX_HEIGHT = 165;
 
   useEffect(() => {
     // set focus to input field
@@ -75,6 +76,25 @@ const SendMessage = () => {
       clearInterval(AUTH_INTERVAL);
     };
   }, [messageInputDisabled, messageInputDisabled.value, t, welcomeMessage]);
+
+  const adjustTextareaHeight = () => {
+    if (inputRef.current) {
+      if (inputRef.current) {
+        inputRef.current.style.overflowY = 'hidden';
+        inputRef.current.style.maxHeight = `${MAX_HEIGHT}px`;
+        inputRef.current.style.height = 'auto';
+        if (inputRef.current.scrollHeight >= MAX_HEIGHT) {
+          inputRef.current.style.overflowY = 'scroll';
+        }
+        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+
+        heightChange.value = inputRef.current.style.height; // update the message box scroll to bottom on textarea height change.
+      }
+    }
+  };
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [promptInputText.value]);
 
   const sendNewMessageToOpenAiAPI = async (
     newMessageToSend: string,
@@ -230,7 +250,11 @@ const SendMessage = () => {
   };
 
   return (
-    <Box onSubmit={handleSubmit} component="form">
+    <Box
+      onSubmit={handleSubmit}
+      component="form"
+      sx={{ display: 'flex', paddingBottom: '2px', paddingTop: '10px' }}
+    >
       <Grid
         container
         spacing={{ xs: 1, sm: 6 }}
@@ -238,25 +262,40 @@ const SendMessage = () => {
         alignContent="center"
         alignItems="center"
       >
-        <Grid item xs>
-          <Box sx={{ display: 'flex' }}>
+        <Grid item xs sx={{ alignSelf: 'flex-end' }}>
+          <Box sx={{ display: 'flex', paddingBottom: '0px' }}>
             <CustomTextarea
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  padding: '8px',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(0, 0, 0, 0.12)',
+                  outline: 'none',
+                },
+
+                '&.Mui-focused fieldset': {
+                  borderColor: 'black',
+                },
+
+                /* '&:active': { outlineColor: 'black' } */
+              }}
               ref={inputRef}
               {...(messageInputDisabled.value && { disabled: true })}
               autoComplete="off"
               title="sendmessage"
               placeholder={t('type-message')}
               name="chatsession"
+              data-testid="sendmessage"
               onChange={handleChatMessageTyping}
               onKeyDown={handleKeyDown}
               value={promptInputText.value}
-              rows={2}
+              rows={1}
             />
           </Box>
         </Grid>
-        <Grid item>
+        <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
-            <Grid item xs>
+            <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
                 fullWidth
                 variant="contained"
@@ -272,7 +311,7 @@ const SendMessage = () => {
                 </CustomIcon>
               </CustomButton>
             </Grid>
-            <Grid item xs>
+            <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
                 fullWidth
                 variant="contained"
