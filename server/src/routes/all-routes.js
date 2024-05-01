@@ -4,6 +4,7 @@ import { getPromptRoutes } from './prompt-routes.js';
 import { getVersionAndOrgRoutes } from './version-and-org-routes.js';
 import { getOktaRoutes } from './okta-routes.js';
 import { getStaticConentRoutes } from './static-content-routes.js';
+import { getRateLimitConfigForUnKnownRoutes } from '../configs/rate-limiting-config.js';
 
 const setupRoutes = (okta, mulesoft35TurboProxy, mulesoftGPT4Proxy, appInsights) => {
   const appRoutes = express.Router();
@@ -17,6 +18,9 @@ const setupRoutes = (okta, mulesoft35TurboProxy, mulesoftGPT4Proxy, appInsights)
   appRoutes.use(getVersionAndOrgRoutes());
 
   appRoutes.use(getStaticConentRoutes());
+
+  const rateLimiter = getRateLimitConfigForUnKnownRoutes();
+  appRoutes.use('*', rateLimiter);
 
   return appRoutes;
 };
