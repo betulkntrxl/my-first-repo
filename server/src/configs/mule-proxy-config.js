@@ -60,16 +60,21 @@ const setupMulesoftProxyGPT35Turbo = appInsights => {
           let openAIErrorMessage =
             'Unfortunately something went wrong, if you would like to report this issue please include the id of this error.';
 
-          const mulesoftErrorMessage = JSON.parse(responseBuffer.toString('utf8'));
-          if (
-            mulesoftErrorMessage.errorDetails[1] &&
-            mulesoftErrorMessage.errorDetails[1].message &&
-            mulesoftErrorMessage.errorDetails[1].message.error &&
-            mulesoftErrorMessage.errorDetails[1].message.error.code &&
-            mulesoftErrorMessage.errorDetails[1].message.error.message
-          ) {
-            openAIErrorCode = mulesoftErrorMessage.errorDetails[1].message.error.code;
-            openAIErrorMessage = mulesoftErrorMessage.errorDetails[1].message.error.message;
+          try {
+            const mulesoftErrorMessage = JSON.parse(responseBuffer.toString('utf8'));
+
+            if (
+              mulesoftErrorMessage.errorDetails[1] &&
+              mulesoftErrorMessage.errorDetails[1].message &&
+              mulesoftErrorMessage.errorDetails[1].message.error &&
+              mulesoftErrorMessage.errorDetails[1].message.error.code &&
+              mulesoftErrorMessage.errorDetails[1].message.error.message
+            ) {
+              openAIErrorCode = mulesoftErrorMessage.errorDetails[1].message.error.code;
+              openAIErrorMessage = mulesoftErrorMessage.errorDetails[1].message.error.message;
+            }
+          } catch (jsonParseError) {
+            logger.error(`Error parsing responseBuffer to JSON ${jsonParseError}`);
           }
           clientResponse = createErrorMessage(errorId, openAIErrorCode, openAIErrorMessage);
         } else {
@@ -138,16 +143,20 @@ const setupMulesoftProxyGPT4 = appInsights => {
           let openAIErrorMessage =
             'Unfortunately something went wrong, if you would like to report this issue please include the id of this error.';
 
-          const mulesoftErrorMessage = JSON.parse(responseBuffer.toString('utf8'));
-          if (
-            mulesoftErrorMessage.errorDetails[1] &&
-            mulesoftErrorMessage.errorDetails[1].message &&
-            mulesoftErrorMessage.errorDetails[1].message.error &&
-            mulesoftErrorMessage.errorDetails[1].message.error.code &&
-            mulesoftErrorMessage.errorDetails[1].message.error.message
-          ) {
-            openAIErrorCode = mulesoftErrorMessage.errorDetails[1].message.error.code;
-            openAIErrorMessage = mulesoftErrorMessage.errorDetails[1].message.error.message;
+          try {
+            const mulesoftErrorMessage = JSON.parse(responseBuffer.toString('utf8'));
+            if (
+              mulesoftErrorMessage.errorDetails[1] &&
+              mulesoftErrorMessage.errorDetails[1].message &&
+              mulesoftErrorMessage.errorDetails[1].message.error &&
+              mulesoftErrorMessage.errorDetails[1].message.error.code &&
+              mulesoftErrorMessage.errorDetails[1].message.error.message
+            ) {
+              openAIErrorCode = mulesoftErrorMessage.errorDetails[1].message.error.code;
+              openAIErrorMessage = mulesoftErrorMessage.errorDetails[1].message.error.message;
+            }
+          } catch (jsonParseError) {
+            logger.error(`Error parsing responseBuffer to JSON ${jsonParseError}`);
           }
           clientResponse = createErrorMessage(errorId, openAIErrorCode, openAIErrorMessage);
         } else {
