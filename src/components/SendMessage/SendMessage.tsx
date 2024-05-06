@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 import Grid from '@mui/material/Grid';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import { DownloadForOffline } from '@mui/icons-material';
 import CachedIcon from '@mui/icons-material/Cached';
 import Box from '@mui/material/Box';
+import { Button } from '@mui/material';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import { CustomButton, CustomIcon, CustomButtonText, CustomTextarea } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
@@ -249,6 +251,30 @@ const SendMessage = () => {
     }
   };
 
+  function download(filename: string, text: string) {
+    const element = document.createElement('a');
+    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+
+  const downloadAsText = () => {
+    console.log(allMessagesToDisplay.value[0].content);
+    const messageArray: string[] = [];
+    allMessagesToDisplay.value.map(value =>
+      value.role === 'user'
+        ? messageArray.push(`user:   ${value.content}`)
+        : messageArray.push(`machine:  ${value.content}`),
+    );
+
+    console.log(messageArray);
+
+    download(`ChatApp - ${Date.now()}.txt`, messageArray.join(`\n`));
+  };
+
   return (
     <Box
       onSubmit={handleSubmit}
@@ -295,6 +321,14 @@ const SendMessage = () => {
         </Grid>
         <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
+            <Grid item xs sx={{ paddingTop: '5px' }}>
+              <CustomButton title="DownloadText" onClick={downloadAsText}>
+                <CustomButtonText>{t('buttons.txt')}</CustomButtonText>
+                <CustomIcon>
+                  <DownloadForOffline />
+                </CustomIcon>
+              </CustomButton>
+            </Grid>
             <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
                 fullWidth

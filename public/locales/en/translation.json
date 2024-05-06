@@ -23,7 +23,8 @@
     "logout": "Logout",
     "cancel": "Cancel",
     "continue": "Continue",
-    "ok": "OK"
+    "ok": "OK",
+    "txt": "TXT"
   },
   "menu": {
     "title": "Menu",
