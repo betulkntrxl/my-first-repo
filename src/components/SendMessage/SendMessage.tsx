@@ -1,13 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useSignal, signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
-
 import Grid from '@mui/material/Grid';
 import TelegramIcon from '@mui/icons-material/Telegram';
-import { DownloadForOffline } from '@mui/icons-material';
 import CachedIcon from '@mui/icons-material/Cached';
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import { CustomButton, CustomIcon, CustomButtonText, CustomTextarea } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
@@ -22,7 +19,6 @@ import {
   getUsedTokensIsGreaterThanMaxTokensMessage,
 } from './MessagesHelper';
 import { hasCookieExpired, isRequestWithinTokenLimit } from './AdHocHelper';
-
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
 import {
   model,
@@ -32,16 +28,15 @@ import {
   maxTokens,
   APITimeout,
 } from '../ConfigurationMenu/ConfigurationMenu';
-
 import PopupDialogs from './PopupDialogs';
+import DownloadConversation from '../DownloadConversation/DownloadConversation';
 
 export const messageInputDisabled = signal(false);
-
 export const displayValue = signal<string>('flex');
 export const icondisplayvalue = signal<string>('flex');
-
 export const allMessagesToDisplay = signal<AllDisplayMessages[]>([]);
 export const heightChange = signal<string>('');
+
 const SendMessage = () => {
   const { t } = useTranslation();
   const welcomeMessage = t('welcome-message');
@@ -55,7 +50,6 @@ const SendMessage = () => {
   useEffect(() => {
     // set focus to input field
     (inputRef.current as any).focus();
-
     if (allMessagesToDisplay.value.length === 0) {
       allMessagesToDisplay.value = [
         ...allMessagesToDisplay.value,
@@ -89,7 +83,6 @@ const SendMessage = () => {
           inputRef.current.style.overflowY = 'scroll';
         }
         inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-
         heightChange.value = inputRef.current.style.height; // update the message box scroll to bottom on textarea height change.
       }
     }
@@ -251,30 +244,6 @@ const SendMessage = () => {
     }
   };
 
-  function download(filename: string, text: string) {
-    const element = document.createElement('a');
-    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
-    element.setAttribute('download', filename);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  }
-
-  const downloadAsText = () => {
-    console.log(allMessagesToDisplay.value[0].content);
-    const messageArray: string[] = [];
-    allMessagesToDisplay.value.map(value =>
-      value.role === 'user'
-        ? messageArray.push(`user:   ${value.content}`)
-        : messageArray.push(`machine:  ${value.content}`),
-    );
-
-    console.log(messageArray);
-
-    download(`ChatApp - ${Date.now()}.txt`, messageArray.join(`\n`));
-  };
-
   return (
     <Box
       onSubmit={handleSubmit}
@@ -319,16 +288,10 @@ const SendMessage = () => {
             />
           </Box>
         </Grid>
+
         <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
-            <Grid item xs sx={{ paddingTop: '5px' }}>
-              <CustomButton title="DownloadText" onClick={downloadAsText}>
-                <CustomButtonText>{t('buttons.txt')}</CustomButtonText>
-                <CustomIcon>
-                  <DownloadForOffline />
-                </CustomIcon>
-              </CustomButton>
-            </Grid>
+            <DownloadConversation />
             <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
                 fullWidth
@@ -339,13 +302,14 @@ const SendMessage = () => {
                 {...(sendButtonDisabled.value && { disabled: true })}
                 aria-disabled={sendButtonDisabled.value}
               >
-                <CustomButtonText>{t('buttons.send')}</CustomButtonText>
+                <CustomButtonText data-testid="sendbtn">{t('buttons.send')}</CustomButtonText>
                 <CustomIcon>
                   <TelegramIcon />
                 </CustomIcon>
               </CustomButton>
             </Grid>
-            <Grid item xs sx={{ paddingTop: '5px' }}>
+
+            <Grid item xs sx={{ paddingTop: '5px', justifySelf: 'end' }}>
               <CustomButton
                 fullWidth
                 variant="contained"
