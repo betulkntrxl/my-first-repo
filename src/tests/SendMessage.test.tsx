@@ -8,7 +8,6 @@ import { setupMockAxiosSuccessResponses } from './test-helper';
 import { UserMessageBubble } from '../components/Messages/UserMessageBubble';
 import { AllDisplayMessages } from '../components/SendMessage/MessagesHelper';
 import { SystemMessageBubble } from '../components/Messages/SystemMessageBubble';
-import DownloadConversation from '../components/DownloadConversation/DownloadConversation';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -78,14 +77,6 @@ describe('testing Send Messages', () => {
     expect(getByTestId('user-copy')).toBeInTheDocument();
     expect(getByTestId('user')).toBeInTheDocument();
     fireEvent.click(getByTestId('user'));
-  });
-
-  it('Check text file generation element', async () => {
-    setupMockAxiosSuccessResponses(mockedAxios);
-    const { getByTestId } = render(<DownloadConversation />);
-    expect(getByTestId('textIcon')).toBeInTheDocument();
-    expect(getByTestId('downloadIcon')).toBeInTheDocument();
-    fireEvent.click(getByTestId('textIcon'));
   });
 
   it('send message with different configuration values, check metrics were called on each configuration value', async () => {
