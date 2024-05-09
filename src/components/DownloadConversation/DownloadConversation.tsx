@@ -4,9 +4,18 @@ import { Grid, Tooltip } from '@mui/material';
 import { t } from 'i18next';
 import { CustomIcon } from '../SendMessage/SendMessage.styles';
 import { allMessagesToDisplay } from '../SendMessage/SendMessage';
-import { downloadConversation } from './DownloadUtils';
 
 const DownloadConversation = () => {
+  const downloadConversation = (filename: string, text: string) => {
+    const element = document.createElement('a');
+    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
   const downloadAsText = () => {
     const messageArray: string[] = [];
     allMessagesToDisplay.value.map(value =>
