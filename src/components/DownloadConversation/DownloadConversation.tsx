@@ -4,7 +4,6 @@ import { Grid, Tooltip } from '@mui/material';
 import { t } from 'i18next';
 import { CustomIcon } from '../SendMessage/SendMessage.styles';
 import { allMessagesToDisplay } from '../SendMessage/SendMessage';
-import { downloadConversation } from './DownloadUtils';
 
 const DownloadConversation = () => {
   const downloadAsText = () => {
@@ -14,7 +13,16 @@ const DownloadConversation = () => {
         ? messageArray.push(`user: ${value.content}`)
         : messageArray.push(`machine: ${value.content}`),
     );
-    downloadConversation(`ChatApp - ${Date.now()}.txt`, messageArray.join(`\n`));
+
+    const filename = `ChatApp - ${Date.now()}.txt`;
+    const text = messageArray.join(`\n`);
+    const element = document.createElement('a');
+    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   };
 
   return (
