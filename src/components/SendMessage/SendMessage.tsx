@@ -63,7 +63,7 @@ const SendMessage = () => {
         'menu.assistant-setup.message-template.system-message-template.template1',
       );
     }
-    const AUTH_INTERVAL = setInterval(async () => {
+    const AUTH_INTERVAL = setInterval(() => {
       if (hasCookieExpired()) {
         PopupDialogOpenHandlers.openSessionExpiredDialog();
       }
