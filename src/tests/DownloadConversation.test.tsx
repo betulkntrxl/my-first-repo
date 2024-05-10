@@ -3,7 +3,6 @@ import axios from 'axios';
 import { render, cleanup, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import { setupMockAxiosSuccessResponses } from './test-helper';
 import DownloadConversation from '../components/DownloadConversation/DownloadConversation';
-import { downloadConversation } from '../components/DownloadConversation/DownloadUtils';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -11,7 +10,17 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 describe('DownloadConversation Tests', () => {
   it('Check download conversation components', async () => {
     setupMockAxiosSuccessResponses(mockedAxios);
+    const downloadConversation = jest.fn((blobUrl, go) => {
+      const element = document.createElement('a');
+      element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(go)}`);
+      element.setAttribute('download', blobUrl);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    });
     const { getByTestId } = render(<DownloadConversation />);
+
     expect(getByTestId('textIcon')).toBeInTheDocument();
     expect(getByTestId('downloadIcon')).toBeInTheDocument();
     fireEvent.click(getByTestId('textIcon'));
