@@ -1,16 +1,19 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 
-export const MainBox = styled(Box)`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
+export const MainBox = styled(Box)(({ theme }) => ({
+  height: 'calc(100vh - 68px)', // adjusted the height in case of mobile.
+  display: 'flex',
+  flexDirection: 'column',
+  [theme.breakpoints.up('md')]: {
+    height: '100vh',
+  },
+}));
 
 export const MessagesBox = styled(Box)`
-  height: 85vh;
-  overflow: hidden;
-  padding: 34px 16px 22px;
+  padding: 0 22px;
+  flex: 1;
+  overflow-y: scroll;
 `;
 
 export const SendMessageBox = styled(Box)`
