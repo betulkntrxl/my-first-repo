@@ -100,6 +100,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # If the github branch name has the text "deployable" in it,
+      # then push the docker image with the git commit sha as the tag
+      # so it can be deployed to kubernetes
+      - if: contains(github.ref, 'deployable')
+        name: Push docker image for git commit
+        run: |
+          docker push $IMAGE_NAME:${{ steps.short-sha.outputs.sha }}
+
       - if: github.ref == 'refs/heads/main'
         name: Push docker image
         run: |
