@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import { CustomButton, CustomIcon, CustomButtonText, CustomTextarea } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
@@ -250,46 +251,47 @@ const SendMessage = () => {
       component="form"
       sx={{ display: 'flex', paddingBottom: '2px', paddingTop: '10px' }}
     >
-      <Grid
-        container
-        spacing={{ xs: 1, sm: 6 }}
-        sx={{ px: 2 }}
-        alignContent="center"
-        alignItems="center"
-      >
-        <Grid item xs sx={{ alignSelf: 'flex-end' }}>
-          <Box sx={{ display: 'flex', paddingBottom: '0px' }}>
-            <CustomTextarea
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  padding: '8px',
-                  borderRadius: '8px',
-                  border: '1px solid rgba(0, 0, 0, 0.12)',
-                  outline: 'none',
-                },
+      <Stack sx={{ width: '100%', alignItems: 'start' }}>
+        <Grid
+          container
+          spacing={{ xs: 1, sm: 6 }}
+          sx={{ px: 2 }}
+          alignContent="center"
+          alignItems="center"
+        >
+          <Grid item xs sx={{ alignSelf: 'flex-end' }}>
+            <Box sx={{ display: 'flex', paddingBottom: '0px' }}>
+              <CustomTextarea
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    padding: '8px',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(0, 0, 0, 0.12)',
+                    outline: 'none',
+                  },
 
-                '&.Mui-focused fieldset': {
-                  borderColor: 'black',
-                },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'black',
+                  },
 
-                /* '&:active': { outlineColor: 'black' } */
-              }}
-              ref={inputRef}
-              {...(messageInputDisabled.value && { disabled: true })}
-              autoComplete="off"
-              title="sendmessage"
-              placeholder={t('type-message')}
-              name="chatsession"
-              data-testid="sendmessage"
-              onChange={handleChatMessageTyping}
-              onKeyDown={handleKeyDown}
-              value={promptInputText.value}
-              rows={1}
-            />
-          </Box>
-        </Grid>
+                  /* '&:active': { outlineColor: 'black' } */
+                }}
+                ref={inputRef}
+                {...(messageInputDisabled.value && { disabled: true })}
+                autoComplete="off"
+                title="sendmessage"
+                placeholder={t('type-message')}
+                name="chatsession"
+                data-testid="sendmessage"
+                onChange={handleChatMessageTyping}
+                onKeyDown={handleKeyDown}
+                value={promptInputText.value}
+                rows={1}
+              />
+            </Box>
+          </Grid>
 
-        {/* <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
+          {/* <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
             <DownloadConversation />
             <Grid item xs sx={{ paddingTop: '5px' }}>
@@ -308,52 +310,52 @@ const SendMessage = () => {
           </Grid>
         </Grid> */}
 
-        <Grid className="textareabottom" item xs={12}>
-          <Grid container alignItems="center" sx={{ justifyContent: 'space-between' }}>
-            <Grid>
-              <Box sx={{ display: 'flex' }}>
-                <DownloadConversation />
-              </Box>
-            </Grid>
+          <Grid className="textareabottom" item xs={12}>
+            <Grid container alignItems="center" sx={{ justifyContent: 'space-between' }}>
+              <Grid>
+                <Box sx={{ display: 'flex' }}>
+                  <DownloadConversation />
+                </Box>
+              </Grid>
 
-            <Grid item>
-              <Grid container columnSpacing={{ xs: 1, sm: 2 }}>
-                <Grid item>
-                  <CustomButton
-                    fullWidth
-                    variant="contained"
-                    title="send"
-                    type="submit"
-                    // disabled={sendButtonDisabled.value}
-                    {...(sendButtonDisabled.value && { disabled: true })}
-                    aria-disabled={sendButtonDisabled.value}
-                  >
-                    <CustomButtonText>{t('buttons.send')}</CustomButtonText>
-                    <CustomIcon>
-                      <TelegramIcon />
-                    </CustomIcon>
-                  </CustomButton>
-                </Grid>
-                <Grid item>
-                  <CustomButton
-                    fullWidth
-                    variant="contained"
-                    title="reset"
-                    onClick={PopupDialogOpenHandlers.openResetChatDialog}
-                  >
-                    <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
-                    <CustomIcon>
-                      <CachedIcon />
-                    </CustomIcon>
-                  </CustomButton>
+              <Grid item>
+                <Grid container columnSpacing={{ xs: 1, sm: 2 }}>
+                  <Grid item>
+                    <CustomButton
+                      fullWidth
+                      variant="contained"
+                      title="send"
+                      type="submit"
+                      // disabled={sendButtonDisabled.value}
+                      {...(sendButtonDisabled.value && { disabled: true })}
+                      aria-disabled={sendButtonDisabled.value}
+                    >
+                      <CustomButtonText>{t('buttons.send')}</CustomButtonText>
+                      <CustomIcon>
+                        <TelegramIcon />
+                      </CustomIcon>
+                    </CustomButton>
+                  </Grid>
+                  <Grid item>
+                    <CustomButton
+                      fullWidth
+                      variant="contained"
+                      title="reset"
+                      onClick={PopupDialogOpenHandlers.openResetChatDialog}
+                    >
+                      <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
+                      <CustomIcon>
+                        <CachedIcon />
+                      </CustomIcon>
+                    </CustomButton>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
+            {/* </Paper> */}
           </Grid>
-          {/* </Paper> */}
         </Grid>
-      </Grid>
-
+      </Stack>
       <PopupDialogs />
     </Box>
   );

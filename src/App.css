@@ -53,6 +53,12 @@ video {
   text-align: center;
 }
 
+@media only screen and (min-width: 768px) {
+  .textareabottom {
+      margin-top: -40px !important;
+  }
+}
+
 /* A solution for hidding the resize observer error as the app is not braking it's safe to hide it for now */
 /* Please keep the commented code below until UI testing finishes and we are happy with the UI and responsive changes */
 /* iframe#webpack-dev-server-client-overlay{display:none!important} */

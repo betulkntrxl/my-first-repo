@@ -35,8 +35,8 @@ const DownloadConversation = () => {
           <FileDownloadOutlinedIcon
             data-testid="downloadIcon"
             style={{
-              width: '40px',
-              height: '40px',
+              width: '30px',
+              height: '30px',
               padding: '2px',
               cursor: 'pointer',
             }}
