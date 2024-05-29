@@ -289,7 +289,7 @@ const SendMessage = () => {
           </Box>
         </Grid>
 
-        <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
+        {/* <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
             <DownloadConversation />
             <Grid item xs sx={{ paddingTop: '5px' }}>
@@ -301,30 +301,59 @@ const SendMessage = () => {
                 // disabled={sendButtonDisabled.value}
                 {...(sendButtonDisabled.value && { disabled: true })}
                 aria-disabled={sendButtonDisabled.value}
-              >
-                <CustomButtonText data-testid="sendbtn">{t('buttons.send')}</CustomButtonText>
-                <CustomIcon>
-                  <TelegramIcon />
-                </CustomIcon>
-              </CustomButton>
+              />
+
             </Grid>
 
-            <Grid item xs sx={{ paddingTop: '5px', justifySelf: 'end' }}>
-              <CustomButton
-                fullWidth
-                variant="contained"
-                title="reset"
-                onClick={PopupDialogOpenHandlers.openResetChatDialog}
-              >
-                <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
-                <CustomIcon>
-                  <CachedIcon />
-                </CustomIcon>
-              </CustomButton>
+          </Grid>
+        </Grid> */}
+
+        <Grid className="textareabottom" item xs={12}>
+          <Grid container alignItems="center" sx={{ justifyContent: 'space-between' }}>
+            <Grid>
+              <Box sx={{ display: 'flex' }}>
+                <DownloadConversation />
+              </Box>
+            </Grid>
+
+            <Grid item>
+              <Grid container columnSpacing={{ xs: 1, sm: 2 }}>
+                <Grid item>
+                  <CustomButton
+                    fullWidth
+                    variant="contained"
+                    title="send"
+                    type="submit"
+                    // disabled={sendButtonDisabled.value}
+                    {...(sendButtonDisabled.value && { disabled: true })}
+                    aria-disabled={sendButtonDisabled.value}
+                  >
+                    <CustomButtonText>{t('buttons.send')}</CustomButtonText>
+                    <CustomIcon>
+                      <TelegramIcon />
+                    </CustomIcon>
+                  </CustomButton>
+                </Grid>
+                <Grid item>
+                  <CustomButton
+                    fullWidth
+                    variant="contained"
+                    title="reset"
+                    onClick={PopupDialogOpenHandlers.openResetChatDialog}
+                  >
+                    <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
+                    <CustomIcon>
+                      <CachedIcon />
+                    </CustomIcon>
+                  </CustomButton>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
+          {/* </Paper> */}
         </Grid>
       </Grid>
+
       <PopupDialogs />
     </Box>
   );
