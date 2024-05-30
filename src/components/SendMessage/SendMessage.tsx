@@ -286,7 +286,7 @@ const SendMessage = () => {
                 onChange={handleChatMessageTyping}
                 onKeyDown={handleKeyDown}
                 value={promptInputText.value}
-                rows={1}
+                rows={2}
               />
             </Box>
           </Grid>
@@ -310,50 +310,52 @@ const SendMessage = () => {
           </Grid>
         </Grid> */}
 
-          <Grid className="textareabottom" item xs={12}>
-            <Grid container alignItems="center" sx={{ justifyContent: 'space-between' }}>
-              <Grid>
-                <Box sx={{ display: 'flex' }}>
-                  <DownloadConversation />
-                </Box>
-              </Grid>
+          <Grid
+            container
+            alignItems="center"
+            sx={{ justifyContent: 'space-between', marginTop: '10px' }}
+          >
+            <Grid className="textareabottom">
+              <Box sx={{ display: 'flex' }}>
+                <DownloadConversation />
+              </Box>
+            </Grid>
 
-              <Grid item>
-                <Grid container columnSpacing={{ xs: 1, sm: 2 }}>
-                  <Grid item>
-                    <CustomButton
-                      fullWidth
-                      variant="contained"
-                      title="send"
-                      type="submit"
-                      // disabled={sendButtonDisabled.value}
-                      {...(sendButtonDisabled.value && { disabled: true })}
-                      aria-disabled={sendButtonDisabled.value}
-                    >
-                      <CustomButtonText>{t('buttons.send')}</CustomButtonText>
-                      <CustomIcon>
-                        <TelegramIcon />
-                      </CustomIcon>
-                    </CustomButton>
-                  </Grid>
-                  <Grid item>
-                    <CustomButton
-                      fullWidth
-                      variant="contained"
-                      title="reset"
-                      onClick={PopupDialogOpenHandlers.openResetChatDialog}
-                    >
-                      <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
-                      <CustomIcon>
-                        <CachedIcon />
-                      </CustomIcon>
-                    </CustomButton>
-                  </Grid>
+            <Grid item>
+              <Grid container columnSpacing={{ xs: 1, sm: 2 }}>
+                <Grid item>
+                  <CustomButton
+                    fullWidth
+                    variant="contained"
+                    title="send"
+                    type="submit"
+                    // disabled={sendButtonDisabled.value}
+                    {...(sendButtonDisabled.value && { disabled: true })}
+                    aria-disabled={sendButtonDisabled.value}
+                  >
+                    <CustomButtonText>{t('buttons.send')}</CustomButtonText>
+                    <CustomIcon>
+                      <TelegramIcon />
+                    </CustomIcon>
+                  </CustomButton>
+                </Grid>
+                <Grid item>
+                  <CustomButton
+                    fullWidth
+                    variant="contained"
+                    title="reset"
+                    onClick={PopupDialogOpenHandlers.openResetChatDialog}
+                  >
+                    <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
+                    <CustomIcon>
+                      <CachedIcon />
+                    </CustomIcon>
+                  </CustomButton>
                 </Grid>
               </Grid>
             </Grid>
-            {/* </Paper> */}
           </Grid>
+          {/* </Paper> */}
         </Grid>
       </Stack>
       <PopupDialogs />

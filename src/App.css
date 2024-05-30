@@ -55,7 +55,7 @@ video {
 
 @media only screen and (min-width: 768px) {
   .textareabottom {
-      margin-top: -40px !important;
+    margin-left: 42px !important;
   }
 }
 
