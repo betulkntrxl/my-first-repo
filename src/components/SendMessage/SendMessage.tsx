@@ -311,6 +311,7 @@ const SendMessage = () => {
         </Grid> */}
 
           <Grid
+            className="marginbottomgap"
             container
             alignItems="center"
             sx={{ justifyContent: 'space-between', marginTop: '10px' }}
