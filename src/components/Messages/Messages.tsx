@@ -34,13 +34,10 @@ const Messages = () => {
       <CardContent
         sx={{
           paddingBottom: 0,
+          height: '100%',
         }}
       >
-        <Stack
-          direction="column"
-          sx={{ minHeight: '100vh', height: 'auto' }}
-          justifyContent="flex-end"
-        >
+        <Stack direction="column" sx={{ minHeight: '100%' }} justifyContent="flex-end">
           <AppGuidelines />
           {renderMessages}
         </Stack>
