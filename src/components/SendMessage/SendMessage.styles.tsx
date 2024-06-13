@@ -15,13 +15,14 @@ export const CustomTextarea = styled('textarea')`
 
   font-size: inherit;
   border-radius: 8px;
-  padding: 10px;
+  padding: 3px 10px;
   max-height: 165px;
   line-height: 24px;
   display: inline-flex;
   flex: 1;
   overflow: hidden;
   color: inherit;
+
   resize: none;
 
   &:active {
@@ -31,7 +32,6 @@ export const CustomTextarea = styled('textarea')`
     border-color: black;
   }
 `;
-
 export const CustomButton = styled(Button)`
   font-family: Arial, sans-serif;
   font-size: 0.875rem;
@@ -40,10 +40,9 @@ export const CustomButton = styled(Button)`
   color: ${({ disabled }) => (disabled ? 'rgba(255, 255, 255, 0.5)' : 'white')};
   transition: all 150ms ease;
   padding: 4px 16px;
-  pointerEvents: auto,
+  pointer-events: auto;
   border: none;
   white-space: nowrap;
-  
 
   &:hover {
     background-color: ${({ disabled }) => (disabled ? null : blue[600])};

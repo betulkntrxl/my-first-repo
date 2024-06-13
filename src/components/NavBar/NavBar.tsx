@@ -84,7 +84,7 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar sx={{ background: 'white' }}>
+    <AppBar sx={{ background: 'white', position: 'relative !important' }}>
       <Toolbar sx={{ height: '66px' }}>
         <IconButton
           edge="start"

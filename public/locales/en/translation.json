@@ -16,6 +16,7 @@
   "token-count": "TOKEN COUNT",
   "copy-alert": "Content copied to clipboard",
   "copy-tooltip": "Copy Text",
+  "text-download": "Click the icon to download conversation.",
   "max-tokens-reached": "  ** Is the answer cut short? Increase the Max Tokens in the Configuration Menu.",
   "buttons": {
     "send": "Send",

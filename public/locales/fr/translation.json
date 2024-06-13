@@ -16,6 +16,7 @@
   "copy-alert": "Contenu copié dans le presse-papiers",
   "copy-tooltip": "Copier le texte",
   "token-count": "NOMBRE DE JETONS",
+  "text-download": "Cliquez sur l'icône pour télécharger la conversation",
   "max-tokens-reached": "  ** coupure de texte? augmenter le nombre maximum de jetons dans le menu",
   "buttons": {
     "send": "Envoyer",
