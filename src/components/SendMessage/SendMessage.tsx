@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useSignal, signal } from '@preact/signals-react';
 import { useTranslation } from 'react-i18next';
-
 import Grid from '@mui/material/Grid';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import CachedIcon from '@mui/icons-material/Cached';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { PopupDialogOpenHandlers } from './PopupDialogHandlers';
 import { CustomButton, CustomIcon, CustomButtonText, CustomTextarea } from './SendMessage.styles';
 import { SendPromptData, PastMessage } from '../../clients/models/PromptModel';
@@ -20,7 +20,6 @@ import {
   getUsedTokensIsGreaterThanMaxTokensMessage,
 } from './MessagesHelper';
 import { hasCookieExpired, isRequestWithinTokenLimit } from './AdHocHelper';
-
 import { systemMessageValue } from '../AssistantSetupMenu/AssistantSetupMenu';
 import {
   model,
@@ -30,16 +29,15 @@ import {
   maxTokens,
   APITimeout,
 } from '../ConfigurationMenu/ConfigurationMenu';
-
 import PopupDialogs from './PopupDialogs';
+import DownloadConversation from '../DownloadConversation/DownloadConversation';
 
 export const messageInputDisabled = signal(false);
-
 export const displayValue = signal<string>('flex');
 export const icondisplayvalue = signal<string>('flex');
-
 export const allMessagesToDisplay = signal<AllDisplayMessages[]>([]);
 export const heightChange = signal<string>('');
+
 const SendMessage = () => {
   const { t } = useTranslation();
   const welcomeMessage = t('welcome-message');
@@ -53,7 +51,6 @@ const SendMessage = () => {
   useEffect(() => {
     // set focus to input field
     (inputRef.current as any).focus();
-
     if (allMessagesToDisplay.value.length === 0) {
       allMessagesToDisplay.value = [
         ...allMessagesToDisplay.value,
@@ -87,7 +84,6 @@ const SendMessage = () => {
           inputRef.current.style.overflowY = 'scroll';
         }
         inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
-
         heightChange.value = inputRef.current.style.height; // update the message box scroll to bottom on textarea height change.
       }
     }
@@ -255,46 +251,49 @@ const SendMessage = () => {
       component="form"
       sx={{ display: 'flex', paddingBottom: '2px', paddingTop: '10px' }}
     >
-      <Grid
-        container
-        spacing={{ xs: 1, sm: 6 }}
-        sx={{ px: 2 }}
-        alignContent="center"
-        alignItems="center"
-      >
-        <Grid item xs sx={{ alignSelf: 'flex-end' }}>
-          <Box sx={{ display: 'flex', paddingBottom: '0px' }}>
-            <CustomTextarea
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  padding: '8px',
-                  borderRadius: '8px',
-                  border: '1px solid rgba(0, 0, 0, 0.12)',
-                  outline: 'none',
-                },
+      <Stack sx={{ width: '100%', alignItems: 'start' }}>
+        <Grid
+          container
+          spacing={{ xs: 1, sm: 6 }}
+          sx={{ px: 2 }}
+          alignContent="center"
+          alignItems="center"
+        >
+          <Grid item xs sx={{ alignSelf: 'flex-end' }}>
+            <Box sx={{ display: 'flex', paddingBottom: '0px' }}>
+              <CustomTextarea
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    padding: '8px',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(0, 0, 0, 0.12)',
+                    outline: 'none',
+                  },
 
-                '&.Mui-focused fieldset': {
-                  borderColor: 'black',
-                },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'black',
+                  },
 
-                /* '&:active': { outlineColor: 'black' } */
-              }}
-              ref={inputRef}
-              {...(messageInputDisabled.value && { disabled: true })}
-              autoComplete="off"
-              title="sendmessage"
-              placeholder={t('type-message')}
-              name="chatsession"
-              data-testid="sendmessage"
-              onChange={handleChatMessageTyping}
-              onKeyDown={handleKeyDown}
-              value={promptInputText.value}
-              rows={1}
-            />
-          </Box>
-        </Grid>
-        <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
+                  /* '&:active': { outlineColor: 'black' } */
+                }}
+                ref={inputRef}
+                {...(messageInputDisabled.value && { disabled: true })}
+                autoComplete="off"
+                title="sendmessage"
+                placeholder={t('type-message')}
+                name="chatsession"
+                data-testid="sendmessage"
+                onChange={handleChatMessageTyping}
+                onKeyDown={handleKeyDown}
+                value={promptInputText.value}
+                rows={2}
+              />
+            </Box>
+          </Grid>
+
+          {/* <Grid item sx={{ display: 'flex', alignSelf: 'flex-end', paddingBottom: '7px' }}>
           <Grid container display="inline-flex" columnSpacing={{ xs: 1, sm: 2 }}>
+            <DownloadConversation />
             <Grid item xs sx={{ paddingTop: '5px' }}>
               <CustomButton
                 fullWidth
@@ -304,29 +303,62 @@ const SendMessage = () => {
                 // disabled={sendButtonDisabled.value}
                 {...(sendButtonDisabled.value && { disabled: true })}
                 aria-disabled={sendButtonDisabled.value}
-              >
-                <CustomButtonText>{t('buttons.send')}</CustomButtonText>
-                <CustomIcon>
-                  <TelegramIcon />
-                </CustomIcon>
-              </CustomButton>
+              />
+
             </Grid>
-            <Grid item xs sx={{ paddingTop: '5px' }}>
-              <CustomButton
-                fullWidth
-                variant="contained"
-                title="reset"
-                onClick={PopupDialogOpenHandlers.openResetChatDialog}
-              >
-                <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
-                <CustomIcon>
-                  <CachedIcon />
-                </CustomIcon>
-              </CustomButton>
+
+          </Grid>
+        </Grid> */}
+
+          <Grid
+            className="marginbottomgap"
+            container
+            alignItems="center"
+            sx={{ justifyContent: 'space-between', marginTop: '10px' }}
+          >
+            <Grid className="textareabottom">
+              <Box sx={{ display: 'flex' }}>
+                <DownloadConversation />
+              </Box>
+            </Grid>
+
+            <Grid item>
+              <Grid container columnSpacing={{ xs: 1, sm: 2 }}>
+                <Grid item>
+                  <CustomButton
+                    fullWidth
+                    variant="contained"
+                    title="send"
+                    type="submit"
+                    // disabled={sendButtonDisabled.value}
+                    {...(sendButtonDisabled.value && { disabled: true })}
+                    aria-disabled={sendButtonDisabled.value}
+                  >
+                    <CustomButtonText>{t('buttons.send')}</CustomButtonText>
+                    <CustomIcon>
+                      <TelegramIcon />
+                    </CustomIcon>
+                  </CustomButton>
+                </Grid>
+                <Grid item>
+                  <CustomButton
+                    fullWidth
+                    variant="contained"
+                    title="reset"
+                    onClick={PopupDialogOpenHandlers.openResetChatDialog}
+                  >
+                    <CustomButtonText>{t('buttons.reset-chat')}</CustomButtonText>
+                    <CustomIcon>
+                      <CachedIcon />
+                    </CustomIcon>
+                  </CustomButton>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
+          {/* </Paper> */}
         </Grid>
-      </Grid>
+      </Stack>
       <PopupDialogs />
     </Box>
   );
