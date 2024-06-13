@@ -31,6 +31,8 @@ const setupRetryConfig = () => {
         (axiosRetry.isNetworkOrIdempotentRequestError(error) ||
           // Retry on ChatApp timeout
           error.code === 'ECONNABORTED' ||
+          // Retry on 401 because of a load balancer issue in Azure
+          ERROR_RESPONSE_STATUS === 401 ||
           // Retry on Prompt OpenAI API Timeout
           ERROR_RESPONSE_STATUS === 408 ||
           // Retry on Prompt Mulesoft API Timeout
